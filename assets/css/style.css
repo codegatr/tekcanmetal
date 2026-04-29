@@ -1747,6 +1747,281 @@ section.bg-alt{background:var(--bg-section)}
   height:12px;
 }
 
+/* ════════════════════════════════════════════════════
+   HİZMETLER LİSTESİ (hizmetler.php) — Limak holding tarzı
+   ════════════════════════════════════════════════════ */
+
+/* GİRİŞ (intro) bölümü — 2 sütun */
+.svc-intro-grid{
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:60px;
+  align-items:start;
+}
+.svc-intro-left .kicker{margin-bottom:14px}
+.svc-intro-left h2{
+  font-size:clamp(28px, 3vw, 42px);
+  font-weight:300;
+  color:var(--primary);
+  margin:0;
+  letter-spacing:-.5px;
+  line-height:1.15;
+}
+.svc-intro-right p{
+  font-size:15.5px;
+  color:var(--text-muted);
+  line-height:1.75;
+  margin:0 0 18px;
+}
+.svc-intro-right .svc-intro-lead{
+  font-size:18px;
+  color:var(--text);
+  font-weight:500;
+  line-height:1.6;
+}
+.svc-intro-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  margin-top:32px;
+  padding-top:28px;
+  border-top:1px solid var(--border);
+}
+.svc-stat{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding-right:24px;
+  border-right:1px solid var(--border);
+}
+.svc-stat:last-child{border-right:0;padding-right:0}
+.svc-stat strong{
+  font-size:clamp(28px, 3vw, 36px);
+  font-weight:300;
+  color:var(--accent);
+  letter-spacing:-1px;
+  line-height:1;
+}
+.svc-stat span{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+/* BÜYÜK HİZMET BLOK — alternating */
+.svc-block{padding:90px 0;background:#fff}
+.svc-block.bg-alt{background:var(--bg-section)}
+.svc-block-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+.svc-block-grid.reverse .svc-block-visual{order:2}
+.svc-block-grid.reverse .svc-block-content{order:1}
+
+/* GÖRSEL */
+.svc-block-visual{position:relative}
+.svc-block-img-wrap{
+  width:100%;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  position:relative;
+}
+.svc-block-img-wrap img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .6s ease;
+}
+.svc-block:hover .svc-block-img-wrap img{transform:scale(1.04)}
+.svc-block-placeholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#d0d7e0;
+}
+.svc-block-num{
+  position:absolute;
+  top:-18px;
+  right:-18px;
+  width:90px;
+  height:90px;
+  background:var(--accent);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  font-weight:300;
+  letter-spacing:-1px;
+  z-index:2;
+  box-shadow:0 14px 30px rgba(200,16,46,.25);
+}
+.svc-block-grid.reverse .svc-block-num{
+  right:auto;
+  left:-18px;
+}
+
+/* İÇERİK */
+.svc-block-content .kicker{margin-bottom:14px}
+.svc-block-content h2{
+  font-size:clamp(28px, 3vw, 40px);
+  font-weight:300;
+  color:var(--primary);
+  margin:0 0 18px;
+  letter-spacing:-.4px;
+  line-height:1.15;
+}
+.svc-block-lead{
+  font-size:16px;
+  color:var(--text-muted);
+  line-height:1.7;
+  margin:0 0 28px;
+}
+.svc-block-features{
+  margin:28px 0;
+  padding:24px 26px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+}
+.svc-block.bg-alt .svc-block-features{background:#fff;border-color:var(--border)}
+.svc-block-features h4{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin:0 0 12px;
+}
+.svc-block-features ul{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 16px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.svc-block-features ul li{
+  position:relative;
+  padding:8px 0 8px 22px;
+  font-size:13.5px;
+  color:var(--text);
+  border-bottom:1px dashed var(--border);
+}
+.svc-block-features ul li:last-child,
+.svc-block-features ul li:nth-last-child(2){border-bottom:0}
+.svc-block-features ul li::before{
+  content:'';
+  position:absolute;
+  left:0;top:13px;
+  width:12px;height:12px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23c8102e'><path d='M13.5 4.5L6 12 2.5 8.5l1-1L6 10l6.5-6.5z'/></svg>");
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+/* AKSİYON BUTONLARI */
+.svc-block-actions{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.svc-block-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 0;
+  border-bottom:2px solid var(--accent);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--primary);
+  text-decoration:none;
+  transition:.22s;
+}
+.svc-block-link span{transition:transform .22s}
+.svc-block-link:hover{color:var(--accent)}
+.svc-block-link:hover span{transform:translateX(6px)}
+
+.svc-block-cta{
+  display:inline-flex;
+  align-items:center;
+  padding:14px 24px;
+  background:var(--accent);
+  color:#fff !important;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:.22s;
+}
+.svc-block-cta:hover{
+  background:var(--accent-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(200,16,46,.25);
+}
+
+/* ÇALIŞMA SÜRECİ — 4 adım */
+.svc-process{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:0;
+  margin-top:48px;
+  border:1px solid var(--border);
+  background:#fff;
+}
+.svc-process-step{
+  padding:36px 30px 32px;
+  position:relative;
+  border-right:1px solid var(--border);
+  transition:.25s;
+}
+.svc-process-step:last-child{border-right:0}
+.svc-process-step:hover{background:var(--bg-alt)}
+.svc-process-step::after{
+  content:'';
+  position:absolute;
+  top:50%;right:-7px;
+  width:13px;height:13px;
+  background:#fff;
+  border-top:1px solid var(--border);
+  border-right:1px solid var(--border);
+  transform:translateY(-50%) rotate(45deg);
+  z-index:2;
+}
+.svc-process-step:last-child::after{display:none}
+.svc-process-num{
+  font-size:34px;
+  font-weight:300;
+  color:var(--accent);
+  letter-spacing:-2px;
+  line-height:1;
+  margin-bottom:18px;
+  font-feature-settings:"tnum";
+}
+.svc-process-step h3{
+  font-size:16px;
+  font-weight:700;
+  color:var(--primary);
+  margin:0 0 10px;
+  letter-spacing:-.1px;
+}
+.svc-process-step p{
+  font-size:13.5px;
+  color:var(--text-muted);
+  line-height:1.6;
+  margin:0;
+}
+
 /* CTA Box (hizmet.php sağ alt CTA) */
 .svc-cta-box{
   background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -3477,6 +3752,15 @@ section.bg-alt{background:var(--bg-section)}
   .partners-grid{grid-template-columns:repeat(2,1fr)}
   .contact-form-wrap{padding:32px 26px}
   .page-header{padding:42px 0 28px}
+  .svc-intro-grid{grid-template-columns:1fr;gap:32px}
+  .svc-block-grid{grid-template-columns:1fr;gap:40px}
+  .svc-block-grid.reverse .svc-block-visual{order:0}
+  .svc-block-grid.reverse .svc-block-content{order:0}
+  .svc-block-grid.reverse .svc-block-num{right:-18px;left:auto}
+  .svc-process{grid-template-columns:repeat(2,1fr)}
+  .svc-process-step:nth-child(2n)::after{display:none}
+  .svc-process-step:nth-child(1),
+  .svc-process-step:nth-child(2){border-bottom:1px solid var(--border)}
 }
 @media (max-width:768px){
   :root{--header-h:72px}
@@ -3526,6 +3810,20 @@ section.bg-alt{background:var(--bg-section)}
   .intro-block,.sector-section,.values-section,.capabilities-section,.news-section{padding:60px 0}
   .partners-section,.cta-banner{padding:50px 0}
   .section-head-row{flex-direction:column;align-items:flex-start;gap:16px}
+  .svc-block{padding:50px 0}
+  .svc-block-grid{gap:32px}
+  .svc-block-num{width:64px;height:64px;font-size:22px;top:-12px;right:-12px}
+  .svc-block-features ul{grid-template-columns:1fr}
+  .svc-block-features ul li{border-bottom:1px dashed var(--border)}
+  .svc-block-features ul li:last-child{border-bottom:0}
+  .svc-process{grid-template-columns:1fr}
+  .svc-process-step{border-right:0;border-bottom:1px solid var(--border)}
+  .svc-process-step:last-child{border-bottom:0}
+  .svc-process-step::after{display:none !important}
+  .svc-intro-stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .svc-stat{padding-right:8px}
+  .svc-stat strong{font-size:22px}
+  .svc-stat span{font-size:9.5px;letter-spacing:1px}
 }
 
 /* Print */
