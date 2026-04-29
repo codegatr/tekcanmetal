@@ -124,14 +124,19 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;ba
   overflow-y:auto;
 }
 .adm-nav-section{
+  margin-bottom:6px;
+}
+.adm-nav-section:first-child{padding-top:4px}
+.adm-nav-title{
   font-size:10.5px;
   text-transform:uppercase;
   letter-spacing:1.4px;
   color:var(--text-dim);
   font-weight:700;
   padding:18px 10px 8px;
+  display:block;
 }
-.adm-nav-section:first-child{padding-top:4px}
+.adm-nav-section:first-child .adm-nav-title{padding-top:4px}
 .adm-nav a{
   display:flex;
   align-items:center;

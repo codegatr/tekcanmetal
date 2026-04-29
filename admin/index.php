@@ -18,15 +18,15 @@ $lastOrders  = all("SELECT id, full_name, amount, created_at, status FROM tm_mai
 $lastLogs    = all("SELECT a.*, u.username FROM tm_activity_logs a LEFT JOIN tm_users u ON u.id=a.user_id ORDER BY a.created_at DESC LIMIT 8");
 ?>
 
-<div class="adm-stats">
-  <div class="adm-stat"><div class="num"><?= $stats['products'] ?></div><div class="lbl">Aktif Ürün</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['cats'] ?></div><div class="lbl">Kategori</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['msg_unr'] ?></div><div class="lbl">Okunmamış Mesaj</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['mail_ord'] ?></div><div class="lbl">Bekleyen Mail Order</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['blogs'] ?></div><div class="lbl">Blog Yazısı</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['team'] ?></div><div class="lbl">Ekip Üyesi</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['partners'] ?></div><div class="lbl">Çözüm Ortağı</div></div>
-  <div class="adm-stat"><div class="num"><?= $stats['gallery'] ?></div><div class="lbl">Galeri Görseli</div></div>
+<div class="adm-stat-grid">
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['products'] ?></div><div class="adm-stat-label">Aktif Ürün</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['cats'] ?></div><div class="adm-stat-label">Kategori</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['msg_unr'] ?></div><div class="adm-stat-label">Okunmamış Mesaj</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['mail_ord'] ?></div><div class="adm-stat-label">Bekleyen Mail Order</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['blogs'] ?></div><div class="adm-stat-label">Blog Yazısı</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['team'] ?></div><div class="adm-stat-label">Ekip Üyesi</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['partners'] ?></div><div class="adm-stat-label">Çözüm Ortağı</div></div>
+  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['gallery'] ?></div><div class="adm-stat-label">Galeri Görseli</div></div>
 </div>
 
 <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px">

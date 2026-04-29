@@ -1,9 +1,11 @@
-  </main>
-  <footer class="adm-foot">
-    <div>© <?= date('Y') ?> Tekcan Metal — Yönetim Paneli</div>
-    <div>Powered by <a href="https://codega.com.tr" target="_blank">Codega</a> v<?= h(TM_VERSION) ?></div>
-  </footer>
-</div>
+    </main>
+  </div><!-- /.adm-main -->
+</div><!-- /.adm-wrap -->
+
+<footer class="adm-foot">
+  <div>© <?= date('Y') ?> Tekcan Metal — Yönetim Paneli</div>
+  <div>Powered by <a href="https://codega.com.tr" target="_blank">Codega</a> v<?= h(TM_VERSION) ?></div>
+</footer>
 
 <script>
 (function(){
