@@ -310,8 +310,8 @@ h4{font-size:17px}
 .main-nav li.has-sub:hover .submenu{opacity:1;visibility:visible;transform:translateY(0)}
 
 /* ════════════════════════════════════════════════════
-   MEGA PANEL — Kurumsal Demir-Çelik Holding Tarzı
-   Hover-driven dinamik görsel showcase + ürün önizleme
+   MEGA PANEL — Endüstriyel B2B Sade Liste
+   Sadece kategori isimleri ve açıklamalar, sağ taraf yok
    ════════════════════════════════════════════════════ */
 
 .has-mega{position:static !important}
@@ -322,14 +322,14 @@ h4{font-size:17px}
   width:100%;
   background:#fff;
   border-top:1px solid var(--border);
-  box-shadow:0 24px 60px rgba(15,32,80,.18);
+  border-bottom:3px solid var(--accent);
+  box-shadow:0 24px 60px rgba(15,32,80,.12);
   opacity:0;
   visibility:hidden;
   transform:translateY(8px);
-  transition:.25s cubic-bezier(.4,0,.2,1);
+  transition:.22s cubic-bezier(.4,0,.2,1);
   z-index:100;
-  padding:0;
-  overflow:hidden;
+  padding:48px 0 36px;
 }
 .has-mega:hover .mega-panel,
 .mega-panel:hover{
@@ -338,385 +338,105 @@ h4{font-size:17px}
   transform:translateY(0);
 }
 
-.mega-panel-inner{display:flex;flex-direction:column}
-
-/* ÜST BAŞLIK ŞERİDİ — koyu lacivert kurumsal banner */
-.mega-header{
-  background:linear-gradient(135deg, #050d24 0%, #0c1e44 50%, #143672 100%);
-  color:#fff;
-  padding:32px 0;
-  position:relative;
-  overflow:hidden;
-}
-.mega-header::before{
-  content:'';
-  position:absolute;
-  top:0;right:-10%;
-  width:60%;height:100%;
-  background:radial-gradient(ellipse at center, rgba(74,139,214,.25) 0%, transparent 70%);
-  pointer-events:none;
-}
-.mega-header-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:32px;
-  flex-wrap:wrap;
-  position:relative;
-}
-.mega-kicker{
-  display:inline-block;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:#c8102e;
-  margin-bottom:8px;
-}
-.mega-kicker::before{
-  content:'';
-  display:inline-block;
-  width:24px;height:2px;
-  background:#c8102e;
-  vertical-align:middle;
-  margin-right:10px;
-}
-.mega-header h2{
-  font-size:clamp(20px, 2vw, 28px);
-  font-weight:300;
-  color:#fff;
-  margin:0;
-  letter-spacing:-.3px;
-  line-height:1.25;
-}
-.mega-header-link{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:14px 24px;
-  background:transparent;
-  border:1px solid rgba(255,255,255,.3);
-  color:#fff !important;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  transition:.22s;
-  white-space:nowrap;
-}
-.mega-header-link span{transition:transform .22s;display:inline-block}
-.mega-header-link:hover{
-  background:#c8102e;
-  border-color:#c8102e;
-}
-.mega-header-link:hover span{transform:translateX(6px)}
-
-/* ANA İÇERİK GRID */
-.mega-content{
+/* SADE LİSTE GRID — 3 sütun, ikon yok, sadece tipografi */
+.mega-list-grid{
   display:grid;
-  grid-template-columns:1.05fr 1.4fr;
+  grid-template-columns:repeat(3,1fr);
   gap:0;
-  padding:32px 0 40px;
-  align-items:stretch;
+  border-top:1px solid var(--border);
+  border-left:1px solid var(--border);
 }
-
-/* SOL: KATEGORİ LİSTESİ */
-.mega-cats-col{
-  border-right:1px solid var(--border);
-  padding-right:32px;
-}
-.mega-cats-list{
+.mega-list-item{
   display:flex;
   flex-direction:column;
-  gap:2px;
-}
-.mega-cat-row{
-  display:grid;
-  grid-template-columns:48px 1fr auto;
-  align-items:center;
-  gap:18px;
-  padding:14px 18px;
+  gap:8px;
+  padding:22px 28px 24px;
   text-decoration:none;
   color:var(--text);
-  background:transparent;
-  border-left:3px solid transparent;
-  transition:.22s;
-  cursor:pointer;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  transition:.18s;
   text-transform:none;
   letter-spacing:0;
+  position:relative;
 }
-.mega-cat-row:hover,
-.mega-cat-row.active{
+.mega-list-item::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:0;height:3px;
+  background:var(--accent);
+  transition:width .25s;
+}
+.mega-list-item:hover{
   background:var(--bg-alt);
-  border-left-color:var(--accent);
 }
-.mega-cat-icon{
+.mega-list-item:hover::before{width:100%}
+
+.mega-list-row{
   display:flex;
   align-items:center;
-  justify-content:center;
-  width:48px;height:48px;
-  color:var(--primary);
-  background:transparent;
-  border:1px solid var(--border);
-  transition:.22s;
+  justify-content:space-between;
+  gap:12px;
 }
-.mega-cat-row:hover .mega-cat-icon,
-.mega-cat-row.active .mega-cat-icon{
-  background:var(--primary);
-  color:#fff;
-  border-color:var(--primary);
-}
-.mega-cat-icon svg{width:28px;height:28px;display:block}
-.mega-cat-info{display:flex;flex-direction:column;gap:3px;min-width:0}
-.mega-cat-info h4{
-  font-size:14.5px;
+.mega-list-name{
+  font-size:15px;
   font-weight:700;
   color:var(--primary);
-  margin:0;
   letter-spacing:-.1px;
-  line-height:1.25;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  line-height:1.3;
+  text-transform:none;
 }
-.mega-cat-meta{
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-  color:var(--text-muted);
-}
-.mega-cat-row:hover .mega-cat-meta,
-.mega-cat-row.active .mega-cat-meta{color:var(--accent)}
-.mega-cat-arrow{
-  font-size:16px;
-  color:var(--text-dim, #8a93a3);
+.mega-list-arrow{
+  font-size:20px;
+  font-weight:300;
+  color:var(--border-strong, #c5cdd9);
+  line-height:1;
   transition:.22s;
 }
-.mega-cat-row:hover .mega-cat-arrow,
-.mega-cat-row.active .mega-cat-arrow{
+.mega-list-item:hover .mega-list-name{color:var(--accent)}
+.mega-list-item:hover .mega-list-arrow{
   color:var(--accent);
   transform:translateX(4px);
 }
 
-/* SAĞ: GÖRSEL ÖNİZLEME + ÜRÜN LİSTESİ */
-.mega-preview-col{
-  padding-left:40px;
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-}
-.mega-preview-img{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  min-height:280px;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  background-color:var(--primary-darker, #0a1a3a);
-  overflow:hidden;
-  display:flex;
-  align-items:flex-end;
-  transition:background-image .35s ease;
-}
-.mega-preview-img::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,
-    rgba(15,32,80,0) 0%,
-    rgba(15,32,80,.4) 50%,
-    rgba(10,26,58,.95) 100%);
-  pointer-events:none;
-}
-.mega-preview-overlay{
-  position:relative;
-  z-index:2;
-  padding:28px 30px;
-  color:#fff;
-  width:100%;
-}
-.mega-preview-kicker{
-  display:inline-block;
-  font-size:10.5px;
-  font-weight:700;
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:#fff;
-  background:rgba(200,16,46,.9);
-  padding:5px 10px;
-  margin-bottom:14px;
-}
-.mega-preview-overlay h3{
-  font-size:clamp(22px, 2.2vw, 30px);
-  font-weight:600;
-  color:#fff;
-  margin:0 0 8px;
-  letter-spacing:-.3px;
-  line-height:1.2;
-  transition:opacity .25s;
-}
-.mega-preview-overlay p{
-  font-size:13.5px;
-  color:rgba(255,255,255,.85);
-  line-height:1.55;
-  margin:0;
-  max-width:520px;
-  transition:opacity .25s;
-}
-
-.mega-preview-products{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-.mega-products-label{
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:var(--text-muted);
-}
-.mega-products-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.mega-product-pill{
-  display:inline-flex;
-  align-items:center;
-  padding:8px 14px;
-  background:var(--bg-alt);
-  border:1px solid var(--border);
-  color:var(--text);
-  text-decoration:none;
+.mega-list-desc{
   font-size:12.5px;
-  font-weight:500;
+  color:var(--text-muted);
+  line-height:1.55;
+  font-weight:400;
   letter-spacing:0;
   text-transform:none;
-  transition:.18s;
-  white-space:nowrap;
 }
-.mega-product-pill::before{
-  content:'›';
-  margin-right:8px;
-  color:var(--accent);
-  font-weight:700;
-}
-.mega-product-pill:hover{
-  background:var(--primary);
-  color:#fff;
-  border-color:var(--primary);
-}
-.mega-product-pill:hover::before{color:#fff}
 
-.mega-preview-cta{
-  display:inline-flex;
-  align-items:center;
-  align-self:flex-start;
-  gap:10px;
-  padding:14px 24px;
-  background:var(--accent);
-  color:#fff !important;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  text-decoration:none;
-  margin-top:4px;
-  transition:.22s;
-}
-.mega-preview-cta span{transition:transform .22s;display:inline-block}
-.mega-preview-cta:hover{
-  background:var(--accent-dark);
-  transform:translateY(-2px);
-  box-shadow:0 12px 24px rgba(200,16,46,.25);
-}
-.mega-preview-cta:hover span{transform:translateX(6px)}
-
-/* ALT ŞERIT: 3 büyük görselli hizmet kartı */
-.mega-bottom-strip{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  padding:0 0 16px;
-  border-top:1px solid var(--border);
+/* ALT BAR — 'Tüm ürün kataloğunu görüntüle →' linki */
+.mega-list-foot{
+  margin-top:28px;
   padding-top:24px;
-}
-.mega-bottom-card{
-  position:relative;
+  border-top:1px solid var(--border);
   display:flex;
-  align-items:flex-end;
-  min-height:160px;
-  padding:24px 26px;
-  background-color:var(--primary-darker, #0a1a3a);
-  background-size:cover;
-  background-position:center;
-  text-decoration:none;
-  color:#fff;
-  overflow:hidden;
-  transition:.25s;
-  border:1px solid var(--border);
+  justify-content:flex-end;
 }
-.mega-bottom-card.mega-bottom-dark{
-  background:linear-gradient(135deg, #1e4a9e 0%, #143672 50%, #0a1a3a 100%);
-  position:relative;
-}
-.mega-bottom-card.mega-bottom-dark::after{
-  content:'';
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:140%;height:160%;
-  background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(74,139,214,.22) 0%, transparent 65%);
-  pointer-events:none;
-}
-.mega-bottom-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--accent);
-}
-.mega-bottom-content{
-  position:relative;
-  z-index:2;
-  width:100%;
-}
-.mega-bottom-icon{
-  display:inline-block;
-  font-size:22px;
-  margin-bottom:10px;
-}
-.mega-bottom-card h4{
-  font-size:18px;
-  font-weight:700;
-  color:#fff;
-  margin:0 0 6px;
-  letter-spacing:-.2px;
-  line-height:1.25;
-}
-.mega-bottom-card p{
-  font-size:12.5px;
-  color:rgba(255,255,255,.8);
-  margin:0 0 12px;
-  line-height:1.5;
-}
-.mega-bottom-arrow{
+.mega-list-allbtn{
   display:inline-flex;
   align-items:center;
-  font-size:11px;
+  gap:10px;
+  font-size:11.5px;
   font-weight:700;
-  letter-spacing:1.5px;
+  letter-spacing:1.8px;
   text-transform:uppercase;
-  color:#c8102e;
-  background:#fff;
-  padding:6px 12px;
+  color:var(--primary);
+  text-decoration:none;
+  padding:6px 0;
+  border-bottom:2px solid var(--accent);
   transition:.22s;
 }
-.mega-bottom-card:hover .mega-bottom-arrow{
-  background:var(--accent);
-  color:#fff;
+.mega-list-allbtn span{
+  transition:transform .22s;
+  display:inline-block;
 }
+.mega-list-allbtn:hover{color:var(--accent)}
+.mega-list-allbtn:hover span{transform:translateX(6px)}
 
 /* Anasayfa transparan header'da mega panel açıldığında: nav metni renkleri ters çevir */
 .home-page .has-mega:hover > a,
@@ -726,6 +446,7 @@ h4{font-size:17px}
 @media (max-width:1100px){
   .mega-panel{display:none !important}
 }
+
 
 .submenu li{list-style:none}
 .submenu a{
