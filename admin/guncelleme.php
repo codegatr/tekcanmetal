@@ -324,6 +324,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         }
         adm_back_with('error', 'Yedek bulunamadı.', 'admin/guncelleme.php');
     }
+
+    /* ========== Görselleri Yenile (Seed-Images Resync) ========== */
+    if ($action === 'resync_images') {
+        $seedDir   = __DIR__ . '/../install/seed-images';
+        $uploadDir = __DIR__ . '/../uploads';
+        $copied = 0; $skipped = 0; $errors = 0;
+        $force = !empty($_POST['force']);
+
+        if (!is_dir($seedDir)) {
+            adm_back_with('error', 'Seed-images dizini bulunamadı: ' . $seedDir, 'admin/guncelleme.php');
+        }
+        if (!is_dir($uploadDir)) @mkdir($uploadDir, 0755, true);
+
+        try {
+            $rii = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($seedDir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($rii as $file) {
+                $rel = ltrim(substr($file->getPathname(), strlen($seedDir)), '/\\');
+                $dst = $uploadDir . '/' . $rel;
+                if ($file->isDir()) {
+                    if (!is_dir($dst)) @mkdir($dst, 0755, true);
+                } else {
+                    @mkdir(dirname($dst), 0755, true);
+                    if ($force || !file_exists($dst)) {
+                        if (@copy($file->getPathname(), $dst)) $copied++;
+                        else $errors++;
+                    } else {
+                        $skipped++;
+                    }
+                }
+            }
+            log_activity('sync', 'seed-images', 0, "Senkronize edildi: $copied yeni, $skipped atlandı, $errors hata");
+            $msg = "Görseller yenilendi: $copied yeni dosya kopyalandı";
+            if ($skipped) $msg .= ", $skipped dosya zaten mevcut";
+            if ($errors) $msg .= ", $errors hata oluştu";
+            adm_back_with($errors ? 'warning' : 'success', $msg . '.', 'admin/guncelleme.php');
+        } catch (Throwable $e) {
+            adm_back_with('error', 'Senkronizasyon hatası: ' . $e->getMessage(), 'admin/guncelleme.php');
+        }
+    }
 }
 
 /* ========== RENDER ========== */
@@ -408,6 +450,25 @@ if (is_dir($bd)) {
             </div>
         </div>
     <?php endif; ?>
+</div>
+
+<div class="adm-panel">
+    <div class="adm-panel-head"><h2>🖼 Görselleri Yenile</h2></div>
+    <div class="adm-panel-body">
+        <p style="font-size:13px;color:var(--text-muted);margin:0 0 14px">
+            Sitedeki ürün, kategori, hizmet, slider gibi görseller eksikse veya bozuksa, paketle gelen <code>install/seed-images/</code> klasöründeki dosyaları <code>uploads/</code>'a senkronize eder.
+        </p>
+        <form method="post" action="?action=resync_images" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <?= csrf_field() ?>
+            <button type="submit" class="adm-btn adm-btn-primary">
+                Sadece Eksik Olanları Kopyala
+            </button>
+            <button type="submit" name="force" value="1" class="adm-btn adm-btn-ghost"
+                    onclick="return confirm('Mevcut tüm görseller paket içindekilerle değiştirilecek. Devam edilsin mi?')">
+                Tüm Görselleri Üzerine Yaz
+            </button>
+        </form>
+    </div>
 </div>
 
 <div class="adm-panel">
