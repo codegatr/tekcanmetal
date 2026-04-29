@@ -215,6 +215,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             } catch (Throwable $e) { /* ignore */ }
         }
 
+        // 4.5. Yeni seed-images dosyalarını uploads'a senkronize et
+        $seedImagesDir = __DIR__ . '/../install/seed-images';
+        $uploadsDir    = __DIR__ . '/../uploads';
+        if (is_dir($seedImagesDir)) {
+            $rii = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($seedImagesDir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($rii as $file) {
+                $rel = ltrim(substr($file->getPathname(), strlen($seedImagesDir)), '/\\');
+                $dst = $uploadsDir . '/' . $rel;
+                if ($file->isDir()) {
+                    if (!is_dir($dst)) @mkdir($dst, 0755, true);
+                } else {
+                    @mkdir(dirname($dst), 0755, true);
+                    if (!file_exists($dst)) @copy($file->getPathname(), $dst);
+                }
+            }
+        }
+
         // 5. Versiyon kaydı
         q("INSERT IGNORE INTO tm_system_versions (version, source, release_date, notes, applied_by) VALUES (?,?,?,?,?)", [
             $newVersion,
@@ -262,6 +282,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $migrationFile = __DIR__ . '/../install/migration.sql';
         if (file_exists($migrationFile)) {
             try { $sql = file_get_contents($migrationFile); if ($sql) db()->exec($sql); } catch (Throwable $e) {}
+        }
+
+        // Seed-images senkronizasyonu (yeni dosyalar uploads'a gelsin)
+        $seedImagesDir = __DIR__ . '/../install/seed-images';
+        $uploadsDir    = __DIR__ . '/../uploads';
+        if (is_dir($seedImagesDir)) {
+            $rii = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($seedImagesDir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($rii as $file) {
+                $rel = ltrim(substr($file->getPathname(), strlen($seedImagesDir)), '/\\');
+                $dst = $uploadsDir . '/' . $rel;
+                if ($file->isDir()) {
+                    if (!is_dir($dst)) @mkdir($dst, 0755, true);
+                } else {
+                    @mkdir(dirname($dst), 0755, true);
+                    if (!file_exists($dst)) @copy($file->getPathname(), $dst);
+                }
+            }
         }
 
         q("INSERT IGNORE INTO tm_system_versions (version, source, notes, applied_by) VALUES (?,?,?,?)", [

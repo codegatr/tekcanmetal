@@ -65,11 +65,16 @@ try {
   <div class="container">
     <div class="header-inner">
       <a href="<?= h(url('/')) ?>" class="logo" aria-label="<?= h(settings('site_short_name')) ?> Anasayfa">
-        <span class="logo-mark">T</span>
-        <span class="logo-text">
-          <span class="logo-name">Tekcan Metal</span>
-          <span class="logo-sub">Demir adına Herşey</span>
-        </span>
+        <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
+        <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
+          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img">
+        <?php else: ?>
+          <span class="logo-mark">T</span>
+          <span class="logo-text">
+            <span class="logo-name">Tekcan Metal</span>
+            <span class="logo-sub">Demir adına Herşey</span>
+          </span>
+        <?php endif; ?>
       </a>
 
       <ul class="main-nav">
@@ -121,7 +126,7 @@ try {
       </ul>
 
       <div class="header-actions">
-        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905548350226'), 'Merhaba, Tekcan Metal\'den ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-cta gold">
+        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, Tekcan Metal\'den ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-cta btn-cta-red">
           <span>💬</span> Hemen Teklif Al
         </a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">☰</button>
@@ -135,11 +140,16 @@ try {
 <aside class="offcanvas" id="offcanvas">
   <div class="offcanvas-head">
     <a href="<?= h(url('/')) ?>" class="logo">
-      <span class="logo-mark">T</span>
-      <span class="logo-text">
-        <span class="logo-name">Tekcan Metal</span>
-        <span class="logo-sub">Menü</span>
-      </span>
+      <?php $logoFile2 = settings('logo', 'assets/img/logo.png'); ?>
+      <?php if ($logoFile2 && file_exists(__DIR__ . '/../' . $logoFile2)): ?>
+        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img">
+      <?php else: ?>
+        <span class="logo-mark">T</span>
+        <span class="logo-text">
+          <span class="logo-name">Tekcan Metal</span>
+          <span class="logo-sub">Menü</span>
+        </span>
+      <?php endif; ?>
     </a>
     <button class="offcanvas-close" id="ocClose">×</button>
   </div>

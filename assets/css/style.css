@@ -1,40 +1,43 @@
 /*  Tekcan Metal — Frontend Stylesheet
- *  Kurumsal mavi (Koza tema #236ace) + temiz gri tonları
- *  Borçelik / Erdemir tarzı B2B sanayi estetik
+ *  Logo renklerine sadık kurumsal palet:
+ *  Navy mavi (#1e4a9e) + Kırmızı vurgu (#c8102e) + Beyaz
+ *  Borçelik / Erdemir tarzı sade B2B sanayi estetik
  *  ────────────────────────────────────────────────── */
 
 :root{
-  --primary: #236ace;          /* Ana kurumsal mavi */
-  --primary-light: #4a8bd6;    /* Hover, gradient açık */
-  --primary-dark: #1a4ea0;     /* Aktif, koyu vurgu */
-  --primary-darker: #163d80;   /* Çok koyu */
-  --accent: #236ace;           /* Aksanlar da mavi (sade kurumsal) */
-  --accent-dark: #1a4ea0;
-  --menu-dark: #111111;        /* JSON'daki menuColor */
+  --primary: #1e4a9e;          /* Navy mavi (logodaki TEKCAN harfleri) */
+  --primary-light: #2d63c2;    /* Hover, gradient açık */
+  --primary-dark: #143672;     /* Aktif, koyu vurgu */
+  --primary-darker: #0d2855;   /* Çok koyu */
+  --accent: #c8102e;           /* Kırmızı (logodaki elmas) */
+  --accent-dark: #a00d24;      /* Koyu kırmızı (hover) */
+  --accent-light: #e63946;     /* Açık kırmızı */
+  --menu-dark: #1a1a1a;
   --steel: #475569;
   --steel-light: #94a3b8;
-  --bg: #ffffff;               /* Beyaz ana zemin (temiz kurumsal) */
-  --bg-alt: #f7f9fc;           /* Çok hafif mavi-gri */
+  --bg: #ffffff;               /* Beyaz ana zemin */
+  --bg-alt: #f5f7fa;           /* Çok hafif gri-mavi */
+  --bg-section: #fafbfd;       /* Section alternatif */
   --bg-dark: #0f172a;
   --surface: #ffffff;
-  --border: #e5e9f0;
-  --border-strong: #cbd5e1;
+  --border: #e1e6ee;
+  --border-strong: #c5cfdc;
   --text: #1a202c;
   --text-muted: #5a6577;
   --text-dim: #8a93a3;
   --success: #047857;
   --warning: #b45309;
-  --danger: #dc2626;
-  --info: #236ace;
-  --shadow-sm: 0 1px 2px rgba(35,106,206,.06);
-  --shadow: 0 4px 14px rgba(35,106,206,.08);
-  --shadow-lg: 0 10px 30px rgba(35,106,206,.12);
-  --shadow-xl: 0 24px 60px rgba(35,106,206,.18);
-  --r: 6px;
-  --r-lg: 10px;
+  --danger: #c8102e;
+  --info: #1e4a9e;
+  --shadow-sm: 0 1px 2px rgba(15,32,80,.05);
+  --shadow: 0 2px 10px rgba(15,32,80,.07);
+  --shadow-lg: 0 8px 24px rgba(15,32,80,.1);
+  --shadow-xl: 0 24px 60px rgba(15,32,80,.15);
+  --r: 4px;                    /* Daha keskin, kurumsal */
+  --r-lg: 8px;
   --container: 1240px;
   --header-h: 96px;
-  --serif: 'Inter', -apple-system, system-ui, sans-serif;  /* Sade kurumsal — serif yerine sans */
+  --serif: 'Inter', -apple-system, system-ui, sans-serif;
   --sans: 'Inter', -apple-system, system-ui, sans-serif;
 }
 
@@ -59,27 +62,36 @@ ul,ol{padding-left:1.4em}
 /* TYPE */
 h1,h2,h3,h4,h5{
   font-family:var(--serif);
-  font-weight:600;
+  font-weight:700;
   color:var(--primary);
-  line-height:1.18;
-  letter-spacing:.2px;
+  line-height:1.2;
+  letter-spacing:-.3px;
   margin:0 0 .5em;
 }
-h1{font-size:clamp(32px,4.6vw,52px)}
-h2{font-size:clamp(26px,3.4vw,40px)}
-h3{font-size:clamp(20px,2.4vw,26px)}
-h4{font-size:18px}
-.lead{font-size:17px;color:var(--text-muted);line-height:1.7}
+h1{font-size:clamp(28px,3.5vw,40px)}
+h2{font-size:clamp(22px,2.6vw,32px)}
+h3{font-size:clamp(18px,2vw,22px)}
+h4{font-size:17px}
+.lead{font-size:16px;color:var(--text-muted);line-height:1.7}
 .kicker{
   display:inline-block;
   font-size:11px;
   font-weight:700;
   letter-spacing:2.5px;
   text-transform:uppercase;
-  color:var(--accent-dark);
+  color:var(--accent);
   margin-bottom:14px;
+  padding:0;
+  position:relative;
 }
-.kicker::before{content:'';display:inline-block;width:24px;height:2px;background:var(--accent);vertical-align:middle;margin-right:10px}
+.kicker::before{
+  content:'';
+  display:inline-block;
+  width:24px;height:2px;
+  background:var(--accent);
+  vertical-align:middle;
+  margin-right:10px;
+}
 
 /* CONTAINER */
 .container{max-width:var(--container);margin:0 auto;padding:0 24px}
@@ -119,18 +131,26 @@ h4{font-size:18px}
   height:var(--header-h);
 }
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--primary)}
+.logo-img{
+  height:54px;
+  width:auto;
+  max-width:240px;
+  object-fit:contain;
+  display:block;
+}
 .logo-mark{
   width:46px;height:46px;
   background:var(--primary);
-  color:var(--accent);
+  color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--serif);font-weight:700;font-size:24px;
-  border-radius:6px;
+  border-radius:4px;
   flex-shrink:0;
+  box-shadow:0 0 0 3px var(--accent);
 }
 .logo-text{display:flex;flex-direction:column;line-height:1.05}
-.logo-name{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--primary)}
-.logo-sub{font-size:10.5px;color:var(--text-muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:3px}
+.logo-name{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--primary)}
+.logo-sub{font-size:10px;color:var(--accent);letter-spacing:1.8px;text-transform:uppercase;margin-top:3px;font-weight:600}
 
 /* NAV */
 .main-nav{display:flex;gap:2px;align-items:center}
@@ -200,8 +220,16 @@ h4{font-size:18px}
   border:0;
   transition:.15s;
 }
-.btn-cta:hover{background:var(--primary-light);color:#fff !important;transform:translateY(-1px);box-shadow:var(--shadow)}
-.btn-cta.gold{background:var(--accent);color:var(--primary) !important}
+.btn-cta:hover{background:var(--primary-dark);color:#fff !important;transform:translateY(-1px);box-shadow:var(--shadow)}
+/* Kırmızı CTA — logo ile uyumlu, dikkat çekici */
+.btn-cta.btn-cta-red,
+.btn-cta-red{
+  background:var(--accent);
+  color:#fff !important;
+}
+.btn-cta-red:hover{background:var(--accent-dark);color:#fff !important;transform:translateY(-1px);box-shadow:0 8px 18px rgba(200,16,46,.25)}
+/* Geri uyumluluk — eski .gold class'ı şimdi kırmızı davranır */
+.btn-cta.gold{background:var(--accent);color:#fff !important}
 .btn-cta.gold:hover{background:var(--accent-dark);color:#fff !important}
 
 .mobile-toggle{display:none;background:none;border:0;color:var(--primary);font-size:22px;padding:8px;cursor:pointer}
@@ -383,11 +411,13 @@ h4{font-size:18px}
 .breadcrumb-sep{color:#475569}
 
 /* SECTIONS */
-section{padding:80px 0}
-section.compact{padding:55px 0}
-.section-head{text-align:center;max-width:720px;margin:0 auto 50px}
+section{padding:64px 0}
+section.compact{padding:44px 0}
+section.bg-alt{background:var(--bg-section)}
+.section-head{text-align:center;max-width:680px;margin:0 auto 40px}
 .section-head .kicker{justify-content:center}
-.section-head p{font-size:16px;color:var(--text-muted);margin-top:10px}
+.section-head h2{margin-bottom:8px}
+.section-head p{font-size:15px;color:var(--text-muted);margin-top:8px;line-height:1.65}
 
 /* CARDS */
 .grid{display:grid;gap:24px}
@@ -429,61 +459,63 @@ section.compact{padding:55px 0}
   position:relative;
   background:#fff;
   border:1px solid var(--border);
-  border-radius:var(--r-lg);
-  padding:32px 28px;
+  border-radius:var(--r);
+  padding:0 0 24px;
   transition:.22s;
   display:flex;flex-direction:column;
-  gap:14px;
+  gap:0;
   text-decoration:none;
   color:var(--text);
   overflow:hidden;
 }
-.cat-card::before{
-  content:'';
-  position:absolute;left:0;top:0;
-  width:4px;height:100%;
-  background:var(--accent);
-  transform:scaleY(0);
-  transform-origin:bottom;
-  transition:.25s;
-}
 .cat-card:hover{
-  transform:translateY(-4px);
-  box-shadow:var(--shadow-lg);
-  border-color:var(--accent);
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(15,32,80,.1);
+  border-color:var(--primary-light);
 }
-.cat-card:hover::before{transform:scaleY(1);transform-origin:top}
 .cat-icon{
   width:54px;height:54px;
   background:var(--primary);
-  color:var(--accent);
+  color:#fff;
   display:flex;align-items:center;justify-content:center;
   border-radius:var(--r);
-  font-size:24px;
+  font-size:22px;
+  font-weight:700;
+  margin:24px 24px 14px;
 }
-.cat-card h3{font-size:22px;margin:0;color:var(--primary)}
-.cat-card p{color:var(--text-muted);font-size:14.5px;margin:0;line-height:1.6}
+.cat-card h3{font-size:18px;margin:14px 24px 6px;color:var(--primary);font-weight:700}
+.cat-card p{color:var(--text-muted);font-size:14px;margin:0 24px;line-height:1.6}
 .cat-card-link{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:13px;font-weight:600;color:var(--accent-dark);
-  text-transform:uppercase;letter-spacing:1px;
-  margin-top:auto;
+  font-size:12.5px;font-weight:600;color:var(--accent);
+  text-transform:uppercase;letter-spacing:1.2px;
+  margin:14px 24px 0;
+  padding-top:14px;
+  border-top:1px solid var(--border);
 }
+.cat-card:hover .cat-card-link{color:var(--accent-dark)}
 .cat-thumb{
   width:100%;
-  height:180px;
-  border-radius:var(--r);
+  height:200px;
   overflow:hidden;
   background:var(--bg-alt);
-  margin-bottom:6px;
+  margin:0;
+  position:relative;
+}
+.cat-thumb::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 60%,rgba(30,74,158,.2) 100%);
+  pointer-events:none;
 }
 .cat-thumb img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:transform .35s ease;
+  transition:transform .4s ease;
 }
-.cat-card:hover .cat-thumb img{transform:scale(1.06)}
+.cat-card:hover .cat-thumb img{transform:scale(1.05)}
 
 /* SERVICE CARDS */
 .svc-card{
@@ -781,7 +813,7 @@ section.compact{padding:55px 0}
   text-decoration:none;
 }
 .btn:hover{background:var(--primary-light);transform:translateY(-1px);box-shadow:var(--shadow)}
-.btn-gold{background:var(--accent);color:var(--primary) !important}
+.btn-gold{background:var(--accent);color:#fff !important}
 .btn-gold:hover{background:var(--accent-dark);color:#fff !important}
 .btn-outline{background:transparent;color:var(--primary) !important;border:2px solid var(--primary)}
 .btn-outline:hover{background:var(--primary);color:#fff !important}

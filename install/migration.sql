@@ -1,6 +1,6 @@
 -- =====================================================
--- Tekcan Metal CMS — Migration v1.0.4
--- Mavi tema + slider yenileme
+-- Tekcan Metal CMS — Migration v1.0.5
+-- Logo renkleri (kırmızı + lacivert) + slider yenileme
 -- =====================================================
 
 -- Slider görsellerini yeni adlarla güncelle
@@ -31,10 +31,11 @@ UPDATE tm_sliders
        link_url = 'iletisim.php'
  WHERE sort_order = 3;
 
--- Tema renk ayarlarını mavi paletine geçir
-UPDATE tm_settings SET setting_value = '#236ace'  WHERE setting_key = 'theme_primary';
-UPDATE tm_settings SET setting_value = '#1a4ea0'  WHERE setting_key = 'theme_accent';
+-- Tema renk ayarlarını logo paletine geçir (lacivert + kırmızı)
+UPDATE tm_settings SET setting_value = '#1e4a9e'  WHERE setting_key = 'theme_primary';
+UPDATE tm_settings SET setting_value = '#c8102e'  WHERE setting_key = 'theme_accent';
 
--- Logo ve favicon path'lerinin doğru olduğundan emin ol
-UPDATE tm_settings SET setting_value = 'assets/img/logo.png'    WHERE setting_key = 'logo'         AND setting_value LIKE '%.svg';
-UPDATE tm_settings SET setting_value = 'assets/img/favicon.jpg' WHERE setting_key = 'favicon'      AND setting_value LIKE '%.png';
+-- Logo ve favicon path'lerini gerçek dosyalara zorla yönlendir
+UPDATE tm_settings SET setting_value = 'assets/img/logo.png'    WHERE setting_key = 'logo';
+UPDATE tm_settings SET setting_value = 'assets/img/favicon.jpg' WHERE setting_key = 'favicon';
+
