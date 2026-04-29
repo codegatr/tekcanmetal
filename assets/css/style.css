@@ -1713,37 +1713,463 @@ section.bg-alt{background:var(--bg-section)}
 .offcanvas-nav a.child{padding-left:38px;font-size:14px;color:var(--text-muted)}
 .offcanvas-nav a:hover,.offcanvas-nav a.active{background:var(--bg-alt);color:var(--accent-dark)}
 
-/* WEIGHT CALCULATOR */
-.calc-wrap{
+/* ════════════════════════════════════════════════════
+   AĞIRLIK HESAPLAMA — KAPSAMLI VERSİYON
+   ════════════════════════════════════════════════════ */
+
+/* TOOLBAR — Üst kontrol çubuğu (yoğunluk + yazdır) */
+.calc-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  padding:20px 24px;
   background:#fff;
   border:1px solid var(--border);
-  border-radius:var(--r-lg);
-  padding:32px;
-  box-shadow:var(--shadow);
-  max-width:780px;margin:0 auto;
+  margin-bottom:30px;
+  flex-wrap:wrap;
 }
-.calc-tabs{display:flex;gap:6px;margin-bottom:26px;flex-wrap:wrap;border-bottom:2px solid var(--border);padding-bottom:0}
-.calc-tab{
+.calc-density-block{
+  display:flex;
+  gap:14px;
+  align-items:flex-end;
+  flex:1;
+  min-width:280px;
+}
+.calc-density-block label{
+  display:flex;flex-direction:column;gap:6px;
+  flex:1;
+}
+.calc-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.calc-select,.calc-select-full{
+  font-family:inherit;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text);
+  padding:10px 14px;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  border-radius:0;
+  cursor:pointer;
+  transition:.18s;
+  width:100%;
+}
+.calc-select:focus,.calc-select-full:focus{outline:0;border-color:var(--accent);background:#fff}
+.calc-select-full{font-weight:500}
+.calc-input{
+  font-family:inherit;
+  font-size:14px;
+  padding:10px 14px;
+  background:#fff;
+  border:1px solid var(--border);
+  width:130px;
+}
+.calc-input:focus{outline:0;border-color:var(--accent)}
+.calc-custom-density{margin-top:18px}
+
+.calc-print-actions{display:flex;gap:8px;flex-shrink:0}
+.calc-btn-ghost{
   padding:10px 16px;
-  background:none;border:0;
-  font:inherit;font-size:14px;font-weight:600;
+  background:transparent;
+  border:1px solid var(--border);
+  font-size:12.5px;font-weight:600;
+  letter-spacing:.5px;
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:.18s;
+  font-family:inherit;
+}
+.calc-btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.calc-btn-sm{padding:6px 10px;font-size:11.5px}
+
+/* TABS — Ürün kategori sekmeleri */
+.calc-tabs{
+  display:flex;
+  gap:0;
+  margin-bottom:0;
+  flex-wrap:wrap;
+  border-bottom:2px solid var(--border);
+  background:#fff;
+  border:1px solid var(--border);
+  border-bottom-width:2px;
+  border-bottom-color:var(--border);
+}
+.calc-tab{
+  padding:14px 16px;
+  background:transparent;border:0;
+  font:inherit;
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.3px;
   color:var(--text-muted);
   cursor:pointer;
   border-bottom:3px solid transparent;
   margin-bottom:-2px;
-  transition:.15s;
+  transition:.18s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
 }
-.calc-tab.active{color:var(--primary);border-color:var(--accent)}
-.calc-result{
-  margin-top:24px;
-  background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  color:#fff;
-  padding:24px;
-  border-radius:var(--r);
+.calc-tab .ico{
+  font-size:14px;
+  font-weight:700;
+  color:var(--accent);
+  min-width:18px;
   text-align:center;
 }
-.calc-result-num{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--accent);line-height:1;margin-bottom:6px}
-.calc-result-label{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#cbd5e1}
+.calc-tab:hover{color:var(--primary);background:var(--bg-alt)}
+.calc-tab.active{
+  color:var(--primary);
+  border-color:var(--accent);
+  background:#fff;
+}
+.calc-tab.active .ico{color:var(--accent)}
+
+/* BODY — Tab içeriği container */
+.calc-body{
+  background:#fff;
+  border:1px solid var(--border);
+  border-top:0;
+  padding:36px 32px;
+  margin-bottom:24px;
+}
+
+.calc-pane{display:none;animation:fadePane .25s ease}
+.calc-pane.active{display:block}
+@keyframes fadePane{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.calc-pane-head{margin-bottom:24px;padding-bottom:18px;border-bottom:1px dashed var(--border)}
+.calc-pane-head h3{
+  font-size:20px;
+  font-weight:600;
+  color:var(--primary);
+  margin:0 0 8px;
+  letter-spacing:-.2px;
+}
+.calc-pane-head p{
+  font-size:13.5px;
+  color:var(--text-muted);
+  margin:0;
+  line-height:1.65;
+}
+.calc-pane-head strong{color:var(--accent);font-weight:600}
+
+/* GRID — Form alanları */
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+  margin-bottom:18px;
+}
+.calc-grid label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.calc-grid input{
+  font-family:inherit;
+  font-size:16px;
+  font-weight:600;
+  color:var(--text);
+  padding:14px 16px;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  border-radius:0;
+  transition:.18s;
+  letter-spacing:0;
+  text-transform:none;
+}
+.calc-grid input:focus{outline:0;border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(200,16,46,.08)}
+.calc-grid select{
+  font-family:inherit;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text);
+  padding:14px 16px;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  border-radius:0;
+  cursor:pointer;
+  letter-spacing:0;
+  text-transform:none;
+}
+
+/* PRESETS — Hızlı seçim ölçü butonları */
+.calc-presets{
+  margin:24px 0 0;
+  padding:18px 0 0;
+  border-top:1px dashed var(--border);
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.preset-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-right:6px;
+}
+.preset-btn{
+  padding:8px 14px;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--primary);
+  cursor:pointer;
+  transition:.18s;
+  font-family:inherit;
+  letter-spacing:0;
+}
+.preset-btn:hover{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+/* NOT — Alt bilgi metni */
+.calc-note{
+  font-size:12.5px;
+  color:var(--text-muted);
+  margin:14px 0 0;
+  padding:12px 14px;
+  background:var(--bg-alt);
+  border-left:3px solid var(--accent);
+  line-height:1.6;
+}
+
+/* ACTIONS — Hesapla / Listeye Ekle butonları */
+.calc-actions{
+  display:flex;
+  gap:12px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+.btn-calc-primary{
+  flex:1;
+  min-width:200px;
+  padding:18px 36px;
+  background:var(--primary);
+  color:#fff;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  border:0;
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-calc-primary:hover{
+  background:var(--primary-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(30,74,158,.25);
+}
+.btn-calc-secondary{
+  padding:18px 28px;
+  background:#fff;
+  color:var(--accent);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  border:2px solid var(--accent);
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-calc-secondary:hover{
+  background:var(--accent);
+  color:#fff;
+}
+.btn-calc-ghost{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 24px;
+  background:transparent;
+  color:var(--primary);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-decoration:none;
+  border:1px solid var(--border);
+  transition:.2s;
+}
+.btn-calc-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* RESULT CARD — Sonuç kartı */
+.calc-result-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-top:4px solid var(--accent);
+  padding:32px;
+  margin-bottom:24px;
+  position:relative;
+}
+.calc-result-head{
+  margin-bottom:24px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--border);
+}
+.calc-result-head .kicker{margin-bottom:6px}
+.calc-result-head h3{
+  font-size:22px;
+  font-weight:600;
+  color:var(--primary);
+  margin:0;
+  letter-spacing:-.2px;
+}
+
+.calc-result-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  margin-bottom:20px;
+}
+.calc-result-item{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:18px 22px;
+  border-right:1px solid var(--border);
+}
+.calc-result-item:last-child{border-right:0}
+.calc-result-item:first-child{padding-left:0}
+.calc-result-item .lbl{
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.calc-result-item strong{
+  font-size:24px;
+  font-weight:700;
+  color:var(--primary);
+  letter-spacing:-.5px;
+  font-feature-settings:"tnum";
+}
+.calc-result-item.highlight strong{color:var(--accent);font-size:32px}
+
+.calc-cta-row{
+  display:flex;
+  gap:12px;
+  margin-top:18px;
+  flex-wrap:wrap;
+}
+.calc-cta-row .btn-cta-red{
+  flex:1;min-width:240px;
+  padding:14px 22px;
+  background:var(--accent);
+  color:#fff !important;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  text-decoration:none;
+  text-align:center;
+  border:0;
+  transition:.2s;
+}
+.calc-cta-row .btn-cta-red:hover{
+  background:var(--accent-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(200,16,46,.25);
+}
+
+/* LIST CARD — Çoklu kalem listesi */
+.calc-list-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-top:4px solid var(--primary);
+  padding:32px;
+  margin-bottom:24px;
+}
+.calc-list-table-wrap{overflow-x:auto}
+.calc-list-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.calc-list-table thead th{
+  text-align:left;
+  padding:12px 14px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  border-bottom:2px solid var(--border);
+  background:var(--bg-alt);
+}
+.calc-list-table tbody td{
+  padding:14px;
+  border-bottom:1px solid var(--border);
+  color:var(--text);
+}
+.calc-list-table tbody tr:hover{background:var(--bg-alt)}
+.calc-list-table tfoot td{
+  padding:18px 14px;
+  font-size:14px;
+  font-weight:700;
+  background:var(--primary);
+  color:#fff;
+  border:0;
+}
+.calc-list-table tfoot td:nth-child(5){color:#fff;font-size:18px}
+
+/* PRINT — Yazdırma stilleri */
+@media print{
+  body{background:#fff;padding:0}
+  .site-header,.topbar,.site-footer,.mobile-bottomnav,
+  .calc-toolbar,.calc-tabs,.calc-actions,
+  .calc-cta-row,#calcReset,#calcPrint,#addToList,
+  .calc-pane:not(.active){display:none !important}
+  .calc-result-card,.calc-list-card{
+    page-break-inside:avoid;
+    border:1px solid #000;
+    box-shadow:none;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .calc-result-grid{grid-template-columns:repeat(2,1fr)}
+  .calc-result-item{padding:14px;border-right:0;border-bottom:1px solid var(--border)}
+  .calc-result-item:nth-child(odd){border-right:1px solid var(--border)}
+  .calc-result-item:nth-last-child(-n+2){border-bottom:0}
+}
+@media (max-width:640px){
+  .calc-toolbar{flex-direction:column;align-items:stretch}
+  .calc-density-block{flex-direction:column;align-items:stretch}
+  .calc-print-actions{justify-content:flex-end}
+  .calc-tab{padding:11px 12px;font-size:11.5px}
+  .calc-tab .ico{display:none}
+  .calc-body{padding:24px 18px}
+  .calc-result-card,.calc-list-card{padding:22px 18px}
+  .calc-result-item.highlight strong{font-size:24px}
+  .calc-result-grid{grid-template-columns:1fr}
+  .calc-result-item{border-right:0 !important;border-bottom:1px solid var(--border)}
+  .calc-result-item:last-child{border-bottom:0}
+}
 
 /* CHIPS */
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
