@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a2b4a"/>
+      <stop offset="100%" stop-color="#2d4a7a"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a961"/>
+      <stop offset="100%" stop-color="#a88838"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Mark -->
+  <g transform="translate(8,12)">
+    <rect width="56" height="56" rx="6" fill="url(#g1)"/>
+    <path d="M14 18 H42 V24 H30 V44 H26 V24 H14 Z" fill="#fff"/>
+    <rect x="14" y="46" width="28" height="3" fill="url(#g2)"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(76,32)" font-family="'Cormorant Garamond', Georgia, serif" fill="#1a2b4a">
+    <text x="0" y="0" font-size="22" font-weight="700" letter-spacing="2">TEKCAN</text>
+    <text x="0" y="22" font-size="12" font-weight="500" letter-spacing="6" fill="#5a6a85">METAL</text>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+# API endpoint'leri — yalnızca .php
+<FilesMatch "\.(sql|log|bak|inc|env)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

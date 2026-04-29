@@ -1,0 +1,11 @@
+# Yedek dosyaları — index ve listeleme yasak,
+# admin panelden indirilebilmesi için zip izinli
+Options -Indexes
+
+<FilesMatch "\.(php|html|htm)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.zip$">
+    Require all granted
+</FilesMatch>

@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /install/
+Disallow: /includes/
+Disallow: /api/
+Disallow: /yedek/
+Disallow: /uploads/cache/
+Disallow: /*?s=
+Disallow: /*?action=
+Disallow: /404.php
+Disallow: /sayfa.php?slug=
+
+# Sitemap
+Sitemap: https://tekcanmetal.com/sitemap.xml
+
+# Crawl-delay (saygılı tarama)
+Crawl-delay: 1

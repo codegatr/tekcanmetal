@@ -1,0 +1,12 @@
+{
+  "name": "Tekcan Metal CMS",
+  "slug": "tekcanmetal",
+  "version": "1.0.0",
+  "release_date": "2026-04-29",
+  "php_required": "8.1",
+  "repo": "codegatr/tekcanmetal",
+  "vendor": "Codega",
+  "vendor_url": "https://codega.com.tr",
+  "description": "Tekcan Metal Sanayi ve Ticaret Ltd. Şti. — PHP 8.3 + MySQL kurumsal web sitesi. Demir, çelik, sac, boru, profil ürün katalogu ve B2B kurumsal CMS.",
+  "site_url": "https://v2.tekcanmetal.com"
+}

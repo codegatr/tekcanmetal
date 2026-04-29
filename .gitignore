@@ -1,0 +1,48 @@
+# Tekcan Metal CMS — .gitignore
+
+# Kurulum sonrası oluşan
+config.php
+
+# Yüklenen kullanıcı dosyaları (klasör yapısı kalsın)
+uploads/*
+!uploads/.gitkeep
+!uploads/products/.gitkeep
+!uploads/gallery/.gitkeep
+!uploads/blog/.gitkeep
+!uploads/team/.gitkeep
+!uploads/partners/.gitkeep
+!uploads/sliders/.gitkeep
+!uploads/.htaccess
+
+# Yedek arşivler
+yedek/*
+!yedek/.gitkeep
+!yedek/.htaccess
+
+# Migration dosyaları (sürüm bazında)
+install/migration.sql
+
+# Sistem
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Geçici
+/tmp/
+*.tmp
+
+# Sertifikalar / sırlar
+.env
+.env.local
+*.pem
+*.key

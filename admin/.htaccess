@@ -1,0 +1,15 @@
+# Admin paneli — herkesle aynı PHP, ek koruma
+<FilesMatch "^_">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|ttf)$">
+    Require all granted
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+    Header set X-Frame-Options "DENY"
+</IfModule>
+
+Options -Indexes

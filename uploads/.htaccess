@@ -1,0 +1,18 @@
+# Uploads — PHP / script çalıştırmayı engelle
+<FilesMatch "\.(php|php3|php4|php5|php7|phtml|pl|py|jsp|asp|aspx|sh|cgi|htaccess)$">
+    Require all denied
+</FilesMatch>
+
+# Yalnızca görsel ve doküman uzantılarına izin
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|pdf|webm|mp4)$">
+    Require all granted
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+RemoveHandler .php .php3 .php4 .php5 .php7 .phtml
+RemoveType .php .php3 .php4 .php5 .php7 .phtml
+AddType text/plain .php
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
