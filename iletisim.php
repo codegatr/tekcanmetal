@@ -58,37 +58,57 @@ require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header">
   <div class="container">
-    <nav class="breadcrumb"><a href="<?= h(url('')) ?>">Anasayfa</a> <span>›</span> <span>İletişim</span></nav>
-    <h1>İletişim</h1>
-    <p class="lead">Sorularınız, talepleriniz ve teklifleriniz için bize ulaşın.</p>
+    <nav class="breadcrumb">
+      <a href="<?= h(url('')) ?>">Anasayfa</a>
+      <span>›</span>
+      <span>İletişim</span>
+    </nav>
+    <h1>Bize Ulaşın</h1>
+    <p class="lead">Sorularınız, ürün talepleriniz ve özel proje teklifleriniz için satış ekibimizle iletişime geçin. En kısa sürede dönüş yapıyoruz.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
     <div class="contact-grid">
+
+      <!-- SOL: İletişim bilgileri -->
       <div class="contact-info">
         <div class="ci-block">
-          <h3>📍 Adresimiz</h3>
+          <h3>Adres</h3>
           <p><?= nl2br(h(settings('contact_address', 'Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS — Karatay/Konya'))) ?></p>
         </div>
         <div class="ci-block">
-          <h3>📞 Telefon</h3>
-          <p><a href="<?= h(phone_link(settings('contact_phone', '03323422452'))) ?>"><?= h(format_phone(settings('contact_phone', '03323422452'))) ?></a></p>
-          <p><a href="<?= h(phone_link(settings('contact_whatsapp', '05548350226'))) ?>"><?= h(format_phone(settings('contact_whatsapp', '05548350226'))) ?> (WhatsApp)</a></p>
+          <h3>Telefon</h3>
+          <p>
+            <a href="<?= h(phone_link(settings('contact_phone', '03323422452'))) ?>"><?= h(format_phone(settings('contact_phone', '03323422452'))) ?></a>
+          </p>
+          <p>
+            <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba')) ?>" target="_blank" rel="noopener">
+              <?= h(format_phone(settings('site_whatsapp', '905320652400'))) ?> · WhatsApp
+            </a>
+          </p>
         </div>
         <div class="ci-block">
-          <h3>✉ E-posta</h3>
+          <h3>E-Posta</h3>
           <p><a href="mailto:<?= h(settings('contact_email', 'info@tekcanmetal.com')) ?>"><?= h(settings('contact_email', 'info@tekcanmetal.com')) ?></a></p>
         </div>
         <div class="ci-block">
-          <h3>🕐 Çalışma Saatleri</h3>
-          <p><?= nl2br(h(settings('contact_hours', "Pzt–Cuma: 08:30 — 18:30\nCumartesi: 08:30 — 17:00\nPazar: Kapalı"))) ?></p>
+          <h3>Çalışma Saatleri</h3>
+          <p><?= nl2br(h(settings('contact_hours', "Pazartesi – Cumartesi: 08:00 – 18:00\nPazar: Kapalı"))) ?></p>
         </div>
       </div>
 
+      <!-- SAĞ: İletişim formu -->
       <div class="contact-form-wrap">
-        <h3>Bize Yazın</h3>
+        <h3>Mesaj Gönderin</h3>
+
+        <?php if ($sent): ?>
+          <div class="alert alert-success">
+            <strong>Mesajınız iletildi.</strong> Satış ekibimiz en kısa sürede sizinle iletişime geçecek. Teşekkür ederiz.
+          </div>
+        <?php endif; ?>
+
         <?php if ($errors): ?>
           <div class="alert alert-error">
             <ul style="margin:0;padding-left:20px;"><?php foreach ($errors as $e): ?><li><?= h($e) ?></li><?php endforeach; ?></ul>
@@ -100,34 +120,47 @@ require __DIR__ . '/includes/header.php';
           <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
 
           <div class="row-2">
-            <label>Ad Soyad *<input type="text" name="full_name" value="<?= h($old['full_name']) ?>" required></label>
-            <label>E-posta *<input type="email" name="email" value="<?= h($old['email']) ?>" required></label>
+            <label>Ad Soyad <span style="color:var(--accent)">*</span>
+              <input type="text" name="full_name" value="<?= h($old['full_name']) ?>" required>
+            </label>
+            <label>E-posta <span style="color:var(--accent)">*</span>
+              <input type="email" name="email" value="<?= h($old['email']) ?>" required>
+            </label>
           </div>
           <div class="row-2">
-            <label>Telefon<input type="tel" name="phone" value="<?= h($old['phone']) ?>"></label>
-            <label>Konu<input type="text" name="subject" value="<?= h($old['subject']) ?>"></label>
+            <label>Telefon
+              <input type="tel" name="phone" value="<?= h($old['phone']) ?>" placeholder="0 5xx xxx xx xx">
+            </label>
+            <label>Konu
+              <input type="text" name="subject" value="<?= h($old['subject']) ?>" placeholder="Teklif talebi, ürün sorgusu, vb.">
+            </label>
           </div>
-          <label>Mesajınız *<textarea name="message" rows="6" required><?= h($old['message']) ?></textarea></label>
+          <label>Mesajınız <span style="color:var(--accent)">*</span>
+            <textarea name="message" rows="6" required placeholder="Talebinizin detaylarını yazınız..."><?= h($old['message']) ?></textarea>
+          </label>
 
           <label class="checkbox">
             <input type="checkbox" name="kvkk" value="1" required>
-            <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum, verilerimin işlenmesine onay veriyorum.</span>
+            <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum, kişisel verilerimin işlenmesine onay veriyorum.</span>
           </label>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-block">Mesajı Gönder</button>
+          <button type="submit" class="btn-primary btn-block btn-lg">Mesajı Gönder →</button>
         </form>
       </div>
     </div>
+  </div>
+</section>
 
+<!-- Harita -->
+<section class="section bg-alt" style="padding-top:0;padding-bottom:0">
+  <div class="container" style="padding:0">
     <?php $mapEmbed = settings('contact_map_embed'); if ($mapEmbed): ?>
-    <div class="contact-map">
-      <?= $mapEmbed ?>
-    </div>
+      <div class="contact-map" style="margin:0"><?= $mapEmbed ?></div>
     <?php else: ?>
-    <div class="contact-map">
-      <iframe src="https://www.google.com/maps?q=<?= urlencode(settings('contact_address', 'Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS Karatay Konya')) ?>&output=embed"
-              width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+      <div class="contact-map" style="margin:0">
+        <iframe src="https://www.google.com/maps?q=<?= urlencode(settings('contact_address', 'Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS Karatay Konya')) ?>&output=embed"
+                width="100%" height="420" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     <?php endif; ?>
   </div>
 </section>

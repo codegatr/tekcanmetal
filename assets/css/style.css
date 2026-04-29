@@ -740,30 +740,60 @@ h4{font-size:17px}
 .hero h1 em{color:#fff;font-style:normal;background:rgba(255,255,255,.18);padding:0 6px;border-radius:4px}
 .hero p{font-size:18px;line-height:1.7;color:rgba(255,255,255,.9);margin-bottom:32px;max-width:640px}
 
-/* PAGE HEADER (alt sayfalar) */
+/* PAGE HEADER (alt sayfalar — Limak tarzı kurumsal hero) */
 .page-header{
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  background:linear-gradient(135deg, #050d24 0%, #0c1e44 50%, #143672 100%);
   color:#fff;
-  padding:60px 0 50px;
+  padding:90px 0 70px;
   position:relative;
+  overflow:hidden;
+}
+.page-header::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:120%;height:140%;
+  background:radial-gradient(ellipse 50% 60% at 50% 50%, rgba(74,139,214,.18) 0%, transparent 65%);
+  pointer-events:none;
 }
 .page-header::after{
   content:'';
   position:absolute;
   left:0;bottom:0;
-  width:100%;height:4px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  width:100%;height:3px;
+  background:var(--accent);
 }
-.page-header h1{color:#fff;margin-bottom:8px}
-.page-header p{color:#cbd5e1;font-size:16px;margin:0}
+.page-header > .container{position:relative;z-index:1}
+.page-header h1{
+  color:#fff !important;
+  font-size:clamp(32px,3.6vw,46px);
+  font-weight:300;
+  letter-spacing:-.5px;
+  line-height:1.15;
+  margin:0 0 14px;
+}
+.page-header .lead,
+.page-header p{
+  color:rgba(255,255,255,.78);
+  font-size:16px;
+  margin:0;
+  font-weight:400;
+  max-width:680px;
+  line-height:1.65;
+}
 .breadcrumb{
-  display:flex;gap:8px;align-items:center;
-  font-size:13px;color:#94a3b8;
-  margin-bottom:18px;
+  display:flex;gap:10px;align-items:center;
+  font-size:12px;color:rgba(255,255,255,.55);
+  margin-bottom:24px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  font-weight:600;
 }
-.breadcrumb a{color:#cbd5e1}
-.breadcrumb a:hover{color:var(--accent)}
-.breadcrumb-sep{color:#475569}
+.breadcrumb a{color:rgba(255,255,255,.85);text-decoration:none;transition:.18s}
+.breadcrumb a:hover{color:#fff}
+.breadcrumb span{color:rgba(255,255,255,.4)}
+.breadcrumb-sep{color:rgba(255,255,255,.3)}
 
 /* SECTIONS */
 section{padding:64px 0}
@@ -1026,12 +1056,10 @@ section.bg-alt{background:var(--bg-section)}
 .team-meta a{color:var(--text-muted)}
 .team-meta a:hover{color:var(--accent-dark)}
 
-/* PARTNERS */
-.partners-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+/* PARTNERS — anasayfadaki .partner kart stili (alt sayfada .partner-card kullanılır) */
 .partner{
   background:#fff;
   border:1px solid var(--border);
-  border-radius:var(--r);
   padding:28px;
   text-align:center;
   transition:.18s;
@@ -1181,62 +1209,397 @@ section.bg-alt{background:var(--bg-section)}
 .alert-info{background:#dbeafe;color:#1e40af;border-left:3px solid #3b82f6}
 .alert-warning{background:#fef3c7;color:#92400e;border-left:3px solid #f59e0b}
 
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:40px}
-.contact-info{
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;
-  padding:36px;
-  border-radius:var(--r-lg);
-  position:relative;
-  overflow:hidden;
+/* ════════════════════════════════════════════════════
+   ALT SAYFA — KURUMSAL KART/GRID STİLLERİ
+   (İletişim, Galeri, Çözüm Ortakları, vb.)
+   ════════════════════════════════════════════════════ */
+
+/* CONTACT — Limak iç sayfa tarzı */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:48px;
+  align-items:start;
 }
-.contact-info::before{
+
+/* SOL: İletişim bilgi kartları */
+.contact-info{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.ci-block{
+  padding:24px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.ci-block:first-child{padding-top:0}
+.ci-block:last-child{border-bottom:0}
+.ci-block h3{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ci-block h3::before{
+  content:'';
+  display:inline-block;
+  width:24px;height:2px;
+  background:var(--accent);
+}
+.ci-block p{
+  font-size:15.5px;
+  color:var(--text);
+  line-height:1.7;
+  margin:0;
+  font-weight:500;
+}
+.ci-block a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent;transition:.18s}
+.ci-block a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* SAĞ: İletişim formu */
+.contact-form-wrap{
+  background:#fff;
+  border:1px solid var(--border);
+  padding:42px 38px;
+  position:relative;
+}
+.contact-form-wrap::before{
   content:'';
   position:absolute;
-  bottom:-40px;right:-40px;
-  width:180px;height:180px;
-  background:var(--accent);opacity:.08;
-  border-radius:50%;
+  top:0;left:0;
+  width:60px;height:3px;
+  background:var(--accent);
 }
-.contact-info h3{color:#fff;font-size:24px;margin-bottom:10px}
-.contact-info p{color:#cbd5e1;font-size:14.5px;margin-bottom:30px}
-.contact-list{list-style:none;padding:0;margin:0}
-.contact-list li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.contact-list li:last-child{border:0}
-.contact-list .ic{
-  width:40px;height:40px;flex-shrink:0;
-  background:rgba(201,169,97,.15);
-  color:var(--accent);
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;
+.contact-form-wrap h3{
+  font-size:22px;
+  font-weight:600;
+  color:var(--primary);
+  margin:0 0 26px;
+  letter-spacing:-.2px;
 }
-.contact-list strong{color:#fff;display:block;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px}
-.contact-list a{color:#fff}
-.contact-list a:hover{color:var(--accent)}
+.contact-form{display:flex;flex-direction:column;gap:18px}
+.contact-form .row-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.contact-form label{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.contact-form label.checkbox{
+  flex-direction:row;
+  align-items:flex-start;
+  gap:10px;
+  font-size:13px;
+  color:var(--text-muted);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  line-height:1.55;
+  margin-top:4px;
+}
+.contact-form label.checkbox input{
+  margin-top:3px;
+  width:16px;height:16px;
+  accent-color:var(--accent);
+}
+.contact-form label.checkbox a{color:var(--primary);text-decoration:underline}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea{
+  font-family:inherit;
+  font-size:15px;
+  font-weight:400;
+  color:var(--text);
+  letter-spacing:0;
+  text-transform:none;
+  padding:14px 16px;
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  border-radius:0;
+  transition:.18s;
+  width:100%;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline:0;
+  border-color:var(--accent);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(200,16,46,.08);
+}
+.contact-form textarea{resize:vertical;min-height:140px;line-height:1.6}
+.contact-form .btn-primary{
+  background:var(--accent);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:16px 30px;
+  border:0;
+  cursor:pointer;
+  transition:.2s;
+  margin-top:6px;
+}
+.contact-form .btn-primary:hover{
+  background:var(--accent-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(200,16,46,.2);
+}
+.contact-form .btn-block{width:100%}
+.contact-form .btn-lg{padding:18px 30px}
+.alert{
+  padding:14px 18px;
+  border-radius:0;
+  margin:0 0 18px;
+  font-size:14px;
+  border-left:3px solid;
+}
+.alert-error{background:#fef2f2;border-color:var(--danger);color:#7f1d1d}
+.alert-success{background:#ecfdf5;border-color:var(--success);color:#064e3b}
 
-/* GALLERY */
+/* Harita */
+.contact-map{
+  margin-top:50px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  position:relative;
+}
+.contact-map iframe{display:block;width:100%;border:0}
+
+/* GALERİ — Limak proje grid tarzı */
+.album-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.album-card{
+  position:relative;
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  background:#fff;
+  overflow:hidden;
+  transition:.3s;
+  border:1px solid var(--border);
+}
+.album-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(15,32,80,.1);
+}
+.album-cover{
+  width:100%;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--bg-alt);
+  position:relative;
+}
+.album-cover img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .55s ease;
+}
+.album-card:hover .album-cover img{transform:scale(1.06)}
+.album-cover::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 50%, rgba(15,32,80,.55) 100%);
+  pointer-events:none;
+}
+.album-placeholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;height:100%;
+  background:linear-gradient(135deg, var(--bg-alt), var(--border));
+  color:var(--text-dim);
+  font-size:42px;
+}
+.album-body{
+  padding:22px 22px 26px;
+  border-top:3px solid transparent;
+  transition:.25s;
+}
+.album-card:hover .album-body{border-top-color:var(--accent)}
+.album-body h3{
+  font-size:17px;
+  font-weight:600;
+  color:var(--primary);
+  margin:0 0 8px;
+  letter-spacing:-.1px;
+}
+.album-body .album-meta{
+  font-size:12px;
+  color:var(--text-muted);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  font-weight:600;
+}
+.album-body p{
+  font-size:14px;
+  color:var(--text-muted);
+  margin:8px 0 0;
+  line-height:1.6;
+}
+
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .gallery-item{
   position:relative;
   aspect-ratio:4/3;
-  border-radius:var(--r);
   overflow:hidden;
   background:var(--bg-alt);
   cursor:pointer;
 }
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:.3s}
-.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.gallery-item:hover img{transform:scale(1.08)}
 .gallery-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(15,23,42,.85) 0%,transparent 60%);
+  background:linear-gradient(to top,rgba(15,32,80,.9) 0%,transparent 60%);
   display:flex;align-items:flex-end;
   padding:18px;
-  opacity:0;transition:.2s;color:#fff;
+  opacity:0;transition:.25s;color:#fff;
   font-weight:600;font-size:14px;
 }
 .gallery-item:hover .gallery-overlay{opacity:1}
+
+/* ÇÖZÜM ORTAKLARI — Kurumsal kart grid */
+.partners-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.partner-card{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:18px;
+  padding:36px 32px;
+  background:#fff;
+  border:1px solid var(--border);
+  text-decoration:none;
+  color:inherit;
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
+}
+.partner-card::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;
+  width:100%;height:3px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s;
+}
+.partner-card:hover{border-color:var(--border-strong);transform:translateY(-3px);box-shadow:0 14px 32px rgba(15,32,80,.08)}
+.partner-card:hover::before{transform:scaleX(1)}
+.partner-card .partner-logo{
+  height:80px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  margin:0;
+  padding:0;
+}
+.partner-card .partner-logo img{
+  max-height:80px;
+  max-width:200px;
+  object-fit:contain;
+  filter:grayscale(30%);
+  transition:filter .25s;
+}
+.partner-card:hover .partner-logo img{filter:grayscale(0%)}
+.partner-initial{
+  width:64px;height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--primary);
+  color:#fff;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+.partner-card h3,
+.partner-card .partner-name{
+  font-size:18px;
+  font-weight:700;
+  color:var(--primary);
+  margin:0;
+  letter-spacing:-.1px;
+}
+.partner-card p,
+.partner-card .partner-desc{
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.6;
+  margin:0;
+}
+.partner-link{
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-top:auto;
+  padding-top:8px;
+}
+
+/* Empty state */
+.empty-state{
+  text-align:center;
+  padding:80px 24px;
+  color:var(--text-muted);
+  font-size:15px;
+  background:var(--bg-alt);
+  border:1px dashed var(--border);
+}
+
+/* SECTION variant kompakt iç sayfa için */
+.section{padding:80px 0}
+.section.bg-alt{background:var(--bg-section)}
+
+/* CONTENT PROSE (hakkımızda vb içerik metni) */
+.content-prose{
+  max-width:780px;
+  font-size:16px;
+  line-height:1.85;
+  color:var(--text);
+}
+.content-prose p{margin:0 0 1.4em}
+.content-prose h2{
+  font-size:26px;
+  font-weight:600;
+  color:var(--primary);
+  margin:2em 0 .8em;
+  letter-spacing:-.2px;
+}
+.content-prose h3{
+  font-size:20px;
+  font-weight:600;
+  color:var(--primary);
+  margin:1.6em 0 .6em;
+}
 
 /* FOOTER */
 .site-footer{
@@ -2000,9 +2363,9 @@ section.bg-alt{background:var(--bg-section)}
   margin:0 0 18px;
 }
 
-/* PARTNERS (Çözüm Ortakları) */
+/* PARTNERS (Çözüm Ortakları — anasayfa) */
 .partners-section{padding:90px 0}
-.partners-grid{
+.partners-section .partners-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:30px;
@@ -2090,11 +2453,15 @@ section.bg-alt{background:var(--bg-section)}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:36px}
   .contact-grid{grid-template-columns:1fr}
   .sector-grid,.cap-grid,.values-grid{grid-template-columns:repeat(2,1fr);gap:30px}
-  .news-grid,.partners-grid{grid-template-columns:repeat(2,1fr)}
+  .news-grid,.partners-section .partners-grid{grid-template-columns:repeat(2,1fr)}
   .stats-strip .stats-grid{grid-template-columns:repeat(3,1fr);gap:36px}
   .intro-grid{grid-template-columns:1fr;gap:30px}
   .cta-banner-inner{grid-template-columns:1fr;gap:30px}
   .cta-banner-actions{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+  .album-grid{grid-template-columns:repeat(2,1fr)}
+  .partners-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-form-wrap{padding:32px 26px}
+  .page-header{padding:70px 0 55px}
 }
 @media (max-width:768px){
   :root{--header-h:72px}
@@ -2131,7 +2498,14 @@ section.bg-alt{background:var(--bg-section)}
   .cta-strip-inner{flex-direction:column;text-align:center}
   .calc-wrap{padding:22px}
   .iban-number{font-size:13px;flex-wrap:wrap;gap:10px}
-  .sector-grid,.cap-grid,.values-grid,.news-grid,.partners-grid{grid-template-columns:1fr;gap:20px}
+  .sector-grid,.cap-grid,.values-grid,.news-grid,.partners-section .partners-grid{grid-template-columns:1fr;gap:20px}
+  .album-grid,.partners-grid{grid-template-columns:1fr;gap:20px}
+  .contact-form-wrap{padding:26px 20px}
+  .contact-form .row-2{grid-template-columns:1fr;gap:14px}
+  .page-header{padding:55px 0 45px}
+  .page-header h1{font-size:28px}
+  .page-header .lead,.page-header p{font-size:14.5px}
+  .ci-block{padding:20px 0}
   .stats-strip .stats-grid{grid-template-columns:repeat(2,1fr);gap:30px}
   .stat-num{font-size:32px}
   .intro-block,.sector-section,.values-section,.capabilities-section,.news-section{padding:60px 0}
