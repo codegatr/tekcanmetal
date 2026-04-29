@@ -17,21 +17,25 @@ return [
     ['site_email_satis',  'satis@tekcanmetal.com',                     'contact'],
     ['site_phone',        '0 332 342 24 52',                           'contact'],
     ['site_mobile',       '0 554 835 0 226',                           'contact'],
-    ['site_whatsapp',     '905548350226',                              'contact'],
-    ['site_address',      'Fevziçakmak Mah. Gülistan Cad. Atiker 3, 2.Blok No:33 AS',  'contact'],
+    ['site_whatsapp',     '905320652400',                              'contact'],
+    ['site_whatsapp_label','Tekcan Metal - Danışman',                  'contact'],
+    ['site_whatsapp_msg', 'Merhaba. Size nasıl yardımcı olabiliriz?',  'contact'],
+    ['site_address',      'Fevziçakmak Mahallesi Gülistan Cad. Atiker 3, 2.Blok No:33 AS - Karatay - Konya',  'contact'],
     ['site_district',     'Karatay',                                   'contact'],
     ['site_city',         'Konya',                                     'contact'],
     ['site_country',      'Türkiye',                                   'contact'],
     ['site_postcode',     '42050',                                     'contact'],
-    ['site_map_lat',      '37.9089',                                   'contact'],
-    ['site_map_lng',      '32.5524',                                   'contact'],
-    ['site_facebook',     'https://www.facebook.com/tekcanmetal',      'social'],
-    ['site_instagram',    '',                                          'social'],
+    ['site_map_lat',      '37.929244',                                 'contact'],
+    ['site_map_lng',      '32.558043',                                 'contact'],
+    ['site_map_iframe',   '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d336.4753529653593!2d32.55804339610216!3d37.929244534581855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d091b020845759%3A0xbe5849fc4faf9419!2sTekcan%20Metal%20Sanayi%20ve%20Ticaret%20Ltd.%C5%9Eti.!5e1!3m2!1str!2str!4v1679979922426!5m2!1str!2str" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>', 'contact'],
+    ['site_facebook',     '',                                          'social'],
+    ['site_instagram',    'https://www.instagram.com/tekcanmetal',     'social'],
     ['site_linkedin',     '',                                          'social'],
     ['site_youtube',      '',                                          'social'],
     ['site_twitter',      '',                                          'social'],
     ['working_hours',     'Pazartesi–Cumartesi: 08:00 – 18:00',        'general'],
-    ['founded_year',      '2010',                                      'general'],
+    ['founded_year',      '2005',                                      'general'],
+    ['legal_year',        '2017',                                      'general'],
     ['tax_office',        'Selçuk',                                    'general'],
     ['tax_no',            '',                                          'general'],
     ['mersis_no',         '',                                          'general'],
@@ -54,13 +58,20 @@ return [
     ['analytics_code',    '',                                          'seo'],
     ['maintenance_mode',  '0',                                         'system'],
     ['homepage_about_title', 'Birlikte Daha Güçlüyüz',                 'homepage'],
-    ['homepage_about_text',  'Tekcan Metal, 2010 yılından bu yana demir-çelik sektöründe geniş ürün yelpazesi, hızlı sevkiyat ve müşteri odaklı hizmet anlayışıyla Konya başta olmak üzere tüm Türkiye’ye hizmet vermektedir. "Ticaret ile Bitmeyen Dostluk" felsefemizle, müşterilerimizle uzun soluklu iş ortaklıkları kuruyoruz.',  'homepage'],
-    ['stat_year',         '15+',                                       'homepage'],
+    ['homepage_about_text',  'Tekcan Metal, demir-çelik sektöründe üretilen mamul ve yarı mamullerin pazarlama ve dağıtımını yapmak amacıyla 2005 yılında şahıs şirketi olarak kurulmuştur. Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle 2017 yılında şirketleşerek faaliyetlerini kurumsal yapıya taşımıştır. Bugün, Karatay/Konya adresinde faaliyet gösteren Tekcan Metal; yüksek kaliteli hizmet anlayışı, güler yüzlü ticaret yaklaşımı ve müşteri odaklı çözümleri ile sektörde güvenilir bir konum elde etmiştir.',  'homepage'],
+    ['footer_about_text',    'Tekcan Metal, demir-çelik sektöründe üretilen mamul ve yarı mamullerin pazarlama ve dağıtımını yapmak amacıyla 2005 yılında şahıs şirketi olarak kurulmuştur. Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle 2017 yılında şirketleşerek faaliyetlerini kurumsal yapıya taşımıştır.', 'general'],
+    ['footer_keywords_text', 'Yüksek kaliteli boru, profil, sac, HRP, DKP, ST52, galvaniz, trapez sac, çatı paneli, cephe paneli, lama, silme, kare demir, NPU, NPI, IPE, HEA, HEB ve inşaat demiri tedarikinde güvenilir çözüm ortağınız. TEKCAN METAL — Güçlü yapılar, sağlam çözümler. Geleceğe atılan çelik adımlar!', 'general'],
+    ['maintenance_message',  'Şu anda geçici bir bakım yapılmaktadır. En kısa sürede sizlerleyiz. info@tekcanmetal.com — 0 554 835 0 226', 'system'],
+    ['stat_year',         '20+',                                       'homepage'],
     ['stat_year_label',   'Yıllık Tecrübe',                            'homepage'],
-    ['stat_products',     '500+',                                      'homepage'],
+    ['stat_products',     '1.000+',                                    'homepage'],
     ['stat_products_label','Ürün Çeşidi',                              'homepage'],
     ['stat_customers',    '1.000+',                                    'homepage'],
     ['stat_customers_label','Mutlu Müşteri',                           'homepage'],
+    ['stat_orders',       '3.436',                                     'homepage'],
+    ['stat_orders_label', 'Ürün Siparişi',                             'homepage'],
+    ['stat_branches',     '1',                                         'homepage'],
+    ['stat_branches_label','Firma Şubesi',                             'homepage'],
     ['stat_delivery',     '7/24',                                      'homepage'],
     ['stat_delivery_label','Sevkiyat Hizmeti',                         'homepage'],
 ],
@@ -71,9 +82,14 @@ return [
         'slug' => 'hakkimizda',
         'title' => 'Hakkımızda',
         'subtitle' => 'Tekcan Metal — Demir adına Herşey...',
-        'content' => '<p class="lead">Tekcan Metal, 2010 yılında Konya’nın Karatay ilçesinde, Fevziçakmak Sanayi Bölgesi’nde demir-çelik ticareti alanında faaliyet göstermek üzere kurulmuştur.</p>
+        'content' => '<p class="lead">Tekcan Metal, demir-çelik sektöründe üretilen mamul ve yarı mamullerin pazarlama ve dağıtımını yapmak amacıyla <strong>2005 yılında şahıs şirketi</strong> olarak kurulmuştur. Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle <strong>2017 yılında şirketleşerek</strong> faaliyetlerini kurumsal yapıya taşımıştır.</p>
 
-<p>Kuruluşumuzdan bu yana <strong>"Ticaret ile Bitmeyen Dostluk"</strong> felsefesiyle hareket eden firmamız, müşterilerini bir aile olarak görmüş, kalıcı ve güvene dayalı iş ortaklıkları kurmaya öncelik vermiştir.</p>
+<p>Bugün, <strong>Fevziçakmak Mahallesi Gülistan Caddesi Atiker 3 Sanayi Sitesi, 2. Blok No:33 AS – Karatay / Konya</strong> adresinde faaliyet gösteren Tekcan Metal; yüksek kaliteli hizmet anlayışı, güler yüzlü ticaret yaklaşımı ve müşteri odaklı çözümleri ile sektörde güvenilir bir konum elde etmiştir.</p>
+
+<p>Türkiye’nin en önemli sanayi merkezlerinden biri olan Konya’da; kalite ve fiyatın en önemli faktörler olduğunun bilincindeyiz. Bu nedenle mamul ve yarı mamul ürünlerde <strong>Türkiye’nin önde gelen üreticilerinin temsilciliklerini</strong> alarak, kaliteli ürünleri uygun fiyatlarla müşterilerimize sunmaktan mutluluk duyuyoruz.</p>
+
+<h3>"Ticaret ile Bitmeyen Dostluk"</h3>
+<p>Felsefemiz; müşterilerimizi bir aile olarak görmek, kalıcı ve güvene dayalı iş ortaklıkları kurmaktır. Bu anlayışla 20 yılı aşkın süredir sektörde varlığımızı sürdürüyor, her geçen gün müşteri ağımızı genişletiyoruz.</p>
 
 <h3>Ürün Yelpazemiz</h3>
 <p>Stoklarımızda <strong>siyah sac, DKP, HRP, ST-52, galvanizli sac</strong>; su, kazan ve konstrüksiyon <strong>boruları</strong>; kare, dikdörtgen ve oval <strong>profiller</strong>; lama, silme, köşebent, HEA/HEB, NPI, NPU ve kare demiri gibi <strong>hadde ürünleri</strong>; <strong>patent dirsek, norm flanş, petek kiriş, çatı/cephe paneli, nervürlü inşaat demiri ve çelik hasır</strong> başta olmak üzere geniş bir ürün yelpazesi bulunmaktadır.</p>
@@ -81,9 +97,14 @@ return [
 <h3>Hizmetlerimiz</h3>
 <p>Ürün satışının yanı sıra <strong>lazer kesim, oksijen kesim ve dekoratif sac</strong> üretim hizmetlerimizle müşterilerimizin özel projelerine de çözüm üretmekteyiz.</p>
 
+<h3>Çözüm Ortaklarımız</h3>
+<p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş gibi sektörün lider üreticileriyle çalışıyor; size her zaman en kaliteli ürünleri sunuyoruz.</p>
+
 <h3>Hedefimiz</h3>
-<p>Stok derinliğimiz, hızlı sevkiyat ağımız ve uzman kadromuzla; inşaat sektöründen sanayi üreticilerine, OEM firmalarından bireysel ustalara kadar geniş bir müşteri kitlesine kesintisiz hizmet sunmaktır.</p>',
-        'meta_desc' => 'Tekcan Metal — 2010’dan bu yana Konya merkezli demir-çelik tedarikçisi. Sac, boru, profil, hadde ürünlerinde stok ve hızlı sevkiyat.',
+<p>Stok derinliğimiz, hızlı sevkiyat ağımız ve uzman kadromuzla; inşaat sektöründen sanayi üreticilerine, OEM firmalarından bireysel ustalara kadar geniş bir müşteri kitlesine kesintisiz hizmet sunmaktır.</p>
+
+<p class="closing"><strong>Geleceğe atılan çelik adımlar için, bizden teklif almayı unutmayın!</strong></p>',
+        'meta_desc' => 'Tekcan Metal — 2005’ten bu yana Konya merkezli demir-çelik tedarikçisi. Sac, boru, profil, hadde ürünlerinde stok ve hızlı sevkiyat. Borçelik, Erdemir, Habaş, Tosyalı, Kardemir, İçdaş çözüm ortaklığıyla.',
         'sort_order' => 1,
     ],
     [
@@ -281,6 +302,6 @@ return [
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.1',
+'version' => '1.0.2',
 
 ];
