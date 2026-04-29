@@ -304,6 +304,156 @@ h4{font-size:17px}
 }
 .submenu-right{left:auto;right:0}
 .main-nav li.has-sub:hover .submenu{opacity:1;visibility:visible;transform:translateY(0)}
+
+/* ════════════════════════════════════════════════════
+   MEGA PANEL (Limak Sektörler tarzı tam genişlik panel)
+   ════════════════════════════════════════════════════ */
+.has-mega{position:static !important}
+.mega-panel{
+  position:absolute;
+  top:100%;
+  left:0;right:0;
+  width:100%;
+  background:#fff;
+  border-top:1px solid var(--border);
+  box-shadow:0 24px 60px rgba(15,32,80,.18);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(8px);
+  transition:.25s cubic-bezier(.4,0,.2,1);
+  z-index:100;
+  padding:38px 0 42px;
+}
+.has-mega:hover .mega-panel,
+.mega-panel:hover{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.mega-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:50px;
+  align-items:start;
+}
+
+/* SOL: kategori grid (2 sütun) */
+.mega-cats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:6px 28px;
+}
+.mega-cat-item{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:14px 12px;
+  text-decoration:none;
+  color:var(--text);
+  border-radius:6px;
+  transition:.18s;
+  text-transform:none;
+  letter-spacing:0;
+}
+.mega-cat-item:hover{
+  background:var(--bg-alt);
+  color:var(--primary);
+}
+.mega-cat-ico{
+  flex-shrink:0;
+  width:42px;height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--primary);
+  margin-top:2px;
+}
+.mega-cat-ico svg{width:32px;height:32px}
+.mega-cat-text h4{
+  font-size:15px;
+  font-weight:700;
+  color:var(--primary);
+  margin:0 0 4px;
+  letter-spacing:-.1px;
+}
+.mega-cat-text p{
+  font-size:12.5px;
+  color:var(--text-muted);
+  line-height:1.55;
+  margin:0;
+  font-weight:400;
+}
+
+/* SAĞ: 3 büyük görselli kart */
+.mega-featured{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  height:100%;
+  min-height:340px;
+}
+.mega-feat-card{
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  padding:20px 18px;
+  background-color:var(--primary-darker);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-radius:6px;
+  text-decoration:none;
+  color:#fff;
+  overflow:hidden;
+  min-height:340px;
+  transition:.25s;
+}
+.mega-feat-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,
+    rgba(15,32,80,.0) 30%,
+    rgba(15,32,80,.6) 70%,
+    rgba(15,32,80,.85) 100%);
+  transition:.25s;
+}
+.mega-feat-card:hover::before{
+  background:linear-gradient(180deg,
+    rgba(15,32,80,.2) 0%,
+    rgba(15,32,80,.7) 60%,
+    rgba(200,16,46,.6) 100%);
+}
+.mega-feat-card.mega-feat-dark{
+  background:linear-gradient(135deg, var(--primary) 0%, var(--primary-darker) 100%);
+}
+.mega-feat-card.mega-feat-dark::before{display:none}
+.mega-feat-label{
+  position:relative;
+  z-index:2;
+  font-size:18px;
+  font-weight:700;
+  line-height:1.25;
+  color:#fff;
+  letter-spacing:-.2px;
+}
+.mega-feat-label-large{font-size:22px}
+.mega-feat-sub{
+  position:relative;
+  z-index:2;
+  font-size:11px;
+  color:rgba(255,255,255,.75);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:8px;
+  font-weight:600;
+}
+
+/* Anasayfa transparan header'da mega panel açıldığında: nav metni renkleri ters çevir */
+.home-page .has-mega:hover > a,
+.home-page .has-mega:focus-within > a{color:var(--primary) !important}
+
 .submenu li{list-style:none}
 .submenu a{
   display:flex;

@@ -75,14 +75,58 @@ try {
 
       <!-- Sol Nav -->
       <ul class="main-nav main-nav-left">
-        <li class="has-sub <?= in_array($current,['urunler','urun-detay','kategori'])?'active':'' ?>">
+        <li class="has-mega <?= in_array($current,['urunler','urun-detay','kategori'])?'active':'' ?>">
           <a href="<?= h(url('urunler.php')) ?>">Ürün Gruplarımız</a>
-          <ul class="submenu">
-            <?php foreach ($navCategories as $c): ?>
-              <li><a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>"><?= h($c['name']) ?></a></li>
-            <?php endforeach; ?>
-            <li class="submenu-all"><a href="<?= h(url('urunler.php')) ?>">Tüm Ürünler →</a></li>
-          </ul>
+
+          <!-- MEGA PANEL — Limak Sektörler tarzı -->
+          <div class="mega-panel">
+            <div class="container">
+              <div class="mega-grid">
+                <!-- SOL: Kategori listesi (2 sütun grid) -->
+                <div class="mega-cats">
+                  <?php foreach ($navCategories as $c): ?>
+                    <a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>" class="mega-cat-item">
+                      <div class="mega-cat-ico">
+                        <?php
+                        // Basit SVG ikon — kategori adına göre
+                        $iconMap = [
+                          'sac' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="6" width="18" height="3"/><rect x="3" y="11" width="18" height="3"/><rect x="3" y="16" width="18" height="3"/></svg>',
+                          'boru' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/></svg>',
+                          'profil' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16"/><rect x="9" y="9" width="6" height="6"/></svg>',
+                          'hadde' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h18M3 12h18M3 17h18"/><path d="M7 4v16M17 4v16"/></svg>',
+                          'flans-dirsek' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h6a3 3 0 0 1 3 3v6"/><circle cx="12" cy="12" r="3"/><circle cx="3" cy="12" r="1.5"/><circle cx="12" cy="21" r="1.5"/></svg>',
+                          'petek-kiris' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M5 8l2-4M11 8L9 4M17 8l-2-4M21 12l-2 8M3 12l2 8M9 12l2 8M15 12l-2 8"/></svg>',
+                          'panel' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',
+                          'insaat-demiri' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 3v18M9 3v18M13 3v18M17 3v18M21 3v18"/></svg>',
+                          'osb-levha' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="11" cy="15" r="1"/><circle cx="17" cy="17" r="1"/></svg>',
+                        ];
+                        echo $iconMap[$c['slug']] ?? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/></svg>';
+                        ?>
+                      </div>
+                      <div class="mega-cat-text">
+                        <h4><?= h($c['name']) ?></h4>
+                        <p><?= h(excerpt($c['short_desc'] ?? '', 80)) ?></p>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- SAĞ: 3 büyük görselli featured kart -->
+                <div class="mega-featured">
+                  <a href="<?= h(url('urunler.php')) ?>" class="mega-feat-card" style="background-image:url('<?= h(url('uploads/products/dkp-sac.jpg')) ?>')">
+                    <div class="mega-feat-label">Tüm<br>Ürünler</div>
+                  </a>
+                  <a href="<?= h(url('hizmetler.php')) ?>" class="mega-feat-card" style="background-image:url('<?= h(url('uploads/services/lazer-kesim.jpg')) ?>')">
+                    <div class="mega-feat-label">Lazer Kesim<br>Hizmetimiz</div>
+                  </a>
+                  <a href="<?= h(url('hesaplama.php')) ?>" class="mega-feat-card mega-feat-dark">
+                    <div class="mega-feat-label mega-feat-label-large">Ağırlık<br>Hesaplama</div>
+                    <div class="mega-feat-sub">Online araç</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
         <li class="has-sub <?= in_array($current,['hizmetler','hizmet'])?'active':'' ?>">
           <a href="<?= h(url('hizmetler.php')) ?>">Hizmetlerimiz</a>
