@@ -137,11 +137,16 @@ try {
         </li>
       </ul>
 
-      <!-- Sağ ucu: Hızlı CTA + Mobile -->
+      <!-- Sağ ucu: Dil seçici (Limak tarzı) -->
       <div class="header-actions">
-        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, Tekcan Metal\'den ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-quote">
-          <span>Teklif Al</span>
-        </a>
+        <div class="lang-switch" tabindex="0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span>TR</span>
+        </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">
           <span></span><span></span><span></span>
         </button>

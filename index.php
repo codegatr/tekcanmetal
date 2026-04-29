@@ -15,19 +15,17 @@ $logoFile = settings('logo', 'assets/img/logo.png');
 require __DIR__ . '/includes/header.php';
 ?>
 
-<!-- HERO — Limak tarzı: sade, koyu, ortada logo glow, ok navigation, alt scroll-down -->
+<!-- HERO — Limak'ın 50 logosu sahnesi gibi: koyu lacivert + ortada parlayan logo -->
 <section class="hero-cinema" id="heroCinema">
   <?php if ($sliders): ?>
     <?php foreach ($sliders as $idx => $sl): ?>
-      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
-           <?= !empty($sl['image']) ? 'style="background-image:url(\''.h(url($sl['image'])).'\')"' : '' ?>>
-      </div>
+      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"></div>
     <?php endforeach; ?>
   <?php else: ?>
     <div class="cinema-slide active"></div>
   <?php endif; ?>
 
-  <!-- Merkez Logo Glow -->
+  <!-- Merkez Logo (Tekcan logosu — Limak'taki "50" gibi parlar) -->
   <div class="cinema-center">
     <div class="cinema-logo-glow">
       <?php if (file_exists(__DIR__ . '/' . $logoFile)): ?>
@@ -38,17 +36,25 @@ require __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Sol Ok -->
+  <!-- Sol/Sağ Ok butonları (Limak'taki minimalist kutusuz oklar) -->
   <?php if (count($sliders) > 1): ?>
   <button class="cinema-arrow prev" id="cinemaPrev" aria-label="Önceki">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
   <button class="cinema-arrow next" id="cinemaNext" aria-label="Sonraki">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="9 18 15 12 9 6"/></svg>
   </button>
   <?php endif; ?>
 
-  <!-- Alt nokta nav -->
+  <!-- Alt: Scroll Down dairesel ok (Limak'taki) -->
+  <a href="#urun-gruplarimiz" class="cinema-scroll" aria-label="Aşağı kaydır">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1" opacity=".55"/>
+      <polyline points="14 17 20 23 26 17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </a>
+
+  <!-- Alt nokta nav (Limak'taki ince çubuklar) -->
   <?php if (count($sliders) > 1): ?>
   <div class="cinema-dots">
     <?php foreach ($sliders as $idx => $sl): ?>
@@ -56,14 +62,6 @@ require __DIR__ . '/includes/header.php';
     <?php endforeach; ?>
   </div>
   <?php endif; ?>
-
-  <!-- Scroll-down oku -->
-  <a href="#urun-gruplarimiz" class="cinema-scroll" aria-label="Aşağı kaydır">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-      <circle cx="12" cy="12" r="11" opacity=".4"/>
-      <polyline points="8 11 12 15 16 11"/>
-    </svg>
-  </a>
 </section>
 
 <script>

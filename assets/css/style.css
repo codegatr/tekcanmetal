@@ -363,6 +363,26 @@ h4{font-size:17px}
   border-color:#fff;
 }
 
+/* Dil seçici (Limak tarzı 🌐 TR) */
+.lang-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  color:var(--text);
+  cursor:pointer;
+  transition:.2s;
+  border:0;
+  background:transparent;
+}
+.lang-switch:hover{color:var(--accent)}
+.lang-switch svg{flex-shrink:0;opacity:.85}
+.home-page .lang-switch{color:#fff}
+.home-page .lang-switch:hover{color:rgba(255,255,255,.7)}
+
 /* Mobile toggle hamburger 3-line */
 .mobile-toggle{
   display:none;
@@ -1231,50 +1251,61 @@ section.bg-alt{background:var(--bg-section)}
    HOLDING TARZI BÖLÜMLER (Limak benzeri kurumsal)
    ════════════════════════════════════════════════════ */
 
-/* HERO CINEMA — Limak tarzı: koyu lacivert tam ekran + ortada logo glow */
+/* HERO CINEMA — Limak'ın 50.yıl sahnesi: tamamen koyu lacivert, ortada logo */
 .hero-cinema{
   position:relative;
   width:100%;
   height:100vh;
-  min-height:680px;
-  background:#0a1a3a;
+  min-height:660px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(35,90,180,.28) 0%, transparent 70%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #0c1e44 0%, #050d24 70%, #03081a 100%);
   overflow:hidden;
 }
 .cinema-slide{
   position:absolute;inset:0;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
+  background:transparent;
   opacity:0;
   transition:opacity 1.5s cubic-bezier(.4,0,.2,1);
 }
 .cinema-slide.active{opacity:1;z-index:1}
-/* Koyu lacivert overlay + radyal glow */
+/* Geniş ışık huzmesi (Limak'taki spotlight beam) */
 .cinema-slide::before{
-  content:'';
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at center, rgba(30,74,158,.35) 0%, rgba(10,26,58,.92) 65%, rgba(5,15,35,1) 100%),
-    linear-gradient(135deg, rgba(10,26,58,.9), rgba(20,54,114,.7) 100%);
-  z-index:1;
-}
-/* Subtle scan line / light beam efekti (Limak'taki "spot light" hissi) */
-.cinema-slide::after{
   content:'';
   position:absolute;
   top:50%;left:50%;
-  width:140%;height:140%;
   transform:translate(-50%,-50%);
-  background:radial-gradient(ellipse at center,
-    rgba(74,139,214,.18) 0%,
-    transparent 35%);
-  z-index:1;
+  width:160%;height:140%;
+  background:
+    radial-gradient(ellipse 50% 70% at 50% 50%,
+      rgba(74,139,214,.22) 0%,
+      rgba(35,90,180,.08) 35%,
+      transparent 65%);
+  filter:blur(40px);
+  animation:cinemaBeam 7s ease-in-out infinite;
+}
+.cinema-slide::after{
+  /* Diagonal ince ışık huzmeleri */
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-15deg);
+  width:200%;height:80vh;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      transparent 20%,
+      rgba(120,180,255,.08) 35%,
+      rgba(120,180,255,.16) 50%,
+      rgba(120,180,255,.08) 65%,
+      transparent 80%,
+      transparent 100%);
   pointer-events:none;
-  animation:cinemaBeam 8s ease-in-out infinite;
+  opacity:.7;
 }
 @keyframes cinemaBeam{
-  0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}
-  50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+  0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
 }
 
 /* Merkez Logo */
@@ -1285,32 +1316,48 @@ section.bg-alt{background:var(--bg-section)}
   z-index:5;
   text-align:center;
   pointer-events:none;
+  width:90%;
 }
 .cinema-logo-glow{
   position:relative;
   display:inline-block;
-  padding:0;
+}
+.cinema-logo-glow::before{
+  /* Logo arkasına büyük yumuşak parıltı */
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:130%;height:200%;
+  background:radial-gradient(ellipse at center, rgba(74,139,214,.4) 0%, transparent 60%);
+  filter:blur(30px);
+  z-index:-1;
+  animation:cinemaPulse 4s ease-in-out infinite;
 }
 .cinema-logo-glow img{
-  max-width:min(560px, 70vw);
+  max-width:min(540px, 75vw);
   width:auto;
   height:auto;
   display:block;
   filter:
-    drop-shadow(0 0 30px rgba(74,139,214,.5))
-    drop-shadow(0 0 80px rgba(30,74,158,.4));
+    drop-shadow(0 0 25px rgba(120,180,255,.55))
+    drop-shadow(0 0 60px rgba(74,139,214,.35));
   animation:cinemaGlow 4s ease-in-out infinite;
+}
+@keyframes cinemaPulse{
+  0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
 }
 @keyframes cinemaGlow{
   0%,100%{
     filter:
-      drop-shadow(0 0 30px rgba(74,139,214,.5))
-      drop-shadow(0 0 80px rgba(30,74,158,.4));
+      drop-shadow(0 0 25px rgba(120,180,255,.55))
+      drop-shadow(0 0 60px rgba(74,139,214,.35));
   }
   50%{
     filter:
-      drop-shadow(0 0 45px rgba(120,170,230,.7))
-      drop-shadow(0 0 120px rgba(74,139,214,.5));
+      drop-shadow(0 0 40px rgba(150,200,255,.75))
+      drop-shadow(0 0 100px rgba(74,139,214,.5));
   }
 }
 .cinema-text-logo{
@@ -1320,8 +1367,8 @@ section.bg-alt{background:var(--bg-section)}
   letter-spacing:8px;
   line-height:1;
   text-shadow:
-    0 0 30px rgba(74,139,214,.6),
-    0 0 80px rgba(30,74,158,.5);
+    0 0 30px rgba(120,180,255,.6),
+    0 0 80px rgba(74,139,214,.5);
   animation:cinemaGlow 4s ease-in-out infinite;
 }
 .cinema-text-logo span{
@@ -1333,28 +1380,53 @@ section.bg-alt{background:var(--bg-section)}
   font-weight:400;
 }
 
-/* Sol-Sağ Ok butonları */
+/* Sol-Sağ Ok butonları (Limak'taki kutusuz minimalist) */
 .cinema-arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
   z-index:8;
-  width:46px;height:46px;
+  width:50px;height:50px;
   background:transparent;
   border:0;
-  color:rgba(255,255,255,.65);
+  color:rgba(255,255,255,.55);
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
   transition:.25s;
   pointer-events:auto;
+  padding:0;
 }
-.cinema-arrow:hover{color:#fff;transform:translateY(-50%) scale(1.15)}
-.cinema-arrow.prev{left:34px}
-.cinema-arrow.next{right:34px}
+.cinema-arrow:hover{color:#fff}
+.cinema-arrow:hover.prev svg{transform:translateX(-3px)}
+.cinema-arrow:hover.next svg{transform:translateX(3px)}
+.cinema-arrow svg{transition:transform .25s}
+.cinema-arrow.prev{left:30px}
+.cinema-arrow.next{right:30px}
 
-/* Alt Dot Navigation — Limak'taki ince kısa çizgiler */
+/* Alt Scroll Down (Limak'taki dairesel v) */
+.cinema-scroll{
+  position:absolute;
+  bottom:90px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:8;
+  color:rgba(255,255,255,.55);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.25s;
+  animation:cinemaBob 2.6s ease-in-out infinite;
+}
+.cinema-scroll:hover{color:#fff}
+@keyframes cinemaBob{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+
+/* Alt nokta nav (Limak'taki çok ince çubuklar) */
 .cinema-dots{
   position:absolute;
   bottom:42px;
@@ -1362,42 +1434,20 @@ section.bg-alt{background:var(--bg-section)}
   transform:translateX(-50%);
   z-index:8;
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 .cinema-dot{
-  width:34px;
-  height:2px;
-  background:rgba(255,255,255,.35);
+  width:30px;
+  height:1.5px;
+  background:rgba(255,255,255,.3);
   border:0;
   border-radius:0;
   cursor:pointer;
   padding:0;
   transition:.3s;
 }
-.cinema-dot.active{background:#fff;width:60px}
-.cinema-dot:hover{background:rgba(255,255,255,.7)}
-
-/* Scroll Down (Limak'taki alt orta v oku) */
-.cinema-scroll{
-  position:absolute;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:8;
-  color:rgba(255,255,255,.5);
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:48px;height:48px;
-  transition:.25s;
-  animation:cinemaBob 2.8s ease-in-out infinite;
-}
-.cinema-scroll:hover{color:#fff}
-@keyframes cinemaBob{
-  0%,100%{transform:translateX(-50%) translateY(0)}
-  50%{transform:translateX(-50%) translateY(8px)}
-}
+.cinema-dot.active{background:#fff;width:54px}
+.cinema-dot:hover{background:rgba(255,255,255,.6)}
 
 /* HERO SLIDER (eski, alt sayfalarda kullanılabilir) — tam ekran, sade, holding hissi */
 .hero-slider{
@@ -1903,6 +1953,7 @@ section.bg-alt{background:var(--bg-section)}
   .mobile-toggle{display:flex}
   .header-actions .btn-cta{display:none}
   .header-actions .btn-quote{display:none}
+  .lang-switch{display:none}
   .header-inner{grid-template-columns:1fr auto;gap:12px}
   .header-logo .logo-img{height:42px;max-width:170px}
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
