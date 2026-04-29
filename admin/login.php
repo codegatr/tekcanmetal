@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $login = trim($_POST['login'] ?? '');
         $pass  = (string)($_POST['password'] ?? '');
         $u = row("SELECT * FROM tm_users WHERE (username=? OR email=?) AND is_active=1", [$login, $login]);
-        if ($u && password_verify($pass, $u['password_hash'])) {
+        if ($u && password_verify($pass, $u['password'])) {
             session_regenerate_id(true);
             $_SESSION['admin_id']    = (int)$u['id'];
             $_SESSION['admin_role']  = $u['role'];
-            q("UPDATE tm_users SET last_login_at=NOW(), last_login_ip=? WHERE id=?", [get_ip(), $u['id']]);
+            q("UPDATE tm_users SET last_login=NOW(), last_ip=? WHERE id=?", [get_ip(), $u['id']]);
             log_activity('login', 'user', $u['id'], 'Yönetici girişi');
             redirect('admin/index.php');
         } else {

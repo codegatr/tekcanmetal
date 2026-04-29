@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             file_put_contents($cfgPath, $cfg);
         }
 
-        log_activity('update', 'system', 0, ['from' => TM_VERSION, 'to' => $newVersion, 'source' => 'github']);
+        log_activity('update', 'system', 0, "GitHub'dan güncellendi: " . TM_VERSION . ' → ' . $newVersion);
         unset($_SESSION['gh_latest']);
         adm_back_with('success', "Sürüm $newVersion uygulandı. Sayfayı yenileyin.", 'admin/guncelleme.php');
     }
@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             'manual-' . date('Ymd-His'), 'manual', 'Manuel zip ile güncelleme.', $adminUser['username'] ?? 'admin',
         ]);
 
-        log_activity('update', 'system', 0, ['source' => 'manual_zip']);
+        log_activity('update', 'system', 0, 'Manuel zip ile güncellendi');
         adm_back_with('success', 'Manuel güncelleme uygulandı: ' . $res['msg'], 'admin/guncelleme.php');
     }
 
@@ -279,7 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $path = $bd . '/' . $name;
         if (str_ends_with($name, '.zip') && file_exists($path)) {
             @unlink($path);
-            log_activity('delete', 'backup', 0, ['file' => $name]);
+            log_activity('delete', 'backup', 0, 'Yedek silindi: ' . $name);
             adm_back_with('success', 'Yedek silindi.', 'admin/guncelleme.php');
         }
         adm_back_with('error', 'Yedek bulunamadı.', 'admin/guncelleme.php');

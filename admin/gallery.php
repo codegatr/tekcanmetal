@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
                 }
             }
         }
-        log_activity('upload', 'gallery_images', $albumId, ['count' => $cnt]);
+        log_activity('upload', 'gallery_images', $albumId, "$cnt resim yüklendi");
         adm_back_with($cnt ? 'success' : 'error',
             $cnt ? "$cnt resim yüklendi." : 'Hiç resim yüklenmedi.',
             'admin/gallery.php?action=view&id=' . $albumId);
