@@ -38,7 +38,7 @@ require __DIR__ . '/includes/header.php';
     <div class="pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-img">
-          <?php $mainImg = $p['main_image'] ?: ($images[0]['image_path'] ?? null); ?>
+          <?php $mainImg = $p['image'] ?: ($images[0]['image_path'] ?? null); ?>
           <?php if ($mainImg): ?>
             <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h($p['name']) ?>">
           <?php else: ?>
@@ -49,10 +49,10 @@ require __DIR__ . '/includes/header.php';
             </div>
           <?php endif; ?>
         </div>
-        <?php if (count($images) > 1 || ($p['main_image'] && $images)): ?>
+        <?php if (count($images) > 1 || ($p['image'] && $images)): ?>
         <div class="pd-thumbs">
-          <?php if ($p['main_image']): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['main_image'])) ?>"><img src="<?= h(img_url($p['main_image'])) ?>" alt=""></button>
+          <?php if ($p['image']): ?>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt=""></button>
           <?php endif; ?>
           <?php foreach ($images as $im): ?>
             <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image_path'])) ?>"><img src="<?= h(img_url($im['image_path'])) ?>" alt=""></button>
@@ -108,8 +108,8 @@ require __DIR__ . '/includes/header.php';
         <?php foreach ($related as $r): ?>
         <a class="prod-card" href="<?= h(url('urun.php?slug=' . urlencode($r['slug']))) ?>">
           <div class="prod-img">
-            <?php if (!empty($r['main_image'])): ?>
-              <img src="<?= h(img_url($r['main_image'])) ?>" alt="<?= h($r['name']) ?>" loading="lazy">
+            <?php if (!empty($r['image'])): ?>
+              <img src="<?= h(img_url($r['image'])) ?>" alt="<?= h($r['name']) ?>" loading="lazy">
             <?php else: ?>
               <div class="prod-placeholder"><svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="20" width="48" height="32" rx="2"/><path d="M8 32h48"/></svg></div>
             <?php endif; ?>

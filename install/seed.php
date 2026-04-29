@@ -39,9 +39,9 @@ return [
     ['tax_office',        'Selçuk',                                    'general'],
     ['tax_no',            '',                                          'general'],
     ['mersis_no',         '',                                          'general'],
-    ['logo',              'assets/img/logo.svg',                       'branding'],
-    ['logo_white',        'assets/img/logo-white.svg',                 'branding'],
-    ['favicon',           'assets/img/favicon.png',                    'branding'],
+    ['logo',              'assets/img/logo.png',                       'branding'],
+    ['logo_white',        'assets/img/logo.png',                       'branding'],
+    ['favicon',           'assets/img/favicon.jpg',                    'branding'],
     ['theme_primary',     '#1a2b4a',                                   'branding'],
     ['theme_accent',      '#c9a961',                                   'branding'],
     ['smtp_enabled',      '0',                                         'mail'],
@@ -151,43 +151,45 @@ return [
 
 // ===== ÜRÜN KATEGORİLERİ =====
 'categories' => [
-    ['sac',           'Sac',           'Siyah sac, DKP, HRP, ST-52 ve galvanizli sac çeşitleri',    'layers',     1],
-    ['boru',          'Boru',          'Su borusu, kazan borusu ve konstrüksiyon borusu',            'minus',      2],
-    ['profil',        'Profil',        'Kare, dikdörtgen ve oval profil çeşitleri',                  'square',     3],
-    ['hadde',         'Hadde',         'Lama, silme, köşebent, HEA/HEB, NPI, NPU, kare demiri',      'grid',       4],
-    ['flans-dirsek',  'Patent Dirsek & Norm Flanş', 'Patent dirsek ve norm flanş ürünleri',          'circle',     5],
-    ['petek-kiris',   'Petek Kirişler', 'Hafif çelik konstrüksiyon için petek kiriş',                'menu',       6],
-    ['panel',         'Panel',         'Çatı paneli ve cephe paneli',                                'grid',       7],
-    ['insaat-demiri', 'Nervürlü İnşaat Demiri & Çelik Hasır', 'Nervürlü demir ve çelik hasır ürünleri', 'bar-chart',  8],
-    ['osb-levha',     'OSB Levha',     'OSB-2, OSB-3, OSB-4 yönlendirilmiş yonga levha',             'square',     9],
+    // [slug, name, short_desc, icon, sort_order, image]
+    ['sac',           'Sac',           'Siyah sac, DKP, HRP, ST-52 ve galvanizli sac çeşitleri',    'layers',     1, 'uploads/categories/sac.jpg'],
+    ['boru',          'Boru',          'Su borusu, kazan borusu ve konstrüksiyon borusu',            'minus',      2, 'uploads/categories/boru.jpg'],
+    ['profil',        'Profil',        'Kare, dikdörtgen ve oval profil çeşitleri',                  'square',     3, 'uploads/categories/profil.jpg'],
+    ['hadde',         'Hadde',         'Lama, silme, köşebent, HEA/HEB, NPI, NPU, kare demiri',      'grid',       4, 'uploads/categories/hadde.png'],
+    ['flans-dirsek',  'Patent Dirsek & Norm Flanş', 'Patent dirsek ve norm flanş ürünleri',          'circle',     5, 'uploads/categories/flans-dirsek.jpg'],
+    ['petek-kiris',   'Petek Kirişler', 'Hafif çelik konstrüksiyon için petek kiriş',                'menu',       6, 'uploads/categories/petek-kiris.jpg'],
+    ['panel',         'Panel',         'Çatı paneli ve cephe paneli',                                'grid',       7, 'uploads/categories/panel.png'],
+    ['insaat-demiri', 'Nervürlü İnşaat Demiri & Çelik Hasır', 'Nervürlü demir ve çelik hasır ürünleri', 'bar-chart',  8, 'uploads/categories/insaat-demiri.jpg'],
+    ['osb-levha',     'OSB Levha',     'OSB-2, OSB-3, OSB-4 yönlendirilmiş yonga levha',             'square',     9, 'uploads/categories/osb-levha.webp'],
 ],
 
 // ===== ÜRÜNLER (Her kategori için temel ürünler) =====
+// [cat, slug, name, short_desc, description, image]
 'products' => [
-    ['sac',  'siyah-sac',         'Siyah Sac',          'Endüstriyel uygulamalarda en yaygın kullanılan ham sac. 1 mm – 100 mm kalınlık aralığı.'],
-    ['sac',  'dkp-sac',           'DKP Sac (Soğuk Haddelenmiş)', 'Yüzeyi pürüzsüz, soğuk haddeleme yöntemiyle üretilen yüksek kalite sac.'],
-    ['sac',  'hrp-sac',           'HRP Sac (Sıcak Haddelenmiş)', 'Sıcak haddeleme ile üretilen, geniş kalınlık aralığında ekonomik çözüm.'],
-    ['sac',  'st52-sac',          'ST-52 Sac',          'Yüksek mukavemetli yapı çeliği. Konstrüksiyon ve makine imalatında tercih edilir.'],
-    ['sac',  'galvanizli-sac',    'Galvanizli Sac',     'Sıcak daldırma yöntemiyle çinko kaplı, paslanmaya karşı dayanıklı sac.'],
-    ['boru', 'su-borusu',         'Su Borusu',          'TS 301-2 standardında siyah ve galvanizli su borusu.'],
-    ['boru', 'kazan-borusu',      'Kazan Borusu',       'Yüksek basınç ve sıcaklığa dayanıklı kazan borusu.'],
-    ['boru', 'konstruksiyon-boru','Konstrüksiyon Borusu', 'Yapı ve makine imalatında kullanılan dikişli/dikişsiz borular.'],
-    ['profil','kare-profil',      'Kare Profil',        'Konstrüksiyon ve dekorasyon uygulamaları için kare kesitli profil.'],
-    ['profil','diktortgen-profil','Dikdörtgen Profil',  'Geniş kullanım alanına sahip dikdörtgen kesitli profil.'],
-    ['profil','oval-profil',      'Oval Profil',        'Estetik uygulamalarda tercih edilen oval profil.'],
-    ['hadde','lama',              'Lama',               'Yatay kesitli düz çelik. Çeşitli ölçülerde stoklu.'],
-    ['hadde','kosebent',          'Köşebent',           '90° kesitli L profil. Çatı ve konstrüksiyon işlerinde temel ürün.'],
-    ['hadde','hea-heb',           'HEA / HEB Profil',   'Avrupa standardı geniş başlıklı I kesitli profiller.'],
-    ['hadde','npi-npu',           'NPI / NPU Profil',   'Standart I ve U kesitli yapı profilleri.'],
-    ['hadde','kare-demiri',       'Kare Demiri',        'Dövme demir ve ferforje işleri için kare kesitli demir.'],
-    ['flans-dirsek','patent-dirsek','Patent Dirsek',    '90° ve 45° patent dirsek çeşitleri.'],
-    ['flans-dirsek','norm-flans', 'Norm Flanş',         'DIN/EN standartlarında alın kaynaklı flanşlar.'],
-    ['petek-kiris','petek-kiris', 'Petek Kiriş',        'Hafif çelik konstrüksiyon için optimize edilmiş petek kesitli kirişler.'],
-    ['panel','cati-paneli',       'Çatı Paneli',        'Sandviç çatı paneli — yalıtımlı ve yalıtımsız çeşitler.'],
-    ['panel','cephe-paneli',      'Cephe Paneli',       'Estetik ve yalıtımlı cephe kaplama panelleri.'],
-    ['insaat-demiri','nervurlu-demir','Nervürlü İnşaat Demiri', 'BÇIII-A standardında nervürlü inşaat demiri.'],
-    ['insaat-demiri','celik-hasir','Çelik Hasır',       'Q ve R tipi çelik hasır ürünleri.'],
-    ['osb-levha','osb-levha',     'OSB Levha',          'OSB-2, OSB-3, OSB-4 yönlendirilmiş yonga levha çeşitleri.'],
+    ['sac',  'siyah-sac',         'Siyah Sac',          'Endüstriyel uygulamalarda en yaygın kullanılan ham sac. 1 mm – 100 mm kalınlık aralığı.', null, 'uploads/products/siyah-sac.jpg'],
+    ['sac',  'dkp-sac',           'DKP Sac (Soğuk Haddelenmiş)', 'Yüzeyi pürüzsüz, soğuk haddeleme yöntemiyle üretilen yüksek kalite sac.', null, 'uploads/products/dkp-sac.jpg'],
+    ['sac',  'hrp-sac',           'HRP Sac (Sıcak Haddelenmiş)', 'Sıcak haddeleme ile üretilen, geniş kalınlık aralığında ekonomik çözüm.', null, 'uploads/products/hrp-sac.jpg'],
+    ['sac',  'st52-sac',          'ST-52 Sac',          'Yüksek mukavemetli yapı çeliği. Konstrüksiyon ve makine imalatında tercih edilir.', null, 'uploads/products/st52-sac.jpg'],
+    ['sac',  'galvanizli-sac',    'Galvanizli Sac',     'Sıcak daldırma yöntemiyle çinko kaplı, paslanmaya karşı dayanıklı sac.', null, 'uploads/products/galvanizli-sac.jpg'],
+    ['boru', 'su-borusu',         'Su Borusu',          'TS 301-2 standardında siyah ve galvanizli su borusu.', null, 'uploads/products/su-borusu.jpg'],
+    ['boru', 'kazan-borusu',      'Kazan Borusu',       'Yüksek basınç ve sıcaklığa dayanıklı kazan borusu.', null, 'uploads/products/kazan-borusu.jpg'],
+    ['boru', 'konstruksiyon-boru','Konstrüksiyon Borusu', 'Yapı ve makine imalatında kullanılan dikişli/dikişsiz borular.', null, 'uploads/products/konstruksiyon-boru.jpg'],
+    ['profil','kare-profil',      'Kare Profil',        'Konstrüksiyon ve dekorasyon uygulamaları için kare kesitli profil.', null, 'uploads/products/kare-profil.jpg'],
+    ['profil','diktortgen-profil','Dikdörtgen Profil',  'Geniş kullanım alanına sahip dikdörtgen kesitli profil.', null, 'uploads/products/diktortgen-profil.jpg'],
+    ['profil','oval-profil',      'Oval Profil',        'Estetik uygulamalarda tercih edilen oval profil.', null, 'uploads/products/oval-profil.jpg'],
+    ['hadde','lama',              'Lama',               'Yatay kesitli düz çelik. Çeşitli ölçülerde stoklu.', null, 'uploads/products/lama.jpg'],
+    ['hadde','kosebent',          'Köşebent',           '90° kesitli L profil. Çatı ve konstrüksiyon işlerinde temel ürün.', null, 'uploads/products/kosebent.jpg'],
+    ['hadde','hea-heb',           'HEA / HEB Profil',   'Avrupa standardı geniş başlıklı I kesitli profiller.', null, 'uploads/products/hea-heb.jpg'],
+    ['hadde','npi-npu',           'NPI / NPU Profil',   'Standart I ve U kesitli yapı profilleri.', null, 'uploads/products/npi-npu.jpg'],
+    ['hadde','kare-demiri',       'Kare Demiri',        'Dövme demir ve ferforje işleri için kare kesitli demir.', null, 'uploads/products/kare-demiri.png'],
+    ['flans-dirsek','patent-dirsek','Patent Dirsek',    '90° ve 45° patent dirsek çeşitleri.', null, 'uploads/products/patent-dirsek.jpg'],
+    ['flans-dirsek','norm-flans', 'Norm Flanş',         'DIN/EN standartlarında alın kaynaklı flanşlar.', null, 'uploads/products/norm-flans.jpg'],
+    ['petek-kiris','petek-kiris', 'Petek Kiriş',        'Hafif çelik konstrüksiyon için optimize edilmiş petek kesitli kirişler.', null, 'uploads/products/petek-kiris.jpg'],
+    ['panel','cati-paneli',       'Çatı Paneli',        'Sandviç çatı paneli — yalıtımlı ve yalıtımsız çeşitler.', null, 'uploads/products/cati-paneli.png'],
+    ['panel','cephe-paneli',      'Cephe Paneli',       'Estetik ve yalıtımlı cephe kaplama panelleri.', null, 'uploads/products/cephe-paneli.png'],
+    ['insaat-demiri','nervurlu-demir','Nervürlü İnşaat Demiri', 'BÇIII-A standardında nervürlü inşaat demiri.', null, 'uploads/products/nervurlu-demir.jpg'],
+    ['insaat-demiri','celik-hasir','Çelik Hasır',       'Q ve R tipi çelik hasır ürünleri.', null, 'uploads/products/celik-hasir.jpg'],
+    ['osb-levha','osb-levha',     'OSB Levha',          'OSB-2, OSB-3, OSB-4 yönlendirilmiş yonga levha çeşitleri.', null, 'uploads/products/osb-levha.webp'],
 ],
 
 // ===== HİZMETLER =====
@@ -200,6 +202,7 @@ return [
 
 <p>İnce dekoratif saclardan kalın yapı çeliklerine kadar geniş bir kalınlık aralığında lazer kesim yapabiliyor; aynı gün üretim ve teslim olanağı sunuyoruz.</p>',
         'icon' => 'zap',
+        'image' => 'uploads/services/lazer-kesim.jpg',
         'features' => json_encode(['CNC tabanlı yüksek hassasiyet', 'DXF / DWG / PDF dosya kabulü', 'Aynı gün üretim seçeneği', 'Sac, paslanmaz, alüminyum kesim'], JSON_UNESCAPED_UNICODE),
     ],
     [
@@ -210,6 +213,7 @@ return [
 
 <p>CNC tabanlı oksijen kesim makinalarımız, müşteri çizimlerine sadık kalarak temiz kenar ve düşük kesim payı sağlar.</p>',
         'icon' => 'flame',
+        'image' => 'uploads/services/oksijen-kesim.jpg',
         'features' => json_encode(['10 mm üzeri kalın sac kesimi', 'CNC tabanlı temiz kenar', 'Ekonomik birim maliyet', 'Kalıp ve seri üretim desteği'], JSON_UNESCAPED_UNICODE),
     ],
     [
@@ -220,15 +224,16 @@ return [
 
 <p>Standart desen kataloğumuzdan seçim yapabileceğiniz gibi, kendi desen dosyanızı da bize iletebilirsiniz.</p>',
         'icon' => 'star',
+        'image' => 'uploads/services/dekoratif-saclar.png',
         'features' => json_encode(['Özel desen üretimi', 'Standart desen kataloğu', 'Mimari cephe uygulamaları', 'İç mekan paravan ve dekorasyon'], JSON_UNESCAPED_UNICODE),
     ],
 ],
 
 // ===== EKİP =====
 'team' => [
-    ['Murat Can',     'Kurucu',                  'Tekcan Metal’in kurucusu. Demir-çelik sektöründe 25+ yıllık tecrübe.', null, '', ''],
+    ['Murat Can',     'Kurucu',                  'Tekcan Metal’in kurucusu. Demir-çelik sektöründe 25+ yıllık tecrübe.', 'uploads/team/murat-can.jpg', '', ''],
     ['Yunus Aksoy',   'Satış Temsilcisi',        '2007 Selçuk Üniversitesi mezunu. Satış-pazarlama alanında uzman; firmanın dijital dönüşümünü yönetmektedir.', null, 'satis@tekcanmetal.com', '0 554 835 0 226'],
-    ['İsmail Gökmen', 'Depo & Sevkiyat Sorumlusu', 'Stok yönetimi ve sevkiyat operasyonlarından sorumlu.', null, '', ''],
+    ['İsmail Gökmen', 'Depo & Sevkiyat Sorumlusu', 'Stok yönetimi ve sevkiyat operasyonlarından sorumlu.', 'uploads/team/ismail-gokmen.jpg', '', ''],
 ],
 
 // ===== SLIDER =====
@@ -237,7 +242,7 @@ return [
         'title' => 'Demir Adına Herşey',
         'subtitle' => 'Ticaret ile Bitmeyen Dostluk',
         'description' => 'Sac, boru, profil, hadde ve özel çelik ürünlerinde geniş stok, hızlı sevkiyat.',
-        'image' => 'assets/img/slider-1.jpg',
+        'image' => 'uploads/sliders/slider-1-bg.jpg',
         'link_text' => 'Ürünlerimizi Keşfet',
         'link_url' => 'urunler.php',
     ],
@@ -245,15 +250,15 @@ return [
         'title' => 'Lazer & Oksijen Kesim',
         'subtitle' => 'Hassas. Hızlı. Ekonomik.',
         'description' => 'CNC lazer ve oksijen kesim hizmetimizle, çiziminizden ürününüze kadar tek elden çözüm.',
-        'image' => 'assets/img/slider-2.jpg',
+        'image' => 'uploads/sliders/slider-2-products.jpg',
         'link_text' => 'Hizmetlerimiz',
         'link_url' => 'hizmetler.php',
     ],
     [
-        'title' => 'Aksoy Holding Güvencesi',
-        'subtitle' => '15+ Yıllık Tecrübe',
-        'description' => 'Konya merkezli, Türkiye genelinde sevkiyat ağıyla 1.000+ kurumsal müşteriye hizmet.',
-        'image' => 'assets/img/slider-3.jpg',
+        'title' => '7/24 Sevkiyat Ağı',
+        'subtitle' => 'Konya merkezli, Türkiye geneline',
+        'description' => '20+ yıllık tecrübe ve 1.000+ kurumsal müşteri ile zamanında sevkiyat garantisi.',
+        'image' => 'uploads/sliders/slider-3-delivery.png',
         'link_text' => 'Hakkımızda',
         'link_url' => 'hakkimizda.php',
     ],
@@ -270,21 +275,23 @@ return [
 ],
 
 // ===== ÇÖZÜM ORTAKLARI =====
+// [name, website, description, logo]
 'partners' => [
-    ['Borçelik',      'https://www.borcelik.com',      'Galvanizli sac üretiminin lider tedarikçisi'],
-    ['Erdemir',       'https://www.erdemir.com.tr',    'Yassı çelik üretiminde Türkiye’nin köklü markası'],
-    ['Habaş',         'https://www.habas.com.tr',      'Demir-çelik ve sanayi gazları üretimi'],
-    ['Tosyalı Çelik', 'https://www.tosyaliholding.com.tr', 'Global çelik üretimi ve ihracatı'],
-    ['Kardemir',      'https://www.kardemir.com',      'Türkiye’nin ilk entegre demir-çelik tesisi'],
-    ['İçdaş',         'https://www.icdas.com.tr',      'Geniş yelpazede çelik ürünleri üretimi'],
+    ['Borçelik',      'https://www.borcelik.com',      'Galvanizli sac üretiminin lider tedarikçisi', null],
+    ['Erdemir',       'https://www.erdemir.com.tr',    'Yassı çelik üretiminde Türkiye’nin köklü markası', null],
+    ['Habaş',         'https://www.habas.com.tr',      'Demir-çelik ve sanayi gazları üretimi', null],
+    ['Tosyalı Çelik', 'https://www.tosyaliholding.com.tr', 'Global çelik üretimi ve ihracatı', null],
+    ['Kardemir',      'https://www.kardemir.com',      'Türkiye’nin ilk entegre demir-çelik tesisi', null],
+    ['İçdaş',         'https://www.icdas.com.tr',      'Geniş yelpazede çelik ürünleri üretimi', null],
 ],
 
 // ===== BANKA / IBAN =====
+// [bank_name, branch, iban, currency, logo]
 'banks' => [
-    ['Ziraat Bankası',    'Konya / Karatay Şubesi',  'TR00 0001 0000 0000 0000 0000 00', 'TRY'],
-    ['İş Bankası',        'Konya Sanayi Şubesi',     'TR00 0006 4000 0010 0000 0000 00', 'TRY'],
-    ['Halkbank',          'Konya Ticaret Şubesi',    'TR00 0001 2009 4670 0010 0000 00', 'TRY'],
-    ['Garanti BBVA',      'Konya Şubesi',            'TR00 0006 2000 0000 0000 0000 00', 'TRY'],
+    ['Ziraat Bankası',    'Konya / Karatay Şubesi',  'TR00 0001 0000 0000 0000 0000 00', 'TRY', 'uploads/banks/ziraat.jpg'],
+    ['İş Bankası',        'Konya Sanayi Şubesi',     'TR00 0006 4000 0010 0000 0000 00', 'TRY', null],
+    ['Halkbank',          'Konya Ticaret Şubesi',    'TR00 0001 2009 4670 0010 0000 00', 'TRY', 'uploads/banks/halkbank.png'],
+    ['Garanti BBVA',      'Konya Şubesi',            'TR00 0006 2000 0000 0000 0000 00', 'TRY', null],
 ],
 
 // ===== BLOG KATEGORİLERİ =====
@@ -295,13 +302,14 @@ return [
 ],
 
 // ===== GALERİ ALBÜM =====
+// [slug, title, description, cover_image]
 'gallery_albums' => [
-    ['depo-stok',       'Depo ve Stok Sahası',        'Karatay Fevziçakmak deposundan görüntüler'],
-    ['lazer-kesim',     'Lazer Kesim Üretim',         'CNC lazer kesim makinalarımız ve örnek ürünler'],
-    ['sevkiyat',        'Sevkiyat ve Lojistik',       'Türkiye genelinde sevkiyat operasyonlarımız'],
+    ['depo-stok',       'Depo ve Stok Sahası',        'Karatay Fevziçakmak deposundan görüntüler', 'uploads/pages/tekcan-metal-bina.jpg'],
+    ['lazer-kesim',     'Lazer Kesim Üretim',         'CNC lazer kesim makinalarımız ve örnek ürünler', 'uploads/services/lazer-kesim.jpg'],
+    ['sevkiyat',        'Sevkiyat ve Lojistik',       'Türkiye genelinde sevkiyat operasyonlarımız', 'uploads/sliders/slider-3-delivery.png'],
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.2',
+'version' => '1.0.3',
 
 ];

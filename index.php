@@ -16,14 +16,14 @@ $slider = $sliders[0] ?? null;
 ?>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" <?= $slider && !empty($slider['image']) ? 'style="background-image:linear-gradient(rgba(15,26,48,0.78),rgba(15,26,48,0.85)),url(\''.h(url($slider['image'])).'\');background-size:cover;background-position:center"' : '' ?>>
   <div class="container">
     <div class="hero-inner">
-      <span class="kicker">Ticaret ile Bitmeyen Dostluk</span>
-      <h1>Demir adına <em>Herşey...</em></h1>
-      <p>Sac, boru, profil ve hadde ürünlerinde geniş stok, Konya merkezli hızlı sevkiyat ağıyla 1.000+ kurumsal müşteriye 7/24 hizmet.</p>
+      <span class="kicker"><?= h($slider['subtitle'] ?? settings('site_slogan', 'Ticaret ile Bitmeyen Dostluk')) ?></span>
+      <h1><?php if ($slider): echo h($slider['title']); else: ?>Demir adına <em>Herşey...</em><?php endif; ?></h1>
+      <p><?= h($slider['description'] ?? 'Sac, boru, profil ve hadde ürünlerinde geniş stok, Konya merkezli hızlı sevkiyat ağıyla 1.000+ kurumsal müşteriye 7/24 hizmet.') ?></p>
       <div class="hero-buttons">
-        <a href="<?= h(url('urunler.php')) ?>" class="btn-hero primary">Ürünlerimizi Keşfet →</a>
+        <a href="<?= h(url($slider['link_url'] ?? 'urunler.php')) ?>" class="btn-hero primary"><?= h($slider['link_text'] ?? 'Ürünlerimizi Keşfet') ?> →</a>
         <a href="<?= h(url('iletisim.php')) ?>" class="btn-hero outline">Teklif Al</a>
       </div>
     </div>
@@ -42,7 +42,11 @@ $slider = $sliders[0] ?? null;
     <div class="grid grid-3">
       <?php foreach ($cats as $c): ?>
       <a class="cat-card" href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>">
-        <div class="cat-icon"><?= h(substr($c['name'], 0, 1)) ?></div>
+        <?php if (!empty($c['image'])): ?>
+          <div class="cat-thumb"><img src="<?= h(img_url($c['image'])) ?>" alt="<?= h($c['name']) ?>" loading="lazy"></div>
+        <?php else: ?>
+          <div class="cat-icon"><?= h(substr($c['name'], 0, 1)) ?></div>
+        <?php endif; ?>
         <h3><?= h($c['name']) ?></h3>
         <p><?= h($c['short_desc']) ?></p>
         <span class="cat-card-link">Detay <span>→</span></span>
@@ -64,7 +68,11 @@ $slider = $sliders[0] ?? null;
     <div class="grid grid-3">
       <?php foreach ($services as $s): ?>
       <div class="svc-card">
-        <div class="svc-icon"><?= h(strtoupper(substr($s['title'], 0, 1))) ?></div>
+        <?php if (!empty($s['image'])): ?>
+          <div class="svc-thumb"><img src="<?= h(img_url($s['image'])) ?>" alt="<?= h($s['title']) ?>" loading="lazy"></div>
+        <?php else: ?>
+          <div class="svc-icon"><?= h(strtoupper(substr($s['title'], 0, 1))) ?></div>
+        <?php endif; ?>
         <h3><?= h($s['title']) ?></h3>
         <p><?= h($s['short_desc']) ?></p>
         <a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>" class="card-link">Detayları Gör</a>
@@ -169,6 +177,9 @@ $slider = $sliders[0] ?? null;
     <div class="partners-grid">
       <?php foreach ($partners as $p): ?>
       <div class="partner">
+        <?php if (!empty($p['logo'])): ?>
+          <div class="partner-logo"><img src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy"></div>
+        <?php endif; ?>
         <div class="partner-name"><?= h($p['name']) ?></div>
         <div class="partner-desc"><?= h($p['description']) ?></div>
       </div>

@@ -24,8 +24,9 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($albums as $a): ?>
       <a class="album-card" href="<?= h(url('galeri-detay.php?slug=' . urlencode($a['slug']))) ?>">
         <div class="album-cover">
-          <?php if (!empty($a['cover'])): ?>
-            <img src="<?= h(img_url($a['cover'])) ?>" alt="<?= h($a['title']) ?>" loading="lazy">
+          <?php $cover = $a['cover'] ?? $a['cover_image'] ?? null; ?>
+          <?php if (!empty($cover)): ?>
+            <img src="<?= h(img_url($cover)) ?>" alt="<?= h($a['title']) ?>" loading="lazy">
           <?php else: ?>
             <div class="album-placeholder">📷</div>
           <?php endif; ?>

@@ -95,27 +95,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $step === 2) {
             }
 
             // 3) Categories
-            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_categories (slug,name,short_desc,icon,sort_order,is_active) VALUES (?,?,?,?,?,1)");
-            foreach ($seed['categories'] as $c) $stmt->execute($c);
+            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_categories (slug,name,short_desc,icon,sort_order,image,is_active) VALUES (?,?,?,?,?,?,1)");
+            foreach ($seed['categories'] as $c) {
+                $stmt->execute([$c[0], $c[1], $c[2], $c[3], $c[4], $c[5] ?? null]);
+            }
 
             // 4) Products
             $catIds = [];
             foreach ($pdo->query("SELECT id, slug FROM tm_categories")->fetchAll(PDO::FETCH_ASSOC) as $r) {
                 $catIds[$r['slug']] = (int)$r['id'];
             }
-            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_products (category_id,slug,name,short_desc,is_active) VALUES (?,?,?,?,1)");
+            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_products (category_id,slug,name,short_desc,description,image,is_active) VALUES (?,?,?,?,?,?,1)");
             foreach ($seed['products'] as $p) {
                 $cid = $catIds[$p[0]] ?? null;
-                if ($cid) $stmt->execute([$cid, $p[1], $p[2], $p[3]]);
+                if ($cid) $stmt->execute([$cid, $p[1], $p[2], $p[3], $p[4] ?? null, $p[5] ?? null]);
             }
 
             // 5) Services
-            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_services (slug,title,short_desc,description,icon,features,is_active,sort_order) VALUES (?,?,?,?,?,?,1,?)");
+            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_services (slug,title,short_desc,description,icon,image,features,is_active,sort_order) VALUES (?,?,?,?,?,?,?,1,?)");
             $i = 1;
             foreach ($seed['services'] as $s) {
                 $stmt->execute([
                     $s['slug'], $s['title'], $s['short_desc'], $s['description'],
-                    $s['icon'], $s['features'], $i++
+                    $s['icon'], $s['image'] ?? null, $s['features'], $i++
                 ]);
             }
 
@@ -142,14 +144,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $step === 2) {
             foreach ($seed['faq'] as $f) $stmt->execute([$f[0], $f[1], $f[2], $i++]);
 
             // 9) Partners
-            $stmt = $pdo->prepare("INSERT INTO tm_partners (name,website,description,sort_order,is_active) VALUES (?,?,?,?,1)");
+            $stmt = $pdo->prepare("INSERT INTO tm_partners (name,website,description,logo,sort_order,is_active) VALUES (?,?,?,?,?,1)");
             $i = 1;
-            foreach ($seed['partners'] as $p) $stmt->execute([$p[0], $p[1], $p[2], $i++]);
+            foreach ($seed['partners'] as $p) $stmt->execute([$p[0], $p[1], $p[2], $p[3] ?? null, $i++]);
 
             // 10) Banks
-            $stmt = $pdo->prepare("INSERT INTO tm_banks (bank_name,branch,iban,currency,sort_order,is_active) VALUES (?,?,?,?,?,1)");
+            $stmt = $pdo->prepare("INSERT INTO tm_banks (bank_name,branch,iban,currency,logo,sort_order,is_active) VALUES (?,?,?,?,?,?,1)");
             $i = 1;
-            foreach ($seed['banks'] as $b) $stmt->execute([$b[0], $b[1], $b[2], $b[3], $i++]);
+            foreach ($seed['banks'] as $b) $stmt->execute([$b[0], $b[1], $b[2], $b[3], $b[4] ?? null, $i++]);
 
             // 11) Blog categories
             $stmt = $pdo->prepare("INSERT IGNORE INTO tm_blog_categories (slug,name,description,sort_order,is_active) VALUES (?,?,?,?,1)");
@@ -157,9 +159,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $step === 2) {
             foreach ($seed['blog_categories'] as $bc) $stmt->execute([$bc[0], $bc[1], $bc[2], $i++]);
 
             // 12) Gallery albums
-            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_gallery_albums (slug,title,description,sort_order,is_active) VALUES (?,?,?,?,1)");
+            $stmt = $pdo->prepare("INSERT IGNORE INTO tm_gallery_albums (slug,title,description,cover_image,sort_order,is_active) VALUES (?,?,?,?,?,1)");
             $i = 1;
-            foreach ($seed['gallery_albums'] as $ga) $stmt->execute([$ga[0], $ga[1], $ga[2], $i++]);
+            foreach ($seed['gallery_albums'] as $ga) $stmt->execute([$ga[0], $ga[1], $ga[2], $ga[3] ?? null, $i++]);
+
+            // 12.5) Seed görsellerini install/seed-images/'dan uploads/'a kopyala
+            $seedImagesDir = __DIR__ . '/seed-images';
+            $uploadsDir    = __DIR__ . '/../uploads';
+            if (is_dir($seedImagesDir)) {
+                $rii = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($seedImagesDir, RecursiveDirectoryIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::SELF_FIRST
+                );
+                foreach ($rii as $file) {
+                    $rel = ltrim(substr($file->getPathname(), strlen($seedImagesDir)), '/\\');
+                    $dst = $uploadsDir . '/' . $rel;
+                    if ($file->isDir()) {
+                        if (!is_dir($dst)) @mkdir($dst, 0755, true);
+                    } else {
+                        @mkdir(dirname($dst), 0755, true);
+                        if (!file_exists($dst)) @copy($file->getPathname(), $dst);
+                    }
+                }
+            }
 
             // 13) Admin user
             $hashed = password_hash($password, PASSWORD_BCRYPT);
