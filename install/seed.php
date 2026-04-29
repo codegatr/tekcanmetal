@@ -241,26 +241,26 @@ return [
     [
         'title' => 'Demir Adına Herşey',
         'subtitle' => 'Ticaret ile Bitmeyen Dostluk',
-        'description' => 'Sac, boru, profil, hadde ve özel çelik ürünlerinde geniş stok, hızlı sevkiyat.',
-        'image' => 'uploads/sliders/slider-1-bg.jpg',
+        'description' => 'Sac, boru, profil, hadde ve özel çelik ürünlerinde geniş stok, Konya merkezli hızlı sevkiyat ağıyla 1.000+ kurumsal müşteriye 7/24 hizmet.',
+        'image' => 'uploads/sliders/slider-1-tekcan.jpg',
         'link_text' => 'Ürünlerimizi Keşfet',
         'link_url' => 'urunler.php',
     ],
     [
         'title' => 'Lazer & Oksijen Kesim',
         'subtitle' => 'Hassas. Hızlı. Ekonomik.',
-        'description' => 'CNC lazer ve oksijen kesim hizmetimizle, çiziminizden ürününüze kadar tek elden çözüm.',
-        'image' => 'uploads/sliders/slider-2-products.jpg',
+        'description' => 'CNC lazer ve oksijen kesim hizmetimizle, çiziminizden ürününüze kadar tek elden çözüm. Aynı gün üretim seçeneği.',
+        'image' => 'uploads/sliders/slider-2-laser.jpg',
         'link_text' => 'Hizmetlerimiz',
         'link_url' => 'hizmetler.php',
     ],
     [
         'title' => '7/24 Sevkiyat Ağı',
-        'subtitle' => 'Konya merkezli, Türkiye geneline',
-        'description' => '20+ yıllık tecrübe ve 1.000+ kurumsal müşteri ile zamanında sevkiyat garantisi.',
+        'subtitle' => 'Konya Merkezli, Türkiye Geneline',
+        'description' => '20+ yıllık tecrübe ve 1.000+ kurumsal müşteri ile zamanında sevkiyat garantisi. Anlaşmalı nakliye firmalarımızla 81 ile teslimat.',
         'image' => 'uploads/sliders/slider-3-delivery.png',
-        'link_text' => 'Hakkımızda',
-        'link_url' => 'hakkimizda.php',
+        'link_text' => 'Bize Ulaşın',
+        'link_url' => 'iletisim.php',
     ],
 ],
 
@@ -310,6 +310,6 @@ return [
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.3',
+'version' => '1.0.4',
 
 ];

@@ -20,7 +20,6 @@ yedek/*
 !yedek/.htaccess
 
 # Migration dosyaları (sürüm bazında)
-install/migration.sql
 
 # Sistem
 .DS_Store
