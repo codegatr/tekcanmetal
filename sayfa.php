@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/includes/db.php';
 $slug = $_GET['slug'] ?? '';
-$page = row("SELECT * FROM tm_pages WHERE slug=? AND is_published=1", [$slug]);
+$page = row("SELECT * FROM tm_pages WHERE slug=? AND is_active=1", [$slug]);
 if (!$page) {
     http_response_code(404);
     require __DIR__ . '/404.php';

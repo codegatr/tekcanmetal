@@ -239,25 +239,25 @@ return [
 // ===== SLIDER =====
 'sliders' => [
     [
-        'title' => 'Demir Adına Herşey',
-        'subtitle' => 'Ticaret ile Bitmeyen Dostluk',
-        'description' => 'Sac, boru, profil, hadde ve özel çelik ürünlerinde geniş stok, Konya merkezli hızlı sevkiyat ağıyla 1.000+ kurumsal müşteriye 7/24 hizmet.',
+        'title' => 'Demir-çelik sektöründe yarım asra yakın güven',
+        'subtitle' => 'Tekcan Metal',
+        'description' => '2005’ten bu yana Konya merkezli; sac, boru, profil, hadde ve özel çelik ürünlerinde Türkiye’nin lider üreticilerinin temsilciliği ile sanayi ve inşaat sektörüne çözüm üretiyoruz.',
         'image' => 'uploads/sliders/slider-1-tekcan.jpg',
-        'link_text' => 'Ürünlerimizi Keşfet',
+        'link_text' => 'Biz Kimiz',
+        'link_url' => 'hakkimizda.php',
+    ],
+    [
+        'title' => 'Tek elden, uçtan uca demir-çelik tedariği',
+        'subtitle' => 'Çözüm Yelpazemiz',
+        'description' => 'Geniş stoğumuz; lazer ve oksijen kesim atölyelerimiz; aynı gün üretim ve sevkiyat kapasitemiz ile projelerinizin her aşamasında yanınızdayız.',
+        'image' => 'uploads/sliders/slider-2-laser.jpg',
+        'link_text' => 'Faaliyet Alanlarımız',
         'link_url' => 'urunler.php',
     ],
     [
-        'title' => 'Lazer & Oksijen Kesim',
-        'subtitle' => 'Hassas. Hızlı. Ekonomik.',
-        'description' => 'CNC lazer ve oksijen kesim hizmetimizle, çiziminizden ürününüze kadar tek elden çözüm. Aynı gün üretim seçeneği.',
-        'image' => 'uploads/sliders/slider-2-laser.jpg',
-        'link_text' => 'Hizmetlerimiz',
-        'link_url' => 'hizmetler.php',
-    ],
-    [
-        'title' => '7/24 Sevkiyat Ağı',
-        'subtitle' => 'Konya Merkezli, Türkiye Geneline',
-        'description' => '20+ yıllık tecrübe ve 1.000+ kurumsal müşteri ile zamanında sevkiyat garantisi. Anlaşmalı nakliye firmalarımızla 81 ile teslimat.',
+        'title' => 'Türkiye genelinde 7/24 sevkiyat ağı',
+        'subtitle' => 'Operasyonel Mükemmellik',
+        'description' => 'Konya merkezli stok depomuz ve anlaşmalı nakliye partnerlerimizle 81 ile zamanında, eksiksiz teslimat taahhüdü sunuyoruz.',
         'image' => 'uploads/sliders/slider-3-delivery.png',
         'link_text' => 'Bize Ulaşın',
         'link_url' => 'iletisim.php',
@@ -310,6 +310,6 @@ return [
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.5',
+'version' => '1.0.6',
 
 ];

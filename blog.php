@@ -7,7 +7,7 @@ $offset = ($page_no - 1) * $per_page;
 
 $cats = all("SELECT * FROM tm_blog_categories ORDER BY name");
 
-$where = ["p.is_published=1"];
+$where = ["p.is_active=1"];
 $params = [];
 if ($cat_slug) {
     $where[] = "c.slug=?";

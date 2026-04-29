@@ -3,7 +3,7 @@ require __DIR__ . '/includes/db.php';
 $slug = $_GET['slug'] ?? '';
 $post = row("SELECT p.*, c.name AS cat_name, c.slug AS cat_slug
              FROM tm_blog_posts p LEFT JOIN tm_blog_categories c ON c.id=p.category_id
-             WHERE p.slug=? AND p.is_published=1", [$slug]);
+             WHERE p.slug=? AND p.is_active=1", [$slug]);
 if (!$post) {
     http_response_code(404);
     require __DIR__ . '/404.php';
@@ -13,8 +13,8 @@ if (!$post) {
 try { q("UPDATE tm_blog_posts SET view_count = view_count + 1 WHERE id=?", [$post['id']]); } catch (Throwable $e) {}
 
 $related = $post['category_id']
-    ? all("SELECT * FROM tm_blog_posts WHERE category_id=? AND id<>? AND is_published=1 ORDER BY published_at DESC LIMIT 3", [$post['category_id'], $post['id']])
-    : all("SELECT * FROM tm_blog_posts WHERE id<>? AND is_published=1 ORDER BY published_at DESC LIMIT 3", [$post['id']]);
+    ? all("SELECT * FROM tm_blog_posts WHERE category_id=? AND id<>? AND is_active=1 ORDER BY published_at DESC LIMIT 3", [$post['category_id'], $post['id']])
+    : all("SELECT * FROM tm_blog_posts WHERE id<>? AND is_active=1 ORDER BY published_at DESC LIMIT 3", [$post['id']]);
 
 $pageTitle = $post['title'];
 $metaDesc  = $post['meta_description'] ?: ($post['excerpt'] ?: excerpt($post['content'], 160));

@@ -8,7 +8,7 @@ $stats = [
     'cats'      => (int)val("SELECT COUNT(*) FROM tm_categories WHERE is_active=1"),
     'msg_unr'   => (int)val("SELECT COUNT(*) FROM tm_contact_messages WHERE is_read=0"),
     'mail_ord'  => (int)val("SELECT COUNT(*) FROM tm_mail_orders WHERE status='pending'"),
-    'blogs'     => (int)val("SELECT COUNT(*) FROM tm_blog_posts WHERE is_published=1"),
+    'blogs'     => (int)val("SELECT COUNT(*) FROM tm_blog_posts WHERE is_active=1"),
     'team'      => (int)val("SELECT COUNT(*) FROM tm_team WHERE is_active=1"),
     'partners'  => (int)val("SELECT COUNT(*) FROM tm_partners WHERE is_active=1"),
     'gallery'   => (int)val("SELECT COUNT(*) FROM tm_gallery_images"),
