@@ -134,6 +134,9 @@ h4{font-size:17px}
 }
 .topbar .social a:hover{background:var(--accent);color:#fff}
 
+/* Anasayfada topbar gizlenir, header transparent */
+.home-page .topbar{display:none}
+
 /* HEADER — kurumsal-temiz */
 .site-header{
   background:#fff;
@@ -143,24 +146,65 @@ h4{font-size:17px}
   z-index:90;
   transition:.25s;
 }
+/* Anasayfada (.home-page) header transparent + ters renkler — Limak tarzı */
+.home-page .site-header{
+  background:transparent;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  position:absolute;
+  top:0;left:0;right:0;
+  z-index:50;
+}
+.home-page .site-header.scrolled{
+  background:rgba(13,30,60,.95);
+  backdrop-filter:blur(10px);
+  position:fixed;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
 .site-header.scrolled{
   box-shadow:0 6px 24px rgba(15,32,80,.06);
   border-bottom-color:transparent;
 }
+
 .header-inner{
   display:grid;
-  grid-template-columns:auto 1fr auto;
+  grid-template-columns:auto 1fr auto 1fr auto auto;
   align-items:center;
-  gap:40px;
+  gap:24px;
   height:var(--header-h);
 }
-.logo{display:flex;align-items:center;text-decoration:none;color:var(--primary)}
-.logo-img{
-  height:64px;
+
+/* Sol Anasayfa ikonu */
+.header-home{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;height:40px;
+  color:var(--primary);
+  text-decoration:none;
+  transition:.2s;
+}
+.header-home:hover{color:var(--accent)}
+.home-page .header-home{color:#fff}
+.home-page .header-home:hover{color:var(--accent)}
+
+/* Merkez Logo */
+.header-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:var(--primary);
+}
+.header-logo .logo-img{
+  height:60px;
   width:auto;
-  max-width:280px;
+  max-width:240px;
   object-fit:contain;
   display:block;
+  transition:.25s;
+}
+.home-page .header-logo .logo-img{
+  filter:drop-shadow(0 0 18px rgba(255,255,255,.15));
 }
 .logo-mark{
   width:46px;height:46px;
@@ -171,6 +215,7 @@ h4{font-size:17px}
   border-radius:3px;
   flex-shrink:0;
   margin-right:12px;
+  position:relative;
 }
 .logo-mark::after{
   content:'';
@@ -180,41 +225,42 @@ h4{font-size:17px}
   border-radius:5px;
   pointer-events:none;
 }
-.logo-mark{position:relative}
 .logo-text{display:flex;flex-direction:column;line-height:1.05}
 .logo-name{font-family:var(--serif);font-weight:800;font-size:20px;color:var(--primary);letter-spacing:.5px}
 .logo-sub{font-size:9.5px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-top:4px;font-weight:700}
 
-/* NAV — kurumsal stil */
+/* NAV — Limak tarzı kompakt, uppercase, sol-sağ */
 .main-nav{
   display:flex;
   gap:0;
   align-items:center;
-  justify-content:center;
   list-style:none;
   margin:0;
   padding:0;
 }
+.main-nav-left{justify-content:flex-end}
+.main-nav-right{justify-content:flex-start}
 .main-nav > li{position:relative;list-style:none}
 .main-nav > li > a{
   display:flex;
   align-items:center;
   gap:5px;
-  padding:14px 14px;
-  font-size:14px;
-  font-weight:600;
+  padding:14px 16px;
+  font-size:13px;
+  font-weight:700;
   color:var(--text);
   text-decoration:none;
-  border-radius:0;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
   position:relative;
-  transition:color .15s;
-  letter-spacing:.2px;
+  transition:color .18s;
 }
+.home-page .main-nav > li > a{color:#fff}
 .main-nav > li > a::before{
   content:'';
   position:absolute;
-  left:14px;right:14px;
-  bottom:6px;
+  left:16px;right:16px;
+  bottom:8px;
   height:2px;
   background:var(--accent);
   transform:scaleX(0);
@@ -222,32 +268,32 @@ h4{font-size:17px}
   transition:transform .22s;
 }
 .main-nav > li > a:hover,
-.main-nav > li.active > a{
-  color:var(--primary);
-}
+.main-nav > li.active > a{color:var(--primary)}
+.home-page .main-nav > li > a:hover,
+.home-page .main-nav > li.active > a{color:#fff}
 .main-nav > li > a:hover::before,
-.main-nav > li.active > a::before{
-  transform:scaleX(1);
-}
+.main-nav > li.active > a::before{transform:scaleX(1)}
 .main-nav > li.has-sub > a::after{
-  content:'▾';
-  font-size:9px;
-  margin-left:3px;
-  color:var(--text-muted);
-  transition:transform .18s;
+  content:'';
+  display:inline-block;
+  width:5px;height:5px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translate(-2px,-2px);
+  margin-left:4px;
+  opacity:.7;
 }
-.main-nav > li.has-sub:hover > a::after{transform:rotate(180deg);color:var(--primary)}
 
 .submenu{
   position:absolute;
   top:100%;left:0;
   background:#fff;
-  border-radius:0 0 var(--r) var(--r);
+  border-radius:0;
   border:1px solid var(--border);
   border-top:3px solid var(--accent);
   box-shadow:0 16px 40px rgba(15,32,80,.14);
-  min-width:260px;
-  padding:8px;
+  min-width:240px;
+  padding:8px 0;
   list-style:none;
   margin:0;
   opacity:0;
@@ -256,22 +302,86 @@ h4{font-size:17px}
   transition:.18s;
   z-index:100;
 }
+.submenu-right{left:auto;right:0}
 .main-nav li.has-sub:hover .submenu{opacity:1;visibility:visible;transform:translateY(0)}
 .submenu li{list-style:none}
 .submenu a{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:11px 14px;
-  font-size:14px;
+  padding:11px 18px;
+  font-size:13.5px;
   color:var(--text);
-  border-radius:6px;
+  font-weight:500;
+  border-radius:0;
   transition:.12s;
+  text-decoration:none;
+  text-transform:none;
+  letter-spacing:0;
 }
-.submenu a:hover{background:var(--bg-alt);color:var(--accent-dark)}
-.submenu a i{color:var(--accent);font-size:14px;width:16px;font-style:normal}
+.submenu a:hover{background:var(--bg-alt);color:var(--primary);padding-left:24px}
+.submenu li.submenu-all a{
+  border-top:1px solid var(--border);
+  margin-top:6px;
+  padding-top:14px;
+  font-weight:700;
+  color:var(--accent);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+}
 
 .header-actions{display:flex;align-items:center;gap:12px;justify-self:end}
+
+/* Limak tarzı sade Teklif Al butonu */
+.btn-quote{
+  display:inline-flex;
+  align-items:center;
+  padding:10px 20px;
+  background:var(--accent);
+  color:#fff !important;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  text-decoration:none;
+  border:1px solid var(--accent);
+  transition:.2s;
+}
+.btn-quote:hover{
+  background:var(--accent-dark);
+  border-color:var(--accent-dark);
+  transform:translateY(-1px);
+}
+.home-page .btn-quote{
+  background:transparent;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.5);
+}
+.home-page .btn-quote:hover{
+  background:#fff;
+  color:var(--primary) !important;
+  border-color:#fff;
+}
+
+/* Mobile toggle hamburger 3-line */
+.mobile-toggle{
+  display:none;
+  background:none;
+  border:0;
+  width:30px;height:24px;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:0;
+  cursor:pointer;
+}
+.mobile-toggle span{
+  display:block;
+  width:100%;height:2px;
+  background:var(--primary);
+  transition:.2s;
+}
+.home-page .mobile-toggle span{background:#fff}
+
 .btn-cta{
   display:inline-flex;
   align-items:center;
@@ -1121,7 +1231,175 @@ section.bg-alt{background:var(--bg-section)}
    HOLDING TARZI BÖLÜMLER (Limak benzeri kurumsal)
    ════════════════════════════════════════════════════ */
 
-/* HERO SLIDER — tam ekran, sade, holding hissi */
+/* HERO CINEMA — Limak tarzı: koyu lacivert tam ekran + ortada logo glow */
+.hero-cinema{
+  position:relative;
+  width:100%;
+  height:100vh;
+  min-height:680px;
+  background:#0a1a3a;
+  overflow:hidden;
+}
+.cinema-slide{
+  position:absolute;inset:0;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  opacity:0;
+  transition:opacity 1.5s cubic-bezier(.4,0,.2,1);
+}
+.cinema-slide.active{opacity:1;z-index:1}
+/* Koyu lacivert overlay + radyal glow */
+.cinema-slide::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at center, rgba(30,74,158,.35) 0%, rgba(10,26,58,.92) 65%, rgba(5,15,35,1) 100%),
+    linear-gradient(135deg, rgba(10,26,58,.9), rgba(20,54,114,.7) 100%);
+  z-index:1;
+}
+/* Subtle scan line / light beam efekti (Limak'taki "spot light" hissi) */
+.cinema-slide::after{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:140%;height:140%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse at center,
+    rgba(74,139,214,.18) 0%,
+    transparent 35%);
+  z-index:1;
+  pointer-events:none;
+  animation:cinemaBeam 8s ease-in-out infinite;
+}
+@keyframes cinemaBeam{
+  0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+}
+
+/* Merkez Logo */
+.cinema-center{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:5;
+  text-align:center;
+  pointer-events:none;
+}
+.cinema-logo-glow{
+  position:relative;
+  display:inline-block;
+  padding:0;
+}
+.cinema-logo-glow img{
+  max-width:min(560px, 70vw);
+  width:auto;
+  height:auto;
+  display:block;
+  filter:
+    drop-shadow(0 0 30px rgba(74,139,214,.5))
+    drop-shadow(0 0 80px rgba(30,74,158,.4));
+  animation:cinemaGlow 4s ease-in-out infinite;
+}
+@keyframes cinemaGlow{
+  0%,100%{
+    filter:
+      drop-shadow(0 0 30px rgba(74,139,214,.5))
+      drop-shadow(0 0 80px rgba(30,74,158,.4));
+  }
+  50%{
+    filter:
+      drop-shadow(0 0 45px rgba(120,170,230,.7))
+      drop-shadow(0 0 120px rgba(74,139,214,.5));
+  }
+}
+.cinema-text-logo{
+  font-size:clamp(64px,9vw,140px);
+  font-weight:300;
+  color:#fff;
+  letter-spacing:8px;
+  line-height:1;
+  text-shadow:
+    0 0 30px rgba(74,139,214,.6),
+    0 0 80px rgba(30,74,158,.5);
+  animation:cinemaGlow 4s ease-in-out infinite;
+}
+.cinema-text-logo span{
+  display:block;
+  font-size:.32em;
+  letter-spacing:24px;
+  margin-top:8px;
+  opacity:.85;
+  font-weight:400;
+}
+
+/* Sol-Sağ Ok butonları */
+.cinema-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:8;
+  width:46px;height:46px;
+  background:transparent;
+  border:0;
+  color:rgba(255,255,255,.65);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.25s;
+  pointer-events:auto;
+}
+.cinema-arrow:hover{color:#fff;transform:translateY(-50%) scale(1.15)}
+.cinema-arrow.prev{left:34px}
+.cinema-arrow.next{right:34px}
+
+/* Alt Dot Navigation — Limak'taki ince kısa çizgiler */
+.cinema-dots{
+  position:absolute;
+  bottom:42px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:8;
+  display:flex;
+  gap:10px;
+}
+.cinema-dot{
+  width:34px;
+  height:2px;
+  background:rgba(255,255,255,.35);
+  border:0;
+  border-radius:0;
+  cursor:pointer;
+  padding:0;
+  transition:.3s;
+}
+.cinema-dot.active{background:#fff;width:60px}
+.cinema-dot:hover{background:rgba(255,255,255,.7)}
+
+/* Scroll Down (Limak'taki alt orta v oku) */
+.cinema-scroll{
+  position:absolute;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:8;
+  color:rgba(255,255,255,.5);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;height:48px;
+  transition:.25s;
+  animation:cinemaBob 2.8s ease-in-out infinite;
+}
+.cinema-scroll:hover{color:#fff}
+@keyframes cinemaBob{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+
+/* HERO SLIDER (eski, alt sayfalarda kullanılabilir) — tam ekran, sade, holding hissi */
 .hero-slider{
   position:relative;
   height:calc(100vh - var(--header-h));
@@ -1598,6 +1876,15 @@ section.bg-alt{background:var(--bg-section)}
 .kicker-light::before{background:#fff !important}
 
 /* RESPONSIVE */
+@media (max-width:1100px){
+  .header-inner{
+    grid-template-columns:auto auto auto;
+    gap:18px;
+  }
+  .main-nav{display:none}
+  .header-actions{display:flex}
+  .header-home{display:none}
+}
 @media (max-width:1024px){
   .grid-4{grid-template-columns:repeat(3,1fr)}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:36px}
@@ -1615,6 +1902,9 @@ section.bg-alt{background:var(--bg-section)}
   .main-nav{display:none}
   .mobile-toggle{display:flex}
   .header-actions .btn-cta{display:none}
+  .header-actions .btn-quote{display:none}
+  .header-inner{grid-template-columns:1fr auto;gap:12px}
+  .header-logo .logo-img{height:42px;max-width:170px}
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
   .form-row.cols-2{grid-template-columns:1fr}
   section{padding:55px 0}
@@ -1628,6 +1918,13 @@ section.bg-alt{background:var(--bg-section)}
   .hero-dots{bottom:20px}
   .hero-dot{width:36px}
   .hero-dot.active{width:60px}
+  .hero-cinema{height:100vh;min-height:520px}
+  .cinema-arrow{display:none}
+  .cinema-logo-glow img{max-width:75vw}
+  .cinema-text-logo{font-size:60px;letter-spacing:4px}
+  .cinema-text-logo span{font-size:.32em;letter-spacing:14px}
+  .cinema-scroll{bottom:60px}
+  .cinema-dots{bottom:30px}
   .footer-grid{grid-template-columns:1fr;gap:32px}
   .footer-bottom{flex-direction:column;text-align:center}
   .cta-strip-inner{flex-direction:column;text-align:center}

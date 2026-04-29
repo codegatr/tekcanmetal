@@ -42,17 +42,17 @@ try {
 <?= $code ?>
 <?php endif; ?>
 </head>
-<body class="page-<?= h($current) ?>">
+<body class="page-<?= h($current) ?> <?= $current === 'index' ? 'home-page' : 'inner-page' ?>">
 
-<!-- TOP BAR -->
+<!-- TOP BAR (sade, sadece iletişim) -->
 <div class="topbar">
   <div class="container">
     <div class="inner">
       <div class="meta">
-        <span><i>📍</i> <?= h(settings('site_address')) ?>, <?= h(settings('site_district')) ?>/<?= h(settings('site_city')) ?></span>
-        <span><i>⏰</i> <?= h(settings('working_hours')) ?></span>
+        <span><i>📍</i> <?= h(settings('site_address')) ?></span>
       </div>
       <div class="meta">
+        <span><i>⏰</i> <?= h(settings('working_hours')) ?></span>
         <span><i>📞</i> <a href="<?= h(phone_link(settings('site_phone'))) ?>"><?= h(settings('site_phone')) ?></a></span>
         <span><i>✉</i> <a href="mailto:<?= h(settings('site_email')) ?>"><?= h(settings('site_email')) ?></a></span>
       </div>
@@ -60,11 +60,45 @@ try {
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- HEADER — Limak tarzı: center logo, sol-sağ nav -->
 <header class="site-header" id="siteHeader">
   <div class="container">
     <div class="header-inner">
-      <a href="<?= h(url('/')) ?>" class="logo" aria-label="<?= h(settings('site_short_name')) ?> Anasayfa">
+
+      <!-- Sol: Anasayfa ikonu -->
+      <a href="<?= h(url('/')) ?>" class="header-home" aria-label="Anasayfa">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </a>
+
+      <!-- Sol Nav -->
+      <ul class="main-nav main-nav-left">
+        <li class="has-sub <?= in_array($current,['urunler','urun-detay','kategori'])?'active':'' ?>">
+          <a href="<?= h(url('urunler.php')) ?>">Ürün Gruplarımız</a>
+          <ul class="submenu">
+            <?php foreach ($navCategories as $c): ?>
+              <li><a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>"><?= h($c['name']) ?></a></li>
+            <?php endforeach; ?>
+            <li class="submenu-all"><a href="<?= h(url('urunler.php')) ?>">Tüm Ürünler →</a></li>
+          </ul>
+        </li>
+        <li class="has-sub <?= in_array($current,['hizmetler','hizmet'])?'active':'' ?>">
+          <a href="<?= h(url('hizmetler.php')) ?>">Hizmetlerimiz</a>
+          <ul class="submenu">
+            <?php foreach ($navServices as $s): ?>
+              <li><a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>"><?= h($s['title']) ?></a></li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
+        <li class="<?= $current==='hesaplama'?'active':'' ?>">
+          <a href="<?= h(url('hesaplama.php')) ?>">Ağırlık Hesaplama</a>
+        </li>
+      </ul>
+
+      <!-- Merkez Logo -->
+      <a href="<?= h(url('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> Anasayfa">
         <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
           <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img">
@@ -77,47 +111,25 @@ try {
         <?php endif; ?>
       </a>
 
-      <ul class="main-nav">
-        <li class="<?= $current==='index'?'active':'' ?>">
-          <a href="<?= h(url('/')) ?>">Anasayfa</a>
-        </li>
-        <li class="has-sub <?= in_array($current,['hakkimizda','ekibimiz','partnerler','iban','sss'])?'active':'' ?>">
+      <!-- Sağ Nav -->
+      <ul class="main-nav main-nav-right">
+        <li class="has-sub <?= in_array($current,['hakkimizda','ekibimiz','partnerler','iban','sss','mail-order','sadakat'])?'active':'' ?>">
           <a href="<?= h(url('hakkimizda.php')) ?>">Kurumsal</a>
-          <ul class="submenu">
-            <li><a href="<?= h(url('hakkimizda.php')) ?>"><i>📌</i> Hakkımızda</a></li>
-            <li><a href="<?= h(url('ekibimiz.php')) ?>"><i>👥</i> Ekibimiz</a></li>
-            <li><a href="<?= h(url('partnerler.php')) ?>"><i>🤝</i> Çözüm Ortakları</a></li>
-            <li><a href="<?= h(url('iban.php')) ?>"><i>🏦</i> IBAN Bilgilerimiz</a></li>
-            <li><a href="<?= h(url('sss.php')) ?>"><i>❓</i> Sıkça Sorulan Sorular</a></li>
-            <li><a href="<?= h(url('mail-order.php')) ?>"><i>💳</i> Mail Order Formu</a></li>
-            <li><a href="<?= h(url('sadakat.php')) ?>"><i>⭐</i> Müşteri Sadakat Programı</a></li>
+          <ul class="submenu submenu-right">
+            <li><a href="<?= h(url('hakkimizda.php')) ?>">Hakkımızda</a></li>
+            <li><a href="<?= h(url('ekibimiz.php')) ?>">Ekibimiz</a></li>
+            <li><a href="<?= h(url('partnerler.php')) ?>">Çözüm Ortakları</a></li>
+            <li><a href="<?= h(url('iban.php')) ?>">IBAN Bilgilerimiz</a></li>
+            <li><a href="<?= h(url('sss.php')) ?>">Sıkça Sorulan Sorular</a></li>
+            <li><a href="<?= h(url('mail-order.php')) ?>">Mail Order Formu</a></li>
+            <li><a href="<?= h(url('sadakat.php')) ?>">Sadakat Programı</a></li>
           </ul>
         </li>
-        <li class="has-sub <?= in_array($current,['urunler','urun-detay','kategori'])?'active':'' ?>">
-          <a href="<?= h(url('urunler.php')) ?>">Ürünler</a>
-          <ul class="submenu">
-            <?php foreach ($navCategories as $c): ?>
-              <li><a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>"><i>▸</i> <?= h($c['name']) ?></a></li>
-            <?php endforeach; ?>
-            <li><a href="<?= h(url('urunler.php')) ?>" style="border-top:1px solid var(--border);margin-top:6px;padding-top:12px;font-weight:600;color:var(--accent-dark)"><i>→</i> Tüm Ürünler</a></li>
-          </ul>
-        </li>
-        <li class="has-sub <?= in_array($current,['hizmetler','hizmet'])?'active':'' ?>">
-          <a href="<?= h(url('hizmetler.php')) ?>">Hizmetlerimiz</a>
-          <ul class="submenu">
-            <?php foreach ($navServices as $s): ?>
-              <li><a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>"><i>⚙</i> <?= h($s['title']) ?></a></li>
-            <?php endforeach; ?>
-          </ul>
-        </li>
-        <li class="<?= $current==='hesaplama'?'active':'' ?>">
-          <a href="<?= h(url('hesaplama.php')) ?>">Ağırlık Hesaplama</a>
-        </li>
-        <li class="<?= in_array($current,['galeri','blog','blog-detay'])?'active':'' ?> has-sub">
-          <a href="<?= h(url('galeri.php')) ?>">Galeri</a>
-          <ul class="submenu">
-            <li><a href="<?= h(url('galeri.php')) ?>"><i>📷</i> Foto Galeri</a></li>
-            <li><a href="<?= h(url('blog.php')) ?>"><i>📰</i> Blog</a></li>
+        <li class="has-sub <?= in_array($current,['galeri','blog','blog-detay'])?'active':'' ?>">
+          <a href="<?= h(url('blog.php')) ?>">Haberler &amp; Basın</a>
+          <ul class="submenu submenu-right">
+            <li><a href="<?= h(url('blog.php')) ?>">Tekcan'dan Haberler</a></li>
+            <li><a href="<?= h(url('galeri.php')) ?>">Foto Galeri</a></li>
           </ul>
         </li>
         <li class="<?= $current==='iletisim'?'active':'' ?>">
@@ -125,11 +137,14 @@ try {
         </li>
       </ul>
 
+      <!-- Sağ ucu: Hızlı CTA + Mobile -->
       <div class="header-actions">
-        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, Tekcan Metal\'den ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-cta btn-cta-red">
-          <span>💬</span> Hemen Teklif Al
+        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, Tekcan Metal\'den ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-quote">
+          <span>Teklif Al</span>
         </a>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">☰</button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </div>

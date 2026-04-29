@@ -10,95 +10,102 @@ $services = all("SELECT * FROM tm_services WHERE is_active=1 ORDER BY sort_order
 $partners = all("SELECT * FROM tm_partners WHERE is_active=1 ORDER BY sort_order LIMIT 8");
 $news     = all("SELECT * FROM tm_blog_posts WHERE is_active=1 AND published_at IS NOT NULL ORDER BY published_at DESC LIMIT 4");
 
+$logoFile = settings('logo', 'assets/img/logo.png');
+
 require __DIR__ . '/includes/header.php';
 ?>
 
-<!-- HERO SLIDER -->
-<?php if ($sliders): ?>
-<section class="hero-slider" id="heroSlider">
-  <?php foreach ($sliders as $idx => $sl): ?>
-    <div class="hero-slide<?= $idx === 0 ? ' active' : '' ?>"
-         <?= !empty($sl['image']) ? 'style="background-image:url(\''.h(url($sl['image'])).'\')"' : '' ?>>
-      <div class="container">
-        <div class="hero-slide-content">
-          <?php if (!empty($sl['subtitle'])): ?>
-            <span class="hero-eyebrow"><?= h($sl['subtitle']) ?></span>
-          <?php endif; ?>
-          <h1><?= h($sl['title']) ?></h1>
-          <?php if (!empty($sl['description'])): ?><p><?= h($sl['description']) ?></p><?php endif; ?>
-          <?php if (!empty($sl['link_url'])): ?>
-            <a href="<?= h(url($sl['link_url'])) ?>" class="hero-cta"><?= h($sl['link_text'] ?: 'Detay') ?> <span>›</span></a>
-          <?php endif; ?>
-        </div>
+<!-- HERO — Limak tarzı: sade, koyu, ortada logo glow, ok navigation, alt scroll-down -->
+<section class="hero-cinema" id="heroCinema">
+  <?php if ($sliders): ?>
+    <?php foreach ($sliders as $idx => $sl): ?>
+      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
+           <?= !empty($sl['image']) ? 'style="background-image:url(\''.h(url($sl['image'])).'\')"' : '' ?>>
       </div>
-    </div>
-  <?php endforeach; ?>
-
-  <?php if (count($sliders) > 1): ?>
-    <div class="hero-dots">
-      <?php foreach ($sliders as $idx => $sl): ?>
-        <button class="hero-dot<?= $idx === 0 ? ' active' : '' ?>" data-index="<?= $idx ?>" aria-label="Slide <?= $idx + 1 ?>"></button>
-      <?php endforeach; ?>
-    </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <div class="cinema-slide active"></div>
   <?php endif; ?>
+
+  <!-- Merkez Logo Glow -->
+  <div class="cinema-center">
+    <div class="cinema-logo-glow">
+      <?php if (file_exists(__DIR__ . '/' . $logoFile)): ?>
+        <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal">
+      <?php else: ?>
+        <div class="cinema-text-logo">TEKCAN<span>METAL</span></div>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <!-- Sol Ok -->
+  <?php if (count($sliders) > 1): ?>
+  <button class="cinema-arrow prev" id="cinemaPrev" aria-label="Önceki">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="cinema-arrow next" id="cinemaNext" aria-label="Sonraki">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <?php endif; ?>
+
+  <!-- Alt nokta nav -->
+  <?php if (count($sliders) > 1): ?>
+  <div class="cinema-dots">
+    <?php foreach ($sliders as $idx => $sl): ?>
+      <button class="cinema-dot<?= $idx === 0 ? ' active' : '' ?>" data-index="<?= $idx ?>" aria-label="Slide <?= $idx + 1 ?>"></button>
+    <?php endforeach; ?>
+  </div>
+  <?php endif; ?>
+
+  <!-- Scroll-down oku -->
+  <a href="#urun-gruplarimiz" class="cinema-scroll" aria-label="Aşağı kaydır">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="12" cy="12" r="11" opacity=".4"/>
+      <polyline points="8 11 12 15 16 11"/>
+    </svg>
+  </a>
 </section>
 
 <script>
 (function(){
-  const root = document.getElementById('heroSlider');
+  const root = document.getElementById('heroCinema');
   if (!root) return;
-  const slides = root.querySelectorAll('.hero-slide');
-  const dots   = root.querySelectorAll('.hero-dot');
+  const slides = root.querySelectorAll('.cinema-slide');
+  const dots   = root.querySelectorAll('.cinema-dot');
   const total  = slides.length;
   if (total < 2) return;
   let idx = 0, timer = null;
   function go(n){
     idx = (n + total) % total;
-    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    slides.forEach((s,i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d,i) => d.classList.toggle('active', i === idx));
   }
   function next(){ go(idx + 1); }
-  function start(){ stop(); timer = setInterval(next, 6500); }
+  function prev(){ go(idx - 1); }
+  function start(){ stop(); timer = setInterval(next, 7000); }
   function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+  document.getElementById('cinemaPrev')?.addEventListener('click', () => { prev(); start(); });
+  document.getElementById('cinemaNext')?.addEventListener('click', () => { next(); start(); });
   dots.forEach(d => d.addEventListener('click', e => { go(+e.currentTarget.dataset.index); start(); }));
-  root.addEventListener('mouseenter', stop);
-  root.addEventListener('mouseleave', start);
   let xStart = null;
   root.addEventListener('touchstart', e => xStart = e.touches[0].clientX);
   root.addEventListener('touchend', e => {
     if (xStart === null) return;
     const dx = e.changedTouches[0].clientX - xStart;
-    if (Math.abs(dx) > 50) { dx > 0 ? go(idx-1) : next(); start(); }
+    if (Math.abs(dx) > 50) { dx > 0 ? prev() : next(); start(); }
     xStart = null;
   });
   start();
 })();
 </script>
-<?php endif; ?>
 
-<!-- KURUMSAL TANITIM -->
-<section class="intro-block">
-  <div class="container">
-    <div class="intro-grid">
-      <div class="intro-text">
-        <span class="kicker">Tekcan Metal</span>
-        <h2>2005’ten bu yana demir-çelik sektöründe<br>kurumsal güveni temsil ediyoruz.</h2>
-      </div>
-      <div class="intro-body">
-        <p>Konya Karatay merkezimizden, sac, boru, profil, hadde, panel ve inşaat demiri başta olmak üzere geniş bir ürün yelpazesinde tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş gibi sektörün lider üreticilerinin temsilciliği bizim güvencemizdir.</p>
-        <a href="<?= h(url('hakkimizda.php')) ?>" class="link-arrow">Biz Kimiz <span>→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAALİYET ALANLARIMIZ -->
-<section class="sector-section bg-alt">
+<!-- ÜRÜN GRUPLARIMIZ (Limak'taki Sektörler) -->
+<section class="sector-section" id="urun-gruplarimiz">
   <div class="container">
     <div class="section-head section-head-left">
-      <span class="kicker">Çözüm Yelpazemiz</span>
-      <h2>Faaliyet Alanlarımız</h2>
-      <p>Sanayi, inşaat ve özel proje gereksinimlerine yönelik <?= count($cats) ?> ana kategoride tedarik ve üretim hizmeti sunuyoruz.</p>
+      <span class="kicker">Ürün Gruplarımız</span>
+      <h2><?= count($cats) ?> ana grupta geniş yelpazeli stok</h2>
+      <p>Sanayi, inşaat ve özel proje gereksinimlerine yönelik tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün lider üreticilerinin temsilciliği güvencesiyle.</p>
     </div>
 
     <div class="sector-grid">
@@ -120,20 +127,43 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- DEĞERLERİMİZ -->
+<!-- ENDÜSTRİYEL YETKİNLİKLERİMİZ -->
+<section class="capabilities-section bg-alt">
+  <div class="container">
+    <div class="section-head section-head-left">
+      <span class="kicker">Endüstriyel Yetkinliklerimiz</span>
+      <h2>Tedarik ve üretimde uçtan uca çözüm</h2>
+      <p>Stoklu satışın yanı sıra atölye yetkinliklerimizle proje tabanlı üretim hizmetleri sunuyoruz.</p>
+    </div>
+    <div class="cap-grid">
+      <?php foreach ($services as $s): ?>
+        <a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>" class="cap-card">
+          <?php if (!empty($s['image'])): ?>
+            <div class="cap-thumb"><img src="<?= h(img_url($s['image'])) ?>" alt="<?= h($s['title']) ?>" loading="lazy"></div>
+          <?php endif; ?>
+          <div class="cap-body">
+            <h3><?= h($s['title']) ?></h3>
+            <p><?= h($s['short_desc']) ?></p>
+            <span class="link-arrow">Detay <span>→</span></span>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- KURUMSAL DEĞERLERİMİZ -->
 <section class="values-section">
   <div class="container">
     <div class="section-head section-head-left">
       <span class="kicker">Kurumsal Değerlerimiz</span>
-      <h2>İlke, kalite ve güvenle çalışıyoruz.</h2>
-      <p>Üç temel ilkemizi her projemizde, her teslimatımızda yaşatmaya devam ediyoruz.</p>
+      <h2>İlke, kalite ve güvenle çalışıyoruz</h2>
     </div>
-
     <div class="values-grid">
       <div class="value-block">
         <div class="value-num">01</div>
         <h3>Kalite ve Standart</h3>
-        <p>Türkiye’nin lider çelik üreticilerinin temsilciliği güvencesiyle, her ürünümüz uluslararası kalite standartlarındadır. EN, DIN ve TS standartlarına uygun belgeli tedarik.</p>
+        <p>Türkiye'nin lider çelik üreticilerinin temsilciliği güvencesiyle, her ürünümüz uluslararası kalite standartlarındadır.</p>
         <a href="<?= h(url('partnerler.php')) ?>" class="link-arrow">Çözüm Ortaklarımız <span>→</span></a>
       </div>
       <div class="value-block">
@@ -180,44 +210,17 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ENDÜSTRİYEL YETKİNLİKLER -->
-<section class="capabilities-section bg-alt">
-  <div class="container">
-    <div class="section-head section-head-left">
-      <span class="kicker">Endüstriyel Yetkinlikler</span>
-      <h2>Tedarik ve üretimde uçtan uca çözüm.</h2>
-      <p>Stoklu satışın yanı sıra atölye yetkinliklerimizle proje tabanlı üretim hizmetleri sunuyoruz.</p>
-    </div>
-
-    <div class="cap-grid">
-      <?php foreach ($services as $s): ?>
-        <a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>" class="cap-card">
-          <?php if (!empty($s['image'])): ?>
-            <div class="cap-thumb"><img src="<?= h(img_url($s['image'])) ?>" alt="<?= h($s['title']) ?>" loading="lazy"></div>
-          <?php endif; ?>
-          <div class="cap-body">
-            <h3><?= h($s['title']) ?></h3>
-            <p><?= h($s['short_desc']) ?></p>
-            <span class="link-arrow">Detay <span>→</span></span>
-          </div>
-        </a>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
 <!-- HABERLER -->
 <?php if ($news): ?>
 <section class="news-section">
   <div class="container">
     <div class="section-head section-head-row">
       <div>
-        <span class="kicker">Tekcan’dan Haberler</span>
-        <h2>Sektörel Gelişmeler ve Duyurular</h2>
+        <span class="kicker">Tekcan'dan Haberler</span>
+        <h2>Sektörel gelişmeler ve duyurular</h2>
       </div>
-      <a href="<?= h(url('blog.php')) ?>" class="link-arrow">Tüm Haberler <span>→</span></a>
+      <a href="<?= h(url('blog.php')) ?>" class="link-arrow">Tümü <span>→</span></a>
     </div>
-
     <div class="news-grid">
       <?php foreach ($news as $n): ?>
         <a href="<?= h(url('blog-detay.php?slug=' . $n['slug'])) ?>" class="news-card">
@@ -227,7 +230,6 @@ require __DIR__ . '/includes/header.php';
           <div class="news-body">
             <span class="news-date"><?= h(tr_date($n['published_at'])) ?></span>
             <h3><?= h($n['title']) ?></h3>
-            <p><?= h(excerpt($n['excerpt'] ?: $n['content'], 110)) ?></p>
             <span class="link-arrow">Devamı <span>→</span></span>
           </div>
         </a>
@@ -243,9 +245,8 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="section-head section-head-left">
       <span class="kicker">Çözüm Ortaklarımız</span>
-      <h2>Türkiye'nin lider çelik üreticilerinin temsilcisiyiz.</h2>
+      <h2>Türkiye'nin lider çelik üreticilerinin temsilcisiyiz</h2>
     </div>
-
     <div class="partners-grid">
       <?php foreach ($partners as $p): ?>
       <div class="partner">
@@ -272,7 +273,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="cta-banner-actions">
         <a href="<?= h(url('iletisim.php')) ?>" class="btn-hero primary">Teklif İste</a>
-        <a href="<?= h(whatsapp_link(settings('site_whatsapp'), 'Merhaba, ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-hero outline">WhatsApp ile İletişim</a>
+        <a href="<?= h(whatsapp_link(settings('site_whatsapp'), 'Merhaba, ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="btn-hero outline">WhatsApp</a>
       </div>
     </div>
   </div>
