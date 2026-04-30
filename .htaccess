@@ -162,6 +162,25 @@ RedirectMatch 404 /\.htpasswd$
     # sitemap.xml -> sitemap.php
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
+    # ═══════════════════════════════════════════════════
+    # SEO Pretty URLs (v1.0.39)
+    # /il/konya          -> il.php?slug=konya
+    # /il/konya/hrp-sac  -> il-urun.php?il=konya&urun=hrp-sac
+    # /ihracat/irak      -> ihracat.php?slug=irak
+    # /urun/hrp-sac      -> urun.php?slug=hrp-sac
+    # /kategori/sac      -> kategori.php?slug=sac
+    # /hizmet/lazer-kesim -> hizmet.php?slug=lazer-kesim
+    # /blog/yazi-slug    -> blog-detay.php?slug=yazi-slug
+    # ═══════════════════════════════════════════════════
+    RewriteRule ^il/([a-z0-9\-]+)/([a-z0-9\-]+)/?$ il-urun.php?il=$1&urun=$2 [L,QSA]
+    RewriteRule ^il/([a-z0-9\-]+)/?$            il.php?slug=$1 [L,QSA]
+    RewriteRule ^ihracat/([a-z0-9\-]+)/?$       ihracat.php?slug=$1 [L,QSA]
+    RewriteRule ^urun/([a-z0-9\-]+)/?$          urun.php?slug=$1 [L,QSA]
+    RewriteRule ^kategori/([a-z0-9\-]+)/?$      kategori.php?slug=$1 [L,QSA]
+    RewriteRule ^hizmet/([a-z0-9\-]+)/?$        hizmet.php?slug=$1 [L,QSA]
+    RewriteRule ^blog/([a-z0-9\-]+)/?$          blog-detay.php?slug=$1 [L,QSA]
+    RewriteRule ^sayfa/([a-z0-9\-]+)/?$         sayfa.php?slug=$1 [L,QSA]
+
     # Mevcut dosya/klasör değilse 404.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

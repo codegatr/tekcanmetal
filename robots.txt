@@ -1,18 +1,88 @@
+# ═══════════════════════════════════════════════════
+# Tekcan Metal — robots.txt
+# v1.0.39 — SEO modülü genişletmesi
+# ═══════════════════════════════════════════════════
+
+# Tüm botlar için varsayılan kurallar
 User-agent: *
 Allow: /
+Allow: /il.php
+Allow: /il-urun.php
+Allow: /ihracat.php
+Allow: /urunler.php
+Allow: /urun.php
+Allow: /kategori.php
+Allow: /hizmetler.php
+Allow: /hizmet.php
+Allow: /hesaplama.php
+Allow: /sss.php
+Allow: /blog.php
+Allow: /blog-detay.php
+Allow: /partnerler.php
+Allow: /hakkimizda.php
+Allow: /iletisim.php
+Allow: /sayfa.php
+Allow: /galeri.php
+
+# Erişilemez bölümler
 Disallow: /admin/
 Disallow: /install/
 Disallow: /includes/
 Disallow: /api/
 Disallow: /yedek/
 Disallow: /uploads/cache/
+Disallow: /uploads/_thumbs/
+Disallow: /404.php
+
+# Search ve filter sayfaları (duplicate content riski)
 Disallow: /*?s=
 Disallow: /*?action=
-Disallow: /404.php
-Disallow: /sayfa.php?slug=
-
-# Sitemap
-Sitemap: https://tekcanmetal.com/sitemap.xml
+Disallow: /*?login=
+Disallow: /*?logout=
+Disallow: /*?utm_source=
+Disallow: /*?utm_medium=
+Disallow: /*?utm_campaign=
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
 
 # Crawl-delay (saygılı tarama)
 Crawl-delay: 1
+
+# Sitemap konumu
+Sitemap: https://tekcanmetal.com/sitemap.xml
+
+# ═══════════════════════════════════════════════════
+# Özel kurallar — istenmeyen botlar
+# ═══════════════════════════════════════════════════
+
+# Açgözlü scraperları yavaşlat
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+# AI training botlarını engelle (içerik telifi)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /

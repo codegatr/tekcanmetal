@@ -47,6 +47,217 @@ try {
 <?php if ($code = settings('analytics_code')): ?>
 <?= $code ?>
 <?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════
+     SCHEMA.ORG STRUCTURED DATA (v1.0.39)
+     ═══════════════════════════════════════════════ -->
+<?php
+$schemaSiteUrl   = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$schemaSiteName  = settings('site_short_name', 'Tekcan Metal');
+$schemaSiteLogo  = $schemaSiteUrl . '/' . settings('logo', 'assets/img/logo.png');
+$schemaPhone     = settings('site_phone', '+90 332 342 24 52');
+$schemaEmail     = settings('site_email', 'info@tekcanmetal.com');
+$schemaAddress   = settings('site_address', 'Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS');
+$schemaCity      = settings('site_city', 'Konya');
+$schemaDistrict  = settings('site_district', 'Karatay');
+
+// Sosyal medya
+$schemaSocial = array_filter([
+    settings('site_instagram'),
+    settings('site_facebook'),
+    settings('site_linkedin'),
+    settings('site_youtube'),
+    settings('site_twitter'),
+]);
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "<?= h($schemaSiteUrl) ?>/#organization",
+  "name": "<?= h($schemaSiteName) ?>",
+  "alternateName": "Tekcan Metal Sanayi ve Ticaret Ltd. Şti.",
+  "url": "<?= h($schemaSiteUrl) ?>",
+  "logo": "<?= h($schemaSiteLogo) ?>",
+  "description": "<?= h(settings('site_description', 'Konya merkezli demir-çelik tedarikçisi. Sac, boru, profil, hadde ve özel çelik ürünleri.')) ?>",
+  "foundingDate": "2005",
+  "telephone": "<?= h($schemaPhone) ?>",
+  "email": "<?= h($schemaEmail) ?>",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "<?= h($schemaAddress) ?>",
+    "addressLocality": "<?= h($schemaDistrict) ?>",
+    "addressRegion": "<?= h($schemaCity) ?>",
+    "addressCountry": "TR"
+  }<?php if ($schemaSocial): ?>,
+  "sameAs": <?= json_encode(array_values($schemaSocial), JSON_UNESCAPED_UNICODE) ?>
+  <?php endif; ?>
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "<?= h($schemaSiteUrl) ?>/#localbusiness",
+  "name": "<?= h($schemaSiteName) ?>",
+  "image": "<?= h($schemaSiteLogo) ?>",
+  "url": "<?= h($schemaSiteUrl) ?>",
+  "telephone": "<?= h($schemaPhone) ?>",
+  "email": "<?= h($schemaEmail) ?>",
+  "priceRange": "₺₺",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "<?= h($schemaAddress) ?>",
+    "addressLocality": "<?= h($schemaDistrict) ?>",
+    "addressRegion": "<?= h($schemaCity) ?>",
+    "postalCode": "42050",
+    "addressCountry": "TR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 37.929244,
+    "longitude": 32.558043
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "08:00",
+      "closes": "13:00"
+    }
+  ],
+  "areaServed": [
+    {"@type": "Country", "name": "Türkiye"},
+    {"@type": "AdministrativeArea", "name": "Konya"},
+    {"@type": "AdministrativeArea", "name": "İstanbul"},
+    {"@type": "AdministrativeArea", "name": "Ankara"},
+    {"@type": "AdministrativeArea", "name": "İzmir"},
+    {"@type": "AdministrativeArea", "name": "Bursa"},
+    {"@type": "AdministrativeArea", "name": "Gaziantep"},
+    {"@type": "AdministrativeArea", "name": "Kayseri"},
+    {"@type": "Country", "name": "Irak"},
+    {"@type": "Country", "name": "Suriye"},
+    {"@type": "Country", "name": "Azerbaycan"},
+    {"@type": "Country", "name": "Türkmenistan"}
+  ],
+  "knowsAbout": [
+    "Demir Çelik Tedarik", "Sac Levha", "DKP Sac", "HRP Sac", "ST-52 Sac",
+    "Galvanizli Sac", "Kutu Profil", "Yuvarlak Boru", "Köşebent",
+    "HEA HEB Profil", "IPE Profil", "Nervürlü İnşaat Demiri", "Çelik Hasır",
+    "Lazer Kesim", "Oksijen Kesim", "Dekoratif Sac"
+  ]
+}
+</script>
+
+<?php
+// SAYFA TİPİNE GÖRE ÖZEL SCHEMA
+$pageBaseName = basename($_SERVER['SCRIPT_NAME'] ?? '', '.php');
+
+// Breadcrumb (varsa)
+if (!empty($schemaBreadcrumb)) :
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": <?= json_encode($schemaBreadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>
+}
+</script>
+<?php endif; ?>
+
+<?php
+// PRODUCT schema (urun.php sayfasında)
+if ($pageBaseName === 'urun' && !empty($p) && is_array($p)) :
+    $prodSpecs = !empty($p['specs']) ? json_decode($p['specs'], true) : [];
+    $prodImage = !empty($p['image']) ? $schemaSiteUrl . '/' . ltrim($p['image'], '/') : $schemaSiteLogo;
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "<?= h($p['name']) ?>",
+  "description": "<?= h($p['short_desc'] ?: strip_tags(substr($p['description'] ?? '', 0, 200))) ?>",
+  "image": "<?= h($prodImage) ?>",
+  "category": "<?= h($p['cat_name'] ?? 'Demir Çelik') ?>",
+  "brand": {
+    "@type": "Brand",
+    "name": "Tekcan Metal"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Tekcan Metal Tedarik Ortakları"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "<?= h($canonical) ?>",
+    "priceCurrency": "TRY",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Tekcan Metal"
+    }
+  }
+}
+</script>
+<?php endif; ?>
+
+<?php
+// FAQ schema (sss.php sayfasında)
+if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
+    $faqJson = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => []];
+    foreach ($faqs as $f) {
+        $faqJson['mainEntity'][] = [
+            '@type' => 'Question',
+            'name' => $f['question'],
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => strip_tags($f['answer']),
+            ],
+        ];
+    }
+?>
+<script type="application/ld+json">
+<?= json_encode($faqJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+</script>
+<?php endif; ?>
+
+<?php
+// BlogPosting schema (blog-detay.php sayfasında)
+if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "<?= h($post['title']) ?>",
+  "datePublished": "<?= h(date('c', strtotime($post['published_at']))) ?>",
+  "dateModified": "<?= h(date('c', strtotime($post['updated_at'] ?? $post['published_at']))) ?>",
+  "author": {
+    "@type": "Organization",
+    "name": "<?= h($schemaSiteName) ?>"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "<?= h($schemaSiteName) ?>",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "<?= h($schemaSiteLogo) ?>"
+    }
+  }
+  <?php if (!empty($post['cover_image'])): ?>,
+  "image": "<?= h($schemaSiteUrl . '/' . ltrim($post['cover_image'], '/')) ?>"
+  <?php endif; ?>
+}
+</script>
+<?php endif; ?>
+
 </head>
 <body class="page-<?= h($current) ?> <?= $current === 'index' ? 'home-page' : 'inner-page' ?>">
 
