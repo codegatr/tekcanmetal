@@ -296,47 +296,47 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
       <!-- Sol Nav -->
       <ul class="main-nav main-nav-left">
         <li class="has-mega <?= in_array($current,['urunler','urun-detay','kategori'])?'active':'' ?>">
-          <a href="<?= h(url('urunler.php')) ?>">Ürün Gruplarımız</a>
+          <a href="<?= h(url_lang('urunler.php')) ?>"><?= h(t('header.menu.products', 'Ürün Gruplarımız')) ?></a>
 
           <!-- MEGA PANEL — Endüstriyel sade B2B liste -->
           <div class="mega-panel mega-panel-list">
             <div class="container">
               <div class="mega-list-grid">
                 <?php foreach ($navCategories as $c): ?>
-                  <a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>" class="mega-list-item">
+                  <a href="<?= h(url_lang('kategori.php?slug=' . $c['slug'])) ?>" class="mega-list-item">
                     <div class="mega-list-row">
-                      <span class="mega-list-name"><?= h($c['name']) ?></span>
+                      <span class="mega-list-name"><?= h(tr_field($c, 'name')) ?></span>
                       <span class="mega-list-arrow">›</span>
                     </div>
                     <?php if (!empty($c['short_desc'])): ?>
-                      <span class="mega-list-desc"><?= h($c['short_desc']) ?></span>
+                      <span class="mega-list-desc"><?= h(tr_field($c, 'short_desc')) ?></span>
                     <?php endif; ?>
                   </a>
                 <?php endforeach; ?>
               </div>
               <div class="mega-list-foot">
-                <a href="<?= h(url('urunler.php')) ?>" class="mega-list-allbtn">
-                  Tüm ürün kataloğunu görüntüle <span>→</span>
+                <a href="<?= h(url_lang('urunler.php')) ?>" class="mega-list-allbtn">
+                  <?= h(t('label.show_all_products', 'Tüm ürün kataloğunu görüntüle')) ?> <span>→</span>
                 </a>
               </div>
             </div>
           </div>
         </li>
         <li class="has-sub <?= in_array($current,['hizmetler','hizmet'])?'active':'' ?>">
-          <a href="<?= h(url('hizmetler.php')) ?>">Hizmetlerimiz</a>
+          <a href="<?= h(url_lang('hizmetler.php')) ?>"><?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></a>
           <ul class="submenu">
             <?php foreach ($navServices as $s): ?>
-              <li><a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>"><?= h($s['title']) ?></a></li>
+              <li><a href="<?= h(url_lang('hizmet.php?slug=' . $s['slug'])) ?>"><?= h(tr_field($s, 'title')) ?></a></li>
             <?php endforeach; ?>
           </ul>
         </li>
         <li class="<?= $current==='hesaplama'?'active':'' ?>">
-          <a href="<?= h(url('hesaplama.php')) ?>">Ağırlık Hesaplama</a>
+          <a href="<?= h(url_lang('hesaplama.php')) ?>"><?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a>
         </li>
       </ul>
 
       <!-- Merkez Logo -->
-      <a href="<?= h(url('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> Anasayfa">
+      <a href="<?= h(url_lang('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> <?= h(t('header.menu.home', 'Anasayfa')) ?>">
         <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
           <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img">
@@ -344,7 +344,7 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
           <span class="logo-mark">T</span>
           <span class="logo-text">
             <span class="logo-name">Tekcan Metal</span>
-            <span class="logo-sub">Demir adına Herşey</span>
+            <span class="logo-sub"><?= h(t('header.tagline', 'Demir adına Herşey')) ?></span>
           </span>
         <?php endif; ?>
       </a>
@@ -352,25 +352,25 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
       <!-- Sağ Nav -->
       <ul class="main-nav main-nav-right">
         <li class="has-sub <?= in_array($current,['hakkimizda','partnerler','iban','sss','mail-order','sadakat'])?'active':'' ?>">
-          <a href="<?= h(url('hakkimizda.php')) ?>">Kurumsal</a>
+          <a href="<?= h(url_lang('hakkimizda.php')) ?>"><?= h(t('header.menu.corporate', 'Kurumsal')) ?></a>
           <ul class="submenu submenu-right">
-            <li><a href="<?= h(url('hakkimizda.php')) ?>">Hakkımızda</a></li>
-            <li><a href="<?= h(url('partnerler.php')) ?>">Çözüm Ortakları</a></li>
-            <li><a href="<?= h(url('iban.php')) ?>">IBAN Bilgilerimiz</a></li>
-            <li><a href="<?= h(url('sss.php')) ?>">Sıkça Sorulan Sorular</a></li>
-            <li><a href="<?= h(url('mail-order.php')) ?>">Mail Order Formu</a></li>
-            <li><a href="<?= h(url('sadakat.php')) ?>">Sadakat Programı</a></li>
+            <li><a href="<?= h(url_lang('hakkimizda.php')) ?>"><?= h(t('header.menu.about', 'Hakkımızda')) ?></a></li>
+            <li><a href="<?= h(url_lang('partnerler.php')) ?>"><?= h(t('header.menu.partners', 'Çözüm Ortakları')) ?></a></li>
+            <li><a href="<?= h(url_lang('iban.php')) ?>"><?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a></li>
+            <li><a href="<?= h(url_lang('sss.php')) ?>"><?= h(t('header.menu.faq', 'Sıkça Sorulan Sorular')) ?></a></li>
+            <li><a href="<?= h(url_lang('mail-order.php')) ?>"><?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a></li>
+            <li><a href="<?= h(url_lang('sadakat.php')) ?>"><?= h(t('header.menu.loyalty', 'Sadakat Programı')) ?></a></li>
           </ul>
         </li>
         <li class="has-sub <?= in_array($current,['galeri','blog','blog-detay'])?'active':'' ?>">
-          <a href="<?= h(url('blog.php')) ?>">Haberler &amp; Basın</a>
+          <a href="<?= h(url_lang('blog.php')) ?>"><?= h(t('header.menu.news', 'Haberler & Basın')) ?></a>
           <ul class="submenu submenu-right">
-            <li><a href="<?= h(url('blog.php')) ?>">Tekcan'dan Haberler</a></li>
-            <li><a href="<?= h(url('galeri.php')) ?>">Foto Galeri</a></li>
+            <li><a href="<?= h(url_lang('blog.php')) ?>"><?= h(t('header.menu.blog', "Tekcan'dan Haberler")) ?></a></li>
+            <li><a href="<?= h(url_lang('galeri.php')) ?>"><?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a></li>
           </ul>
         </li>
         <li class="<?= $current==='iletisim'?'active':'' ?>">
-          <a href="<?= h(url('iletisim.php')) ?>">İletişim</a>
+          <a href="<?= h(url_lang('iletisim.php')) ?>"><?= h(t('header.menu.contact', 'İletişim')) ?></a>
         </li>
       </ul>
 
@@ -419,31 +419,31 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
         <span class="logo-mark">T</span>
         <span class="logo-text">
           <span class="logo-name">Tekcan Metal</span>
-          <span class="logo-sub">Menü</span>
+          <span class="logo-sub"><?= h(t('header.menu_label', 'Menü')) ?></span>
         </span>
       <?php endif; ?>
     </a>
     <button class="offcanvas-close" id="ocClose">×</button>
   </div>
   <nav class="offcanvas-nav">
-    <a href="<?= h(url('/')) ?>" class="parent <?= $current==='index'?'active':'' ?>">🏠 Anasayfa</a>
-    <a href="<?= h(url('hakkimizda.php')) ?>" class="parent <?= $current==='hakkimizda'?'active':'' ?>">📌 Hakkımızda</a>
-    <a href="<?= h(url('partnerler.php')) ?>" class="child">→ Çözüm Ortakları</a>
-    <a href="<?= h(url('iban.php')) ?>" class="child">→ IBAN Bilgilerimiz</a>
-    <a href="<?= h(url('sss.php')) ?>" class="child">→ Sıkça Sorulan Sorular</a>
-    <a href="<?= h(url('urunler.php')) ?>" class="parent <?= $current==='urunler'?'active':'' ?>">🏗️ Ürünler</a>
+    <a href="<?= h(url_lang('/')) ?>" class="parent <?= $current==='index'?'active':'' ?>">🏠 <?= h(t('header.menu.home', 'Anasayfa')) ?></a>
+    <a href="<?= h(url_lang('hakkimizda.php')) ?>" class="parent <?= $current==='hakkimizda'?'active':'' ?>">📌 <?= h(t('header.menu.about', 'Hakkımızda')) ?></a>
+    <a href="<?= h(url_lang('partnerler.php')) ?>" class="child">→ <?= h(t('header.menu.partners', 'Çözüm Ortakları')) ?></a>
+    <a href="<?= h(url_lang('iban.php')) ?>" class="child">→ <?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a>
+    <a href="<?= h(url_lang('sss.php')) ?>" class="child">→ <?= h(t('header.menu.faq', 'Sıkça Sorulan Sorular')) ?></a>
+    <a href="<?= h(url_lang('urunler.php')) ?>" class="parent <?= $current==='urunler'?'active':'' ?>">🏗️ <?= h(t('label.products', 'Ürünler')) ?></a>
     <?php foreach ($navCategories as $c): ?>
-      <a href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>" class="child">→ <?= h($c['name']) ?></a>
+      <a href="<?= h(url_lang('kategori.php?slug=' . $c['slug'])) ?>" class="child">→ <?= h(tr_field($c, 'name')) ?></a>
     <?php endforeach; ?>
-    <a href="<?= h(url('hizmetler.php')) ?>" class="parent <?= $current==='hizmetler'?'active':'' ?>">⚙️ Hizmetlerimiz</a>
+    <a href="<?= h(url_lang('hizmetler.php')) ?>" class="parent <?= $current==='hizmetler'?'active':'' ?>">⚙️ <?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></a>
     <?php foreach ($navServices as $s): ?>
-      <a href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>" class="child">→ <?= h($s['title']) ?></a>
+      <a href="<?= h(url_lang('hizmet.php?slug=' . $s['slug'])) ?>" class="child">→ <?= h(tr_field($s, 'title')) ?></a>
     <?php endforeach; ?>
-    <a href="<?= h(url('hesaplama.php')) ?>" class="parent <?= $current==='hesaplama'?'active':'' ?>">📐 Ağırlık Hesaplama</a>
-    <a href="<?= h(url('galeri.php')) ?>" class="parent <?= $current==='galeri'?'active':'' ?>">📷 Foto Galeri</a>
-    <a href="<?= h(url('blog.php')) ?>" class="parent <?= $current==='blog'?'active':'' ?>">📰 Blog</a>
-    <a href="<?= h(url('iletisim.php')) ?>" class="parent <?= $current==='iletisim'?'active':'' ?>">📞 İletişim</a>
-    <a href="<?= h(url('mail-order.php')) ?>" class="parent">💳 Mail Order Formu</a>
+    <a href="<?= h(url_lang('hesaplama.php')) ?>" class="parent <?= $current==='hesaplama'?'active':'' ?>">📐 <?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a>
+    <a href="<?= h(url_lang('galeri.php')) ?>" class="parent <?= $current==='galeri'?'active':'' ?>">📷 <?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a>
+    <a href="<?= h(url_lang('blog.php')) ?>" class="parent <?= $current==='blog'?'active':'' ?>">📰 <?= h(t('header.menu.blog', "Tekcan'dan Haberler")) ?></a>
+    <a href="<?= h(url_lang('iletisim.php')) ?>" class="parent <?= $current==='iletisim'?'active':'' ?>">📞 <?= h(t('header.menu.contact', 'İletişim')) ?></a>
+    <a href="<?= h(url_lang('mail-order.php')) ?>" class="parent">💳 <?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>
   </nav>
 </aside>
 

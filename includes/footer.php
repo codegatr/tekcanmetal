@@ -10,12 +10,12 @@
         <img src="<?= h(img_url($logo)) ?>" alt="<?= h(settings('site_name', 'Tekcan Metal')) ?>" class="footer-logo">
       </div>
       <div class="footer-strip-tagline">
-        <span class="footer-strip-eyebrow">Demir adına Herşey…</span>
-        <span class="footer-strip-slogan">Ticaret ile bitmeyen <em>dostluk</em>.</span>
+        <span class="footer-strip-eyebrow"><?= h(t('footer.tagline', 'Demir adına Herşey…')) ?></span>
+        <span class="footer-strip-slogan"><?= t('footer.about_short', 'Ticaret ile bitmeyen <em>dostluk</em>.') ?></span>
       </div>
       <div class="footer-strip-cta">
-        <a href="<?= h(phone_link(settings('site_phone', '0 332 342 24 52'))) ?>" class="footer-strip-btn footer-strip-btn-primary">📞 Hemen Ara</a>
-        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '05548350226'))) ?>" target="_blank" rel="noopener" class="footer-strip-btn footer-strip-btn-ghost">💬 WhatsApp</a>
+        <a href="<?= h(phone_link(settings('site_phone', '0 332 342 24 52'))) ?>" class="footer-strip-btn footer-strip-btn-primary">📞 <?= h(t('btn.call_now', 'Hemen Ara')) ?></a>
+        <a href="<?= h(whatsapp_link(settings('site_whatsapp', '05548350226'))) ?>" target="_blank" rel="noopener" class="footer-strip-btn footer-strip-btn-ghost">💬 <?= h(t('btn.whatsapp', 'WhatsApp')) ?></a>
       </div>
     </div>
 
@@ -54,32 +54,32 @@
       </div>
 
       <div class="footer-col">
-        <h4>Kurumsal</h4>
+        <h4><?= h(t('header.menu.corporate', 'Kurumsal')) ?></h4>
         <ul>
-          <li><a href="<?= h(url('hakkimizda.php')) ?>">Hakkımızda</a></li>
-          <li><a href="<?= h(url('partnerler.php')) ?>">Çözüm Ortakları</a></li>
-          <li><a href="<?= h(url('iban.php')) ?>">IBAN Bilgilerimiz</a></li>
-          <li><a href="<?= h(url('sss.php')) ?>">Sıkça Sorulan Sorular</a></li>
-          <li><a href="<?= h(url('mail-order.php')) ?>">Mail Order Formu</a></li>
-          <li><a href="<?= h(url('sadakat.php')) ?>">Sadakat Programı</a></li>
-          <li><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>">KVKK Aydınlatma</a></li>
+          <li><a href="<?= h(url_lang('hakkimizda.php')) ?>"><?= h(t('header.menu.about', 'Hakkımızda')) ?></a></li>
+          <li><a href="<?= h(url_lang('partnerler.php')) ?>"><?= h(t('header.menu.partners', 'Çözüm Ortakları')) ?></a></li>
+          <li><a href="<?= h(url_lang('iban.php')) ?>"><?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a></li>
+          <li><a href="<?= h(url_lang('sss.php')) ?>"><?= h(t('header.menu.faq', 'Sıkça Sorulan Sorular')) ?></a></li>
+          <li><a href="<?= h(url_lang('mail-order.php')) ?>"><?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a></li>
+          <li><a href="<?= h(url_lang('sadakat.php')) ?>"><?= h(t('header.menu.loyalty', 'Sadakat Programı')) ?></a></li>
+          <li><a href="<?= h(url_lang('sayfa.php?slug=kvkk')) ?>"><?= h(t('footer.kvkk', 'KVKK Aydınlatma')) ?></a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Hızlı Erişim</h4>
+        <h4><?= h(t('footer.quick_access', 'Hızlı Erişim')) ?></h4>
         <ul>
-          <li><a href="<?= h(url('urunler.php')) ?>">Tüm Ürünler</a></li>
-          <li><a href="<?= h(url('hizmetler.php')) ?>">Hizmetlerimiz</a></li>
-          <li><a href="<?= h(url('hesaplama.php')) ?>">Ağırlık Hesaplama</a></li>
-          <li><a href="<?= h(url('galeri.php')) ?>">Foto Galeri</a></li>
-          <li><a href="<?= h(url('blog.php')) ?>">Haberler &amp; Basın</a></li>
-          <li><a href="<?= h(url('iletisim.php')) ?>">İletişim</a></li>
+          <li><a href="<?= h(url_lang('urunler.php')) ?>"><?= h(t('footer.products', 'Tüm Ürünler')) ?></a></li>
+          <li><a href="<?= h(url_lang('hizmetler.php')) ?>"><?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></a></li>
+          <li><a href="<?= h(url_lang('hesaplama.php')) ?>"><?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a></li>
+          <li><a href="<?= h(url_lang('galeri.php')) ?>"><?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a></li>
+          <li><a href="<?= h(url_lang('blog.php')) ?>"><?= h(t('header.menu.news', 'Haberler & Basın')) ?></a></li>
+          <li><a href="<?= h(url_lang('iletisim.php')) ?>"><?= h(t('header.menu.contact', 'İletişim')) ?></a></li>
         </ul>
       </div>
 
       <div class="footer-col footer-col-contact">
-        <h4>İletişim</h4>
+        <h4><?= h(t('footer.contact', 'İletişim')) ?></h4>
         <ul class="footer-contact-list">
           <li>
             <span class="footer-contact-ico">📍</span>
@@ -102,8 +102,8 @@
           <li>
             <span class="footer-contact-ico">⏰</span>
             <span>
-              <strong>Pazartesi – Cuma</strong> 08:00 – 18:00<br>
-              <strong>Cumartesi</strong> 08:00 – 13:00
+              <strong><?= h(t('footer.weekdays', 'Pazartesi – Cuma')) ?></strong> 08:00 – 18:00<br>
+              <strong><?= h(t('footer.saturday', 'Cumartesi')) ?></strong> 08:00 – 13:00
             </span>
           </li>
         </ul>
@@ -114,14 +114,14 @@
     <!-- ── Footer Bottom ── -->
     <div class="footer-bottom">
       <div class="footer-bottom-left">
-        © <?= date('Y') ?> <?= h(settings('site_name', 'Tekcan Metal Sanayi ve Ticaret Ltd. Şti.')) ?>. Tüm hakları saklıdır.
+        © <?= date('Y') ?> <?= h(settings('site_name', 'Tekcan Metal Sanayi ve Ticaret Ltd. Şti.')) ?>. <?= h(t('footer.copyright', 'Tüm hakları saklıdır')) ?>.
       </div>
       <div class="footer-bottom-right">
-        <a href="<?= h(url('sayfa.php?slug=kvkk')) ?>">KVKK</a>
+        <a href="<?= h(url_lang('sayfa.php?slug=kvkk')) ?>"><?= h(t('footer.kvkk_short', 'KVKK')) ?></a>
         <span class="footer-sep">·</span>
-        <a href="<?= h(url('sayfa.php?slug=cerez-politikasi')) ?>">Çerez Politikası</a>
+        <a href="<?= h(url_lang('sayfa.php?slug=cerez-politikasi')) ?>"><?= h(t('footer.cookie_policy', 'Çerez Politikası')) ?></a>
         <span class="footer-sep">·</span>
-        <span class="footer-vendor-wrap">Tasarım: <a href="https://codega.com.tr" target="_blank" rel="noopener" class="footer-vendor">Codega</a></span>
+        <span class="footer-vendor-wrap"><?= h(t('footer.design_by', 'Tasarım')) ?>: <a href="https://codega.com.tr" target="_blank" rel="noopener" class="footer-vendor">Codega</a></span>
       </div>
     </div>
   </div>
