@@ -6949,3 +6949,628 @@ INSERT INTO tm_translations (lang, `key`, `value`) VALUES
   ('ar', 'footer.aria_mobile', 'الهاتف المحمول:'),
   ('ru', 'footer.aria_mobile', 'Мобильный телефон:')
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
+
+-- =====================================================
+-- v1.0.70 — KAPSAMLI SEO + KRİTİK HOTFIX
+-- =====================================================
+-- 1) ÖNEMLİ HOTFIX: tekman-metal landing sayfası kaldırıldı
+--    Sebep: Tekman Metal Ltd. Şti. (Merzifon, Amasya — 1980'den beri)
+--    KÖKLÜ ve AYRI bir markadır. Marka tecavüzü/yanıltıcı reklam riski.
+--    Bu sürümde tüm ilgili kayıtlar nötr duruma getiriliyor.
+-- 2) 3 YENİ SEO SÜPER SAYFA: Delikli Sac + Galvanizli Boru + Ferforje
+-- 3) DKP/Siyah/HRP Sac SEO meta zenginleştirme
+
+-- ===== 1) Delikli Sac süper sayfa =====
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'delikli-sac-rehberi',
+    'Delikli Sac (Perforated Sheet): Çeşitleri, Ölçüler, Açıklık Oranları ve Fiyatlar',
+    'Delikli sac (perforated sheet) çeşitleri (yuvarlak, kare, slot, altıgen), DKP/galvaniz/paslanmaz/alüminyum malzeme seçenekleri, standart ölçü tabloları, açıklık oranları ve kullanım alanları. Tekcan Metal — Konya merkezli, CNC pres + lazer kesim atölyesi.',
+    '<p class="lead"><strong>Delikli sac</strong> (perforated sheet, perforated metal), düz metal levhanın CNC kontrolü ile özel kalıplar veya laser sistemleriyle <strong>düzenli aralıklarla delinmesiyle</strong> elde edilen, hassas hava-ışık-akışkan geçirgenliği sağlayan endüstriyel sac türüdür. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline DKP, paslanmaz, alüminyum ve galvanizli delikli sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Delikli Sac Nedir? Yapısı ve Üretim Süreci</h2>
+
+<p>Delikli sac, düz galvanizli/DKP/paslanmaz/alüminyum bir levhaya CNC pres veya lazer makinesi ile <strong>belirli geometrik desende düzenli delikler açılarak</strong> üretilir. Genişletilmiş sactan farklı olarak <strong>delikler kesilip çıkarılır</strong>, bu sayede düzgün, hassas ve simetrik bir geçirgenlik elde edilir.</p>
+
+<p>Sektörde "<strong>perforated sheet</strong>", "<strong>perforated metal</strong>", "<strong>punching sac</strong>" veya "<strong>elek sac</strong>" olarak da bilinir.</p>
+
+<h3>Üretim Yöntemleri</h3>
+<ol>
+<li><strong>CNC pres delikleme:</strong> Çoklu kalıp + servo motorla saniyede 100+ delik. Standart delikler için en ekonomik yöntem.</li>
+<li><strong>Lazer delikleme:</strong> Özel desenler, 0.1 mm hassasiyet. Hassas filtreleme uygulamaları için.</li>
+<li><strong>Su jeti delikleme:</strong> Termal etki istemeyen özel uygulamalar.</li>
+<li><strong>Photo-etching (asit aşındırma):</strong> Mikro-delikli ürünler, 0.05 mm aralıklı yüksek hassasiyet.</li>
+</ol>
+
+<h2>Delikli Sac Çeşitleri (Delik Geometrisine Göre)</h2>
+
+<h3>1. Yuvarlak Delikli Sac (Round Hole)</h3>
+<p>En yaygın tip. Yuvarlak delikler eşit aralıklarla. <strong>RV (60° kare) ve RU (90° staggered)</strong> diziliminde olabilir. Filtre, akustik panel, dekoratif uygulamalar.</p>
+
+<h3>2. Kare Delikli Sac (Square Hole)</h3>
+<p>Kare delikler. <strong>Maksimum açıklık alanı</strong> sağlar. Eleme, sınıflandırma, havalandırma uygulamaları.</p>
+
+<h3>3. Slot Delikli Sac (Dikdörtgen)</h3>
+<p>Dikdörtgen şeklinde uzun delikler. Yatay/dikey diziliş. Hava akış kontrolü, akustik hassas filtreleme.</p>
+
+<h3>4. Altıgen Delikli Sac (Hexagonal)</h3>
+<p>Bal peteği görünümü. Estetik mimari uygulamalar, tasarım panelleri, modern cephe sistemleri.</p>
+
+<h3>5. Özel Desenli Delikli Sac</h3>
+<p>Yıldız, üçgen, oval veya logo şeklinde delikler. <strong>Lazer kesim</strong> ile özel CAD tasarımları.</p>
+
+<h2>Delikli Sac Standart Ölçüleri</h2>
+
+<table>
+<thead>
+<tr><th>Levha Boyutu (mm)</th><th>Kalınlık Aralığı</th><th>Delik Çapı</th><th>Tipik Açıklık Oranı</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>0,5 - 5 mm</td><td>1 - 25 mm</td><td>%20 - %50</td></tr>
+<tr><td>1250 × 2500</td><td>1 - 6 mm</td><td>2 - 30 mm</td><td>%25 - %55</td></tr>
+<tr><td>1500 × 3000</td><td>1,5 - 8 mm</td><td>3 - 40 mm</td><td>%30 - %60</td></tr>
+<tr><td>Özel ölçü</td><td>0,5 - 10 mm</td><td>0,3 - 50 mm</td><td>Talebe göre</td></tr>
+</tbody>
+</table>
+
+<h3>Standart Delik Modelleri (Yuvarlak)</h3>
+
+<table>
+<thead>
+<tr><th>Delik Çapı</th><th>Aralık (Pitch)</th><th>Açıklık Oranı</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>3 mm</td><td>5 mm</td><td>%32,7</td><td>Hassas filtre, akustik</td></tr>
+<tr><td>5 mm</td><td>8 mm</td><td>%35,4</td><td>Standart filtre, dekoratif</td></tr>
+<tr><td>8 mm</td><td>12 mm</td><td>%40,3</td><td>Endüstriyel filtre</td></tr>
+<tr><td>10 mm</td><td>15 mm</td><td>%40,3</td><td>Havalandırma kanal</td></tr>
+<tr><td>15 mm</td><td>22 mm</td><td>%42,1</td><td>Cephe, eleme</td></tr>
+<tr><td>20 mm</td><td>28 mm</td><td>%46,2</td><td>Estetik panel</td></tr>
+</tbody>
+</table>
+
+<h2>Delikli Sac Malzeme Seçenekleri</h2>
+
+<h3>1. DKP Delikli Sac</h3>
+<p>Soğuk haddelenmiş çelikten — en yaygın ve ekonomik. 0,5-3 mm kalınlık. İç mekan, korumalı uygulamalar. Boyanabilir.</p>
+
+<h3>2. Galvaniz Delikli Sac</h3>
+<p>Sıcak daldırma galvaniz kaplama. <strong>Açık hava + nemli ortam</strong> uygulamaları. Çatı ve cephe perforasyonu, dış mekan filtre.</p>
+
+<h3>3. Paslanmaz Delikli Sac (304 / 316)</h3>
+<p>Korozyon dayanımı kritik. <strong>Gıda, kimya, ilaç sanayisi</strong>, eczacılık ekipmanları, mutfak ekipmanları, deniz uygulamaları (316L).</p>
+
+<h3>4. Alüminyum Delikli Sac</h3>
+<p>Hafif, doğal korozyon dayanımı. <strong>Mimari cephe, akustik tavan, hava filtre</strong>, otomotiv parçaları. Anodize halleri mevcut.</p>
+
+<h3>5. Bakır / Pirinç Delikli Sac</h3>
+<p>Dekoratif uygulamalar, müzik enstrümanı parçaları, anteni, lüks mimari panel. Patine veya parlak hâli.</p>
+
+<h2>Delikli Sac Kullanım Alanları</h2>
+
+<h3>Filtreleme ve Eleme</h3>
+<ul>
+<li><strong>Endüstriyel filtreler:</strong> Hava, yağ, su, gaz filtre yatakları</li>
+<li><strong>Tarım eleme:</strong> Tahıl, fındık, fıstık, fasulye sınıflandırma</li>
+<li><strong>Maden eleme:</strong> Kömür, kum, mıcır, taş ayırma</li>
+<li><strong>Atık işleme:</strong> Geri dönüşüm tesislerinde sınıflandırma</li>
+<li><strong>Gıda eleme:</strong> Un, şeker, baharatın boyut sınıflandırması</li>
+</ul>
+
+<h3>Mimari ve Yapı</h3>
+<ul>
+<li><strong>Modern cephe panelleri:</strong> Lüks villa, ofis, AVM, otel cephe</li>
+<li><strong>Dekoratif iç mekan:</strong> Restoran, kafe, mağaza separator</li>
+<li><strong>Akustik panel:</strong> Konferans salonu, sinema, ses kayıt stüdyosu</li>
+<li><strong>Asma tavan:</strong> Havalandırma + akustik kontrol</li>
+<li><strong>Korkuluk ve bariyer:</strong> Şeffaf görünüm + güvenlik</li>
+<li><strong>Bahçe pergola:</strong> Estetik gölgelik panelleri</li>
+</ul>
+
+<h3>HVAC ve Havalandırma</h3>
+<ul>
+<li><strong>Hava difüzörü:</strong> Klima, mekanik havalandırma</li>
+<li><strong>Egzoz duvar paneli:</strong> Endüstriyel duman tahliye</li>
+<li><strong>Ses absorbe panel:</strong> Endüstriyel mahaller</li>
+<li><strong>Havalandırma kanalı:</strong> Düzenli hava sirkülasyonu</li>
+</ul>
+
+<h3>Otomotiv ve Ulaşım</h3>
+<ul>
+<li>Egzoz susturucu iç parçaları</li>
+<li>Hava filtre kafesleri</li>
+<li>Yağ filtresi delikli plakaları</li>
+<li>Gemi havalandırma panelleri</li>
+</ul>
+
+<h3>Endüstriyel Makina</h3>
+<ul>
+<li>CNC tezgâh güvenlik panelleri</li>
+<li>Konveyör güvenlik kapakları</li>
+<li>Boyahane filtreleme bölmeleri</li>
+<li>Endüstriyel mutfak ızgaraları</li>
+</ul>
+
+<h2>Delikli Sac Ağırlık Hesaplama</h2>
+
+<p>Delikli sacın ağırlığı, baz sacın ağırlığından <strong>delik açıklık oranı kadar düşüktür</strong>:</p>
+
+<p><strong>Delikli Sac Ağırlığı = Düz Sac Ağırlığı × (1 - Açıklık Oranı / 100)</strong></p>
+
+<p><em>Örneği:</em> 2 mm DKP düz sac = 15,7 kg/m². %35 açıklık oranlı delikli sac = 15,7 × (1 - 0,35) = <strong>10,2 kg/m²</strong>.</p>
+
+<p><a href="/hesaplama.php">Online ağırlık hesaplama motorumuz</a> ile hassas hesap yapabilirsiniz.</p>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Hafifletme:</strong> Düz saca göre %20-60 daha hafif (açıklık oranına bağlı)</li>
+<li><strong>Geçirgenlik:</strong> Hava, ışık, ses, sıvı kontrollü geçişi sağlar</li>
+<li><strong>Estetik:</strong> Modern, çağdaş görünüm sağlar</li>
+<li><strong>Hijyen:</strong> Paslanmaz delikli sac gıda standartlarında</li>
+<li><strong>Akustik kontrol:</strong> Ses absorbsiyon panel olarak</li>
+<li><strong>Filtreleme hassasiyeti:</strong> Mikronlu çapraz tutma</li>
+<li><strong>Rüzgar yükü azaltma:</strong> Cephe için %30+ rüzgar geçirgenliği</li>
+<li><strong>Geri dönüştürülebilir:</strong> %100 metal — sürdürülebilir</li>
+</ul>
+
+<h2>Delikli Sac vs Genişletilmiş Sac</h2>
+
+<table>
+<thead>
+<tr><th>Özellik</th><th>Delikli Sac</th><th>Genişletilmiş Sac</th></tr>
+</thead>
+<tbody>
+<tr><td>Üretim</td><td>Pres delikleme (delikler çıkarılır)</td><td>Pres genleştirme (kaynaksız tek parça)</td></tr>
+<tr><td>Delik şekli</td><td>Hassas, düzgün geometrik</td><td>Doğal elmas/baklava</td></tr>
+<tr><td>Açıklık oranı</td><td>%20 - %60</td><td>%50 - %80 (yüksek)</td></tr>
+<tr><td>Mukavemet</td><td>Orta</td><td>Yüksek (kaynaksız)</td></tr>
+<tr><td>Estetik</td><td>Çok iyi (modern, hassas)</td><td>İyi (endüstriyel)</td></tr>
+<tr><td>Maliyet</td><td>Daha pahalı (delikler kayıp)</td><td>Daha ekonomik</td></tr>
+<tr><td>Tipik kullanım</td><td>Mimari, filtre, akustik</td><td>Cephe, yürüme yolu</td></tr>
+</tbody>
+</table>
+
+<h2>Delikli Sac Fiyatları (2026)</h2>
+
+<p>Delikli sac fiyatları; <strong>malzeme cinsi, kalınlık, delik geometrisi, açıklık oranı, levha ölçüsü ve sipariş miktarı</strong> baz alınarak belirlenir.</p>
+
+<h3>Fiyat Sıralaması (Pahalıdan Ucuza)</h3>
+<ol>
+<li>Bakır/pirinç delikli sac</li>
+<li>Paslanmaz 316L delikli sac</li>
+<li>Paslanmaz 304 delikli sac</li>
+<li>Alüminyum delikli sac</li>
+<li>Galvanizli delikli sac</li>
+<li>DKP delikli sac (en ekonomik)</li>
+</ol>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>Açıklık oranı:</strong> Daha fazla delik = daha az kalan metal ama daha çok işçilik</li>
+<li><strong>Delik çapı:</strong> Çok küçük delikler (1-2 mm) yüksek hassasiyet maliyeti</li>
+<li><strong>Geometri:</strong> Yuvarlak en ekonomik, özel desen pahalı</li>
+<li><strong>Üretim yöntemi:</strong> CNC pres < Lazer < Su jeti (artan maliyet)</li>
+<li><strong>Sipariş miktarı:</strong> 50+ levha siparişlerde kademeli indirim</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Delikli sac kaç farklı geometride üretilir?</h4>
+<p>Standart yuvarlak, kare, dikdörtgen (slot), altıgen, üçgen, oval ve özel CAD tasarımı. <strong>Lazer kesim</strong> ile pratikte sınırsız desen mümkün.</p>
+
+<h4>En küçük delik çapı nedir?</h4>
+<p>CNC pres ile <strong>0,8 mm</strong>, lazer kesim ile <strong>0,3 mm</strong>, photo-etching ile <strong>0,05 mm</strong>''ye kadar inilebilir.</p>
+
+<h4>Delikli sac kaç m² minimum sipariş?</h4>
+<p>Standart desenler (yuvarlak, kare) için <strong>1 levha</strong> minimum. Özel CAD desenler için minimum 5-10 m² ekonomik olur.</p>
+
+<h4>Galvaniz delikli sac üretiyor musunuz?</h4>
+<p>Evet. Hem önceden galvanizli sacı delikleyebiliyor (delikler galvanizsiz kalır) hem de DKP delikli sacı sonrasında galvanizleme imkanımız var.</p>
+
+<h4>Ne kadar süre içinde teslim edebilirsiniz?</h4>
+<p>Standart desenler stoklu (yuvarlak 5/8/10 mm) <strong>aynı gün</strong>. Özel desenler <strong>3-5 iş günü</strong>. Mikro-delikli özel siparişler <strong>10-15 gün</strong>.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli delikli sac sevkiyatı yapıyoruz. Gümrük ve menşei dokümantasyonu dahil.</p>
+
+<h2>Tekcan Metal Delikli Sac Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Erdemir, Borçelik, Tosyalı</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>5 standart geometri stokta</strong> (yuvarlak, kare, slot, altıgen, özel)</li>
+<li>✅ <strong>CNC pres + lazer kesim atölyesi</strong> — özel desen üretimi</li>
+<li>✅ <strong>Tüm malzemeler:</strong> DKP, galvaniz, paslanmaz 304/316, alüminyum, bakır</li>
+<li>✅ <strong>0,3 mm hassasiyet</strong> (lazer kesim)</li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>e-Fatura, üretici sertifikası, kalite belgeleri</strong> dahil</li>
+</ul>
+
+<p class="cta-block"><strong>Delikli sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/delikli-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Delikli Sac Çeşitleri, Ölçüleri, Açıklık Oranları ve Fiyat — Tekcan Metal',
+    'Delikli sac (perforated sheet) çeşitleri yuvarlak/kare/slot/altıgen, DKP/galvaniz/paslanmaz/alüminyum, ağırlık tablosu, kullanım alanları. CNC pres + lazer kesim atölyesi. Konya merkezli Tekcan Metal — 20+ yıl, 81 il sevkiyat.',
+    NOW(), 0, 1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- ===== 2) Galvanizli Boru süper sayfa =====
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'galvanizli-boru-rehberi',
+    'Galvanizli Boru (Galvaniz Boru): Çapları, Ölçü Tablosu, Çeşitleri ve Fiyatlar',
+    'Galvanizli boru (galvaniz çelik boru) DN 15 - DN 200 (1/2-8 inch) çap aralığı, sanayi/doğalgaz/yangın/su tesisat çeşitleri, kalınlık tablosu, ağırlık ve fiyat. İGDAŞ/BAŞKENTGAZ onaylı. Konya merkezli Tekcan Metal — 20+ yıl, 81 il sevkiyat.',
+    '<p class="lead"><strong>Galvanizli boru</strong> (galvaniz boru olarak da bilinir), çelik borunun iç ve dış yüzeylerine sıcak daldırma yöntemiyle <strong>çinko (Zn) kaplaması</strong> uygulanmış, korozyona dayanıklı ve uzun ömürlü endüstriyel boru türüdür. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline çeşitli çap ve kalınlıkta galvanizli boru tedariği gerçekleştiriyoruz.</p>
+
+<h2>Galvanizli Boru Nedir? Yapısı ve Üretim Süreci</h2>
+
+<p>Galvanizli boru, üretim süreci tamamlanmış çelik borunun <strong>460°C''de erimiş çinko banyosundan</strong> geçirilmesiyle iç ve dış yüzeyi çinko ile kaplanır. Bu işlem boruyu atmosferik korozyon, nem, kimyasal etkiler ve havadaki oksijen ile çinkonun reaksiyonuna karşı 25-50 yıl koruma altına alır.</p>
+
+<p>Sektörde "<strong>galvaniz çelik boru</strong>", "<strong>çinko kaplı boru</strong>" veya İngilizce "<strong>galvanized steel pipe (GP)</strong>", "<strong>hot-dip galvanized pipe</strong>" olarak da bilinir.</p>
+
+<h3>Üretim Yöntemleri</h3>
+
+<h4>1. Sıcak Daldırma Galvaniz (Hot-Dip)</h4>
+<p>Tamamlanmış çelik boru çinko banyosuna <strong>tamamen daldırılır</strong>. İç ve dış yüzeyler eş zamanlı kaplanır. Kaplama 50-200 g/m². <strong>En yaygın ve en dayanıklı</strong> yöntem.</p>
+
+<h4>2. Daldırma Galvaniz Sonrası Şekillendirme</h4>
+<p>Önce sac galvanizlenir, sonra borulanır. Daha ekonomik ama kaynak hatlarında çinko olmaz. <strong>Mavi-beyaz şerit</strong> görünür kaynak izi.</p>
+
+<h4>3. Galvaniz-İçeride (Outside Only)</h4>
+<p>Sadece dış yüzey galvanizli, iç yüzey çıplak. Yüksek basınçlı uygulamalar için kaynak edilebilirlik kritik.</p>
+
+<h2>Galvanizli Boru Çeşitleri</h2>
+
+<h3>1. Sanayi Galvanizli Borusu</h3>
+<p>EN 10219 / TS EN 10255 standardı. Genel inşaat ve sanayi uygulamaları. <strong>1/2" - 8" çap</strong> aralığı. En yaygın kullanılan tip.</p>
+
+<h3>2. Doğalgaz Galvanizli Borusu</h3>
+<p>İGDAŞ, BAŞKENTGAZ vb. <strong>onaylı doğalgaz dağıtım</strong> hatları için. TS EN 10255-G standardı. Düşük basınçlı bina içi gaz hatları.</p>
+
+<h3>3. Su Tesisatı Galvanizli Borusu</h3>
+<p>Eski sistemlerde çok yaygın (artık PE veya kompozit boru tercih ediliyor). <strong>İçme suyu sertifikalı</strong> kaplama.</p>
+
+<h3>4. Yangın Sistemi Galvanizli Borusu</h3>
+<p>Sprinkler, hidrant, yangın hattı. UL/FM onaylı. <strong>Schedule 40</strong> veya kalın cidar tipler.</p>
+
+<h3>5. Konstrüksiyon Galvanizli Borusu</h3>
+<p>Çatı strüktürü, çelik konstrüksiyon, çadır direği. <strong>Basınç değil yapısal yük</strong> taşır.</p>
+
+<h3>6. Profil Galvanizli Borusu</h3>
+<p>Kare, dikdörtgen kesitli galvanizli profil. Mobilya, mimari uygulama, çit, korkuluk.</p>
+
+<h2>Galvanizli Boru Çapları ve Ölçü Tablosu</h2>
+
+<p>Galvanizli borular <strong>nominal çap (DN) sistemi</strong> ile satılır. Aşağıdaki tabloda yaygın ölçüler:</p>
+
+<table>
+<thead>
+<tr><th>Nominal Çap (DN)</th><th>İnch (")</th><th>Dış Çap (mm)</th><th>Standart Cidar Kalınlığı (mm)</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>DN 15</td><td>1/2"</td><td>21,3</td><td>2,3 - 2,9</td><td>Tesisat, hava hattı</td></tr>
+<tr><td>DN 20</td><td>3/4"</td><td>26,9</td><td>2,3 - 2,9</td><td>Tesisat, küçük hat</td></tr>
+<tr><td>DN 25</td><td>1"</td><td>33,7</td><td>2,9 - 3,2</td><td>Genel sanayi, doğalgaz</td></tr>
+<tr><td>DN 32</td><td>1¼"</td><td>42,4</td><td>2,9 - 3,2</td><td>Sıvı/gaz iletim</td></tr>
+<tr><td>DN 40</td><td>1½"</td><td>48,3</td><td>2,9 - 3,6</td><td>Endüstriyel hat</td></tr>
+<tr><td>DN 50</td><td>2"</td><td>60,3</td><td>3,2 - 3,6</td><td>Yangın, sanayi</td></tr>
+<tr><td>DN 65</td><td>2½"</td><td>76,1</td><td>3,2 - 4,0</td><td>Yangın hattı</td></tr>
+<tr><td>DN 80</td><td>3"</td><td>88,9</td><td>3,2 - 4,0</td><td>Hidrant, ana hat</td></tr>
+<tr><td>DN 100</td><td>4"</td><td>114,3</td><td>3,6 - 4,5</td><td>Endüstriyel ana hat</td></tr>
+<tr><td>DN 125</td><td>5"</td><td>139,7</td><td>4,0 - 5,0</td><td>Büyük dağıtım</td></tr>
+<tr><td>DN 150</td><td>6"</td><td>168,3</td><td>4,5 - 5,4</td><td>Endüstriyel</td></tr>
+<tr><td>DN 200</td><td>8"</td><td>219,1</td><td>5,4 - 6,3</td><td>Ana hat, büyük endüstri</td></tr>
+</tbody>
+</table>
+
+<h3>Standart Boy</h3>
+<p>Galvanizli borular genelde <strong>6 metre boy</strong> (4 metre, 12 metre seçenekleri de var) halinde satılır. Pakette demet sayısı çapa göre değişir.</p>
+
+<h2>Galvanizli Boru Ağırlık Hesaplama</h2>
+
+<p>Galvanizli boru ağırlığı (kg/m), boru cidar kalınlığı ve dış çapına göre hesaplanır:</p>
+
+<p><strong>Ağırlık (kg/m) = (Dış Çap - Cidar) × Cidar × π × 7,85 / 1000</strong></p>
+
+<h3>Pratik Ağırlık Tablosu (kg/m)</h3>
+
+<table>
+<thead>
+<tr><th>Çap</th><th>Cidar 2,3 mm</th><th>Cidar 2,9 mm</th><th>Cidar 3,2 mm</th><th>Cidar 4,0 mm</th></tr>
+</thead>
+<tbody>
+<tr><td>1/2" (21,3 mm)</td><td>1,08</td><td>1,32</td><td>—</td><td>—</td></tr>
+<tr><td>3/4" (26,9 mm)</td><td>1,40</td><td>1,72</td><td>—</td><td>—</td></tr>
+<tr><td>1" (33,7 mm)</td><td>—</td><td>2,21</td><td>2,42</td><td>—</td></tr>
+<tr><td>1½" (48,3 mm)</td><td>—</td><td>3,25</td><td>3,57</td><td>4,38</td></tr>
+<tr><td>2" (60,3 mm)</td><td>—</td><td>—</td><td>4,52</td><td>5,57</td></tr>
+<tr><td>3" (88,9 mm)</td><td>—</td><td>—</td><td>6,77</td><td>8,38</td></tr>
+<tr><td>4" (114,3 mm)</td><td>—</td><td>—</td><td>—</td><td>10,90</td></tr>
+<tr><td>6" (168,3 mm)</td><td>—</td><td>—</td><td>—</td><td>16,21</td></tr>
+</tbody>
+</table>
+
+<p><em>Hassas hesaplama için <a href="/hesaplama.php">online ağırlık hesaplama motorumuzu</a> kullanın. Galvaniz kaplaması ek %1-2 ağırlık katar.</em></p>
+
+<h2>Galvanizli Boru Kullanım Alanları</h2>
+
+<h3>Tesisat ve Sıhhi Tesisat</h3>
+<ul>
+<li><strong>Bina içi su tesisatı:</strong> Soğuk-sıcak su hatları (yeni binalarda PEX/PE tercih edilir, eski sistemler galvaniz)</li>
+<li><strong>Doğalgaz tesisatı:</strong> Düşük basınçlı bina içi gaz hatları (DN 15 - DN 50)</li>
+<li><strong>Sera sulama:</strong> Tarımsal sulama hatları</li>
+<li><strong>Endüstriyel su:</strong> Soğutma, proses suyu hattı</li>
+</ul>
+
+<h3>Yangın Sistemleri</h3>
+<ul>
+<li><strong>Sprinkler hatları:</strong> Otomatik yangın söndürme</li>
+<li><strong>Hidrant tesisatı:</strong> Bina dışı yangın hatları</li>
+<li><strong>Yangın dolapları:</strong> Bina içi yangın hortum sistemleri</li>
+<li><strong>Endüstriyel söndürme:</strong> Kuru yangın hatları</li>
+</ul>
+
+<h3>Konstrüksiyon</h3>
+<ul>
+<li><strong>Çatı iskeleti:</strong> Hangar, çadır, sera çelik strüktür</li>
+<li><strong>Çelik korkuluk:</strong> Merdiven, balkon, ofis</li>
+<li><strong>Çit ve bariyer:</strong> Endüstriyel saha, otopark</li>
+<li><strong>Korkuluk direği:</strong> Otoyol bariyer sistemi</li>
+<li><strong>Reklam panosu strüktürü:</strong> Açık hava reklam</li>
+</ul>
+
+<h3>Tarım ve Sera</h3>
+<ul>
+<li>Sera çatı strüktürü</li>
+<li>Damla sulama ana hatlar</li>
+<li>Hayvan barınakları çatı iskeletleri</li>
+<li>Tarım makinesi şasileri</li>
+</ul>
+
+<h3>Endüstri ve Sanayi</h3>
+<ul>
+<li>Pnömatik (basınçlı hava) hatları</li>
+<li>Endüstriyel buhar hatları (düşük basınç)</li>
+<li>Hava soğutma kanal sistemleri</li>
+<li>Konveyör ana strüktürü</li>
+</ul>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Korozyon dayanımı:</strong> Çinko, çeliğin yerine oksitlenir (sacrificial protection) — 25-50 yıl ömür</li>
+<li><strong>İç ve dış kaplama:</strong> Borunun her iki yüzeyi de korunur</li>
+<li><strong>Ekonomik:</strong> Paslanmaz çelik boruya göre %60-70 daha ucuz</li>
+<li><strong>Kaynaklanabilir:</strong> Punto, MIG, MAG kaynak yöntemleri uygulanabilir</li>
+<li><strong>Diş açılabilir:</strong> Vidalı bağlantı ile montaj yapılır (BSPT/NPT diş)</li>
+<li><strong>Yangın güvenliği:</strong> Yanmaz — A1 sınıfı malzeme</li>
+<li><strong>Geri dönüştürülebilir:</strong> %100 metal — sürdürülebilir</li>
+<li><strong>Standart ölçü desteği:</strong> Geniş stok, hızlı tedarik</li>
+</ul>
+
+<h2>Galvanizli Boru vs Diğer Borular</h2>
+
+<table>
+<thead>
+<tr><th>Özellik</th><th>Galvanizli</th><th>Siyah Çelik</th><th>Paslanmaz</th><th>PE/PEX</th></tr>
+</thead>
+<tbody>
+<tr><td>Korozyon dayanımı</td><td>Çok iyi (25-50 yıl)</td><td>Düşük (5-10 yıl)</td><td>Mükemmel (50+ yıl)</td><td>Mükemmel (50+ yıl)</td></tr>
+<tr><td>Maliyet</td><td>Orta</td><td>Düşük</td><td>Yüksek</td><td>Düşük-orta</td></tr>
+<tr><td>Yangın direnci</td><td>Mükemmel</td><td>Mükemmel</td><td>Mükemmel</td><td>Düşük</td></tr>
+<tr><td>Basınç dayanımı</td><td>Yüksek</td><td>Yüksek</td><td>Çok yüksek</td><td>Orta</td></tr>
+<tr><td>İçme suyu uygun</td><td>Evet (sertifikalı)</td><td>Hayır</td><td>Evet</td><td>Evet</td></tr>
+<tr><td>Tipik kullanım</td><td>Tesisat, yangın, gaz</td><td>Endüstriyel hat</td><td>Gıda, kimya</td><td>Yeni bina tesisat</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanizli Boru Fiyatları (2026)</h2>
+
+<p>Galvanizli boru fiyatları; <strong>çap, cidar kalınlığı, kalite sınıfı, sipariş miktarı</strong> baz alınarak belirlenir.</p>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>LME çinko fiyatı:</strong> Borsa fiyatına göre günlük değişir</li>
+<li><strong>Çelik hammadde:</strong> HRC fiyatı + işleme maliyetleri</li>
+<li><strong>Çap büyüklüğü:</strong> 1/2" en ekonomik, 8" en pahalı (m fiyatı)</li>
+<li><strong>Cidar kalınlığı:</strong> Standart 2,9 mm en yaygın, kalın cidar (4-5 mm) ek maliyet</li>
+<li><strong>Kalite sertifikası:</strong> EN 10204 3.1, doğalgaz onaylı, yangın onaylı ek maliyet</li>
+<li><strong>Sipariş miktarı:</strong> Tonaj bazında kademeli indirim</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Galvanizli boru kaç yıl dayanır?</h4>
+<p>Kullanım koşullarına bağlı: <strong>İç mekanda 50+ yıl</strong>, açık havada 25-40 yıl, agresif ortamda 15-25 yıl. Bina içi tesisatta yarım asır sorunsuz çalışır.</p>
+
+<h4>İçme suyu için galvanizli boru kullanabilir miyim?</h4>
+<p>Yeni yapılarda içme suyu için <strong>PE/PEX boru</strong> tercih ediliyor. Mevcut galvaniz tesisat değiştirilmeli olabilir; çünkü zamanla iç yüzeyde paslanma tortu birikir. <strong>İçme suyu sertifikalı galvanizli boru</strong> mevcut, ama yenisini için PE/PEX öneriyoruz.</p>
+
+<h4>Galvanizli boru kaç inç başlar?</h4>
+<p>Standart üretim <strong>1/2" (DN 15)</strong>''ten başlar. Daha küçük çaplar (1/4", 3/8") özel sipariş.</p>
+
+<h4>Galvanizli boru kesim hizmeti veriyor musunuz?</h4>
+<p>Evet. Sipariş ettiğiniz boy uzunluğunda kesim yapıyoruz. Standart 6 m, talep ederseniz 1-12 m arası kesim ücretsiz.</p>
+
+<h4>Doğalgaz onaylı galvanizli boru var mı?</h4>
+<p>Evet. <strong>İGDAŞ ve BAŞKENTGAZ onaylı</strong> TS EN 10255-G sertifikalı borularımız mevcut. Bina içi gaz tesisatı için.</p>
+
+<h4>Galvanizli boruya kaynak yapılabilir mi?</h4>
+<p>Evet ama özel teknik gerektirir. Kaynak sırasında çinko buharı çıkar, <strong>iyi havalandırma</strong> şart. Kaynaklı bölge tekrar galvanizli sprey/boya ile kaplanmalı.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli galvanizli boru sevkiyatımız var. Gümrük dokümantasyonu ve menşei şahadetnamesi tarafımızca düzenlenir.</p>
+
+<h2>Tekcan Metal Galvanizli Boru Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Erbosan, Borçelik, Borusan, Tezcan</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>Tüm çaplar:</strong> 1/2" - 8" arası geniş stok</li>
+<li>✅ <strong>Doğalgaz onaylı</strong> İGDAŞ/BAŞKENTGAZ sertifikalı borular</li>
+<li>✅ <strong>Yangın onaylı</strong> sprinkler/hidrant boruları</li>
+<li>✅ <strong>Boy kesim hizmeti</strong> — standart 6m, talebe göre 1-12m</li>
+<li>✅ <strong>EN 10204 3.1 üretici sertifikası</strong> dahil</li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>e-Fatura, kalite belgeleri, gümrük dokümantasyonu</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Galvanizli boru fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/galvanizli-boru-rehberi.jpg',
+    'Tekcan Metal',
+    'Galvanizli Boru Çapları, Ölçü Tablosu, Çeşitleri ve Fiyat — Tekcan Metal',
+    'Galvanizli boru (galvaniz boru) çapları DN 15-DN 200 (1/2-8 inch), sanayi/doğalgaz/yangın/su tesisat tipleri, ağırlık tablosu, fiyat. İGDAŞ-BAŞKENTGAZ onaylı, EN 10204 3.1 sertifikalı. Konya Tekcan Metal — 20+ yıl tecrübe.',
+    NOW(), 0, 1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- ===== 3) Ferforje optimize sayfa =====
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'ferforje-nedir',
+    'Ferforje Nedir? Üretim Yöntemleri, Kullanım Alanları ve Hammadde Tedariki',
+    'Ferforje (dövme demir) nedir, üretim yöntemleri (sıcak dövme, soğuk şekillendirme, CNC plazma), kullanım alanları (bahçe kapısı, balkon korkuluğu, merdiven trabzanı), kullanılan malzemeler. Tekcan Metal hammadde tedariki — Konya, lama, yuvarlak demir, hazır ferforje aksesuarları.',
+    '<p class="lead"><strong>Ferforje</strong>, dövme demir ya da çelik ürünlerin elle veya endüstriyel olarak şekillendirilerek dekoratif amaçlarla kullanılması sanatıdır. Bahçe kapısı, balkon korkuluğu, merdiven trabzanı, pencere demiri ve dekoratif iç mekan elemanları başta olmak üzere geniş kullanım alanı vardır.</p>
+
+<h2>Ferforje Nedir?</h2>
+<p>Ferforje kelimesi Fransızca "fer forgé" yani "dövme demir" anlamına gelir. <strong>Sıcak dövme</strong> veya <strong>soğuk şekillendirme</strong> yöntemleriyle çelik çubukların büküm, kıvırma, kıvrım, helezon ve kombinlerle dekoratif desenler oluşturulduğu metal sanatıdır.</p>
+
+<h3>Ferforje Üretim Yöntemleri</h3>
+<ul>
+<li><strong>Sıcak dövme:</strong> Çelik 1100°C''''ye kadar ısıtılır, çekiç ve örs ile şekillendirilir</li>
+<li><strong>Soğuk şekillendirme:</strong> Hidrolik veya manuel pres ile bükme/kıvırma</li>
+<li><strong>CNC plazma kesim:</strong> Karmaşık desenler için modern teknoloji</li>
+<li><strong>El işçiliği:</strong> Geleneksel ferforje için (özel projeler)</li>
+</ul>
+
+<h2>Ferforje Kullanım Alanları</h2>
+
+<h3>Yapı ve İnşaat</h3>
+<ul>
+<li><strong>Bahçe kapısı ve duvarı:</strong> Estetik girişler, villa girişleri</li>
+<li><strong>Balkon korkuluğu:</strong> Apartman, villa balkonları</li>
+<li><strong>Merdiven trabzanı:</strong> İç ve dış merdiven korkulukları</li>
+<li><strong>Pencere demiri:</strong> Güvenlik + estetik kombinasyonu</li>
+<li><strong>Çardak ve pergola:</strong> Bahçe çatı strüktürleri</li>
+<li><strong>Çiçeklik destekleri:</strong> Dış mekan dekorasyonu</li>
+</ul>
+
+<h3>İç Mekan Dekorasyon</h3>
+<ul>
+<li>Dekoratif duvar süslemeleri</li>
+<li>Salon avizesi ve aplik tasarımları</li>
+<li>Mum şamdanı, mum tutucu</li>
+<li>Şömine paravan ve aletleri</li>
+<li>Restaurant/kafe dekorasyon elemanları</li>
+</ul>
+
+<h3>Ticari ve Endüstriyel</h3>
+<ul>
+<li>Otel girişleri ve dekorasyon</li>
+<li>Restoran tabela çerçeveleri</li>
+<li>Mağaza dış cephe süslemeleri</li>
+<li>Park-bahçe çitleri</li>
+</ul>
+
+<h2>Ferforje Malzemeleri</h2>
+<p>Ferforje üretiminde kullanılan malzemeler:</p>
+<ul>
+<li><strong>Lama demiri:</strong> 12×3 mm''''den 80×10 mm''''ye kadar dikdörtgen kesitli demir</li>
+<li><strong>Yuvarlak demir:</strong> Ø8 - Ø25 mm yuvarlak çelik çubuk</li>
+<li><strong>Kare demiri:</strong> 10×10 - 30×30 mm kare profil</li>
+<li><strong>Çelik boru:</strong> Yapısal destek için galvanizli/siyah boru</li>
+<li><strong>Hazır ferforje aksesuarlar:</strong> Helezon, çiçek motifi, yaprak, halka, mızrak ucu</li>
+</ul>
+
+<h2>Ferforje Sipariş ve Üretim Süreci</h2>
+<p>Tekcan Metal olarak ferforje ürünleri için <strong>hammadde tedariki</strong> sağlıyoruz:</p>
+<ol>
+<li>Ferforje atölyesi/ustası ile çalışan müşterilerimize lama, yuvarlak ve kare demir tedarik ediyoruz</li>
+<li>Hazır ferforje aksesuarlar (helezon, motif vb.) sipariş üzerine getirebiliyoruz</li>
+<li>Ferforje üretimi yapan ustalarla bağlantı kurabilirsiniz</li>
+<li>Konya bölgesinde ferforje üreticileri için referans hizmeti sunuyoruz</li>
+</ol>
+
+<h2>Ferforje Avantajları</h2>
+<ul>
+<li><strong>Dayanıklılık:</strong> Doğru bakımla 50+ yıl ömür</li>
+<li><strong>Estetik:</strong> Klasik, antik, modern stillerin tümü</li>
+<li><strong>Özelleştirilebilir:</strong> Her proje için özel desen</li>
+<li><strong>Güvenlik:</strong> Pencere/kapı için hem güzellik hem koruma</li>
+<li><strong>Bakım:</strong> Periyodik boya ile yenilenebilir</li>
+<li><strong>Geri dönüştürülebilir:</strong> %100 metal — sürdürülebilir</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular</h2>
+
+<h4>Ferforje nedir, kelime anlamı?</h4>
+<p>Ferforje, Fransızca <em>"fer forgé"</em> kelimesinden gelir; "<strong>dövme demir</strong>" anlamındadır. Demirden el işçiliği veya endüstriyel dövme yöntemleriyle yapılan dekoratif metal işidir.</p>
+
+<h4>Ferforje paslanır mı?</h4>
+<p>Ham çelik ferforje açık havada paslanır. Korozyona karşı <strong>galvanizleme veya antipas + boya</strong> uygulaması yapılır. Periyodik bakımla 50+ yıl dayanır.</p>
+
+<h4>Ferforje üretimi yapıyor musunuz?</h4>
+<p>Tekcan Metal ferforje atölyesi olarak çalışmıyor; ancak ferforje üretici ve ustaları için <strong>hammadde tedarik</strong> ve referans hizmeti sunuyoruz. Lama, yuvarlak demir ve hazır ferforje aksesuarlarımız mevcuttur.</p>
+
+<h4>Ferforje kapı fiyatı ne kadar?</h4>
+<p>Ferforje fiyatları işçilik yoğun olduğu için ürüne özel hesaplanır. Hammadde + işçilik + boya birleşimine göre değişir. Konya bölgesinde anlaşmalı ferforje atölyeleri için bize danışabilirsiniz.</p>
+
+<p class="cta-block"><strong>Ferforje hammadde tedariki için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">İletişim</a> · <a href="/urunler.php" class="btn btn-ghost">Ürünlerimiz</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/ferforje-nedir.jpg',
+    'Tekcan Metal',
+    'Ferforje Nedir? Üretim, Kullanım Alanları ve Hammadde — Tekcan Metal',
+    'Ferforje (dövme demir) nedir, üretim yöntemleri, kullanım alanları (bahçe kapısı, balkon korkuluğu, merdiven), hammadde tedariki (lama, yuvarlak demir). Konya merkezli Tekcan Metal — 20+ yıl tecrübe.',
+    NOW(), 0, 1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- ===== 4) Mevcut DKP/Siyah/HRP Sac SEO meta zenginleştirme =====
+-- Bu sayfa zaten WP'den import edilmiş 14KB içeriğe sahip.
+-- Sadece title/meta optimize ederek SEO etkinliğini artıralım.
+UPDATE tm_blog_posts SET
+    title = 'DKP, Siyah, HRP ve ST-52 Sac: Çeşitleri, Farkları ve Kullanım Alanları',
+    excerpt = 'DKP (soğuk haddelenmiş), Siyah Sac (HRP - sıcak haddelenmiş), ST-52 yapısal çelik sac çeşitleri arasındaki farklar, kalınlıklar, yüzey özellikleri ve kullanım alanları. Tekcan Metal — Konya, üretici sertifikalı tedarik.',
+    meta_title = 'DKP, Siyah Sac, HRP, ST-52 Sac Farkları ve Çeşitleri — Tekcan Metal',
+    meta_desc = 'DKP soğuk haddelenmiş sac, Siyah/HRP sıcak haddelenmiş sac, ST-52 yapısal çelik sac arasındaki farklar, kullanım alanları, fiyat. Konya merkezli Tekcan Metal — 20+ yıl, 81 il sevkiyat.'
+WHERE slug = 'siyah-dkp-hrp-ve-st-52-sac';
