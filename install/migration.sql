@@ -4630,3 +4630,595 @@ UPDATE tm_faq SET
   answer_ar = 'نعم. تُصدر جميع فواتيرنا من خلال نظام الفاتورة الإلكترونية المتكامل مع GIB.',
   answer_ru = 'Да. Все наши счета выставляются через интегрированную с GIB систему электронных счетов.'
 WHERE category = 'fatura';
+
+-- v1.0.64 — KVKK content 3 dilde (~5000 kelime × 3 dil = ~15.000 kelime)
+UPDATE tm_pages SET
+  content_en = '<p>As Tekcan Metal Sanayi ve Ticaret Ltd. Şti., we attach the utmost importance to the protection of your personal data processed in steel supply, workshop cutting services, shipping, invoicing and customer relations. This Privacy Notice has been prepared to fulfill our obligations under Personal Data Protection Law No. 6698 (<em>"PDPL"</em>) and related legislation.</p>
+
+<h2>1. Identity of the Data Controller</h2>
+<p>Pursuant to Law No. 6698, your personal data may be processed by <strong>Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</strong> (hereinafter referred to as the <em>"Company"</em>) as the data controller, within the scope explained below.</p>
+
+<h4>Company Contact Information</h4>
+<ul>
+<li><strong>Title:</strong> Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</li>
+<li><strong>Address:</strong> Fevzicakmak Dist. Gulistan Str. Atiker 3, Block 2 No:33 AS — Karatay/KONYA</li>
+<li><strong>Phone:</strong> 0 332 342 24 52</li>
+<li><strong>E-mail:</strong> info@tekcanmetal.com</li>
+<li><strong>Web:</strong> www.tekcanmetal.com</li>
+</ul>
+
+<h2>2. Purposes of Processing Personal Data</h2>
+<p>Due to the nature of our supply activities in the steel sector, we process your personal data for the following purposes:</p>
+
+<h3>A) Supply and Sales Processes</h3>
+<ul>
+<li><strong>Preparing price quotes</strong> for sheet, pipe, profile, rolled and other steel products</li>
+<li><strong>Receiving and confirming orders</strong>, technical coordination regarding product specifications</li>
+<li>Issuing <strong>proforma invoices and contracts</strong></li>
+<li><strong>Issuing quality documents</strong> such as manufacturer certificates and certificates of origin</li>
+<li>Conducting <strong>custom-size cutting, laser cutting and oxygen cutting</strong> workshop operations specific to the order</li>
+</ul>
+
+<h3>B) Shipping and Logistics</h3>
+<ul>
+<li>Using <strong>delivery address, recipient information and contact details</strong> in our domestic shipping network covering all 81 provinces</li>
+<li>Coordinating <strong>cargo</strong> with contracted transportation companies</li>
+<li><strong>Issuing customs documents</strong> for international (Iraq, Syria, Azerbaijan, Turkmenistan) export shipments and transit logistics coordination</li>
+<li>Issuing dispatch notes and delivery receipts</li>
+</ul>
+
+<h3>C) Invoicing and Collection</h3>
+<ul>
+<li>Issuing e-Invoice, e-Archive Invoice or paper invoices</li>
+<li>Tracking <strong>bank transfer, EFT, credit card, post-dated check and term open account transactions</strong></li>
+<li>Fulfilling <strong>legal obligations to financial advisors and official authorities</strong></li>
+<li>Initiating legal proceedings in case of payment delays</li>
+</ul>
+
+<h3>D) Customer Relations and Marketing</h3>
+<ul>
+<li><strong>Managing membership records</strong> within the customer loyalty program</li>
+<li><strong>Responding to price inquiries</strong> through contact forms, WhatsApp and phone calls</li>
+<li>If you give explicit consent, sending you <strong>new product, campaign and industry announcements</strong></li>
+<li><strong>Improving the user experience</strong> on the website (our cookie policy is published separately)</li>
+</ul>
+
+<h3>E) Legal and Regulatory Obligations</h3>
+<ul>
+<li><strong>Books and document retention obligations</strong> under the Tax Procedure Law, Turkish Commercial Code and other commercial legislation</li>
+<li><strong>Responding to requests from</strong> the Financial Crimes Investigation Board (MASAK), customs administration and other <strong>authorized public institutions</strong></li>
+<li><strong>Submitting evidence and documents</strong> in legal audits, investigations and court proceedings</li>
+</ul>
+
+<h2>3. Categories of Personal Data Processed</h2>
+<p>For the purposes stated above, the following categories of personal data are processed:</p>
+
+<table>
+<thead><tr><th>Data Category</th><th>Sample Data</th></tr></thead>
+<tbody>
+<tr><td><strong>Identity Information</strong></td><td>Name, surname, ID number, tax ID, tax office, title</td></tr>
+<tr><td><strong>Contact Information</strong></td><td>Phone, mobile, e-mail, fax, address, country/city/district</td></tr>
+<tr><td><strong>Customer Transaction</strong></td><td>Order history, quote records, invoice information, payment details, shipping addresses</td></tr>
+<tr><td><strong>Financial Data</strong></td><td>Bank account information (IBAN), payment plan, term account status, credit score (when required)</td></tr>
+<tr><td><strong>Professional Information</strong></td><td>Company, position, sector (for B2B customers)</td></tr>
+<tr><td><strong>Marketing Data</strong></td><td>Communication preferences, interests, click/visit records (with explicit consent)</td></tr>
+<tr><td><strong>Legal Process</strong></td><td>Contracts, undertakings, dispute process records</td></tr>
+<tr><td><strong>Transaction Security</strong></td><td>IP address, log records, cookies, user session information</td></tr>
+</tbody>
+</table>
+
+<h2>4. Method of Collection and Legal Basis of Personal Data</h2>
+<p>Your personal data is collected through the following methods:</p>
+<ul>
+<li><strong>Through the website:</strong> Contact form, mail order application, loyalty program registration form, quote request form, price calculation wizard</li>
+<li><strong>Verbally and by phone:</strong> Phone conversations, WhatsApp messages, requests submitted to sales consultants</li>
+<li><strong>Through written documents:</strong> Signed contracts, order forms, valuable papers, delivery receipts, dispatch notes</li>
+<li><strong>Through physical visits:</strong> Business cards and product catalog forms provided during visits to our Konya headquarters and warehouse facility</li>
+<li><strong>Through third parties:</strong> Contracted transportation companies, bank approvals, financial advisors, customs brokers</li>
+<li><strong>Public sources:</strong> Open access systems such as GIB Tax Plate Inquiry, MERSIS, Trade Registry</li>
+</ul>
+
+<h4>Legal Bases (PDPL Articles 5 and 6)</h4>
+<p>Your personal data is processed based on one or more of the following legal grounds:</p>
+<ol>
+<li><strong>Explicit consent</strong> (PDPL art. 5/1) — For consent-based processing such as marketing communications</li>
+<li><strong>Establishment or performance of a contract</strong> (PDPL art. 5/2-c) — For order, shipping, invoicing processes</li>
+<li><strong>Fulfillment of a legal obligation</strong> (PDPL art. 5/2-ç) — Tax, MASAK, commercial books</li>
+<li><strong>Legitimate interest</strong> (PDPL art. 5/2-f) — Collection tracking, fraud prevention, customer relations management</li>
+<li><strong>Establishment, exercise or protection of a right</strong> (PDPL art. 5/2-e) — Legal dispute processes</li>
+</ol>
+
+<h2>5. Transfer of Personal Data</h2>
+<p>Your processed personal data may be transferred to the following third parties, limited to the disclosed purposes:</p>
+
+<h4>Domestic Transfers</h4>
+<ul>
+<li><strong>Contracted transportation companies</strong> — for shipping coordination</li>
+<li><strong>Banks and financial institutions</strong> — for collection processes</li>
+<li><strong>Financial advisors and accounting offices</strong> — for tax declaration and bookkeeping</li>
+<li><strong>Public institutions</strong> — Tax authorities, GIB, MASAK, courts (within legal obligations)</li>
+<li><strong>Solution partners</strong> — Erdemir, Borcelik, Habas etc. (only when required for ordering and quality certificate processes)</li>
+<li><strong>IT service providers</strong> — Server, e-mail, e-invoice integration providers</li>
+</ul>
+
+<h4>International Transfers</h4>
+<ul>
+<li><strong>Customs offices and freight forwarders abroad</strong> — Iraq, Syria, Azerbaijan, Turkmenistan customs procedures</li>
+<li>Personal data is transferred only to the extent necessary in the relevant export country and is protected with appropriate security measures</li>
+</ul>
+
+<h2>6. Personal Data Retention Period</h2>
+<p>Your personal data is retained for the following durations:</p>
+<ul>
+<li><strong>Tax and accounting records:</strong> 10 years (in accordance with Tax Procedure Law)</li>
+<li><strong>Commercial book records:</strong> 10 years (in accordance with Turkish Commercial Code)</li>
+<li><strong>Customer transaction records:</strong> 10 years from the end of the customer relationship</li>
+<li><strong>Marketing data:</strong> Until consent is withdrawn (at most 5 years)</li>
+<li><strong>Website log records:</strong> 6 months (Law No. 5651)</li>
+<li><strong>CV applications:</strong> 1 year (deleted if not employed)</li>
+</ul>
+<p>Personal data exceeding the legal retention period is deleted, destroyed or anonymized in accordance with our personal data destruction policy.</p>
+
+<h2>7. Personal Data Security</h2>
+<p>To ensure the security of your personal data, we implement the following technical and administrative measures:</p>
+
+<h4>Technical Measures</h4>
+<ul>
+<li>SSL/TLS encryption (HTTPS) on all forms and login screens</li>
+<li>Database servers protected with firewall and regular backups</li>
+<li>Encrypted storage of passwords (bcrypt/Argon2 algorithm)</li>
+<li>Up-to-date anti-virus and anti-malware software</li>
+<li>Restricted access through multi-factor authentication (admin panel)</li>
+<li>Regular security tests and vulnerability scanning</li>
+</ul>
+
+<h4>Administrative Measures</h4>
+<ul>
+<li>Confidentiality undertakings from employees</li>
+<li>Periodic personal data protection training</li>
+<li>Authorization matrix on the principle of access on a need-to-know basis</li>
+<li>Personal data inventory and processing activity records</li>
+<li>Data breach response plan and notification procedures</li>
+</ul>
+
+<h2>8. Rights of the Data Subject (PDPL Article 11)</h2>
+<p>Pursuant to Article 11 of PDPL, as a data subject you have the following rights:</p>
+<ol>
+<li>Learning whether your personal data is processed</li>
+<li>Requesting information regarding the processing if such processing has been done</li>
+<li>Learning the purpose of personal data processing and whether they are used for their intended purpose</li>
+<li>Knowing the third parties to whom personal data is transferred at home or abroad</li>
+<li>Requesting correction of personal data in case of incomplete or incorrect processing</li>
+<li>Requesting deletion or destruction of personal data within the framework of the conditions stipulated in Article 7 of the Law</li>
+<li>Requesting that the operations performed pursuant to subparagraphs (e) and (f) be notified to third parties to whom the personal data has been transferred</li>
+<li>Objecting to the emergence of an unfavorable result through the analysis of processed data exclusively through automated systems</li>
+<li>Requesting compensation for damages in case of suffering damages due to unlawful processing of personal data</li>
+</ol>
+
+<h2>9. Application Methods and Conclusion</h2>
+<p>You can use the rights listed above through the following methods:</p>
+
+<h4>Written Application</h4>
+<p>By delivering a wet-signed petition to the address <strong>Fevzicakmak Dist. Gulistan Str. Atiker 3, Block 2 No:33 AS — Karatay/KONYA</strong> in person or through a notary.</p>
+
+<h4>Electronic Application</h4>
+<ul>
+<li><strong>Registered Electronic Mail (KEP):</strong> If you have a KEP address, by sending to our company KEP address</li>
+<li><strong>Secure E-signed E-mail:</strong> By sending an e-signed e-mail to <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a></li>
+<li><strong>Secure Authentication:</strong> By logging into our system with a previously authenticated user account</li>
+</ul>
+
+<h4>Application Content</h4>
+<p>The following information must be included in your application:</p>
+<ul>
+<li>Name, surname, signature (in written application)</li>
+<li>For Turkish citizens: Turkish ID number; for foreigners: nationality, passport number</li>
+<li>Notification address, e-mail or fax</li>
+<li>Subject of the request (clearly stated)</li>
+<li>Information and documents subject to the request, if any</li>
+</ul>
+
+<h4>Conclusion Period</h4>
+<p>Your applications are concluded <strong>free of charge within 30 days at the latest</strong>. However, if the procedure requires additional cost, the fee determined by the Personal Data Protection Board may be charged.</p>
+
+<h2>10. Data Breach Notifications</h2>
+<p>In the event that your personal data is unlawfully obtained by others, we notify you and the Personal Data Protection Board within <strong>72 hours at the latest</strong>. The notification includes the nature of the breach, affected data, measures taken and contact information.</p>
+
+<h2>11. Changes to the Privacy Notice</h2>
+<p>This Privacy Notice may be updated due to changes in legislation, regulatory authority decisions or our company practices. The current version is published on our website at <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">www.tekcanmetal.com/sayfa.php?slug=kvkk</a>.</p>
+
+<p><em>Last update: January 2026</em></p>
+',
+  content_ar = '<p>بصفتنا تكجان ميتال للصناعة والتجارة المحدودة، نولي أهمية قصوى لحماية بياناتك الشخصية المعالجة في عمليات توريد الحديد والصلب وخدمات القطع في الورشة والشحن والفوترة وعلاقات العملاء. تم إعداد إشعار الخصوصية هذا للوفاء بالتزاماتنا بموجب قانون حماية البيانات الشخصية رقم 6698 (<em>"KVKK"</em>) والتشريعات ذات الصلة.</p>
+
+<h2>1. هوية المتحكم بالبيانات</h2>
+<p>وفقاً للقانون رقم 6698، يجوز معالجة بياناتك الشخصية من قبل <strong>تكجان ميتال للصناعة والتجارة المحدودة</strong> (المشار إليها فيما يلي بـ <em>"الشركة"</em>) بصفتها متحكماً بالبيانات، ضمن النطاق الموضح أدناه.</p>
+
+<h4>معلومات الاتصال بالشركة</h4>
+<ul>
+<li><strong>الاسم:</strong> تكجان ميتال للصناعة والتجارة المحدودة</li>
+<li><strong>العنوان:</strong> حي فوزي تشاكماك، شارع غولستان، أتيكر 3، البلوك 2 رقم 33 AS — كاراتاي/قونية</li>
+<li><strong>الهاتف:</strong> 0 332 342 24 52</li>
+<li><strong>البريد الإلكتروني:</strong> info@tekcanmetal.com</li>
+<li><strong>الموقع:</strong> www.tekcanmetal.com</li>
+</ul>
+
+<h2>2. أغراض معالجة البيانات الشخصية</h2>
+<p>نظراً لطبيعة نشاطنا في توريد الحديد والصلب، نقوم بمعالجة بياناتك الشخصية للأغراض التالية:</p>
+
+<h3>أ) عمليات التوريد والمبيعات</h3>
+<ul>
+<li><strong>إعداد عروض الأسعار</strong> للألواح والأنابيب والمقاطع والمنتجات المدرفلة وغيرها من منتجات الحديد والصلب</li>
+<li><strong>استلام الطلبات وتأكيدها</strong>، التنسيق الفني فيما يتعلق بمواصفات المنتجات</li>
+<li>إصدار <strong>الفواتير الأولية والعقود</strong></li>
+<li><strong>إصدار وثائق الجودة</strong> مثل شهادات الشركة المصنعة وشهادات المنشأ</li>
+<li>إجراء عمليات الورشة <strong>للقطع بمقاسات خاصة والقطع بالليزر والقطع بالأكسجين</strong> الخاصة بالطلب</li>
+</ul>
+
+<h3>ب) الشحن والخدمات اللوجستية</h3>
+<ul>
+<li>استخدام <strong>عنوان التسليم ومعلومات المستلم وتفاصيل الاتصال</strong> في شبكة الشحن المحلية التي تغطي جميع المحافظات الـ81</li>
+<li>تنسيق <strong>الشحنات</strong> مع شركات النقل المتعاقدة</li>
+<li><strong>إصدار الوثائق الجمركية</strong> للشحنات الدولية للتصدير (العراق، سوريا، أذربيجان، تركمانستان) وتنسيق الخدمات اللوجستية للعبور</li>
+<li>إصدار سندات الشحن وإيصالات التسليم</li>
+</ul>
+
+<h3>ج) الفوترة والتحصيل</h3>
+<ul>
+<li>إصدار الفاتورة الإلكترونية أو فاتورة الأرشيف الإلكترونية أو الفواتير الورقية</li>
+<li>متابعة <strong>التحويل البنكي و EFT وبطاقة الائتمان والشيكات الآجلة ومعاملات الحساب الجاري</strong></li>
+<li>الوفاء <strong>بالالتزامات القانونية تجاه المستشارين الماليين والسلطات الرسمية</strong></li>
+<li>بدء الإجراءات القانونية في حالة تأخر السداد</li>
+</ul>
+
+<h3>د) علاقات العملاء والتسويق</h3>
+<ul>
+<li><strong>إدارة سجلات العضوية</strong> ضمن برنامج ولاء العملاء</li>
+<li><strong>الرد على استفسارات الأسعار</strong> عبر نماذج الاتصال وواتساب والمكالمات الهاتفية</li>
+<li>في حالة موافقتك الصريحة، إرسال <strong>إعلانات المنتجات الجديدة والحملات والإعلانات الصناعية</strong> إليك</li>
+<li><strong>تحسين تجربة المستخدم</strong> على الموقع الإلكتروني (سياسة ملفات تعريف الارتباط منشورة بشكل منفصل)</li>
+</ul>
+
+<h3>هـ) الالتزامات القانونية والتنظيمية</h3>
+<ul>
+<li><strong>التزامات الاحتفاظ بالدفاتر والوثائق</strong> بموجب قانون الإجراءات الضريبية والقانون التجاري التركي والتشريعات التجارية الأخرى</li>
+<li><strong>الرد على طلبات</strong> هيئة التحقيق في الجرائم المالية (MASAK) وإدارة الجمارك وغيرها من <strong>المؤسسات العامة المعتمدة</strong></li>
+<li><strong>تقديم الأدلة والوثائق</strong> في عمليات التدقيق القانونية والتحقيقات والإجراءات القضائية</li>
+</ul>
+
+<h2>3. فئات البيانات الشخصية المعالجة</h2>
+<p>للأغراض المذكورة أعلاه، يتم معالجة فئات البيانات الشخصية التالية:</p>
+
+<table>
+<thead><tr><th>فئة البيانات</th><th>أمثلة على البيانات</th></tr></thead>
+<tbody>
+<tr><td><strong>معلومات الهوية</strong></td><td>الاسم، اللقب، رقم الهوية، رقم التعريف الضريبي، الدائرة الضريبية، اللقب الوظيفي</td></tr>
+<tr><td><strong>معلومات الاتصال</strong></td><td>الهاتف، الجوال، البريد الإلكتروني، الفاكس، العنوان، الدولة/المدينة/المنطقة</td></tr>
+<tr><td><strong>معاملات العميل</strong></td><td>تاريخ الطلبات، سجلات عروض الأسعار، معلومات الفواتير، تفاصيل الدفع، عناوين الشحن</td></tr>
+<tr><td><strong>البيانات المالية</strong></td><td>معلومات الحساب البنكي (IBAN)، خطة الدفع، حالة الحساب الآجل، التصنيف الائتماني (عند الحاجة)</td></tr>
+<tr><td><strong>المعلومات المهنية</strong></td><td>الشركة، المنصب، القطاع (لعملاء B2B)</td></tr>
+<tr><td><strong>بيانات التسويق</strong></td><td>تفضيلات الاتصال، الاهتمامات، سجلات النقر/الزيارة (بموافقة صريحة)</td></tr>
+<tr><td><strong>الإجراءات القانونية</strong></td><td>العقود، التعهدات، سجلات إجراءات النزاع</td></tr>
+<tr><td><strong>أمن المعاملات</strong></td><td>عنوان IP، سجلات السجل، ملفات تعريف الارتباط، معلومات جلسة المستخدم</td></tr>
+</tbody>
+</table>
+
+<h2>4. طريقة جمع البيانات الشخصية وأساسها القانوني</h2>
+<p>يتم جمع بياناتك الشخصية من خلال الطرق التالية:</p>
+<ul>
+<li><strong>عبر الموقع الإلكتروني:</strong> نموذج الاتصال، طلب البريد المباشر، نموذج التسجيل في برنامج الولاء، نموذج طلب عرض السعر، معالج حساب الأسعار</li>
+<li><strong>شفهياً وعبر الهاتف:</strong> المحادثات الهاتفية، رسائل واتساب، الطلبات المقدمة لمستشاري المبيعات</li>
+<li><strong>من خلال الوثائق المكتوبة:</strong> العقود الموقعة، نماذج الطلبات، الأوراق ذات القيمة، إيصالات التسليم، سندات الشحن</li>
+<li><strong>من خلال الزيارات الفعلية:</strong> بطاقات العمل ونماذج كتالوج المنتجات المقدمة أثناء الزيارات لمقرنا الرئيسي ومستودعنا في قونية</li>
+<li><strong>من خلال أطراف ثالثة:</strong> شركات النقل المتعاقدة، موافقات البنوك، المستشارون الماليون، وكلاء الجمارك</li>
+<li><strong>المصادر العامة:</strong> أنظمة الوصول المفتوحة مثل GIB لاستعلام لوحة الضرائب و MERSIS وسجل التجارة</li>
+</ul>
+
+<h4>الأسس القانونية (مادة 5 و 6 من KVKK)</h4>
+<p>تتم معالجة بياناتك الشخصية بناءً على واحد أو أكثر من الأسس القانونية التالية:</p>
+<ol>
+<li><strong>الموافقة الصريحة</strong> (مادة 5/1 من KVKK) — للمعالجات القائمة على الموافقة مثل الاتصالات التسويقية</li>
+<li><strong>إنشاء أو تنفيذ العقد</strong> (مادة 5/2-ج من KVKK) — لعمليات الطلب والشحن والفوترة</li>
+<li><strong>الوفاء بالتزام قانوني</strong> (مادة 5/2-ح من KVKK) — الضرائب، MASAK، الدفاتر التجارية</li>
+<li><strong>المصلحة المشروعة</strong> (مادة 5/2-و من KVKK) — متابعة التحصيل، منع الاحتيال، إدارة علاقات العملاء</li>
+<li><strong>إنشاء أو ممارسة أو حماية حق</strong> (مادة 5/2-هـ من KVKK) — إجراءات النزاع القانوني</li>
+</ol>
+
+<h2>5. نقل البيانات الشخصية</h2>
+<p>قد يتم نقل بياناتك الشخصية المعالجة إلى الأطراف الثالثة التالية، مع الاقتصار على الأغراض المعلنة:</p>
+
+<h4>التحويلات المحلية</h4>
+<ul>
+<li><strong>شركات النقل المتعاقدة</strong> — لتنسيق الشحن</li>
+<li><strong>البنوك والمؤسسات المالية</strong> — لعمليات التحصيل</li>
+<li><strong>المستشارون الماليون ومكاتب المحاسبة</strong> — للإقرار الضريبي ومسك الدفاتر</li>
+<li><strong>المؤسسات العامة</strong> — السلطات الضريبية، GIB، MASAK، المحاكم (ضمن الالتزامات القانونية)</li>
+<li><strong>شركاء الحلول</strong> — إرديمير، بورجيليك، حاباش وغيرها (فقط عند الحاجة لطلب وشهادات الجودة)</li>
+<li><strong>مقدمو خدمات تكنولوجيا المعلومات</strong> — مقدمو خدمات الخادم والبريد الإلكتروني وتكامل الفاتورة الإلكترونية</li>
+</ul>
+
+<h4>التحويلات الدولية</h4>
+<ul>
+<li><strong>المكاتب الجمركية ووكلاء الشحن في الخارج</strong> — إجراءات الجمارك في العراق وسوريا وأذربيجان وتركمانستان</li>
+<li>يتم نقل البيانات الشخصية فقط بالقدر اللازم في بلد التصدير المعني وتتم حمايتها بالتدابير الأمنية المناسبة</li>
+</ul>
+
+<h2>6. فترة الاحتفاظ بالبيانات الشخصية</h2>
+<p>يتم الاحتفاظ ببياناتك الشخصية للفترات التالية:</p>
+<ul>
+<li><strong>السجلات الضريبية والمحاسبية:</strong> 10 سنوات (وفقاً لقانون الإجراءات الضريبية)</li>
+<li><strong>سجلات الدفاتر التجارية:</strong> 10 سنوات (وفقاً للقانون التجاري التركي)</li>
+<li><strong>سجلات معاملات العملاء:</strong> 10 سنوات من نهاية علاقة العميل</li>
+<li><strong>بيانات التسويق:</strong> حتى سحب الموافقة (5 سنوات على الأكثر)</li>
+<li><strong>سجلات الموقع الإلكتروني:</strong> 6 أشهر (القانون رقم 5651)</li>
+<li><strong>طلبات السيرة الذاتية:</strong> سنة واحدة (تُحذف إذا لم يتم التوظيف)</li>
+</ul>
+<p>يتم حذف البيانات الشخصية التي تتجاوز فترة الاحتفاظ القانونية أو إتلافها أو إخفاء هويتها وفقاً لسياسة إتلاف البيانات الشخصية.</p>
+
+<h2>7. أمن البيانات الشخصية</h2>
+<p>لضمان أمن بياناتك الشخصية، نطبق الإجراءات التقنية والإدارية التالية:</p>
+
+<h4>الإجراءات التقنية</h4>
+<ul>
+<li>تشفير SSL/TLS (HTTPS) على جميع النماذج وشاشات تسجيل الدخول</li>
+<li>خوادم قواعد البيانات محمية بجدار حماية ونسخ احتياطية منتظمة</li>
+<li>تخزين كلمات المرور بشكل مشفر (خوارزمية bcrypt/Argon2)</li>
+<li>برامج محدثة لمكافحة الفيروسات والبرامج الضارة</li>
+<li>الوصول المقيد عبر المصادقة متعددة العوامل (لوحة الإدارة)</li>
+<li>اختبارات أمنية منتظمة وفحص الثغرات</li>
+</ul>
+
+<h4>الإجراءات الإدارية</h4>
+<ul>
+<li>تعهدات السرية من الموظفين</li>
+<li>تدريب دوري على حماية البيانات الشخصية</li>
+<li>مصفوفة الترخيص على مبدأ الوصول حسب الحاجة للمعرفة</li>
+<li>قائمة جرد البيانات الشخصية وسجلات أنشطة المعالجة</li>
+<li>خطة الاستجابة لانتهاكات البيانات وإجراءات الإخطار</li>
+</ul>
+
+<h2>8. حقوق صاحب البيانات (مادة 11 من KVKK)</h2>
+<p>وفقاً للمادة 11 من KVKK، بصفتك صاحب البيانات لديك الحقوق التالية:</p>
+<ol>
+<li>معرفة ما إذا كانت بياناتك الشخصية تتم معالجتها</li>
+<li>طلب معلومات بشأن المعالجة إذا تمت هذه المعالجة</li>
+<li>معرفة الغرض من معالجة البيانات الشخصية وما إذا كان يتم استخدامها لغرضها المقصود</li>
+<li>معرفة الأطراف الثالثة التي يتم نقل البيانات الشخصية إليها في الداخل أو الخارج</li>
+<li>طلب تصحيح البيانات الشخصية في حالة المعالجة غير المكتملة أو غير الصحيحة</li>
+<li>طلب حذف البيانات الشخصية أو إتلافها ضمن إطار الشروط المنصوص عليها في المادة 7 من القانون</li>
+<li>طلب إخطار الأطراف الثالثة التي تم نقل البيانات الشخصية إليها بالعمليات المنفذة وفقاً للفقرتين الفرعيتين (هـ) و(و)</li>
+<li>الاعتراض على ظهور نتيجة غير ملائمة من خلال تحليل البيانات المعالجة حصراً عبر الأنظمة الآلية</li>
+<li>طلب تعويض الأضرار في حالة تكبد أضرار بسبب المعالجة غير القانونية للبيانات الشخصية</li>
+</ol>
+
+<h2>9. طرق التقديم والإنجاز</h2>
+<p>يمكنك استخدام الحقوق المذكورة أعلاه من خلال الطرق التالية:</p>
+
+<h4>التقديم الكتابي</h4>
+<p>عن طريق تسليم عريضة موقعة بخط اليد إلى عنوان <strong>حي فوزي تشاكماك، شارع غولستان، أتيكر 3، البلوك 2 رقم 33 AS — كاراتاي/قونية</strong> شخصياً أو عن طريق كاتب العدل.</p>
+
+<h4>التقديم الإلكتروني</h4>
+<ul>
+<li><strong>البريد الإلكتروني المسجل (KEP):</strong> إذا كان لديك عنوان KEP، عن طريق الإرسال إلى عنوان KEP الخاص بشركتنا</li>
+<li><strong>البريد الإلكتروني الموقع إلكترونياً:</strong> عن طريق إرسال بريد إلكتروني موقع إلكترونياً إلى <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a></li>
+<li><strong>المصادقة الآمنة:</strong> عن طريق تسجيل الدخول إلى نظامنا بحساب مستخدم مصدق مسبقاً</li>
+</ul>
+
+<h4>محتوى الطلب</h4>
+<p>يجب تضمين المعلومات التالية في طلبك:</p>
+<ul>
+<li>الاسم، اللقب، التوقيع (في الطلب الكتابي)</li>
+<li>للمواطنين الأتراك: رقم الهوية التركية؛ للأجانب: الجنسية ورقم جواز السفر</li>
+<li>عنوان الإخطار، البريد الإلكتروني أو الفاكس</li>
+<li>موضوع الطلب (مذكور بوضوح)</li>
+<li>المعلومات والوثائق الخاضعة للطلب، إن وجدت</li>
+</ul>
+
+<h4>فترة الإنجاز</h4>
+<p>يتم إنجاز طلباتك <strong>مجاناً في غضون 30 يوماً كحد أقصى</strong>. ومع ذلك، إذا تطلبت الإجراءات تكلفة إضافية، فقد يتم تحصيل الرسوم التي يحددها مجلس حماية البيانات الشخصية.</p>
+
+<h2>10. إخطارات انتهاك البيانات</h2>
+<p>في حالة الحصول على بياناتك الشخصية بشكل غير قانوني من قبل آخرين، نخطرك ومجلس حماية البيانات الشخصية في غضون <strong>72 ساعة كحد أقصى</strong>. يتضمن الإخطار طبيعة الانتهاك والبيانات المتأثرة والإجراءات المتخذة ومعلومات الاتصال.</p>
+
+<h2>11. التغييرات في إشعار الخصوصية</h2>
+<p>قد يتم تحديث إشعار الخصوصية هذا بسبب التغييرات في التشريعات أو قرارات السلطة التنظيمية أو ممارسات شركتنا. يتم نشر النسخة الحالية على موقعنا الإلكتروني على <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">www.tekcanmetal.com/sayfa.php?slug=kvkk</a>.</p>
+
+<p><em>آخر تحديث: يناير 2026</em></p>
+',
+  content_ru = '<p>Как Tekcan Metal Sanayi ve Ticaret Ltd. Şti., мы придаём первостепенное значение защите ваших персональных данных, обрабатываемых в процессах поставки металла, услуг резки в цеху, доставки, выставления счетов и работы с клиентами. Настоящее Уведомление о конфиденциальности подготовлено для выполнения наших обязательств в рамках Закона № 6698 о защите персональных данных (<em>"ЗоЗПД"</em>) и соответствующего законодательства.</p>
+
+<h2>1. Личность контролёра данных</h2>
+<p>В соответствии с Законом № 6698 ваши персональные данные могут обрабатываться компанией <strong>Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</strong> (далее именуемой <em>"Компания"</em>) в качестве контролёра данных в рамках, описанных ниже.</p>
+
+<h4>Контактная информация компании</h4>
+<ul>
+<li><strong>Наименование:</strong> Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</li>
+<li><strong>Адрес:</strong> Район Февзичакмак, ул. Гюлистан, Атикер 3, Блок 2 № 33 AS — Каратай/КОНЬЯ</li>
+<li><strong>Телефон:</strong> 0 332 342 24 52</li>
+<li><strong>Электронная почта:</strong> info@tekcanmetal.com</li>
+<li><strong>Сайт:</strong> www.tekcanmetal.com</li>
+</ul>
+
+<h2>2. Цели обработки персональных данных</h2>
+<p>В силу характера нашей деятельности по поставке металла мы обрабатываем ваши персональные данные в следующих целях:</p>
+
+<h3>А) Процессы поставки и продаж</h3>
+<ul>
+<li><strong>Подготовка коммерческих предложений</strong> на листы, трубы, профили, прокат и другую металлопродукцию</li>
+<li><strong>Приём и подтверждение заказов</strong>, техническая координация по характеристикам продукции</li>
+<li>Оформление <strong>проформ-инвойсов и договоров</strong></li>
+<li><strong>Оформление документов качества</strong>, таких как сертификаты производителя и сертификаты происхождения</li>
+<li>Проведение цеховых операций <strong>резки нестандартных размеров, лазерной резки и газокислородной резки</strong> по индивидуальным заказам</li>
+</ul>
+
+<h3>Б) Доставка и логистика</h3>
+<ul>
+<li>Использование <strong>адреса доставки, информации о получателе и контактных данных</strong> в нашей внутренней сети доставки, охватывающей все 81 провинцию</li>
+<li>Координация <strong>грузоперевозок</strong> с партнёрами-перевозчиками</li>
+<li><strong>Оформление таможенных документов</strong> для международных экспортных отгрузок (Ирак, Сирия, Азербайджан, Туркменистан) и координация транзитной логистики</li>
+<li>Оформление транспортных накладных и актов приёма-передачи</li>
+</ul>
+
+<h3>В) Выставление счетов и взыскание</h3>
+<ul>
+<li>Выставление электронных счетов, электронных архивных счетов или бумажных счетов</li>
+<li>Отслеживание <strong>банковских переводов, EFT, кредитных карт, отсроченных чеков и операций по открытому срочному счёту</strong></li>
+<li>Выполнение <strong>юридических обязательств перед финансовыми консультантами и официальными органами</strong></li>
+<li>Возбуждение судебных разбирательств в случае задержки платежей</li>
+</ul>
+
+<h3>Г) Работа с клиентами и маркетинг</h3>
+<ul>
+<li><strong>Управление членскими записями</strong> в рамках программы лояльности клиентов</li>
+<li><strong>Ответы на ценовые запросы</strong> через контактные формы, WhatsApp и телефонные звонки</li>
+<li>В случае вашего явного согласия отправка вам <strong>анонсов о новых продуктах, акциях и отраслевых событиях</strong></li>
+<li><strong>Улучшение пользовательского опыта</strong> на сайте (наша политика cookie публикуется отдельно)</li>
+</ul>
+
+<h3>Д) Юридические и нормативные обязательства</h3>
+<ul>
+<li><strong>Обязательства по хранению книг и документов</strong> в соответствии с Законом о налоговой процедуре, Турецким коммерческим кодексом и другим коммерческим законодательством</li>
+<li><strong>Ответы на запросы</strong> Совета по расследованию финансовых преступлений (MASAK), таможенной администрации и других <strong>уполномоченных государственных учреждений</strong></li>
+<li><strong>Предоставление доказательств и документов</strong> в ходе юридических аудитов, расследований и судебных разбирательств</li>
+</ul>
+
+<h2>3. Категории обрабатываемых персональных данных</h2>
+<p>Для указанных выше целей обрабатываются следующие категории персональных данных:</p>
+
+<table>
+<thead><tr><th>Категория данных</th><th>Примеры данных</th></tr></thead>
+<tbody>
+<tr><td><strong>Идентификационные данные</strong></td><td>Имя, фамилия, номер ID, ИНН, налоговая инспекция, должность</td></tr>
+<tr><td><strong>Контактные данные</strong></td><td>Телефон, мобильный, электронная почта, факс, адрес, страна/город/район</td></tr>
+<tr><td><strong>Транзакции клиента</strong></td><td>История заказов, записи предложений, информация по счетам, данные платежей, адреса доставки</td></tr>
+<tr><td><strong>Финансовые данные</strong></td><td>Банковские реквизиты (IBAN), план платежей, статус срочного счёта, кредитный рейтинг (при необходимости)</td></tr>
+<tr><td><strong>Профессиональная информация</strong></td><td>Компания, должность, отрасль (для B2B-клиентов)</td></tr>
+<tr><td><strong>Маркетинговые данные</strong></td><td>Коммуникационные предпочтения, интересы, записи кликов/посещений (с явным согласием)</td></tr>
+<tr><td><strong>Юридические процессы</strong></td><td>Договоры, обязательства, записи о спорах</td></tr>
+<tr><td><strong>Безопасность транзакций</strong></td><td>IP-адрес, журналы, cookie, информация о сеансе пользователя</td></tr>
+</tbody>
+</table>
+
+<h2>4. Способ сбора персональных данных и правовое основание</h2>
+<p>Ваши персональные данные собираются следующими способами:</p>
+<ul>
+<li><strong>Через сайт:</strong> Контактная форма, заявка на mail order, регистрационная форма программы лояльности, форма запроса предложения, мастер расчёта цен</li>
+<li><strong>Устно и по телефону:</strong> Телефонные разговоры, переписка в WhatsApp, запросы, направляемые консультантам по продажам</li>
+<li><strong>Через письменные документы:</strong> Подписанные договоры, бланки заказов, ценные бумаги, акты приёма, транспортные накладные</li>
+<li><strong>Через личные визиты:</strong> Визитные карточки и формы каталога продукции, заполненные во время посещения нашего головного офиса и склада в Конье</li>
+<li><strong>Через третьи стороны:</strong> Партнёры-перевозчики, банковские подтверждения, финансовые консультанты, таможенные брокеры</li>
+<li><strong>Открытые источники:</strong> Системы открытого доступа, такие как GIB-проверка налогового свидетельства, MERSIS, Торговый реестр</li>
+</ul>
+
+<h4>Правовые основания (ст. 5 и 6 ЗоЗПД)</h4>
+<p>Ваши персональные данные обрабатываются на основании одного или нескольких из следующих правовых оснований:</p>
+<ol>
+<li><strong>Явное согласие</strong> (ст. 5/1 ЗоЗПД) — Для обработки на основе согласия, такой как маркетинговые коммуникации</li>
+<li><strong>Заключение или исполнение договора</strong> (ст. 5/2-в ЗоЗПД) — Для процессов заказа, доставки, выставления счетов</li>
+<li><strong>Выполнение юридического обязательства</strong> (ст. 5/2-г ЗоЗПД) — Налоги, MASAK, коммерческие книги</li>
+<li><strong>Законный интерес</strong> (ст. 5/2-е ЗоЗПД) — Отслеживание платежей, предотвращение мошенничества, управление клиентскими отношениями</li>
+<li><strong>Установление, осуществление или защита права</strong> (ст. 5/2-д ЗоЗПД) — Юридические споры</li>
+</ol>
+
+<h2>5. Передача персональных данных</h2>
+<p>Обработанные вами персональные данные могут быть переданы следующим третьим сторонам, ограниченным заявленными целями:</p>
+
+<h4>Внутренние передачи</h4>
+<ul>
+<li><strong>Партнёры-перевозчики</strong> — для координации доставки</li>
+<li><strong>Банки и финансовые учреждения</strong> — для процессов взыскания</li>
+<li><strong>Финансовые консультанты и бухгалтерские офисы</strong> — для налоговых деклараций и ведения книг</li>
+<li><strong>Государственные учреждения</strong> — Налоговые органы, GIB, MASAK, суды (в рамках юридических обязательств)</li>
+<li><strong>Партнёры по решениям</strong> — Erdemir, Borcelik, Habas и др. (только при необходимости для процессов заказа и сертификатов качества)</li>
+<li><strong>Поставщики ИТ-услуг</strong> — Поставщики серверов, электронной почты, интеграции электронных счетов</li>
+</ul>
+
+<h4>Международные передачи</h4>
+<ul>
+<li><strong>Таможенные службы и экспедиторы за рубежом</strong> — Таможенные процедуры в Ираке, Сирии, Азербайджане, Туркменистане</li>
+<li>Персональные данные передаются только в объёме, необходимом в соответствующей стране экспорта, и защищены соответствующими мерами безопасности</li>
+</ul>
+
+<h2>6. Срок хранения персональных данных</h2>
+<p>Ваши персональные данные хранятся в течение следующих сроков:</p>
+<ul>
+<li><strong>Налоговые и бухгалтерские записи:</strong> 10 лет (в соответствии с Законом о налоговой процедуре)</li>
+<li><strong>Записи коммерческих книг:</strong> 10 лет (в соответствии с Турецким коммерческим кодексом)</li>
+<li><strong>Записи транзакций клиентов:</strong> 10 лет с окончания клиентских отношений</li>
+<li><strong>Маркетинговые данные:</strong> До отзыва согласия (максимум 5 лет)</li>
+<li><strong>Журналы сайта:</strong> 6 месяцев (Закон № 5651)</li>
+<li><strong>Заявки на работу:</strong> 1 год (удаляются, если не приняты на работу)</li>
+</ul>
+<p>Персональные данные, превышающие установленный законом срок хранения, удаляются, уничтожаются или анонимизируются в соответствии с нашей политикой уничтожения персональных данных.</p>
+
+<h2>7. Безопасность персональных данных</h2>
+<p>Для обеспечения безопасности ваших персональных данных мы применяем следующие технические и административные меры:</p>
+
+<h4>Технические меры</h4>
+<ul>
+<li>SSL/TLS-шифрование (HTTPS) на всех формах и экранах входа</li>
+<li>Серверы баз данных защищены файрволом и регулярным резервным копированием</li>
+<li>Зашифрованное хранение паролей (алгоритм bcrypt/Argon2)</li>
+<li>Актуальное антивирусное и антишпионское ПО</li>
+<li>Ограниченный доступ через многофакторную аутентификацию (админ-панель)</li>
+<li>Регулярные тесты безопасности и сканирование уязвимостей</li>
+</ul>
+
+<h4>Административные меры</h4>
+<ul>
+<li>Соглашения о конфиденциальности от сотрудников</li>
+<li>Периодическое обучение защите персональных данных</li>
+<li>Матрица авторизации по принципу доступа на основе необходимости знать</li>
+<li>Реестр персональных данных и записи о деятельности по обработке</li>
+<li>План реагирования на нарушения данных и процедуры уведомления</li>
+</ul>
+
+<h2>8. Права субъекта данных (ст. 11 ЗоЗПД)</h2>
+<p>В соответствии со статьёй 11 ЗоЗПД, как субъект данных вы имеете следующие права:</p>
+<ol>
+<li>Узнать, обрабатываются ли ваши персональные данные</li>
+<li>Запросить информацию об обработке, если такая обработка проводилась</li>
+<li>Узнать цель обработки персональных данных и используются ли они по назначению</li>
+<li>Знать третьи стороны, которым передаются персональные данные внутри страны или за рубежом</li>
+<li>Запросить исправление персональных данных в случае неполной или неверной обработки</li>
+<li>Запросить удаление или уничтожение персональных данных в рамках условий, установленных статьёй 7 Закона</li>
+<li>Запросить уведомление третьих сторон, которым были переданы персональные данные, об операциях, выполненных согласно подпунктам (д) и (е)</li>
+<li>Возразить против появления неблагоприятного результата через анализ обработанных данных исключительно автоматизированными системами</li>
+<li>Запросить компенсацию ущерба в случае ущерба из-за незаконной обработки персональных данных</li>
+</ol>
+
+<h2>9. Способы подачи заявления и его рассмотрение</h2>
+<p>Вы можете воспользоваться перечисленными выше правами следующими способами:</p>
+
+<h4>Письменное заявление</h4>
+<p>Доставив петицию с собственноручной подписью на адрес <strong>Район Февзичакмак, ул. Гюлистан, Атикер 3, Блок 2 № 33 AS — Каратай/КОНЬЯ</strong> лично или через нотариуса.</p>
+
+<h4>Электронное заявление</h4>
+<ul>
+<li><strong>Зарегистрированная электронная почта (KEP):</strong> Если у вас есть адрес KEP, путём отправки на корпоративный адрес KEP нашей компании</li>
+<li><strong>Электронная почта с защищённой ЭЦП:</strong> Путём отправки электронного письма с электронной подписью на <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a></li>
+<li><strong>Безопасная аутентификация:</strong> Путём входа в нашу систему с ранее аутентифицированной учётной записью пользователя</li>
+</ul>
+
+<h4>Содержание заявления</h4>
+<p>В заявлении должна быть указана следующая информация:</p>
+<ul>
+<li>Имя, фамилия, подпись (в письменном заявлении)</li>
+<li>Для граждан Турции: номер ID Турции; для иностранцев: гражданство, номер паспорта</li>
+<li>Адрес для уведомлений, электронная почта или факс</li>
+<li>Предмет запроса (чётко указанный)</li>
+<li>Информация и документы, относящиеся к запросу, при наличии</li>
+</ul>
+
+<h4>Срок рассмотрения</h4>
+<p>Ваши заявления рассматриваются <strong>бесплатно в срок не более 30 дней</strong>. Однако, если процедура требует дополнительных затрат, может взиматься плата, определённая Советом по защите персональных данных.</p>
+
+<h2>10. Уведомления о нарушении данных</h2>
+<p>В случае незаконного получения ваших персональных данных другими лицами мы уведомляем вас и Совет по защите персональных данных в течение <strong>не более 72 часов</strong>. Уведомление включает характер нарушения, затронутые данные, принятые меры и контактную информацию.</p>
+
+<h2>11. Изменения в Уведомлении о конфиденциальности</h2>
+<p>Настоящее Уведомление о конфиденциальности может обновляться в связи с изменениями в законодательстве, решениями регулирующих органов или практикой нашей компании. Текущая версия публикуется на нашем сайте по адресу <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">www.tekcanmetal.com/sayfa.php?slug=kvkk</a>.</p>
+
+<p><em>Последнее обновление: январь 2026</em></p>
+'
+WHERE slug = 'kvkk';
