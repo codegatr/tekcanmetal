@@ -1,12 +1,17 @@
 <?php
 define('TM_ADMIN', true);
-$adminTitle = 'Güncelleme Merkezi';
-require __DIR__ . '/_layout.php';
+
+// _helpers ve db.php önce — yetki kontrolü için
+require_once __DIR__ . '/../includes/db.php';
 require __DIR__ . '/_helpers.php';
 
-// Sadece superadmin ve admin
-if (!in_array($adminUser['role'] ?? '', ['superadmin', 'admin'], true)) {
-    adm_back_with('error', 'Bu sayfa için yetkiniz yok.', 'admin/index.php');
+// Yetki kontrolü
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (empty($_SESSION['admin_id'])) redirect('admin/login.php');
+$adminUser = row("SELECT id, username, full_name, email, role FROM tm_users WHERE id=? AND is_active=1", [$_SESSION['admin_id']]);
+if (!$adminUser || !in_array($adminUser['role'] ?? '', ['superadmin', 'admin'], true)) {
+    flash('error', 'Bu sayfa için yetkiniz yok.');
+    redirect('admin/index.php');
 }
 
 $action = $_GET['action'] ?? 'home';
@@ -14,6 +19,8 @@ $action = $_GET['action'] ?? 'home';
 // GitHub config — önce settings, sonra config.php constant'ları
 $githubRepo  = settings('github_repo')  ?: (defined('GITHUB_REPO')  ? GITHUB_REPO  : '');
 $githubToken = settings('github_token') ?: (defined('GITHUB_TOKEN') ? GITHUB_TOKEN : '');
+
+$adminTitle = 'Güncelleme Merkezi';
 
 /* ========== HELPERS ========== */
 function gh_api(string $url, ?string $token = null, bool $raw = false): array {
@@ -77,15 +84,54 @@ function rrmdir(string $dir): void {
     @rmdir($dir);
 }
 
-function rcopy(string $src, string $dst): void {
-    if (!is_dir($dst)) @mkdir($dst, 0755, true);
+function rcopy(string $src, string $dst): array {
+    // AGRESİF VERSİYON: hata bastırma yok, detaylı log dön.
+    $log = ['copied' => 0, 'failed' => 0, 'skipped' => 0, 'errors' => []];
+    if (!is_dir($dst)) {
+        if (!@mkdir($dst, 0755, true) && !is_dir($dst)) {
+            $log['errors'][] = "Klasör oluşturulamadı: $dst";
+            return $log;
+        }
+    }
     foreach (scandir($src) as $entry) {
         if ($entry === '.' || $entry === '..') continue;
         $sp = $src . '/' . $entry;
         $dp = $dst . '/' . $entry;
-        if (is_dir($sp)) rcopy($sp, $dp);
-        else @copy($sp, $dp);
+        if (is_dir($sp)) {
+            $sub = rcopy($sp, $dp);
+            $log['copied']  += $sub['copied'];
+            $log['failed']  += $sub['failed'];
+            $log['skipped'] += $sub['skipped'];
+            $log['errors']   = array_merge($log['errors'], $sub['errors']);
+        } else {
+            // Dosya zaten var ama yazma izni yok mu?
+            if (file_exists($dp) && !is_writable($dp)) {
+                @chmod($dp, 0644);  // izin düzelt
+            }
+            // Dosyayı sil ve yeniden yaz (force overwrite)
+            if (file_exists($dp)) {
+                @unlink($dp);
+            }
+            // Önce hash karşılaştır — gerçekten farklı mı
+            $srcMd5 = @md5_file($sp);
+            // Kopyala
+            if (@copy($sp, $dp)) {
+                $dstMd5 = @md5_file($dp);
+                if ($srcMd5 && $dstMd5 && $srcMd5 === $dstMd5) {
+                    $log['copied']++;
+                    @chmod($dp, 0644);  // standart izin
+                } else {
+                    $log['failed']++;
+                    $log['errors'][] = "MD5 uyuşmuyor: $dp";
+                }
+            } else {
+                $log['failed']++;
+                $err = error_get_last();
+                $log['errors'][] = "copy() başarısız: $sp → $dp" . ($err ? " ({$err['message']})" : '');
+            }
+        }
     }
+    return $log;
 }
 
 function exclude_paths(): array {
@@ -143,19 +189,60 @@ function extract_update_zip(string $zipPath): array {
 
     $root = realpath(__DIR__ . '/..');
     $excluded = exclude_paths();
-    $copied = 0;
+
+    $totalCopied = 0;
+    $totalFailed = 0;
+    $allErrors = [];
+    $detail = [];
 
     foreach (scandir($source) as $entry) {
         if ($entry === '.' || $entry === '..') continue;
-        if (in_array($entry, $excluded, true)) continue;
+        if (in_array($entry, $excluded, true)) {
+            $detail[] = "↪ atlandı (korunuyor): $entry";
+            continue;
+        }
         $sp = $source . '/' . $entry;
         $dp = $root . '/' . $entry;
-        if (is_dir($sp)) { rcopy($sp, $dp); $copied++; }
-        else { @copy($sp, $dp); $copied++; }
+        if (is_dir($sp)) {
+            $log = rcopy($sp, $dp);
+            $totalCopied += $log['copied'];
+            $totalFailed += $log['failed'];
+            $allErrors    = array_merge($allErrors, $log['errors']);
+            $detail[] = "📁 $entry — {$log['copied']} dosya kopyalandı" . ($log['failed'] ? " ({$log['failed']} hata)" : '');
+        } else {
+            // Tek dosyalar (root altındaki .htaccess, manifest.json, vs)
+            if (file_exists($dp) && !is_writable($dp)) @chmod($dp, 0644);
+            if (file_exists($dp)) @unlink($dp);
+            if (@copy($sp, $dp)) {
+                @chmod($dp, 0644);
+                $totalCopied++;
+                $detail[] = "✓ $entry";
+            } else {
+                $totalFailed++;
+                $err = error_get_last();
+                $detail[] = "✗ $entry — copy başarısız" . ($err ? ": {$err['message']}" : '');
+                $allErrors[] = "$entry: copy() failed";
+            }
+        }
     }
 
     rrmdir($tmp);
-    return ['ok' => true, 'msg' => "$copied öğe güncellendi.", 'count' => $copied];
+
+    // Detaylı log session'a kaydet ki Yunus görsün
+    $_SESSION['update_detail'] = [
+        'copied' => $totalCopied,
+        'failed' => $totalFailed,
+        'detail' => $detail,
+        'errors' => $allErrors,
+        'time'   => date('Y-m-d H:i:s'),
+    ];
+
+    return [
+        'ok'     => $totalFailed === 0,
+        'msg'    => "$totalCopied öğe güncellendi" . ($totalFailed ? ", {$totalFailed} dosya kopyalanamadı" : ''),
+        'count'  => $totalCopied,
+        'failed' => $totalFailed,
+    ];
 }
 
 /* ========== POST ACTIONS ========== */
@@ -469,6 +556,10 @@ function rel_time(int $ts): string {
     if ($diff < 604800) return floor($diff/86400) . ' gün önce';
     return date('d.m.Y', $ts);
 }
+
+/* ========== _layout SADECE POST işlendikten sonra çağrılır
+   (header redirect güvenli olsun diye) ========== */
+require __DIR__ . '/_layout.php';
 ?>
 
 <style>
@@ -712,6 +803,42 @@ function rel_time(int $ts): string {
     .gm-list-actions{align-self:stretch;justify-content:flex-start}
   }
 </style>
+
+<?php
+// Detaylı güncelleme logu — son güncellemeden hemen sonra Yunus'a göster
+$updateDetail = $_SESSION['update_detail'] ?? null;
+unset($_SESSION['update_detail']);
+?>
+
+<?php if ($updateDetail): ?>
+<div style="background:#0d1117;color:#c9d1d9;border:1px solid #30363d;margin-bottom:20px;font-family:ui-monospace,monospace">
+  <div style="background:linear-gradient(135deg,#0c1e44,#143672);padding:14px 22px;color:#fff;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <strong style="font-size:14px">📋 Son Güncelleme Detay Logu</strong>
+      <span style="opacity:.7;font-size:12px;margin-left:10px"><?= htmlspecialchars($updateDetail['time']) ?></span>
+    </div>
+    <div>
+      <span style="background:#16a34a;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:1px">✓ <?= $updateDetail['copied'] ?> KOPYALANDI</span>
+      <?php if ($updateDetail['failed'] > 0): ?>
+        <span style="background:#c8102e;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:1px;margin-left:6px">✗ <?= $updateDetail['failed'] ?> HATA</span>
+      <?php endif; ?>
+    </div>
+  </div>
+  <div style="padding:14px 22px;font-size:12.5px;line-height:1.8;max-height:280px;overflow-y:auto">
+    <?php foreach ($updateDetail['detail'] as $line): ?>
+      <div><?= htmlspecialchars($line) ?></div>
+    <?php endforeach; ?>
+  </div>
+  <?php if (!empty($updateDetail['errors'])): ?>
+  <div style="background:#3d0e10;padding:14px 22px;color:#f85149;border-top:1px solid #30363d">
+    <strong>⚠ Hatalar:</strong>
+    <?php foreach ($updateDetail['errors'] as $err): ?>
+      <div style="font-size:12px;margin-top:6px"><?= htmlspecialchars($err) ?></div>
+    <?php endforeach; ?>
+  </div>
+  <?php endif; ?>
+</div>
+<?php endif; ?>
 
 <div class="gm-shell">
 
