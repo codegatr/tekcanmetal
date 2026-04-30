@@ -67,6 +67,129 @@ function gh_download_to_file(string $url, string $token, string $dest): bool {
     return $ok && $code >= 200 && $code < 400 && filesize($dest) > 0;
 }
 
+/**
+ * v1.0.41 — Tek bir dosyanın içeriğini GitHub raw API'den indirir.
+ * ERP'nin Smart Sync mantığında her dosya tek tek indirilir.
+ * Dönüş: dosyanın binary içeriği veya null (hata)
+ */
+function gh_get_file_content(string $repo, string $branch, string $path, string $token): ?string {
+    // Önce contents API (base64 encoded — küçük dosyalar için ideal)
+    $apiUrl = "https://api.github.com/repos/{$repo}/contents/" . str_replace('%2F', '/', rawurlencode($path)) . "?ref=" . $branch;
+    $r = gh_api($apiUrl, $token);
+    if ($r['code'] === 200) {
+        $data = json_decode($r['body'], true);
+        if (!empty($data['content'])) {
+            return base64_decode(str_replace(["\n", "\r"], '', $data['content']));
+        }
+    }
+    // Fallback: raw.githubusercontent.com (büyük dosyalar için)
+    $rawUrl = "https://raw.githubusercontent.com/{$repo}/{$branch}/{$path}";
+    $ch = curl_init($rawUrl);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_TIMEOUT        => 60,
+        CURLOPT_HTTPHEADER     => [
+            'User-Agent: TekcanMetal-CMS/' . TM_VERSION,
+            'Authorization: Bearer ' . $token,
+        ],
+        CURLOPT_SSL_VERIFYPEER => true,
+    ]);
+    $body = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($code >= 200 && $code < 400 && $body !== false) {
+        return $body;
+    }
+    return null;
+}
+
+/**
+ * v1.0.41 — Hızlı yedek (sadece kritik kod dosyaları)
+ * ERP'den ilham alınmış: 10 MB üstü atlanır, 2000 dosya safety limit.
+ * Backup içeriği: kök PHP dosyaları + admin/, includes/, install/, assets/css/, assets/js/
+ * uploads/ ve yedek/ asla yedeklenmez (zaten kullanıcı verisi)
+ */
+function backup_current_fast(string $version): ?string {
+    if (!class_exists('ZipArchive')) return null;
+    $bd = backup_dir();
+    $stamp = date('Ymd_His');
+    $file = $bd . "/{$version}_{$stamp}.zip";
+    $root = realpath(__DIR__ . '/..');
+    if (!$root) return null;
+
+    $zip = new ZipArchive();
+    if ($zip->open($file, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return null;
+
+    // Kritik kod klasörleri (yedek değer üreten)
+    $criticalDirs = ['admin', 'includes', 'install', 'api'];
+    $excluded = exclude_paths();
+    $count = 0;
+    $maxFiles = 2000;
+    $maxFileSize = 10 * 1024 * 1024; // 10 MB
+
+    // 1) Kök seviyesindeki PHP/JSON/HTACCESS dosyaları
+    foreach (glob($root . '/*') as $f) {
+        if ($count >= $maxFiles) break;
+        if (!is_file($f)) continue;
+        $base = basename($f);
+        if (in_array($base, $excluded, true)) continue;
+        if (filesize($f) > $maxFileSize) continue;
+        // Sadece kod dosyaları
+        if (!preg_match('/\.(php|json|md|txt|xml|html|htaccess)$/i', $base) && $base !== '.htaccess') continue;
+        $zip->addFile($f, $base);
+        $count++;
+    }
+
+    // 2) Kritik klasörler — ama assets/img, uploads içermez
+    foreach ($criticalDirs as $cd) {
+        $sourceDir = $root . '/' . $cd;
+        if (!is_dir($sourceDir)) continue;
+        $rii = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS)
+        );
+        foreach ($rii as $f) {
+            if ($count >= $maxFiles) break 2;
+            if (!$f->isFile()) continue;
+            if ($f->getSize() > $maxFileSize) continue;
+            $rel = ltrim(substr($f->getPathname(), strlen($root)), '/\\');
+            // Exclude check
+            $segments = explode('/', str_replace('\\', '/', $rel));
+            $skip = false;
+            foreach ($excluded as $ex) {
+                if (in_array($ex, $segments, true)) { $skip = true; break; }
+            }
+            if ($skip) continue;
+            $zip->addFile($f->getPathname(), $rel);
+            $count++;
+        }
+    }
+
+    // 3) assets/css ve assets/js (görselsiz)
+    foreach (['assets/css', 'assets/js'] as $assetDir) {
+        $sourceDir = $root . '/' . $assetDir;
+        if (!is_dir($sourceDir)) continue;
+        foreach (glob($sourceDir . '/*') as $f) {
+            if ($count >= $maxFiles) break 2;
+            if (!is_file($f)) continue;
+            if (filesize($f) > $maxFileSize) continue;
+            $rel = $assetDir . '/' . basename($f);
+            $zip->addFile($f, $rel);
+            $count++;
+        }
+    }
+
+    $zip->close();
+
+    // Eski yedekleri temizle (en fazla 10 yedek)
+    $bks = glob($bd . '/*.zip') ?: [];
+    usort($bks, fn($a, $b) => filemtime($a) <=> filemtime($b));
+    $maxBackups = 10;
+    foreach (array_slice($bks, 0, max(0, count($bks) - $maxBackups)) as $old) @unlink($old);
+
+    return file_exists($file) ? $file : null;
+}
+
 function backup_dir(): string {
     $dir = __DIR__ . '/../yedek';
     if (!is_dir($dir)) @mkdir($dir, 0755, true);
@@ -262,54 +385,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
 
     /* GitHub'dan güncelle */
     if ($action === 'update_github') {
+        // ═══════════════════════════════════════════════════
+        // v1.0.41: Dosya-bazlı SHA karşılaştırma (ERP stili)
+        // 30sn timeout sorunu çözülür: ZIP indirme yerine değişen
+        // dosyaları tek tek API'den çek
+        // ═══════════════════════════════════════════════════
+        @set_time_limit(0);
+        @ini_set('max_execution_time', '0');
+        @ini_set('memory_limit', '512M');
+        @ignore_user_abort(true);
+
         if (!$githubRepo)  adm_back_with('error', 'GitHub repo ayarı boş.', 'admin/guncelleme.php');
         if (!$githubToken) adm_back_with('error', 'GitHub token boş. Ayarlardan ekleyin.', 'admin/guncelleme.php');
 
-        $r = gh_api("https://api.github.com/repos/{$githubRepo}/releases/latest", $githubToken);
-        if ($r['code'] !== 200) adm_back_with('error', "GitHub API hatası ({$r['code']}).", 'admin/guncelleme.php');
+        // 1) Repo tree (recursive) — değişen dosyaları bulmak için
+        $tree = gh_api("https://api.github.com/repos/{$githubRepo}/git/trees/main?recursive=1", $githubToken);
+        if ($tree['code'] !== 200) {
+            adm_back_with('error', "GitHub tree alınamadı (HTTP {$tree['code']}). Tokenı kontrol edin.", 'admin/guncelleme.php');
+        }
+        $treeData = json_decode($tree['body'], true);
+        if (empty($treeData['tree'])) adm_back_with('error', 'Repo ağacı boş.', 'admin/guncelleme.php');
 
-        $rel = json_decode($r['body'], true);
-        $newVersion = ltrim($rel['tag_name'] ?? '', 'v');
-        if (!$newVersion) adm_back_with('error', 'Geçerli sürüm bulunamadı.', 'admin/guncelleme.php');
+        // 2) Uzak manifest.json'dan yeni sürümü oku
+        $remoteManifestRaw = gh_get_file_content($githubRepo, 'main', 'manifest.json', $githubToken);
+        $remoteManifest = $remoteManifestRaw ? json_decode($remoteManifestRaw, true) : null;
+        $newVersion = $remoteManifest['version'] ?? '';
+        if (!$newVersion) {
+            adm_back_with('error', 'Uzak manifest.json okunamadı.', 'admin/guncelleme.php');
+        }
 
-        // Asset varsa onu, yoksa zipball'u al
-        $downloadUrl = null;
-        if (!empty($rel['assets']) && is_array($rel['assets'])) {
-            foreach ($rel['assets'] as $asset) {
-                if (str_ends_with(($asset['name'] ?? ''), '.zip')) {
-                    $downloadUrl = $asset['url']; // API URL
-                    break;
+        // 3) Hızlı yedek (sadece kritik kod dosyaları, max 2000 dosya)
+        $backupFile = backup_current_fast(TM_VERSION);
+
+        // 4) Senkron — sadece SHA farklı veya eksik dosyalar indirilir
+        $excluded = exclude_paths();
+        $siteRoot = realpath(__DIR__ . '/..');
+        $stats = ['updated' => 0, 'skipped' => 0, 'errors' => 0, 'log' => []];
+        $errorList = [];
+
+        foreach ($treeData['tree'] as $item) {
+            if ($item['type'] !== 'blob') continue;
+
+            $relPath = $item['path'];
+            // Exclude check (her klasör segmenti)
+            $segments = explode('/', $relPath);
+            $skip = false;
+            foreach ($excluded as $ex) {
+                if ($relPath === $ex) { $skip = true; break; }
+                // Klasör/path dahil
+                if (str_starts_with($relPath, $ex . '/')) { $skip = true; break; }
+                if (in_array($ex, $segments, true)) { $skip = true; break; }
+            }
+            if ($skip) { $stats['skipped']++; continue; }
+
+            $localPath = $siteRoot . '/' . $relPath;
+
+            // SHA karşılaştırma (Git blob hash)
+            if (file_exists($localPath)) {
+                $localContent = @file_get_contents($localPath);
+                $localSha = sha1('blob ' . strlen($localContent) . "\0" . $localContent);
+                if ($localSha === $item['sha']) {
+                    $stats['skipped']++;
+                    continue; // Aynı, indirme gerekmez
                 }
             }
+
+            // Dosyayı indir
+            $remoteContent = gh_get_file_content($githubRepo, 'main', $relPath, $githubToken);
+            if ($remoteContent === null) {
+                $stats['errors']++;
+                $errorList[] = $relPath;
+                continue;
+            }
+
+            // Klasörü oluştur (yoksa)
+            $dir = dirname($localPath);
+            if (!is_dir($dir)) @mkdir($dir, 0755, true);
+
+            if (@file_put_contents($localPath, $remoteContent) !== false) {
+                $stats['updated']++;
+            } else {
+                $stats['errors']++;
+                $errorList[] = $relPath;
+            }
         }
-        if (!$downloadUrl) $downloadUrl = $rel['zipball_url'] ?? null;
-        if (!$downloadUrl) adm_back_with('error', 'İndirilebilir zip bulunamadı.', 'admin/guncelleme.php');
 
-        // 1. Yedek
-        $backupFile = backup_current(TM_VERSION);
-        if (!$backupFile) adm_back_with('error', 'Yedekleme başarısız. Güncelleme iptal edildi.', 'admin/guncelleme.php');
-
-        // 2. İndir
-        $tmpZip = sys_get_temp_dir() . '/tm_update_' . uniqid() . '.zip';
-        if (!gh_download_to_file($downloadUrl, $githubToken, $tmpZip)) {
-            adm_back_with('error', 'Güncelleme zip indirilemedi.', 'admin/guncelleme.php');
-        }
-
-        // 3. Extract
-        $res = extract_update_zip($tmpZip);
-        @unlink($tmpZip);
-        if (!$res['ok']) adm_back_with('error', 'Extract hatası: ' . $res['msg'], 'admin/guncelleme.php');
-
-        // 4. Migration SQL varsa çalıştır
+        // 5) Migration SQL çalıştır
+        $migrationLog = '';
         $migrationFile = __DIR__ . '/../install/migration.sql';
         if (file_exists($migrationFile)) {
             try {
                 $sql = file_get_contents($migrationFile);
-                if ($sql) db()->exec($sql);
-            } catch (Throwable $e) { /* ignore */ }
+                if ($sql) {
+                    db()->exec($sql);
+                    $migrationLog = ' Migration uygulandı.';
+                }
+            } catch (Throwable $e) {
+                $migrationLog = ' (Migration hatası: ' . substr($e->getMessage(), 0, 80) . ')';
+            }
         }
 
-        // 4.5. Yeni seed-images dosyalarını uploads'a senkronize et
+        // 6) Seed images senkronize
         $seedImagesDir = __DIR__ . '/../install/seed-images';
         $uploadsDir    = __DIR__ . '/../uploads';
         if (is_dir($seedImagesDir)) {
@@ -329,16 +505,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             }
         }
 
-        // 5. Versiyon kaydı
+        // 7) Versiyon kaydı + config TM_VERSION güncellemesi
         q("INSERT IGNORE INTO tm_system_versions (version, source, release_date, notes, applied_by) VALUES (?,?,?,?,?)", [
             $newVersion,
-            'github',
-            isset($rel['published_at']) ? date('Y-m-d H:i:s', strtotime($rel['published_at'])) : date('Y-m-d H:i:s'),
-            mb_substr($rel['body'] ?? '', 0, 5000),
+            'github-smart',
+            date('Y-m-d H:i:s'),
+            "Smart Sync: {$stats['updated']} dosya güncel, {$stats['skipped']} aynı, {$stats['errors']} hata.",
             $adminUser['username'] ?? 'admin',
         ]);
 
-        // 6. config.php içindeki TM_VERSION'u güncelle (mümkünse)
         $cfgPath = __DIR__ . '/../config.php';
         if (file_exists($cfgPath) && is_writable($cfgPath)) {
             $cfg = file_get_contents($cfgPath);
@@ -346,15 +521,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             file_put_contents($cfgPath, $cfg);
         }
 
-        log_activity('update', 'system', 0, "GitHub'dan güncellendi: " . TM_VERSION . ' → ' . $newVersion);
+        log_activity('update', 'system', 0, "Smart Sync: " . TM_VERSION . " → $newVersion ({$stats['updated']} dosya)");
         unset($_SESSION['gh_latest']);
 
-        // Cache temizle — yeni dosyalar etkili olsun
         if (function_exists('opcache_reset')) { @opcache_reset(); }
         if (function_exists('clearstatcache')) { clearstatcache(true); }
-        @touch(__DIR__ . '/../.htaccess');  // LiteSpeed cache invalidate sinyali
+        @touch(__DIR__ . '/../.htaccess');
 
-        adm_back_with('success', "Sürüm $newVersion uygulandı. OPcache resetlendi. Ctrl+Shift+R ile yenileyin.", 'admin/guncelleme.php');
+        $msg = "✅ Sürüm $newVersion uygulandı. {$stats['updated']} dosya güncellendi, {$stats['skipped']} dosya zaten güncel.";
+        if ($stats['errors'] > 0) {
+            $msg .= " ⚠ {$stats['errors']} dosyada hata: " . implode(', ', array_slice($errorList, 0, 5));
+            if (count($errorList) > 5) $msg .= '...';
+        }
+        $msg .= $migrationLog . ' Ctrl+Shift+R ile yenileyin.';
+
+        adm_back_with($stats['errors'] > 0 ? 'warning' : 'success', $msg, 'admin/guncelleme.php');
     }
 
     /* Manuel zip yükleme ile güncelle */
@@ -901,13 +1082,13 @@ unset($_SESSION['update_detail']);
       <div class="gm-update-banner">
         <div>
           <h3>🚀 Yeni sürüm hazır: v<?= h($latestVersion) ?></h3>
-          <p>Mevcut: v<?= h(TM_VERSION) ?> — Tek tıkla yedek alıp güncelleyebilirsin.</p>
+          <p>Mevcut: v<?= h(TM_VERSION) ?> — <strong>Smart Sync</strong> sadece değişen dosyaları indirir, hızlıdır.</p>
         </div>
         <form method="post" action="?action=update_github" style="margin:0">
           <?= csrf_field() ?>
           <button type="submit" class="gm-btn gm-btn-primary"
-                  onclick="return confirm('Güncelleme uygulansın mı? Önce otomatik yedek alınacak.')">
-            ⬇ Güncelle (v<?= h($latestVersion) ?>)
+                  onclick="return confirm('Smart Sync uygulanacak.\n\n• Sadece değişen dosyalar indirilecek (saniyeler içinde)\n• Otomatik yedek alınacak\n• Migration otomatik çalışacak\n\nDevam edilsin mi?')">
+            ⚡ Smart Sync ile Güncelle (v<?= h($latestVersion) ?>)
           </button>
         </form>
       </div>
