@@ -338,7 +338,7 @@ input:focus{outline:0;border-color:#1a2b4a;box-shadow:0 0 0 3px rgba(26,43,74,.1
       <form method="post">
         <div class="field">
           <label>Site Adresi</label>
-          <input type="url" name="site_url" value="<?= htmlspecialchars($_POST['site_url'] ?? 'https://v2.tekcanmetal.com') ?>" required>
+          <input type="url" name="site_url" value="<?= htmlspecialchars($_POST['site_url'] ?? 'https://tekcanmetal.com') ?>" required>
           <div class="help">Sondaki "/" karakteri olmadan.</div>
         </div>
         <div class="row">

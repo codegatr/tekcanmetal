@@ -1314,7 +1314,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2026">
             <h3 class="kral-tl-title"><?= h(t('about.timeline_digital', 'Dijital Dönüşüm')) ?></h3>
-            <p class="kral-tl-desc">Yeni nesil <strong>v2.tekcanmetal.com</strong> kurumsal sitesi ve <em>Android mobil uygulamamız</em> yayında. Müşterilerimiz artık ürün katalogları, anlık fiyat sorgulaması, mail-order talimatı ve ağırlık hesaplamasına dijital olarak erişebiliyor.</p>
+            <p class="kral-tl-desc">Yeni nesil <strong>tekcanmetal.com</strong> kurumsal sitesi ve <em>Android mobil uygulamamız</em> yayında. Müşterilerimiz artık ürün katalogları, anlık fiyat sorgulaması, mail-order talimatı ve ağırlık hesaplamasına dijital olarak erişebiliyor.</p>
           </div>
         </div>
 

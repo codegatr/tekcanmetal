@@ -6107,3 +6107,12 @@ ON DUPLICATE KEY UPDATE
     content = VALUES(content),
     meta_title = VALUES(meta_title),
     meta_desc = VALUES(meta_desc);
+
+-- =====================================================
+-- v1.0.67 — site_url düzeltmesi
+-- v2.tekcanmetal.com kaldırıldı, ana domain'e geri dönüldü
+-- =====================================================
+UPDATE tm_settings
+   SET setting_value = 'https://tekcanmetal.com'
+ WHERE setting_key = 'site_url'
+   AND setting_value LIKE '%v2.tekcanmetal%';
