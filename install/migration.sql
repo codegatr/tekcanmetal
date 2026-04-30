@@ -4410,3 +4410,223 @@ INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
   ('export.meta_certified', 'en', 'Manufacturer-certified, customs documents included.', 'export'),
   ('export.meta_certified', 'ar', 'معتمد من الشركة المصنعة، مستندات الجمارك مشمولة.', 'export'),
   ('export.meta_certified', 'ru', 'Сертификат производителя, таможенные документы включены.', 'export');
+
+-- v1.0.63 — DB İçerik Çevirileri (Meta + Partners + Banks + Blog Cats + FAQ)
+
+-- 1) Sayfa meta alanları (KVKK + Çerez + Hakkımızda)
+
+UPDATE tm_pages SET
+  title_en = 'Personal Data Protection Notice',
+  title_ar = 'إشعار حماية البيانات الشخصية',
+  title_ru = 'Уведомление о защите персональных данных',
+  subtitle_en = 'Information about your personal data processed during the steel supply process under Personal Data Protection Law No. 6698.',
+  subtitle_ar = 'معلومات حول بياناتك الشخصية المعالجة خلال عملية توريد الحديد والصلب وفقاً لقانون حماية البيانات الشخصية رقم 6698.',
+  subtitle_ru = 'Информация о ваших персональных данных, обрабатываемых в процессе поставки металлопродукции согласно Закону № 6698 о защите персональных данных.',
+  meta_title_en = 'Privacy Notice | Tekcan Metal',
+  meta_title_ar = 'إشعار الخصوصية | تكجان للحديد',
+  meta_title_ru = 'Политика конфиденциальности | Tekcan Metal',
+  meta_desc_en = 'Tekcan Metal privacy notice — detailed information about personal data processed in steel supply, shipping, invoicing and customer relations.',
+  meta_desc_ar = 'إشعار خصوصية تكجان للحديد - معلومات مفصلة حول البيانات الشخصية المعالجة في توريد الحديد والصلب والشحن والفوترة وعلاقات العملاء.',
+  meta_desc_ru = 'Политика конфиденциальности Tekcan Metal — подробная информация об обработке персональных данных в поставке металла, доставке, выставлении счетов и работе с клиентами.'
+WHERE slug = 'kvkk';
+
+UPDATE tm_pages SET
+  title_en = 'Cookie Policy',
+  title_ar = 'سياسة ملفات تعريف الارتباط',
+  title_ru = 'Политика использования cookie',
+  subtitle_en = 'Detailed information about cookies used on our website, their purposes and your control options.',
+  subtitle_ar = 'معلومات مفصلة حول ملفات تعريف الارتباط المستخدمة على موقعنا الإلكتروني وأغراضها وخيارات التحكم الخاصة بك.',
+  subtitle_ru = 'Подробная информация о cookie-файлах на нашем сайте, их назначении и вариантах управления.',
+  meta_title_en = 'Cookie Policy | Tekcan Metal',
+  meta_title_ar = 'سياسة ملفات تعريف الارتباط | تكجان للحديد',
+  meta_title_ru = 'Политика cookie | Tekcan Metal',
+  meta_desc_en = 'Tekcan Metal cookie policy — detailed information about essential, performance, functional and targeting cookies, retention periods and browser control settings.',
+  meta_desc_ar = 'سياسة ملفات تعريف الارتباط لتكجان للحديد - معلومات مفصلة حول ملفات تعريف الارتباط الأساسية والأداء والوظيفية والاستهداف وفترات الاحتفاظ وإعدادات التحكم في المتصفح.',
+  meta_desc_ru = 'Политика cookie Tekcan Metal — подробная информация об обязательных, производительных, функциональных и таргетинговых cookie, сроках хранения и настройках браузера.'
+WHERE slug = 'cerez-politikasi';
+
+UPDATE tm_pages SET
+  title_en = 'About Us',
+  title_ar = 'من نحن',
+  title_ru = 'О нас',
+  meta_title_en = 'About Us | Tekcan Metal',
+  meta_title_ar = 'من نحن | تكجان للحديد',
+  meta_title_ru = 'О нас | Tekcan Metal',
+  meta_desc_en = 'Tekcan Metal — Konya-based steel supplier since 2005. Stock and fast shipping for sheet, pipe, profile and rolled products.',
+  meta_desc_ar = 'تكجان للحديد - مورد فولاذ مقره قونية منذ عام 2005. مخزون وشحن سريع لمنتجات الألواح والأنابيب والمقاطع والمدرفلة.',
+  meta_desc_ru = 'Tekcan Metal — поставщик металла из Конья с 2005 года. Склад и быстрая доставка листов, труб, профилей и проката.'
+WHERE slug = 'hakkimizda';
+
+
+-- 2) Çözüm ortakları (6 marka × 2 alan × 3 dil)
+
+UPDATE tm_partners SET
+  name_en = 'Borcelik',
+  name_ar = 'بورجيليك',
+  name_ru = 'Borcelik',
+  description_en = 'Leading supplier of galvanized sheet manufacturing',
+  description_ar = 'المورد الرائد لتصنيع الألواح المجلفنة',
+  description_ru = 'Ведущий поставщик оцинкованного листа'
+WHERE name = 'Borçelik';
+
+UPDATE tm_partners SET
+  name_en = 'Erdemir',
+  name_ar = 'إرديمير',
+  name_ru = 'Erdemir',
+  description_en = 'Turkey''s established brand in flat steel production',
+  description_ar = 'العلامة التجارية العريقة في تركيا لإنتاج الفولاذ المسطح',
+  description_ru = 'Известный турецкий производитель плоской стали'
+WHERE name = 'Erdemir';
+
+UPDATE tm_partners SET
+  name_en = 'Habas',
+  name_ar = 'حاباش',
+  name_ru = 'Habas',
+  description_en = 'Steel and industrial gases production',
+  description_ar = 'إنتاج الفولاذ والغازات الصناعية',
+  description_ru = 'Производство стали и промышленных газов'
+WHERE name = 'Habaş';
+
+UPDATE tm_partners SET
+  name_en = 'Tosyali Steel',
+  name_ar = 'توسيالي للفولاذ',
+  name_ru = 'Tosyali Steel',
+  description_en = 'Global steel production and export',
+  description_ar = 'إنتاج وتصدير الفولاذ العالمي',
+  description_ru = 'Глобальное производство и экспорт стали'
+WHERE name = 'Tosyalı Çelik';
+
+UPDATE tm_partners SET
+  name_en = 'Kardemir',
+  name_ar = 'كاردمير',
+  name_ru = 'Kardemir',
+  description_en = 'Turkey''s first integrated iron-steel facility',
+  description_ar = 'أول منشأة متكاملة للحديد والصلب في تركيا',
+  description_ru = 'Первый интегрированный металлургический завод Турции'
+WHERE name = 'Kardemir';
+
+UPDATE tm_partners SET
+  name_en = 'Icdas',
+  name_ar = 'إجداش',
+  name_ru = 'Icdas',
+  description_en = 'Wide range of steel product manufacturing',
+  description_ar = 'تصنيع مجموعة واسعة من منتجات الفولاذ',
+  description_ru = 'Производство широкого ассортимента стальной продукции'
+WHERE name = 'İçdaş';
+
+
+-- 3) Bankalar (4 banka × 2 alan × 3 dil)
+
+UPDATE tm_banks SET
+  bank_name_en = 'Ziraat Bank',
+  bank_name_ar = 'بنك الزراعة',
+  bank_name_ru = 'Ziraat Bank',
+  branch_en = 'Konya / Karatay Branch',
+  branch_ar = 'فرع قونية / كاراتاي',
+  branch_ru = 'Филиал Конья / Каратай'
+WHERE bank_name = 'Ziraat Bankası';
+
+UPDATE tm_banks SET
+  bank_name_en = 'Isbank',
+  bank_name_ar = 'إيش بنك',
+  bank_name_ru = 'Isbank',
+  branch_en = 'Konya Industrial Branch',
+  branch_ar = 'فرع قونية الصناعي',
+  branch_ru = 'Филиал Конья Промышленный'
+WHERE bank_name = 'İş Bankası';
+
+UPDATE tm_banks SET
+  bank_name_en = 'Halkbank',
+  bank_name_ar = 'هالك بنك',
+  bank_name_ru = 'Halkbank',
+  branch_en = 'Konya Trade Branch',
+  branch_ar = 'فرع قونية التجاري',
+  branch_ru = 'Филиал Конья Торговый'
+WHERE bank_name = 'Halkbank';
+
+UPDATE tm_banks SET
+  bank_name_en = 'Garanti BBVA',
+  bank_name_ar = 'غارانتي BBVA',
+  bank_name_ru = 'Garanti BBVA',
+  branch_en = 'Konya Branch',
+  branch_ar = 'فرع قونية',
+  branch_ru = 'Филиал Конья'
+WHERE bank_name = 'Garanti BBVA';
+
+
+-- 4) Blog kategorileri
+
+UPDATE tm_blog_categories SET
+  name_en = 'Industry News',
+  name_ar = 'أخبار الصناعة',
+  name_ru = 'Новости отрасли',
+  description_en = 'Steel industry and market developments',
+  description_ar = 'تطورات صناعة الفولاذ والسوق',
+  description_ru = 'Развитие металлургии и рынка'
+WHERE slug = 'sektor-haberleri';
+
+UPDATE tm_blog_categories SET
+  name_en = 'Technical Information',
+  name_ar = 'معلومات تقنية',
+  name_ru = 'Техническая информация',
+  description_en = 'Technical articles about our products',
+  description_ar = 'مقالات تقنية حول منتجاتنا',
+  description_ru = 'Технические статьи о нашей продукции'
+WHERE slug = 'teknik-bilgiler';
+
+
+-- 5) SSS soruları (6 soru × 2 alan × 3 dil)
+
+UPDATE tm_faq SET
+  question_en = 'How does the order process work?',
+  question_ar = 'كيف تعمل عملية الطلب؟',
+  question_ru = 'Как работает процесс заказа?',
+  answer_en = 'You can submit your request via the contact form on our website, by phone or WhatsApp. After order confirmation, the product is prepared and shipping is scheduled the same day or the next day.',
+  answer_ar = 'يمكنك تقديم طلبك عبر نموذج الاتصال على موقعنا الإلكتروني أو عبر الهاتف أو واتساب. بعد تأكيد الطلب، يتم تجهيز المنتج وجدولة الشحن في نفس اليوم أو اليوم التالي.',
+  answer_ru = 'Вы можете оставить заявку через контактную форму на сайте, по телефону или WhatsApp. После подтверждения заказа продукт готовится и отгрузка планируется в тот же или на следующий день.'
+WHERE category = 'siparis';
+
+UPDATE tm_faq SET
+  question_en = 'Do you ship outside Konya?',
+  question_ar = 'هل تقومون بالشحن خارج قونية؟',
+  question_ru = 'Доставляете ли вы за пределы Коньи?',
+  answer_en = 'Yes. We provide shipping throughout Turkey with our contracted transportation companies. You can contact our sales representative for shipping times by city.',
+  answer_ar = 'نعم. نقدم خدمات الشحن في جميع أنحاء تركيا من خلال شركات النقل المتعاقدة معنا. يمكنك التواصل مع ممثل المبيعات لمعرفة أوقات الشحن حسب المدينة.',
+  answer_ru = 'Да. Мы доставляем по всей Турции через наших партнёров-перевозчиков. По срокам доставки в конкретные города свяжитесь с нашим менеджером.'
+WHERE category = 'sevkiyat';
+
+UPDATE tm_faq SET
+  question_en = 'What payment methods are accepted?',
+  question_ar = 'ما هي طرق الدفع المقبولة؟',
+  question_ru = 'Какие способы оплаты принимаются?',
+  answer_en = 'We accept bank transfer/EFT, corporate current account, and mail order credit card payments. Acceptance of checks/promissory notes varies by current account relationship.',
+  answer_ar = 'نقبل التحويل البنكي/EFT والحساب الجاري للشركات ومدفوعات بطاقة الائتمان للطلبات البريدية. قبول الشيكات/السندات يختلف حسب علاقة الحساب الجاري.',
+  answer_ru = 'Мы принимаем банковский перевод/EFT, корпоративный текущий счёт и платежи кредитной картой через mail order. Чеки/векселя — в зависимости от отношений по текущему счёту.'
+WHERE category = 'odeme';
+
+UPDATE tm_faq SET
+  question_en = 'Is there a minimum order amount for laser cutting?',
+  question_ar = 'هل هناك حد أدنى لمبلغ الطلب للقطع بالليزر؟',
+  question_ru = 'Есть ли минимальная сумма заказа на лазерную резку?',
+  answer_en = 'No minimum amount applies for standard projects. However, special pricing is applied for complex and short-term projects.',
+  answer_ar = 'لا يوجد حد أدنى للمشاريع القياسية. ومع ذلك، يتم تطبيق تسعير خاص للمشاريع المعقدة وقصيرة الأجل.',
+  answer_ru = 'Для стандартных проектов минимальная сумма не применяется. Для сложных и срочных проектов применяется специальное ценообразование.'
+WHERE category = 'kesim';
+
+UPDATE tm_faq SET
+  question_en = 'Can I order products that are out of stock?',
+  question_ar = 'هل يمكنني طلب منتجات غير متوفرة في المخزون؟',
+  question_ru = 'Могу ли я заказать товары, которых нет в наличии?',
+  answer_en = 'Yes. We can supply products not in our stock within 24-72 hours. Please send your detailed request via the contact form.',
+  answer_ar = 'نعم. يمكننا توريد المنتجات غير الموجودة في مخزوننا خلال 24-72 ساعة. يرجى إرسال طلبك التفصيلي عبر نموذج الاتصال.',
+  answer_ru = 'Да. Товары, которых нет на нашем складе, мы можем поставить за 24-72 часа. Отправьте подробный запрос через контактную форму.'
+WHERE category = 'stok';
+
+UPDATE tm_faq SET
+  question_en = 'Do you issue e-invoices?',
+  question_ar = 'هل تصدرون فواتير إلكترونية؟',
+  question_ru = 'Выставляете ли вы электронные счета-фактуры?',
+  answer_en = 'Yes. All our invoices are issued through the GIB-integrated e-invoice system.',
+  answer_ar = 'نعم. تُصدر جميع فواتيرنا من خلال نظام الفاتورة الإلكترونية المتكامل مع GIB.',
+  answer_ru = 'Да. Все наши счета выставляются через интегрированную с GIB систему электронных счетов.'
+WHERE category = 'fatura';
