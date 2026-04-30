@@ -106,6 +106,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         <?php endif; ?>
         <?php if (file_exists(__DIR__ . '/../install/wp-content.json.gz') && ($adminUser['role'] ?? '') === 'superadmin'): ?>
         <a href="<?= h(admin_url('wp-import.php')) ?>"<?= nav_active('wp-import.php', $current) ?>>📥 WP Aktarımı</a>
+        <a href="<?= h(admin_url('wp-refresh.php')) ?>"<?= nav_active('wp-refresh.php', $current) ?>>🔄 WP İçerik Yenileme</a>
         <?php endif; ?>
         <a href="<?= h(admin_url('activity.php')) ?>"<?= nav_active('activity.php', $current) ?>>📜 Aktivite Logları</a>
       </div>
