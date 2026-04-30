@@ -7594,3 +7594,814 @@ UPDATE tm_blog_posts SET
     meta_title = 'DKP, Siyah Sac, HRP, ST-52 Sac Farkları ve Çeşitleri — Tekcan Metal',
     meta_desc = 'DKP soğuk haddelenmiş sac, Siyah/HRP sıcak haddelenmiş sac, ST-52 yapısal çelik sac arasındaki farklar, kullanım alanları, fiyat. Konya merkezli Tekcan Metal — 20+ yıl, 81 il sevkiyat.'
 WHERE slug = 'siyah-dkp-hrp-ve-st-52-sac';
+
+-- =====================================================
+-- v1.0.78 — SEO Süper Sayfa EN Çevirileri (İlk 4 sayfa)
+-- =====================================================
+-- Hedef: ihracat müşterileri (Iraq, Syria, Azerbaijan, Turkmenistan)
+-- Çevrilen: title_en, excerpt_en, content_en, meta_title_en, meta_desc_en
+-- Dosyalar: 4 SEO süper sayfa
+-- 1) Genişletilmiş Sac → Expanded Metal
+-- 2) Baklava Sac → Diamond Plate
+-- 3) Galvanizli Sac → Galvanized Sheet
+-- 4) Trapez Sac → Trapezoidal Sheet
+
+
+-- ===== genisletilmis-sac-rehberi (EN, ~1014 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Expanded Metal: Dimensions, Weight Calculation, Types and Applications',
+    excerpt_en    = 'Expanded metal dimensions, weight tables, CRS/HRP/galvanized/stainless/aluminum types and applications. Tekcan Metal — 20+ years experience, Konya-based, 81-province shipping.',
+    content_en    = '<p class="lead"><strong>Expanded metal</strong> (also known as expanded sheet, expanded mesh, or perforated stretched sheet) is a single-piece perforated structure produced by applying tension and shearing to flat metal sheets through specialized presses, resulting in open <strong>diamond, rhomboid, or hexagonal patterns</strong>. Tekcan Metal has been supplying expanded metal from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Expanded Metal? Production Process and Structure</h2>
+
+<p>Expanded metal is a structural metal product with mesh-like open patterns, obtained by simultaneously cutting and stretching a flat sheet on specialized die presses. The production process uses a single sheet; <strong>no welding or assembly is involved</strong>. This method makes the product both lightweight and remarkably durable.</p>
+
+<h3>Production Stages</h3>
+<ol>
+<li><strong>Raw material selection:</strong> 0.5 mm – 6 mm thick CRS (cold-rolled), HRP (hot-rolled), stainless steel, aluminum, or galvanized sheet</li>
+<li><strong>Press cutting and expanding:</strong> Synchronized cutting and stretching through the die''s vertical motion</li>
+<li><strong>Flattening (optional):</strong> Transition from raised to flattened structure</li>
+<li><strong>Surface treatment:</strong> Galvanizing, electrostatic powder coating, or electro-galvanizing (as required)</li>
+<li><strong>Quality control:</strong> Dimensional verification, weight, opening ratio, and tensile strength testing</li>
+</ol>
+
+<h2>Expanded Metal Dimensions and Standard Sizes</h2>
+
+<p>Tekcan Metal stocks expanded metal sheets in <strong>standard dimensions</strong>:</p>
+
+<table>
+<thead>
+<tr><th>Sheet Size (mm)</th><th>Thickness</th><th>Mesh Pattern (LWD × SWD)</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>1.5 - 6 mm</td><td>22×10, 30×12, 43×13, 62×20</td></tr>
+<tr><td>1250 × 2500</td><td>2 - 6 mm</td><td>43×13, 62×20, 76×24, 100×40</td></tr>
+<tr><td>1500 × 3000</td><td>3 - 6 mm</td><td>62×20, 76×24, 100×40, 125×50</td></tr>
+<tr><td>Custom size</td><td>0.5 - 8 mm</td><td>By request</td></tr>
+</tbody>
+</table>
+
+<p>LWD = Long Way of Diamond, SWD = Short Way of Diamond. Custom dimensions and patterns available upon request.</p>
+
+<h2>Expanded Metal Material Options</h2>
+
+<h3>1. CRS (Cold-Rolled Steel) Expanded Metal</h3>
+<p>Manufactured from cold-rolled steel — the most common and economical option. Available in 0.5–3 mm thickness. Suitable for indoor and protected applications. Can be painted.</p>
+
+<h3>2. HRP (Hot-Rolled Pickled) Expanded Metal</h3>
+<p>Made from hot-rolled and pickled steel sheet. Suitable for thicker applications (3–6 mm). Used in industrial walkways, security barriers, and machinery guards.</p>
+
+<h3>3. Galvanized Expanded Metal</h3>
+<p>Hot-dip galvanized coating. Recommended for <strong>outdoor and humid environments</strong>. Used in roof and façade perforations and outdoor filters.</p>
+
+<h3>4. Stainless Steel Expanded Metal (304 / 316)</h3>
+<p>Critical corrosion resistance. Used in <strong>food, chemical, and pharmaceutical industries</strong>, marine applications (316L), and architectural decorative panels.</p>
+
+<h3>5. Aluminum Expanded Metal</h3>
+<p>Lightweight with natural corrosion resistance. Used in <strong>architectural façades, acoustic ceilings, air filters</strong>, and automotive components. Anodized finishes available.</p>
+
+<h2>Expanded Metal Weight Calculation</h2>
+
+<p>The weight of expanded metal (kg/m²) is calculated based on the base sheet density × opening ratio:</p>
+
+<p><strong>Expanded Metal Weight = Flat Sheet Weight × (1 - Opening Ratio / 100)</strong></p>
+
+<p><em>For example:</em> 2 mm CRS flat sheet = 15.7 kg/m². Expanded metal with 65% opening ratio = 15.7 × (1 - 0.65) = <strong>5.5 kg/m²</strong>.</p>
+
+<p>Use our <a href="/hesaplama.php">online weight calculator</a> for precise calculations.</p>
+
+<h2>Expanded Metal Applications</h2>
+
+<h3>Architecture and Construction</h3>
+<ul>
+<li><strong>Modern façade panels:</strong> Luxury villas, offices, malls, and hotel exteriors</li>
+<li><strong>Decorative interior:</strong> Restaurants, cafés, retail dividers</li>
+<li><strong>Acoustic panels:</strong> Conference rooms, cinemas, recording studios</li>
+<li><strong>Suspended ceilings:</strong> Combined ventilation + acoustic control</li>
+<li><strong>Railings and barriers:</strong> Transparent appearance with security</li>
+</ul>
+
+<h3>Industrial Applications</h3>
+<ul>
+<li><strong>Walkway grating:</strong> Heavy-duty industrial walkways</li>
+<li><strong>Machine guards:</strong> CNC and production line safety panels</li>
+<li><strong>Filter beds:</strong> Industrial air, oil, water filtration</li>
+<li><strong>Conveyor protection:</strong> Open mesh conveyor sides</li>
+<li><strong>Sieve and screening:</strong> Mining, agriculture, recycling sorting</li>
+</ul>
+
+<h3>HVAC and Ventilation</h3>
+<ul>
+<li>Air diffusers for HVAC systems</li>
+<li>Industrial exhaust panels</li>
+<li>Sound-absorbing industrial partitions</li>
+<li>Ventilation channels</li>
+</ul>
+
+<h3>Automotive and Transportation</h3>
+<ul>
+<li>Exhaust silencer internals</li>
+<li>Air filter cages</li>
+<li>Marine ventilation panels</li>
+</ul>
+
+<h3>Security and Fencing</h3>
+<ul>
+<li>Industrial site fencing</li>
+<li>Window and door security mesh</li>
+<li>Vehicle protection grilles</li>
+</ul>
+
+<h2>Advantages of Expanded Metal</h2>
+
+<ul>
+<li><strong>Lightweight:</strong> 50-80% lighter than flat sheet (depending on opening ratio)</li>
+<li><strong>High strength-to-weight ratio:</strong> Single-piece construction (no welds)</li>
+<li><strong>Air, light, and fluid permeability:</strong> Controlled flow</li>
+<li><strong>Modern aesthetics:</strong> Contemporary architectural appeal</li>
+<li><strong>Wind load reduction:</strong> 50%+ wind permeability for façades</li>
+<li><strong>Self-cleaning:</strong> Open structure prevents dust accumulation</li>
+<li><strong>Cost-effective:</strong> No material loss (vs perforated sheet)</li>
+<li><strong>100% recyclable:</strong> Sustainable metal product</li>
+</ul>
+
+<h2>Expanded Metal vs Perforated Sheet</h2>
+
+<table>
+<thead>
+<tr><th>Feature</th><th>Expanded Metal</th><th>Perforated Sheet</th></tr>
+</thead>
+<tbody>
+<tr><td>Production</td><td>Press expansion (single piece)</td><td>Hole punching (material removed)</td></tr>
+<tr><td>Hole shape</td><td>Natural diamond/rhomboid</td><td>Precise geometric patterns</td></tr>
+<tr><td>Opening ratio</td><td>50% - 80% (high)</td><td>20% - 60%</td></tr>
+<tr><td>Strength</td><td>Higher (no welds)</td><td>Medium</td></tr>
+<tr><td>Aesthetics</td><td>Industrial</td><td>Modern, precise</td></tr>
+<tr><td>Cost</td><td>More economical</td><td>More expensive (material loss)</td></tr>
+<tr><td>Typical use</td><td>Façades, walkways</td><td>Architecture, filters, acoustics</td></tr>
+</tbody>
+</table>
+
+<h2>Expanded Metal Pricing (2026)</h2>
+
+<p>Expanded metal pricing depends on <strong>material type, thickness, mesh pattern, opening ratio, sheet dimensions, and order quantity</strong>.</p>
+
+<h3>Pricing Order (Most Expensive to Most Economical)</h3>
+<ol>
+<li>Stainless 316L expanded metal</li>
+<li>Stainless 304 expanded metal</li>
+<li>Aluminum expanded metal</li>
+<li>Galvanized expanded metal</li>
+<li>HRP expanded metal</li>
+<li>CRS expanded metal (most economical)</li>
+</ol>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>What is the smallest expanded metal mesh size?</h4>
+<p>Standard production starts at <strong>22×10 mm</strong> (LWD×SWD). Smaller meshes (10×5 mm) are available as custom orders.</p>
+
+<h4>What is the maximum thickness for expanded metal?</h4>
+<p>Up to <strong>8 mm</strong> for standard production. Thicker custom orders are possible up to 12 mm using heavy-duty press equipment.</p>
+
+<h4>Can expanded metal be welded?</h4>
+<p>Yes. MIG, MAG, and TIG welding are all suitable. For galvanized expanded metal, the welded zone should be re-coated with zinc-rich spray paint.</p>
+
+<h4>Do you provide custom dimensions?</h4>
+<p>Yes. We accept custom orders for sheet sizes, mesh patterns, and finishing (painting, galvanizing). Minimum order: 5 m² for custom specifications.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. We regularly ship to <strong>Iraq, Syria, Azerbaijan, and Turkmenistan</strong>. Customs documentation and certificate of origin are provided.</p>
+
+<h4>What is the lead time for expanded metal?</h4>
+<p>Standard sizes: <strong>same-day shipping</strong> from stock. Custom specifications: <strong>3-7 business days</strong>. Bulk orders (50+ sheets): 1-2 weeks.</p>
+
+<h2>Why Choose Tekcan Metal for Expanded Metal</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Manufacturer-certified supply</strong> (Erdemir, Borçelik, Tosyalı)</li>
+<li>✅ <strong>4 standard mesh patterns in stock</strong> (22×10, 43×13, 62×20, 100×40)</li>
+<li>✅ <strong>All materials:</strong> CRS, HRP, galvanized, stainless 304/316, aluminum</li>
+<li>✅ <strong>Custom production</strong> for special projects</li>
+<li>✅ <strong>81-province domestic shipping</strong> + international export</li>
+<li>✅ <strong>EN 10204 3.1 mill certificates, e-invoice, customs documentation</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for expanded metal:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Expanded Metal: Sizes, Weight, Types and Applications — Tekcan Metal',
+    meta_desc_en  = 'Expanded metal sheet types (CRS, HRP, galvanized, stainless, aluminum), standard sizes, weight calculation, applications. Konya-based Tekcan Metal — 20+ years, 81-province shipping.'
+WHERE slug = 'genisletilmis-sac-rehberi';
+
+
+-- ===== baklava-sac-rehberi (EN, ~888 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Diamond Plate (Checker Plate): Sizes, Weight, Types and Pricing',
+    excerpt_en    = 'Diamond plate (checker plate, tread plate) types (carbon steel, stainless, aluminum, galvanized), standard sizes 2.5-10mm thickness, weight tables, applications and pricing. Tekcan Metal — Konya, 20+ years.',
+    content_en    = '<p class="lead"><strong>Diamond plate</strong> (also known as checker plate, tread plate, or floor plate — Turkish: <em>baklava sac</em>) is a non-slip, decorative steel sheet with raised diamond or rhomboid patterns embossed on its surface. Tekcan Metal has been supplying diamond plate from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Diamond Plate? Production and Structure</h2>
+
+<p>Diamond plate is produced by passing flat hot-rolled steel through specialized embossing rollers that create raised <strong>diamond or rhomboid patterns</strong> on one surface. The opposite face remains flat. The patterns provide enhanced grip, slip resistance, and decorative appeal.</p>
+
+<p>Industry alternative names: "checker plate", "tread plate", "floor plate", "Riffelblech" (German), or "tôle larmée" (French).</p>
+
+<h3>Pattern Types</h3>
+<ol>
+<li><strong>Two-bar diamond pattern:</strong> Most common — two parallel raised bars in diamond shape</li>
+<li><strong>Three-bar diamond pattern:</strong> Three bars per diamond — extra grip for industrial floors</li>
+<li><strong>Four-bar / five-bar:</strong> Heavy-duty patterns for industrial walkways and ramps</li>
+<li><strong>Round button pattern:</strong> Decorative — used in furniture and design applications</li>
+</ol>
+
+<h2>Diamond Plate Standard Sizes and Thickness</h2>
+
+<table>
+<thead>
+<tr><th>Sheet Size (mm)</th><th>Thickness Range</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>2.5 - 5 mm</td><td>Standard floor plates</td></tr>
+<tr><td>1250 × 2500</td><td>3 - 6 mm</td><td>Industrial walkways</td></tr>
+<tr><td>1500 × 3000</td><td>4 - 8 mm</td><td>Heavy-duty platforms</td></tr>
+<tr><td>1500 × 6000</td><td>5 - 10 mm</td><td>Vehicle decking, ramps</td></tr>
+<tr><td>Custom size</td><td>2 - 12 mm</td><td>By request</td></tr>
+</tbody>
+</table>
+
+<h3>Common Thickness Specifications</h3>
+<p>Diamond plate thickness measurement excludes the raised pattern height. The base sheet (flat side) determines the nominal thickness:</p>
+<ul>
+<li><strong>2-3 mm:</strong> Decorative panels, light-duty applications</li>
+<li><strong>4-5 mm:</strong> Standard industrial floors, walkways, stairs</li>
+<li><strong>6-8 mm:</strong> Heavy-duty platforms, truck beds, loading ramps</li>
+<li><strong>10-12 mm:</strong> Mining equipment, heavy machinery decking</li>
+</ul>
+
+<h2>Diamond Plate Material Options</h2>
+
+<h3>1. Hot-Rolled Steel Diamond Plate (Most Common)</h3>
+<p>Standard carbon steel — economical and versatile. Available in S235JR, S275JR grades. Used in industrial floors, vehicle decking, and machinery platforms. Can be painted or galvanized.</p>
+
+<h3>2. Galvanized Diamond Plate</h3>
+<p>Hot-dip galvanized coating. <strong>Outdoor and humid environment</strong> applications: external staircases, outdoor walkways, and marine platforms.</p>
+
+<h3>3. Stainless Steel Diamond Plate (304 / 316)</h3>
+<p>Corrosion-resistant — used in <strong>food processing, chemical, and pharmaceutical industries</strong>. 316L grade for marine and aggressive environments.</p>
+
+<h3>4. Aluminum Diamond Plate</h3>
+<p>Lightweight (~1/3 of steel weight). Naturally corrosion-resistant. Used in <strong>truck bodies, trailer floors, marine applications</strong>, and decorative panels.</p>
+
+<h2>Diamond Plate Weight Calculation</h2>
+
+<p>Diamond plate weight (kg/m²) = base sheet weight + pattern overlay (~5-7%):</p>
+
+<table>
+<thead>
+<tr><th>Thickness (mm)</th><th>Steel Weight (kg/m²)</th><th>Aluminum Weight (kg/m²)</th></tr>
+</thead>
+<tbody>
+<tr><td>2.5</td><td>20.5</td><td>7.0</td></tr>
+<tr><td>3</td><td>24.5</td><td>8.4</td></tr>
+<tr><td>4</td><td>32.5</td><td>11.2</td></tr>
+<tr><td>5</td><td>40.5</td><td>14.0</td></tr>
+<tr><td>6</td><td>48.5</td><td>16.8</td></tr>
+<tr><td>8</td><td>64.5</td><td>22.4</td></tr>
+<tr><td>10</td><td>80.5</td><td>28.0</td></tr>
+</tbody>
+</table>
+
+<p>Use our <a href="/hesaplama.php">online weight calculator</a> for precise project calculations.</p>
+
+<h2>Diamond Plate Applications</h2>
+
+<h3>Industrial Flooring</h3>
+<ul>
+<li><strong>Factory floors:</strong> Production area walkways</li>
+<li><strong>Industrial stairs:</strong> Anti-slip step covering</li>
+<li><strong>Mezzanine platforms:</strong> Storage area decking</li>
+<li><strong>Loading ramps:</strong> Forklift and pallet truck access</li>
+<li><strong>Catwalks:</strong> Maintenance walkways above machinery</li>
+</ul>
+
+<h3>Transportation</h3>
+<ul>
+<li><strong>Truck beds:</strong> Cargo bed flooring</li>
+<li><strong>Trailer floors:</strong> Heavy-duty trailer platforms</li>
+<li><strong>Bus and van floors:</strong> Anti-slip passenger floors</li>
+<li><strong>Boat decks:</strong> Marine non-slip surfaces (aluminum)</li>
+<li><strong>Vehicle ramps:</strong> Loading/unloading inclines</li>
+</ul>
+
+<h3>Construction</h3>
+<ul>
+<li><strong>Building stairs:</strong> External staircase treads</li>
+<li><strong>Pedestrian walkways:</strong> Bridge surfaces, station platforms</li>
+<li><strong>Drainage covers:</strong> Storm drain protection</li>
+<li><strong>Trench covers:</strong> Industrial site protection</li>
+</ul>
+
+<h3>Decorative and Architectural</h3>
+<ul>
+<li>Modern interior wall accents</li>
+<li>Counter and bar fronts</li>
+<li>Garage door panels</li>
+<li>Toolbox surfaces</li>
+<li>Custom furniture detailing</li>
+</ul>
+
+<h2>Advantages of Diamond Plate</h2>
+
+<ul>
+<li><strong>Anti-slip surface:</strong> 30-50% better grip than flat sheet</li>
+<li><strong>Self-cleaning pattern:</strong> Dirt and debris cannot accumulate easily</li>
+<li><strong>Aesthetic appeal:</strong> Industrial-modern design</li>
+<li><strong>Durability:</strong> Pattern provides additional structural rigidity</li>
+<li><strong>Easy installation:</strong> Cut, drilled, welded with standard tools</li>
+<li><strong>Cost-effective:</strong> Affordable compared to alternatives</li>
+<li><strong>Wide thickness range:</strong> Light to heavy-duty applications</li>
+<li><strong>100% recyclable:</strong> Sustainable steel/aluminum product</li>
+</ul>
+
+<h2>Diamond Plate Pricing (2026)</h2>
+
+<p>Diamond plate pricing depends on <strong>material grade, thickness, sheet dimensions, surface treatment, and order quantity</strong>. Pricing is typically calculated per kilogram or per square meter.</p>
+
+<h3>Pricing Order (Most Expensive to Most Economical)</h3>
+<ol>
+<li>Stainless 316L diamond plate</li>
+<li>Stainless 304 diamond plate</li>
+<li>Aluminum diamond plate</li>
+<li>Galvanized diamond plate</li>
+<li>Hot-rolled steel diamond plate (most economical)</li>
+</ol>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>What is the difference between two-bar and four-bar diamond plate?</h4>
+<p>The number of raised parallel bars per diamond shape. <strong>Two-bar</strong> is most common for general use. <strong>Four-bar</strong> patterns provide better grip on inclined surfaces and heavy industrial use.</p>
+
+<h4>Can diamond plate be cut to size?</h4>
+<p>Yes. We provide custom cutting services using plasma, laser, or shearing. Tolerance: ±1 mm.</p>
+
+<h4>What is the slip resistance rating?</h4>
+<p>Diamond plate typically achieves <strong>R10-R12</strong> slip resistance ratings (German DIN 51130 standard) depending on pattern depth and thickness.</p>
+
+<h4>Can diamond plate be galvanized?</h4>
+<p>Yes. We offer hot-dip galvanizing with 50-200 g/m² zinc coating. The pattern remains visible after galvanizing.</p>
+
+<h4>What is the lead time?</h4>
+<p>Standard sizes (1500×3000, 4-5 mm): <strong>same-day shipping</strong> from stock. Custom dimensions: <strong>3-5 business days</strong>. Galvanized custom orders: 1-2 weeks.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. We regularly export to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Customs documentation and certificate of origin provided.</p>
+
+<h2>Why Choose Tekcan Metal for Diamond Plate</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Manufacturer-certified supply</strong> (Erdemir, Borçelik, Tosyalı)</li>
+<li>✅ <strong>Wide stock:</strong> 2.5–10 mm thicknesses</li>
+<li>✅ <strong>All materials:</strong> hot-rolled, galvanized, stainless, aluminum</li>
+<li>✅ <strong>Custom cutting:</strong> Plasma, laser, shearing services</li>
+<li>✅ <strong>81-province domestic shipping</strong> + international export</li>
+<li>✅ <strong>EN 10204 3.1 mill certificates included</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for diamond plate:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Diamond Plate (Checker Plate): Sizes, Weight, Types — Tekcan Metal',
+    meta_desc_en  = 'Diamond plate (checker plate, tread plate, baklava sac) types, sizes, thickness, weight tables, anti-slip flooring applications. Konya-based Tekcan Metal — 20+ years experience.'
+WHERE slug = 'baklava-sac-rehberi';
+
+
+-- ===== galvanizli-sac-rehberi (EN, ~916 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Galvanized Sheet: Z140-Z600 Coating Classes, Sizes, Weight and Applications',
+    excerpt_en    = 'Galvanized steel sheet (HDG, EG, Galvalume) types, coating classes (Z100-Z600), thickness, weight tables, construction and HVAC applications. Tekcan Metal — Erdemir/Borçelik certified, 81-province shipping.',
+    content_en    = '<p class="lead"><strong>Galvanized steel sheet</strong> (galvanized sheet, GI sheet) is steel sheet that has been coated with a layer of zinc through hot-dip immersion or electro-galvanizing, providing exceptional corrosion resistance and a service life of 25-50 years. Tekcan Metal has been supplying galvanized sheet from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Galvanized Sheet? Production and Coating Process</h2>
+
+<p>Galvanized steel sheet is produced by passing flat steel sheet through a molten zinc bath at <strong>460°C</strong>. The zinc bonds metallurgically with the steel surface, creating an iron-zinc alloy layer that serves as both physical and electrochemical (sacrificial) protection.</p>
+
+<p>Industry alternative names: "GI sheet" (galvanized iron), "zinc-coated steel", "hot-dip galvanized" (HDG).</p>
+
+<h3>Production Methods</h3>
+
+<h4>1. Hot-Dip Galvanizing (HDG) — Most Common</h4>
+<p>Steel sheet is fully immersed in molten zinc. Coating thickness: <strong>50-600 g/m²</strong> (Z100-Z600 designations). Best for <strong>outdoor, structural, and long-life applications</strong>.</p>
+
+<h4>2. Electro-Galvanizing (EG)</h4>
+<p>Zinc deposited via electrolysis. Thinner coating (5-25 g/m²) but excellent surface uniformity. Used for <strong>automotive panels, appliances, and applications requiring paint adhesion</strong>.</p>
+
+<h4>3. Galvalume (55% Al-Zn)</h4>
+<p>Aluminum-zinc alloy coating. <strong>2-4× longer atmospheric corrosion resistance</strong> than standard galvanizing. Used in roofing, siding, and harsh environments.</p>
+
+<h4>4. Galfan (95% Zn / 5% Al)</h4>
+<p>Zinc-aluminum alloy. Better formability than HDG. Used in cold-formed sections and severe forming operations.</p>
+
+<h2>Coating Class Designations (Z-Code)</h2>
+
+<table>
+<thead>
+<tr><th>Designation</th><th>Coating (g/m²)</th><th>Equivalent Microns</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>Z100</td><td>100</td><td>~7 µm</td><td>Light indoor applications</td></tr>
+<tr><td>Z140</td><td>140</td><td>~10 µm</td><td>Standard indoor / mild outdoor</td></tr>
+<tr><td>Z200</td><td>200</td><td>~14 µm</td><td>General outdoor use</td></tr>
+<tr><td>Z275</td><td>275</td><td>~20 µm</td><td>Severe outdoor — most common</td></tr>
+<tr><td>Z350</td><td>350</td><td>~25 µm</td><td>Heavy industrial</td></tr>
+<tr><td>Z450</td><td>450</td><td>~32 µm</td><td>Very corrosive environments</td></tr>
+<tr><td>Z600</td><td>600</td><td>~42 µm</td><td>Extreme conditions, marine</td></tr>
+</tbody>
+</table>
+
+<p>The numbers indicate <strong>total zinc coating per square meter</strong> (both sides combined). Higher Z values mean longer service life in corrosive conditions.</p>
+
+<h2>Galvanized Sheet Standard Sizes</h2>
+
+<table>
+<thead>
+<tr><th>Sheet Size (mm)</th><th>Thickness Range</th><th>Common Uses</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>0.4 - 3 mm</td><td>HVAC ducting, roofing</td></tr>
+<tr><td>1250 × 2500</td><td>0.5 - 4 mm</td><td>Automotive, appliances</td></tr>
+<tr><td>1500 × 3000</td><td>0.7 - 6 mm</td><td>Industrial structures</td></tr>
+<tr><td>Coil (slit)</td><td>0.3 - 4 mm</td><td>Continuous production</td></tr>
+</tbody>
+</table>
+
+<h3>Surface Finishes</h3>
+<ul>
+<li><strong>Regular spangle:</strong> Visible crystalline pattern (traditional)</li>
+<li><strong>Minimized spangle:</strong> Smaller pattern — better paintability</li>
+<li><strong>Zero spangle:</strong> Smooth surface — premium painting</li>
+<li><strong>Skin-passed:</strong> Cold-rolled finish for tight tolerances</li>
+</ul>
+
+<h2>Galvanized Sheet Weight Calculation</h2>
+
+<p>Weight (kg/m²) = thickness (mm) × 7.85 (steel density). Zinc coating adds approximately 1-2% weight:</p>
+
+<table>
+<thead>
+<tr><th>Thickness (mm)</th><th>Weight (kg/m²)</th><th>Z275 Coated Weight (kg/m²)</th></tr>
+</thead>
+<tbody>
+<tr><td>0.5</td><td>3.93</td><td>4.20</td></tr>
+<tr><td>0.7</td><td>5.50</td><td>5.78</td></tr>
+<tr><td>1.0</td><td>7.85</td><td>8.13</td></tr>
+<tr><td>1.5</td><td>11.78</td><td>12.05</td></tr>
+<tr><td>2.0</td><td>15.70</td><td>15.98</td></tr>
+<tr><td>3.0</td><td>23.55</td><td>23.83</td></tr>
+<tr><td>4.0</td><td>31.40</td><td>31.68</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanized Sheet Applications</h2>
+
+<h3>Construction and Building</h3>
+<ul>
+<li><strong>Roofing systems:</strong> Trapezoidal sheets, sandwich panels, shingles</li>
+<li><strong>Wall cladding:</strong> Industrial building façades</li>
+<li><strong>Steel framing:</strong> Cold-formed structural sections (C, Z, U profiles)</li>
+<li><strong>Drainage systems:</strong> Gutters, downspouts, splash blocks</li>
+<li><strong>HVAC ducting:</strong> Air distribution channels</li>
+</ul>
+
+<h3>Automotive and Transport</h3>
+<ul>
+<li>Body panels (electro-galvanized for paintability)</li>
+<li>Underbody components</li>
+<li>Truck and trailer bodies</li>
+<li>Fuel tanks (interior)</li>
+<li>Wheel wells</li>
+</ul>
+
+<h3>Industrial Equipment</h3>
+<ul>
+<li><strong>Storage tanks:</strong> Water, agricultural chemical tanks</li>
+<li><strong>Silos:</strong> Grain and feed storage</li>
+<li><strong>Cabinets:</strong> Outdoor electrical enclosures</li>
+<li><strong>Conveyor systems:</strong> Industrial material handling</li>
+</ul>
+
+<h3>Agriculture and Livestock</h3>
+<ul>
+<li>Livestock barns (roofing, walls)</li>
+<li>Greenhouse structures</li>
+<li>Feed bins and silos</li>
+<li>Irrigation system components</li>
+</ul>
+
+<h3>Appliances and Consumer Goods</h3>
+<ul>
+<li>Refrigerator panels</li>
+<li>Washing machine bodies</li>
+<li>Air conditioner outdoor units</li>
+<li>Furniture frames</li>
+</ul>
+
+<h2>Advantages of Galvanized Sheet</h2>
+
+<ul>
+<li><strong>Corrosion protection:</strong> Zinc oxidizes sacrificially before steel — 25-50 year lifespan</li>
+<li><strong>Self-healing:</strong> Minor scratches re-cover via zinc patina</li>
+<li><strong>Cost-effective:</strong> 60-70% cheaper than stainless steel</li>
+<li><strong>Recyclable:</strong> 100% steel and zinc — sustainable</li>
+<li><strong>Paintable:</strong> Especially electro-galvanized variants</li>
+<li><strong>Formable:</strong> Cold-rolled and pressed without coating damage</li>
+<li><strong>Weldable:</strong> Standard MIG, MAG, spot welding (with zinc fume ventilation)</li>
+<li><strong>Wide availability:</strong> Standard stock in all common sizes</li>
+</ul>
+
+<h2>Galvanized Sheet vs Other Materials</h2>
+
+<table>
+<thead>
+<tr><th>Property</th><th>Galvanized</th><th>Stainless</th><th>Aluminum</th><th>Black Steel</th></tr>
+</thead>
+<tbody>
+<tr><td>Corrosion resistance</td><td>Excellent (25-50 yr)</td><td>Outstanding (50+ yr)</td><td>Outstanding</td><td>Poor (5-10 yr)</td></tr>
+<tr><td>Cost</td><td>Medium</td><td>High</td><td>Medium-High</td><td>Low</td></tr>
+<tr><td>Strength</td><td>High</td><td>Very high</td><td>Medium</td><td>High</td></tr>
+<tr><td>Weldability</td><td>Good</td><td>Excellent</td><td>Specialized</td><td>Excellent</td></tr>
+<tr><td>Paintability</td><td>Good (EG variant)</td><td>Limited</td><td>Limited</td><td>Excellent</td></tr>
+<tr><td>Typical use</td><td>Construction, HVAC</td><td>Food, chemical</td><td>Aerospace, marine</td><td>Industrial fabrication</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanized Sheet Pricing (2026)</h2>
+
+<p>Galvanized sheet pricing depends on <strong>thickness, coating class (Z-value), sheet dimensions, surface finish, and order quantity</strong>. LME zinc prices and HRC steel prices significantly impact daily pricing.</p>
+
+<h3>Pricing Factors</h3>
+<ul>
+<li><strong>Coating class:</strong> Z275 standard; Z350+ premium</li>
+<li><strong>Surface finish:</strong> Zero spangle costs more than regular spangle</li>
+<li><strong>Mill source:</strong> Erdemir, Borçelik, Tosyalı, Tezcan certified</li>
+<li><strong>Quantity:</strong> Tonnage-based discount tiers</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>How long does galvanized sheet last?</h4>
+<p>Service life depends on environment: <strong>50+ years indoor</strong>, 25-40 years outdoor (mild), 15-25 years aggressive (industrial/marine). Higher Z-codes extend lifetime.</p>
+
+<h4>Can galvanized sheet be painted?</h4>
+<p>Yes, but proper surface preparation is essential. Phosphate or chromate pre-treatment ensures paint adhesion. Electro-galvanized variants paint better than HDG.</p>
+
+<h4>What''s the difference between Z275 and G90?</h4>
+<p>Same coating thickness, different naming conventions. Z275 (European) = G90 (American) = ~275 g/m² total zinc coating.</p>
+
+<h4>Can galvanized sheet be welded?</h4>
+<p>Yes, with proper precautions. Zinc vapor is released during welding — ensure ventilation. The welded zone should be re-coated with zinc-rich primer.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. We regularly export to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Customs documentation and certificate of origin provided.</p>
+
+<h4>What is the lead time?</h4>
+<p>Standard sizes/coatings: <strong>same-day shipping</strong>. Custom sizes or premium coatings (Z450+): <strong>5-10 business days</strong>.</p>
+
+<h2>Why Choose Tekcan Metal for Galvanized Sheet</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Mill-certified supply</strong> (Erdemir, Borçelik, Tosyalı, Tezcan)</li>
+<li>✅ <strong>All Z-coatings:</strong> Z100-Z600 in stock</li>
+<li>✅ <strong>Wide thickness range:</strong> 0.3-6 mm</li>
+<li>✅ <strong>Custom cutting and slitting</strong></li>
+<li>✅ <strong>Full sheet, coil, or pre-cut available</strong></li>
+<li>✅ <strong>EN 10204 3.1 mill certificates included</strong></li>
+<li>✅ <strong>81-province shipping</strong> + international export</li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for galvanized sheet:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Galvanized Sheet (Z140-Z600): Sizes, Weight, Coating Classes — Tekcan Metal',
+    meta_desc_en  = 'Galvanized steel sheet (GI, HDG, Galvalume) coating classes Z100-Z600, sizes, weight, construction/HVAC/automotive applications. Konya-based Tekcan Metal — mill-certified supply.'
+WHERE slug = 'galvanizli-sac-rehberi';
+
+
+-- ===== trapez-sac-rehberi (EN, ~935 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Trapezoidal Sheet (Corrugated Sheet): TR-18 to TR-55 Profiles, Colors, Pricing',
+    excerpt_en    = 'Trapezoidal sheet (corrugated metal, profiled roofing) TR-18/TR-27/TR-35/TR-45/TR-55 profiles, RAL colors, weight tables, roofing/cladding applications. Tekcan Metal — full color range, 81-province shipping.',
+    content_en    = '<p class="lead"><strong>Trapezoidal sheet</strong> (corrugated metal sheet, profiled roofing sheet) is a structural metal sheet rolled into trapezoidal-shaped corrugations, providing high load-bearing capacity per unit weight. Tekcan Metal has been supplying trapezoidal sheet from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Trapezoidal Sheet? Production and Profiles</h2>
+
+<p>Trapezoidal sheet is produced by passing flat (typically galvanized or pre-painted) steel coil through <strong>roll-forming machines</strong> that progressively bend the sheet into the desired trapezoidal profile. The corrugation depth and pitch are critical performance characteristics.</p>
+
+<p>Industry alternative names: "corrugated sheet", "profiled metal sheet", "roof deck", "TR profile", "wall cladding sheet".</p>
+
+<h3>Profile Designation System</h3>
+<p>In Turkey and Europe, trapezoidal sheet profiles are designated as <strong>TR-X</strong> where X = corrugation depth in millimeters:</p>
+
+<ul>
+<li><strong>TR-18:</strong> 18 mm depth — light wall cladding, fences</li>
+<li><strong>TR-27:</strong> 27 mm depth — standard roofing for sheds, garages</li>
+<li><strong>TR-35:</strong> 35 mm depth — industrial roofing — most common</li>
+<li><strong>TR-45:</strong> 45 mm depth — large-span industrial roofing</li>
+<li><strong>TR-55:</strong> 55 mm depth — heavy-duty load-bearing decks</li>
+<li><strong>TR-100, TR-135:</strong> Floor decking — composite slab construction</li>
+</ul>
+
+<h2>Trapezoidal Sheet Dimensions</h2>
+
+<table>
+<thead>
+<tr><th>Profile</th><th>Effective Width (mm)</th><th>Pitch (mm)</th><th>Length</th><th>Thickness</th></tr>
+</thead>
+<tbody>
+<tr><td>TR-18</td><td>1080</td><td>180</td><td>2-12 m</td><td>0.4-0.7 mm</td></tr>
+<tr><td>TR-27</td><td>1100</td><td>183</td><td>2-12 m</td><td>0.4-0.8 mm</td></tr>
+<tr><td>TR-35</td><td>1100</td><td>275</td><td>2-12 m</td><td>0.5-1.0 mm</td></tr>
+<tr><td>TR-45</td><td>1100</td><td>275</td><td>2-12 m</td><td>0.5-1.2 mm</td></tr>
+<tr><td>TR-55</td><td>1000</td><td>250</td><td>2-12 m</td><td>0.7-1.5 mm</td></tr>
+</tbody>
+</table>
+
+<p>Lengths can be cut to project requirements. Standard transportation length: 6-12 meters.</p>
+
+<h2>Trapezoidal Sheet Material Options</h2>
+
+<h3>1. Galvanized Trapezoidal Sheet</h3>
+<p>Most common base material. Hot-dip galvanized (Z275 typical) provides 25-40 year corrosion resistance. Used in <strong>industrial roofing, agricultural buildings, warehouses</strong>.</p>
+
+<h3>2. Pre-Painted (PPGI/PPGL) Trapezoidal Sheet</h3>
+<p>Galvanized base + factory-applied paint coating (polyester, PVDF, plastisol). Available in <strong>RAL color spectrum</strong>:</p>
+<ul>
+<li><strong>RAL 3005:</strong> Wine red — traditional roof color</li>
+<li><strong>RAL 3009:</strong> Oxide red — industrial standard</li>
+<li><strong>RAL 6020:</strong> Chrome green — agricultural buildings</li>
+<li><strong>RAL 7016:</strong> Anthracite gray — modern architecture</li>
+<li><strong>RAL 9006:</strong> White aluminum — solar reflectance</li>
+<li><strong>RAL 9010:</strong> Pure white — clean rooms, food industry</li>
+</ul>
+
+<h3>3. Aluminum-Zinc Coated (Galvalume)</h3>
+<p>55% Al / 45% Zn coating — <strong>2-4× longer atmospheric corrosion resistance</strong> than galvanized. Used in coastal areas and industrial environments.</p>
+
+<h3>4. Aluminum Trapezoidal Sheet</h3>
+<p>Pure aluminum — <strong>1/3 weight of steel</strong>, marine corrosion resistance, used in coastal buildings and chemical industries.</p>
+
+<h2>Trapezoidal Sheet Weight Calculation</h2>
+
+<p>Weight per linear meter (kg/m) calculation:</p>
+<p><strong>Weight = Effective Width × Thickness × 7.85 / 1000 × Profile Coefficient</strong></p>
+
+<p>Profile coefficient accounts for the additional material in corrugations (typically 1.05-1.15).</p>
+
+<h3>Practical Weight Reference</h3>
+
+<table>
+<thead>
+<tr><th>Profile + Thickness</th><th>Weight (kg/m²)</th><th>Weight (kg/m of sheet)</th></tr>
+</thead>
+<tbody>
+<tr><td>TR-27 × 0.5 mm</td><td>4.10</td><td>4.50</td></tr>
+<tr><td>TR-35 × 0.5 mm</td><td>4.30</td><td>4.73</td></tr>
+<tr><td>TR-35 × 0.7 mm</td><td>5.95</td><td>6.55</td></tr>
+<tr><td>TR-45 × 0.7 mm</td><td>6.10</td><td>6.71</td></tr>
+<tr><td>TR-45 × 1.0 mm</td><td>8.65</td><td>9.52</td></tr>
+<tr><td>TR-55 × 1.0 mm</td><td>9.10</td><td>9.10</td></tr>
+</tbody>
+</table>
+
+<h2>Trapezoidal Sheet Applications</h2>
+
+<h3>Roofing</h3>
+<ul>
+<li><strong>Industrial buildings:</strong> Factories, warehouses, distribution centers</li>
+<li><strong>Agricultural structures:</strong> Barns, livestock shelters, grain storage</li>
+<li><strong>Commercial buildings:</strong> Shopping centers, hangars</li>
+<li><strong>Residential:</strong> Garages, sheds, garden structures</li>
+<li><strong>Sports facilities:</strong> Sports halls, indoor arenas</li>
+</ul>
+
+<h3>Wall Cladding</h3>
+<ul>
+<li>Industrial building façades</li>
+<li>Cold storage exterior walls</li>
+<li>Equipment housing enclosures</li>
+<li>Container and modular buildings</li>
+</ul>
+
+<h3>Floor Decking</h3>
+<ul>
+<li><strong>Composite slabs:</strong> TR-100/TR-135 with concrete topping</li>
+<li>Multi-story building floors</li>
+<li>Mezzanine platforms</li>
+<li>Bridge decks (light pedestrian)</li>
+</ul>
+
+<h3>Special Applications</h3>
+<ul>
+<li>Sound barriers along highways</li>
+<li>Solar panel mounting structures</li>
+<li>Agricultural greenhouses</li>
+<li>Water channel covers</li>
+</ul>
+
+<h2>Advantages of Trapezoidal Sheet</h2>
+
+<ul>
+<li><strong>High strength-to-weight ratio:</strong> Corrugation provides structural rigidity</li>
+<li><strong>Long spans:</strong> 2-6 meter unsupported spans (depending on profile)</li>
+<li><strong>Quick installation:</strong> Light, large-format pieces accelerate construction</li>
+<li><strong>Weather resistance:</strong> Zinc + paint coating = 25-50 year service life</li>
+<li><strong>Wide color range:</strong> RAL spectrum factory-painted options</li>
+<li><strong>Cost-effective:</strong> Lower material and labor costs vs alternatives</li>
+<li><strong>Recyclable:</strong> 100% recyclable steel product</li>
+<li><strong>Fire-resistant:</strong> Steel — Class A1 non-combustible</li>
+</ul>
+
+<h2>Trapezoidal Sheet vs Other Roofing</h2>
+
+<table>
+<thead>
+<tr><th>Feature</th><th>Trapezoidal</th><th>Sandwich Panel</th><th>Tile</th><th>Membrane</th></tr>
+</thead>
+<tbody>
+<tr><td>Cost (per m²)</td><td>Low</td><td>Medium-High</td><td>Medium</td><td>High</td></tr>
+<tr><td>Insulation</td><td>None</td><td>Excellent (built-in)</td><td>Limited</td><td>None (top layer)</td></tr>
+<tr><td>Lifespan</td><td>25-50 years</td><td>30-40 years</td><td>50+ years</td><td>15-25 years</td></tr>
+<tr><td>Installation speed</td><td>Very fast</td><td>Fast</td><td>Slow</td><td>Medium</td></tr>
+<tr><td>Span capability</td><td>2-6 m</td><td>3-8 m</td><td>0.5-1 m</td><td>Continuous</td></tr>
+<tr><td>Best use</td><td>Industrial, agricultural</td><td>Insulated buildings</td><td>Residential, traditional</td><td>Flat roofs</td></tr>
+</tbody>
+</table>
+
+<h2>Trapezoidal Sheet Pricing (2026)</h2>
+
+<p>Trapezoidal sheet pricing depends on <strong>profile depth, base material, coating type, paint quality, length, and order quantity</strong>.</p>
+
+<h3>Pricing Order (Most to Least Economical)</h3>
+<ol>
+<li>PVDF/Plastisol painted (premium)</li>
+<li>Polyester painted (RAL standard colors)</li>
+<li>Aluminum-zinc coated (Galvalume)</li>
+<li>Galvanized only (Z275)</li>
+<li>Galvanized only (Z140) — most economical</li>
+</ol>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>What''s the difference between TR-27 and TR-35?</h4>
+<p>The corrugation depth: 27 mm vs 35 mm. <strong>TR-35 spans further</strong> and carries more snow/wind load. TR-27 is sufficient for small spans (2-3 m). TR-35 is the industrial standard.</p>
+
+<h4>What roof slope is required?</h4>
+<p>Minimum recommended slope: <strong>5° (8.7%)</strong> for trapezoidal sheets. For lower slopes, additional sealing at overlaps is required.</p>
+
+<h4>Can trapezoidal sheets be cut on-site?</h4>
+<p>Yes, with electric shears or angle grinders. <strong>Avoid abrasive disc cutting</strong> as it damages the coating. Cold cutting is preferred.</p>
+
+<h4>How are sheets installed?</h4>
+<p>With <strong>self-drilling screws with EPDM washers</strong>. Standard pattern: 2 fixings per corrugation crest at each support. Overlap: 1 corrugation side / 200 mm end.</p>
+
+<h4>What colors are available?</h4>
+<p>Full <strong>RAL color spectrum</strong>. Most common: RAL 3005 (wine red), RAL 7016 (anthracite), RAL 9010 (pure white), RAL 6020 (green).</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. We regularly export to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Container loads typically 12-meter sheets.</p>
+
+<h2>Why Choose Tekcan Metal for Trapezoidal Sheet</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Mill-certified supply</strong> (Borçelik, Tezcan, Tata)</li>
+<li>✅ <strong>All profiles in stock:</strong> TR-18, TR-27, TR-35, TR-45, TR-55</li>
+<li>✅ <strong>Custom length cutting:</strong> 2-12 m</li>
+<li>✅ <strong>Full RAL color range</strong></li>
+<li>✅ <strong>Galvanized, Galvalume, painted variants</strong></li>
+<li>✅ <strong>EN 10204 3.1 mill certificates included</strong></li>
+<li>✅ <strong>81-province shipping</strong> + international container shipping</li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for trapezoidal sheet:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Trapezoidal Sheet TR-18 to TR-55: Profiles, Colors, Pricing — Tekcan Metal',
+    meta_desc_en  = 'Trapezoidal sheet (corrugated metal) profiles TR-18, TR-27, TR-35, TR-45, TR-55, weight tables, RAL color range, roofing and cladding applications. Konya-based Tekcan Metal.'
+WHERE slug = 'trapez-sac-rehberi';
