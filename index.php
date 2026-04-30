@@ -32,15 +32,15 @@ require __DIR__ . '/includes/header.php';
   <div class="cinema-content">
     <?php foreach ($sliders as $idx => $sl): ?>
     <div class="cinema-slide-text<?= $idx === 0 ? ' active' : '' ?>" data-index="<?= $idx ?>">
-      <?php if (!empty($sl['subtitle'])): ?>
-        <span class="cinema-eyebrow"><?= h($sl['subtitle']) ?></span>
+      <?php if (tr_has($sl, 'subtitle')): ?>
+        <span class="cinema-eyebrow"><?= h(tr_field($sl, 'subtitle')) ?></span>
       <?php endif; ?>
-      <h2 class="cinema-title"><?= h($sl['title']) ?></h2>
-      <?php if (!empty($sl['description'])): ?>
-        <p class="cinema-desc"><?= h($sl['description']) ?></p>
+      <h2 class="cinema-title"><?= h(tr_field($sl, 'title')) ?></h2>
+      <?php if (tr_has($sl, 'description')): ?>
+        <p class="cinema-desc"><?= h(tr_field($sl, 'description')) ?></p>
       <?php endif; ?>
-      <?php if (!empty($sl['link_url']) && !empty($sl['link_text'])): ?>
-        <a href="<?= h(url($sl['link_url'])) ?>" class="cinema-cta"><?= h($sl['link_text']) ?> <span>→</span></a>
+      <?php if (!empty($sl['link_url']) && tr_has($sl, 'link_text')): ?>
+        <a href="<?= h(url_lang($sl['link_url'])) ?>" class="cinema-cta"><?= h(tr_field($sl, 'link_text')) ?> <span>→</span></a>
       <?php endif; ?>
     </div>
     <?php endforeach; ?>
@@ -844,26 +844,26 @@ require __DIR__ . '/includes/header.php';
   <section class="hp-section">
     <div class="container">
       <div class="hp-head">
-        <div class="hp-eyebrow">Ürün Gruplarımız</div>
-        <h2><?= count($cats) ?> Ana Grupta <em>Geniş Yelpaze</em></h2>
-        <p>Sanayi, inşaat ve özel proje gereksinimlerine yönelik tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün lider üreticilerinden doğrudan tedarik güvencesiyle.</p>
+        <div class="hp-eyebrow"><?= h(t('home.product_groups', 'Ürün Gruplarımız')) ?></div>
+        <h2><?= count($cats) ?> <?= t('home.products_h2', 'Ana Grupta <em>Geniş Yelpaze</em>') ?></h2>
+        <p><?= h(t('home.products_section_lead', 'Sanayi, inşaat ve özel proje gereksinimlerine yönelik tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün lider üreticilerinden doğrudan tedarik güvencesiyle.')) ?></p>
       </div>
 
       <div class="hp-products">
         <?php foreach ($cats as $i => $c): ?>
-        <a class="hp-product" href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>">
+        <a class="hp-product" href="<?= h(url_lang('kategori.php?slug=' . $c['slug'])) ?>">
           <div class="hp-product-img">
             <span class="hp-product-num"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
             <?php if (!empty($c['image'])): ?>
-              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h($c['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy">
             <?php else: ?>
               <div class="hp-product-img-placeholder"><?= h(mb_strtoupper(mb_substr($c['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
           </div>
           <div class="hp-product-body">
-            <h3><?= h($c['name']) ?></h3>
-            <p><?= h($c['short_desc']) ?></p>
-            <span class="hp-product-link">Ürünleri İncele <span>→</span></span>
+            <h3><?= h(tr_field($c, 'name')) ?></h3>
+            <p><?= h(tr_field($c, 'short_desc')) ?></p>
+            <span class="hp-product-link"><?= h(t('home.explore_products', 'Ürünleri İncele')) ?> <span>→</span></span>
           </div>
         </a>
         <?php endforeach; ?>
@@ -877,24 +877,24 @@ require __DIR__ . '/includes/header.php';
   <section class="hp-section alt">
     <div class="container">
       <div class="hp-head">
-        <div class="hp-eyebrow">Endüstriyel Yetkinlikler</div>
-        <h2>Tedarikten <em>Üretime</em><br>Uçtan Uca Çözüm</h2>
-        <p>Stoklu satışın yanı sıra atölye yetkinliklerimizle proje tabanlı üretim hizmetleri sunuyoruz. Lazer kesimden oksijen kesime, dekoratif sac üretiminden CNC işleme kadar.</p>
+        <div class="hp-eyebrow"><?= h(t('bc.industrial_capabilities', 'Endüstriyel Yetkinlikler')) ?></div>
+        <h2><?= t('home.services_h2', 'Tedarikten <em>Üretime</em><br>Uçtan Uca Çözüm') ?></h2>
+        <p><?= h(t('home.services_section_lead', 'Stoklu satışın yanı sıra atölye yetkinliklerimizle proje tabanlı üretim hizmetleri sunuyoruz. Lazer kesimden oksijen kesime, dekoratif sac üretiminden CNC işleme kadar.')) ?></p>
       </div>
 
       <div class="hp-services">
         <?php foreach (array_slice($services, 0, 3) as $i => $s): ?>
-        <a class="hp-service" href="<?= h(url('hizmet.php?slug=' . $s['slug'])) ?>">
+        <a class="hp-service" href="<?= h(url_lang('hizmet.php?slug=' . $s['slug'])) ?>">
           <div class="hp-service-img">
             <span class="hp-service-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($s['image'])): ?>
-              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h($s['title']) ?>" loading="lazy">
+              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
             <?php endif; ?>
           </div>
           <div class="hp-service-body">
-            <h3><?= h($s['title']) ?></h3>
-            <p><?= h($s['short_desc']) ?></p>
-            <span class="hp-service-link">Detaylı İncele <span>→</span></span>
+            <h3><?= h(tr_field($s, 'title')) ?></h3>
+            <p><?= h(tr_field($s, 'short_desc')) ?></p>
+            <span class="hp-service-link"><?= h(t('home.explore_detail', 'Detaylı İncele')) ?> <span>→</span></span>
           </div>
         </a>
         <?php endforeach; ?>
@@ -908,29 +908,29 @@ require __DIR__ . '/includes/header.php';
   <section class="hp-section">
     <div class="container">
       <div class="hp-head">
-        <div class="hp-eyebrow">Kurumsal Değerlerimiz</div>
-        <h2>İlke, Kalite ve <em>Güvenle</em> Çalışıyoruz</h2>
-        <p>2005'ten bu yana üç temel ilke üzerinde yükseliyoruz: kaliteden ödün vermeden, operasyonel mükemmellikle ve müşteri odaklı bir yaklaşımla.</p>
+        <div class="hp-eyebrow"><?= h(t('home.corporate_values_eyebrow', 'Kurumsal Değerlerimiz')) ?></div>
+        <h2><?= t('home.values_h2', 'İlke, Kalite ve <em>Güvenle</em> Çalışıyoruz') ?></h2>
+        <p><?= h(t('home.values_lead', "2005'ten bu yana üç temel ilke üzerinde yükseliyoruz: kaliteden ödün vermeden, operasyonel mükemmellikle ve müşteri odaklı bir yaklaşımla.")) ?></p>
       </div>
 
       <div class="hp-values">
         <div class="hp-value">
           <div class="hp-value-num">01</div>
-          <h3>Kalite ve Standart</h3>
-          <p>Türkiye'nin lider çelik üreticilerinden doğrudan tedarik ettiğimiz ürünler, uluslararası kalite standartlarındadır. Sertifikalı, izlenebilir, üretici onaylı.</p>
-          <a href="<?= h(url('partnerler.php')) ?>" class="hp-value-link">Çözüm Ortaklarımız <span>→</span></a>
+          <h3><?= h(t('home.value_quality', 'Kalite ve Standart')) ?></h3>
+          <p><?= h(t('home.value_quality_desc', "Türkiye'nin lider çelik üreticilerinden doğrudan tedarik ettiğimiz ürünler, uluslararası kalite standartlarındadır. Sertifikalı, izlenebilir, üretici onaylı.")) ?></p>
+          <a href="<?= h(url_lang('partnerler.php')) ?>" class="hp-value-link"><?= h(t('header.menu.partners', 'Çözüm Ortaklarımız')) ?> <span>→</span></a>
         </div>
         <div class="hp-value">
           <div class="hp-value-num">02</div>
-          <h3>Operasyonel Mükemmellik</h3>
-          <p>Geniş stoğumuz, lazer ve oksijen kesim atölyemiz, aynı gün üretim seçeneğimiz ve 7/24 sevkiyat ağımızla zaman, teslimatımızın ayrılmaz bir parçasıdır.</p>
-          <a href="<?= h(url('hizmetler.php')) ?>" class="hp-value-link">Yetkinliklerimiz <span>→</span></a>
+          <h3><?= h(t('home.value_operational', 'Operasyonel Mükemmellik')) ?></h3>
+          <p><?= h(t('home.value_operational_desc', 'Geniş stoğumuz, lazer ve oksijen kesim atölyemiz, aynı gün üretim seçeneğimiz ve 7/24 sevkiyat ağımızla zaman, teslimatımızın ayrılmaz bir parçasıdır.')) ?></p>
+          <a href="<?= h(url_lang('hizmetler.php')) ?>" class="hp-value-link"><?= h(t('home.our_capabilities', 'Yetkinliklerimiz')) ?> <span>→</span></a>
         </div>
         <div class="hp-value">
           <div class="hp-value-num">03</div>
-          <h3>Müşteri Odaklılık</h3>
-          <p>"Ticaret ile Bitmeyen Dostluk" felsefemizle her müşteriyi bir iş ortağı olarak görüyor; uzun vadeli ve güvene dayalı ilişkiler kuruyoruz.</p>
-          <a href="<?= h(url('sadakat.php')) ?>" class="hp-value-link">Sadakat Programı <span>→</span></a>
+          <h3><?= h(t('home.value_customer', 'Müşteri Odaklılık')) ?></h3>
+          <p><?= t('home.value_customer_desc', '&quot;Ticaret ile Bitmeyen Dostluk&quot; felsefemizle her müşteriyi bir iş ortağı olarak görüyor; uzun vadeli ve güvene dayalı ilişkiler kuruyoruz.') ?></p>
+          <a href="<?= h(url_lang('sadakat.php')) ?>" class="hp-value-link"><?= h(t('header.menu.loyalty', 'Sadakat Programı')) ?> <span>→</span></a>
         </div>
       </div>
     </div>
@@ -942,24 +942,24 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hp-stats">
         <div class="hp-stat">
-          <div class="hp-stat-num"><?= h(settings('stat_year', '20+')) ?></div>
-          <div class="hp-stat-label"><?= h(settings('stat_year_label', 'Yıllık Tecrübe')) ?></div>
+          <div class="hp-stat-num"><?= h(t_setting('stat_year', '20+')) ?></div>
+          <div class="hp-stat-label"><?= h(t_setting('stat_year_label', 'Yıllık Tecrübe')) ?></div>
         </div>
         <div class="hp-stat">
-          <div class="hp-stat-num"><?= h(settings('stat_products', '1.000+')) ?></div>
-          <div class="hp-stat-label"><?= h(settings('stat_products_label', 'Ürün Çeşidi')) ?></div>
+          <div class="hp-stat-num"><?= h(t_setting('stat_products', '1.000+')) ?></div>
+          <div class="hp-stat-label"><?= h(t_setting('stat_products_label', 'Ürün Çeşidi')) ?></div>
         </div>
         <div class="hp-stat">
-          <div class="hp-stat-num"><?= h(settings('stat_customers', '1.000+')) ?></div>
-          <div class="hp-stat-label"><?= h(settings('stat_customers_label', 'Mutlu Müşteri')) ?></div>
+          <div class="hp-stat-num"><?= h(t_setting('stat_customers', '1.000+')) ?></div>
+          <div class="hp-stat-label"><?= h(t_setting('stat_customers_label', 'Mutlu Müşteri')) ?></div>
         </div>
         <div class="hp-stat">
-          <div class="hp-stat-num"><?= h(settings('stat_orders', '3.436')) ?></div>
-          <div class="hp-stat-label"><?= h(settings('stat_orders_label', 'Ürün Siparişi')) ?></div>
+          <div class="hp-stat-num"><?= h(t_setting('stat_orders', '3.436')) ?></div>
+          <div class="hp-stat-label"><?= h(t_setting('stat_orders_label', 'Ürün Siparişi')) ?></div>
         </div>
         <div class="hp-stat">
-          <div class="hp-stat-num"><?= h(settings('stat_delivery', '7/24')) ?></div>
-          <div class="hp-stat-label"><?= h(settings('stat_delivery_label', 'Sevkiyat Hizmeti')) ?></div>
+          <div class="hp-stat-num"><?= h(t_setting('stat_delivery', '7/24')) ?></div>
+          <div class="hp-stat-label"><?= h(t_setting('stat_delivery_label', 'Sevkiyat Hizmeti')) ?></div>
         </div>
       </div>
     </div>
@@ -972,24 +972,24 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hp-news-head">
         <div>
-          <div class="hp-eyebrow" style="margin-bottom:10px">Haberler &amp; Basın</div>
-          <h2>Sektörel <em>Gelişmeler</em> ve Duyurular</h2>
+          <div class="hp-eyebrow" style="margin-bottom:10px"><?= h(t('header.menu.news', 'Haberler & Basın')) ?></div>
+          <h2><?= t('home.news_h2', 'Sektörel <em>Gelişmeler</em> ve Duyurular') ?></h2>
         </div>
-        <a href="<?= h(url('blog.php')) ?>" class="hp-news-allbtn">Tümünü İncele →</a>
+        <a href="<?= h(url_lang('blog.php')) ?>" class="hp-news-allbtn"><?= h(t('home.view_all_news', 'Tümünü İncele')) ?> →</a>
       </div>
 
       <div class="hp-news-grid">
         <?php foreach ($news as $n): ?>
-        <a class="hp-news" href="<?= h(url('blog-detay.php?slug=' . $n['slug'])) ?>">
+        <a class="hp-news" href="<?= h(url_lang('blog-detay.php?slug=' . $n['slug'])) ?>">
           <?php if (!empty($n['cover_image'])): ?>
           <div class="hp-news-thumb">
-            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h($n['title']) ?>" loading="lazy">
+            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h(tr_field($n, 'title')) ?>" loading="lazy">
           </div>
           <?php endif; ?>
           <div class="hp-news-body">
             <span class="hp-news-date"><?= h(tr_date($n['published_at'])) ?></span>
-            <h3><?= h($n['title']) ?></h3>
-            <span class="hp-news-link">Devamını Oku <span>→</span></span>
+            <h3><?= h(tr_field($n, 'title')) ?></h3>
+            <span class="hp-news-link"><?= h(t('btn.read_more', 'Devamını Oku')) ?> <span>→</span></span>
           </div>
         </a>
         <?php endforeach; ?>
@@ -1004,9 +1004,9 @@ require __DIR__ . '/includes/header.php';
   <section class="hp-section alt">
     <div class="container">
       <div class="hp-head">
-        <div class="hp-eyebrow">Çözüm Ortaklarımız</div>
-        <h2>Türkiye'nin <em>Çelik Devleri</em><br>Tedarik Ortaklarımız</h2>
-        <p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinden doğrudan ürün tedarik ediyoruz.</p>
+        <div class="hp-eyebrow"><?= h(t('home.partners', 'Çözüm Ortaklarımız')) ?></div>
+        <h2><?= t('home.partners_h2', "Türkiye'nin <em>Çelik Devleri</em><br>Tedarik Ortaklarımız") ?></h2>
+        <p><?= h(t('home.partners_lead', 'Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinden doğrudan ürün tedarik ediyoruz.')) ?></p>
       </div>
 
       <div class="hp-partners-wrap">
@@ -1014,7 +1014,7 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($partners as $p): ?>
           <div class="hp-partner" title="<?= h($p['name']) ?>">
             <?php if (!empty($p['logo'])): ?>
-              <img class="hp-partner-logo" src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy">
+              <img class="hp-partner-logo" src="<?= h(img_url($p['logo'])) ?>" alt="<?= h(tr_field($p, 'name')) ?>" loading="lazy">
             <?php else: ?>
               <div class="hp-partner-initial"><?= h(mb_strtoupper(mb_substr($p['name'], 0, 2, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
@@ -1022,7 +1022,7 @@ require __DIR__ . '/includes/header.php';
           <?php endforeach; ?>
         </div>
         <div class="hp-partners-foot">
-          <a href="<?= h(url('partnerler.php')) ?>">Tüm Çözüm Ortaklarını İncele <span>→</span></a>
+          <a href="<?= h(url_lang('partnerler.php')) ?>"><?= h(t('home.view_all_partners', 'Tüm Çözüm Ortaklarını İncele')) ?> <span>→</span></a>
         </div>
       </div>
     </div>
@@ -1035,12 +1035,12 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hp-cta-inner">
         <div>
-          <div class="hp-eyebrow" style="margin-bottom:14px">Bize Ulaşın</div>
-          <h2>Projeniz için <strong>özel teklif</strong> almak ister misiniz?</h2>
-          <p class="hp-cta-lead">Uzman satış ekibimiz, ihtiyacınıza özel ürün ve sevkiyat planlamasını en kısa sürede hazırlayıp size sunar.</p>
+          <div class="hp-eyebrow" style="margin-bottom:14px"><?= h(t('btn.contact_us', 'Bize Ulaşın')) ?></div>
+          <h2><?= t('home.cta_title', 'Projeniz için <strong>özel teklif</strong> almak ister misiniz?') ?></h2>
+          <p class="hp-cta-lead"><?= h(t('home.cta_lead', 'Uzman satış ekibimiz, ihtiyacınıza özel ürün ve sevkiyat planlamasını en kısa sürede hazırlayıp size sunar.')) ?></p>
         </div>
         <div class="hp-cta-actions">
-          <a href="<?= h(url('iletisim.php')) ?>" class="hp-cta-btn hp-cta-btn-primary">Teklif İste</a>
+          <a href="<?= h(url_lang('iletisim.php')) ?>" class="hp-cta-btn hp-cta-btn-primary"><?= h(t('btn.request_quote', 'Teklif İste')) ?></a>
           <a href="<?= h(whatsapp_link(settings('site_whatsapp'), 'Merhaba, ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="hp-cta-btn hp-cta-btn-ghost">WhatsApp</a>
         </div>
       </div>

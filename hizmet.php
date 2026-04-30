@@ -12,48 +12,48 @@ if (!$s) {
 
 // Features JSON parse
 $features = [];
-if (!empty($s['features'])) {
-    $tmp = json_decode($s['features'], true);
+if (tr_has($s, 'features')) {
+    $tmp = json_decode(tr_field($s, 'features'), true);
     if (is_array($tmp)) $features = $tmp;
 }
 
 // Specs JSON parse (yeni — teknik özellik tablosu)
 $specs = [];
-if (!empty($s['specs'])) {
-    $tmp = json_decode($s['specs'], true);
+if (tr_has($s, 'specs')) {
+    $tmp = json_decode(tr_field($s, 'specs'), true);
     if (is_array($tmp)) $specs = $tmp;
 }
 
 // Diğer hizmetler
-$otherServices = all("SELECT slug,title,image,short_desc FROM tm_services WHERE is_active=1 AND id<>? ORDER BY sort_order LIMIT 3", [$s['id']]);
+$otherServices = all("SELECT slug,title,title_en,title_ar,title_ru,image,short_desc,short_desc_en,short_desc_ar,short_desc_ru FROM tm_services WHERE is_active=1 AND id<>? ORDER BY sort_order LIMIT 3", [$s['id']]);
 
 // Hizmet tipi tespiti — eyebrow ve ikon için
 $svcType = 'general';
-$svcEyebrow = 'Endüstriyel Yetkinlik';
+$svcEyebrow = t('services.eyebrow.industrial_capability', 'Endüstriyel Yetkinlik');
 $svcIcon = '⚙';
 $lc = mb_strtolower($slug, 'UTF-8');
 if (str_contains($lc, 'lazer')) {
     $svcType = 'laser';
-    $svcEyebrow = 'Hassas Kesim Teknolojisi';
+    $svcEyebrow = t('services.eyebrow.precision', 'Hassas Kesim Teknolojisi');
     $svcIcon = '⚡';
 } elseif (str_contains($lc, 'oksijen') || str_contains($lc, 'plazma')) {
     $svcType = 'oxygen';
-    $svcEyebrow = 'Kalın Levha Kesimi';
+    $svcEyebrow = t('services.eyebrow.thick_cutting', 'Kalın Levha Kesimi');
     $svcIcon = '🔥';
 } elseif (str_contains($lc, 'dekoratif')) {
     $svcType = 'decorative';
-    $svcEyebrow = 'Mimari Sac Üretimi';
+    $svcEyebrow = t('services.eyebrow.architectural', 'Mimari Sac Üretimi');
     $svcIcon = '✦';
 } elseif (str_contains($lc, 'bukum') || str_contains($lc, 'abkant')) {
     $svcType = 'bending';
-    $svcEyebrow = 'Sac Şekillendirme';
+    $svcEyebrow = t('services.eyebrow.bending', 'Sac Şekillendirme');
     $svcIcon = '∠';
 }
 
-$pageTitle = $s['title'];
-$metaDesc  = $s['meta_desc'] ?? $s['short_desc'] ?? '';
-if (!$metaDesc && !empty($s['description'])) {
-    $metaDesc = mb_substr(strip_tags($s['description']), 0, 160, 'UTF-8');
+$pageTitle = tr_field($s, 'title');
+$metaDesc  = tr_field($s, 'meta_desc') ?: tr_field($s, 'short_desc');
+if (!$metaDesc && tr_has($s, 'description')) {
+    $metaDesc = mb_substr(strip_tags(tr_field($s, 'description')), 0, 160, 'UTF-8');
 }
 
 require __DIR__ . '/includes/header.php';
@@ -524,9 +524,9 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hz-hero-icon"><?= $svcIcon ?></div>
       <div class="hz-hero-eyebrow"><?= h($svcEyebrow) ?></div>
-      <h1><?= h($s['title']) ?></h1>
-      <?php if (!empty($s['short_desc'])): ?>
-        <p class="hz-hero-lead"><?= h($s['short_desc']) ?></p>
+      <h1><?= h(tr_field($s, 'title')) ?></h1>
+      <?php if (tr_has($s, 'short_desc')): ?>
+        <p class="hz-hero-lead"><?= h(tr_field($s, 'short_desc')) ?></p>
       <?php endif; ?>
 
       <div class="hz-hero-stats">
@@ -544,9 +544,9 @@ require __DIR__ . '/includes/header.php';
       <nav class="hz-breadcrumb">
         <a href="<?= h(url('')) ?>">Anasayfa</a>
         <span class="sep">›</span>
-        <a href="<?= h(url('hizmetler.php')) ?>">Endüstriyel Yetkinlikler</a>
+        <a href="<?= h(url_lang('hizmetler.php')) ?>">Endüstriyel Yetkinlikler</a>
         <span class="sep">›</span>
-        <span class="current"><?= h($s['title']) ?></span>
+        <span class="current"><?= h(tr_field($s, 'title')) ?></span>
       </nav>
     </div>
   </section>
@@ -558,7 +558,7 @@ require __DIR__ . '/includes/header.php';
 
         <!-- CONTENT -->
         <article class="hz-content">
-          <?= !empty($s['description']) ? $s['description'] : '<p>Bu hizmet için detaylı içerik yakında eklenecektir.</p>' ?>
+          <?= tr_has($s, 'description') ? tr_field($s, 'description') : '<p>' . h(t('services.no_content', 'Bu hizmet için detaylı içerik yakında eklenecektir.')) . '</p>' ?>
         </article>
 
         <!-- SIDEBAR -->
@@ -568,7 +568,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hz-side-card">
             <div class="hz-side-card-head">
               <div class="eyebrow">Hizmet <?= count($features) ?> Avantaj</div>
-              <h3><em>Avantajlarımız</em></h3>
+              <h3><em><?= h(t('services.our_advantages', 'Avantajlarımız')) ?></em></h3>
             </div>
             <div class="hz-side-card-body">
               <ul class="hz-features">
@@ -584,7 +584,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hz-side-card">
             <div class="hz-side-card-head">
               <div class="eyebrow">Teknik Spesifikasyon</div>
-              <h3>Üretim <em>Özellikleri</em></h3>
+              <h3><?= t('services.production_specs', 'Üretim <em>Özellikleri</em>') ?></h3>
             </div>
             <div class="hz-side-card-body">
               <table class="hz-specs-table">
@@ -602,7 +602,7 @@ require __DIR__ . '/includes/header.php';
             <div class="eyebrow">Aynı Gün Teklif</div>
             <h3>Bu Hizmet İçin <em>Bize Yazın</em></h3>
             <p>DXF/DWG çiziminizi veya ölçü detaylarınızı gönderin, satış ekibimiz aynı gün geri dönüş yapsın.</p>
-            <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, ' . $s['title'] . ' hizmeti için teklif almak istiyorum.')) ?>"
+            <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, ' . tr_field($s, 'title') . ' hizmeti için teklif almak istiyorum.')) ?>"
                target="_blank" rel="noopener"
                class="hz-cta-btn hz-cta-btn-primary">💬 WhatsApp Teklif</a>
             <a href="<?= h(url('iletisim.php')) ?>" class="hz-cta-btn hz-cta-btn-ghost">📝 İletişim Formu</a>
@@ -629,12 +629,12 @@ require __DIR__ . '/includes/header.php';
           <div class="hz-other-card-img">
             <span class="hz-other-card-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($o['image'])): ?>
-              <img src="<?= h(img_url($o['image'])) ?>" alt="<?= h($o['title']) ?>" loading="lazy">
+              <img src="<?= h(img_url($o['image'])) ?>" alt="<?= h(tr_field($o, 'title')) ?>" loading="lazy">
             <?php endif; ?>
           </div>
           <div class="hz-other-card-body">
-            <h3><?= h($o['title']) ?></h3>
-            <p><?= h($o['short_desc']) ?></p>
+            <h3><?= h(tr_field($o, 'title')) ?></h3>
+            <p><?= h(tr_field($o, 'short_desc')) ?></p>
             <span class="hz-other-link">Detaylı İncele <span>→</span></span>
           </div>
         </a>
