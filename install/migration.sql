@@ -52,3 +52,71 @@ UPDATE tm_products
    SET image = 'uploads/categories/petek-kiris.jpg'
  WHERE slug = 'petek-kiris'
    AND (image IS NULL OR image = '');
+
+-- =====================================================
+-- v1.0.33 — Slider'a eski WP'den 4 yeni görsel ekle
+-- (Tekcan Metal endüstriyel görselleri)
+-- =====================================================
+
+-- Önce mevcut slider'ları temizle, en güzelleri yeniden yerleştir
+DELETE FROM tm_sliders;
+
+INSERT INTO tm_sliders (title, subtitle, description, image, link_text, link_url, sort_order, is_active) VALUES
+(
+  'Demir adına Herşey…',
+  'Tekcan Metal — 2005''ten Bu Yana',
+  'Konya merkezli, Türkiye''nin önde gelen üreticilerinin yetkili temsilciliği ile sac, boru, profil ve özel çelik ürünlerinde lider tedarikçi.',
+  'uploads/wp-imported/2023/11/tekcan-metal.jpg',
+  'Hakkımızda',
+  'hakkimizda.php',
+  1, 1
+),
+(
+  'Geniş Stok, Hızlı Sevkiyat',
+  'Operasyonel Mükemmellik',
+  'Karatay merkezli stoğumuz ve anlaşmalı nakliye partnerlerimizle 81 ile zamanında, eksiksiz teslimat.',
+  'uploads/wp-imported/2023/11/tekcan-metal-1.jpg',
+  'Ürün Kataloğu',
+  'urunler.php',
+  2, 1
+),
+(
+  'Boru ve Profil Tedariği',
+  'Çözüm Yelpazemiz',
+  'Su borusu, kazan borusu, konstrüksiyon borusu, kare ve dikdörtgen profil — her ölçü, her kalınlık.',
+  'uploads/wp-imported/2023/09/boru_profil_1.jpg',
+  'Boru ve Profil',
+  'kategori.php?slug=boru',
+  3, 1
+),
+(
+  'Demirin Şekillendiği Yer',
+  'Lazer ve Oksijen Kesim',
+  'Atölye tesislerimizde projenize özel kesim, plaka açma ve hazırlık hizmetleri. Aynı gün üretim taahhüdü.',
+  'uploads/wp-imported/2023/09/demirinsekillendigiyer.png',
+  'Hizmetlerimiz',
+  'hizmetler.php',
+  4, 1
+),
+(
+  'Lazer Kesimde Hassasiyet',
+  'Mikron Toleransla Çalışıyoruz',
+  'CNC kontrollü lazer kesim makinelerimizle 0.5 mm''den 25 mm''ye kadar her tür sac levhada hassas kesim.',
+  'uploads/sliders/slider-2-laser.jpg',
+  'Lazer Kesim Detayları',
+  'hizmet.php?slug=lazer-kesim',
+  5, 1
+),
+(
+  'Türkiye Geneline Sevkiyat',
+  '81 İl, 7/24 Hizmet',
+  'Konya merkezli stok depomuzdan Türkiye''nin her noktasına anlaşmalı nakliye partnerlerimiz ile zamanında teslimat.',
+  'uploads/sliders/slider-3-delivery.png',
+  'İletişime Geç',
+  'iletisim.php',
+  6, 1
+);
+
+-- Çalışma saatleri ayarı düzeltildi
+UPDATE tm_settings SET setting_value = 'Pazartesi-Cuma: 08:00–18:00 · Cumartesi: 08:00–13:00'
+ WHERE setting_key = 'working_hours';

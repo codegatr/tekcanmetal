@@ -35,9 +35,9 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($images as $i => $im): ?>
       <button type="button" class="gallery-item"
               data-index="<?= $i ?>"
-              data-img="<?= h(img_url($im['image_path'])) ?>"
+              data-img="<?= h(img_url($im['image'])) ?>"
               data-caption="<?= h($im['caption'] ?? '') ?>">
-        <img src="<?= h(img_url($im['image_path'])) ?>" alt="<?= h($im['caption'] ?? $album['title']) ?>" loading="lazy">
+        <img src="<?= h(img_url($im['image'])) ?>" alt="<?= h($im['caption'] ?? $album['title']) ?>" loading="lazy">
       </button>
       <?php endforeach; ?>
     </div>

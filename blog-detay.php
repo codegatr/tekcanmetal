@@ -40,10 +40,10 @@ require __DIR__ . '/includes/header.php';
     </div>
   </header>
 
-  <?php if (!empty($post['featured_image'])): ?>
+  <?php if (!empty($post['cover_image'])): ?>
   <div class="blog-detail-img">
     <div class="container container-narrow">
-      <img src="<?= h(img_url($post['featured_image'])) ?>" alt="<?= h($post['title']) ?>">
+      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h($post['title']) ?>">
     </div>
   </div>
   <?php endif; ?>
@@ -63,8 +63,8 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($related as $r): ?>
       <article class="blog-card">
         <a href="<?= h(url('blog-detay.php?slug=' . urlencode($r['slug']))) ?>" class="blog-img-link">
-          <?php if (!empty($r['featured_image'])): ?>
-            <img src="<?= h(img_url($r['featured_image'])) ?>" alt="<?= h($r['title']) ?>" loading="lazy">
+          <?php if (!empty($r['cover_image'])): ?>
+            <img src="<?= h(img_url($r['cover_image'])) ?>" alt="<?= h($r['title']) ?>" loading="lazy">
           <?php else: ?>
             <div class="blog-placeholder">📝</div>
           <?php endif; ?>

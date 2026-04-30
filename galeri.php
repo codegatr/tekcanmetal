@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/includes/db.php';
-$albums = all("SELECT a.*, (SELECT image_path FROM tm_gallery_images WHERE album_id = a.id ORDER BY sort_order LIMIT 1) AS cover,
+$albums = all("SELECT a.*, (SELECT image FROM tm_gallery_images WHERE album_id = a.id ORDER BY sort_order LIMIT 1) AS cover,
                           (SELECT COUNT(*) FROM tm_gallery_images WHERE album_id = a.id) AS img_count
                FROM tm_gallery_albums a WHERE is_active=1 ORDER BY sort_order, id DESC");
 $pageTitle = 'Foto Galeri';
