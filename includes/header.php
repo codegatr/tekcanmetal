@@ -21,7 +21,7 @@ try {
 }
 ?>
 <!doctype html>
-<html lang="tr">
+<html lang="<?= h(current_lang()) ?>"<?= is_rtl() ? ' dir="rtl"' : '' ?>>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -30,11 +30,14 @@ try {
 <meta name="keywords" content="<?= h(settings('site_keywords')) ?>">
 <link rel="canonical" href="<?= h($canonical) ?>">
 
+<!-- hreflang (v1.0.56 — i18n) -->
+<?= hreflang_tags() ?>
+
 <meta property="og:title" content="<?= h($pageTitle) ?> — <?= h(settings('site_short_name')) ?>">
 <meta property="og:description" content="<?= h($metaDesc) ?>">
 <meta property="og:type" content="website">
 <meta property="og:url" content="<?= h($canonical) ?>">
-<meta property="og:locale" content="tr_TR">
+<meta property="og:locale" content="<?= h(lang_locale()) ?>">
 
 <link rel="icon" href="<?= h(url(settings('favicon', 'assets/img/favicon.png'))) ?>">
 
@@ -371,7 +374,7 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
         </li>
       </ul>
 
-      <!-- Sağ ucu: Dil seçici (Limak tarzı) -->
+      <!-- Sağ ucu: Dil seçici (4 dil dropdown) -->
       <div class="header-actions">
         <div class="lang-switch" tabindex="0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -379,7 +382,22 @@ if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
             <line x1="2" y1="12" x2="22" y2="12"/>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           </svg>
-          <span>TR</span>
+          <span><?= h(strtoupper(current_lang())) ?></span>
+          <svg class="lang-caret" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 5l3 3 3-3"/>
+          </svg>
+
+          <ul class="lang-menu">
+            <?php foreach (I18N_LANGUAGES as $code => $info): ?>
+              <li class="<?= $code === current_lang() ? 'active' : '' ?>">
+                <a href="<?= h(lang_switch_url($code)) ?>" hreflang="<?= h($code) ?>" lang="<?= h($code) ?>">
+                  <span class="lang-flag"><?= $info['flag'] ?></span>
+                  <span class="lang-code"><?= h(strtoupper($code)) ?></span>
+                  <span class="lang-name"><?= h($info['native']) ?></span>
+                </a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">
           <span></span><span></span><span></span>

@@ -241,3 +241,15 @@ function version_gt(string $a, string $b): bool {
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// ---- i18n bootstrap (v1.0.56) ----
+require_once __DIR__ . '/i18n.php';
+
+// Kullanıcı ?lang=en gibi parametre ile dil değiştirirse cookie'ye yaz
+if (isset($_GET['set_lang']) && in_array($_GET['set_lang'], I18N_LANG_CODES, true)) {
+    set_lang_cookie($_GET['set_lang']);
+    // Aynı sayfaya redirect (lang param'sız)
+    $url = lang_switch_url($_GET['set_lang']);
+    header('Location: ' . $url);
+    exit;
+}

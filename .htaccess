@@ -163,7 +163,23 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # ═══════════════════════════════════════════════════
-    # SEO Pretty URLs (v1.0.39)
+    # i18n DİL ROUTING (v1.0.56)
+    # /en/, /ar/, /ru/ prefix'lerini E=LANG ile PHP'ye geçir
+    # Default dil (TR) prefix'siz çalışır
+    # ═══════════════════════════════════════════════════
+    RewriteRule ^(en|ar|ru)/?$                                  index.php [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/il/([a-z0-9\-]+)/([a-z0-9\-]+)/?$  il-urun.php?il=$2&urun=$3 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/il/([a-z0-9\-]+)/?$                 il.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/ihracat/([a-z0-9\-]+)/?$            ihracat.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/urun/([a-z0-9\-]+)/?$               urun.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/kategori/([a-z0-9\-]+)/?$           kategori.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/hizmet/([a-z0-9\-]+)/?$             hizmet.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/blog/([a-z0-9\-]+)/?$               blog-detay.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/sayfa/([a-z0-9\-]+)/?$              sayfa.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/(.+\.php)$                          $2 [L,QSA,E=LANG:%1]
+
+    # ═══════════════════════════════════════════════════
+    # SEO Pretty URLs (Türkçe — default dil, prefix'siz)
     # /il/konya          -> il.php?slug=konya
     # /il/konya/hrp-sac  -> il-urun.php?il=konya&urun=hrp-sac
     # /ihracat/irak      -> ihracat.php?slug=irak
