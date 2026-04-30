@@ -6,8 +6,23 @@
     <!-- ── Footer Top: Brand + Newsletter strip ── -->
     <div class="footer-strip">
       <div class="footer-strip-brand">
-        <?php $logo = settings('logo', 'assets/img/logo.png'); ?>
-        <img src="<?= h(img_url($logo)) ?>" alt="<?= h(settings('site_name', 'Tekcan Metal')) ?>" class="footer-logo" width="240" height="60" loading="lazy">
+        <?php
+        // v1.0.73: Footer logosu — SVG önce (1 KB), yoksa logo-footer.png (8.7 KB), son fallback ana logo
+        if (file_exists(__DIR__ . '/../assets/img/logo.svg')) {
+            $footerLogo = 'assets/img/logo.svg';
+        } elseif (file_exists(__DIR__ . '/../assets/img/logo-footer.png')) {
+            $footerLogo = 'assets/img/logo-footer.png';
+        } else {
+            $footerLogo = settings('logo', 'assets/img/logo.png');
+        }
+        ?>
+        <?= picture_tag($footerLogo, [
+            'alt' => settings('site_name', 'Tekcan Metal'),
+            'class' => 'footer-logo',
+            'width' => 240,
+            'height' => 60,
+            'loading' => 'lazy',
+        ]) ?>
       </div>
       <div class="footer-strip-tagline">
         <span class="footer-strip-eyebrow"><?= h(t('footer.tagline', 'Demir adına Herşey…')) ?></span>

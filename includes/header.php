@@ -116,12 +116,21 @@ foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
 
 <?php
+// v1.0.73: Critical CSS inline (above-the-fold) — FCP/LCP optimizasyonu
+// Render-blocking ana CSS'i async yükleriz, kritik kısmı head'e gömeriz
+$criticalCssPath = __DIR__ . '/../assets/css/style.critical.min.css';
+if (file_exists($criticalCssPath)) {
+    echo "<style>" . file_get_contents($criticalCssPath) . "</style>\n";
+}
+
 // v1.0.72: Production'da minified CSS (15% daha küçük)
 $cssFile = file_exists(__DIR__ . '/../assets/css/style.min.css')
     ? 'assets/css/style.min.css'
     : 'assets/css/style.css';
 ?>
-<link rel="stylesheet" href="<?= h(url($cssFile)) ?>?v=<?= h(TM_VERSION) ?>">
+<!-- Ana CSS — async yüklenir (render-blocking değil) -->
+<link rel="preload" href="<?= h(url($cssFile)) ?>?v=<?= h(TM_VERSION) ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="<?= h(url($cssFile)) ?>?v=<?= h(TM_VERSION) ?>"></noscript>
 
 <?php if ($code = settings('analytics_code')): ?>
 <?= $code ?>
@@ -413,16 +422,26 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
       <!-- Merkez Logo -->
       <a href="<?= h(url_lang('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> <?= h(t('header.menu.home', 'Anasayfa')) ?>">
         <?php
-        // v1.0.72: Performance — SVG logo varsa PNG yerine SVG kullan (95% boyut tasarrufu)
-        $logoFile = settings('logo', '');
-        if (empty($logoFile) || !file_exists(__DIR__ . '/../' . $logoFile)) {
-            $logoFile = file_exists(__DIR__ . '/../assets/img/logo.svg')
-                ? 'assets/img/logo.svg'
-                : 'assets/img/logo.png';
+        // v1.0.73: Performance — SVG logo varsa ÖNCE SVG kullan (1 KB vs 12 KB)
+        // Settings'teki PNG path'i de varsa, SVG mevcut diye SVG'yi tercih et
+        if (file_exists(__DIR__ . '/../assets/img/logo.svg')) {
+            $logoFile = 'assets/img/logo.svg';
+        } else {
+            $logoFile = settings('logo', '');
+            if (empty($logoFile) || !file_exists(__DIR__ . '/../' . $logoFile)) {
+                $logoFile = 'assets/img/logo.png';
+            }
         }
         ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
-          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img" width="290" height="73" fetchpriority="high">
+          <?= picture_tag($logoFile, [
+              'alt' => 'Tekcan Metal',
+              'class' => 'logo-img',
+              'width' => 290,
+              'height' => 73,
+              'loading' => 'eager',
+              'fetchpriority' => 'high',
+          ]) ?>
         <?php else: ?>
           <span class="logo-mark">T</span>
           <span class="logo-text">
@@ -496,16 +515,24 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
   <div class="offcanvas-head">
     <a href="<?= h(url('/')) ?>" class="logo">
       <?php
-      // v1.0.72: Sticky header için de SVG tercih (PNG fallback)
-      $logoFile2 = settings('logo', '');
-      if (empty($logoFile2) || !file_exists(__DIR__ . '/../' . $logoFile2)) {
-          $logoFile2 = file_exists(__DIR__ . '/../assets/img/logo.svg')
-              ? 'assets/img/logo.svg'
-              : 'assets/img/logo.png';
+      // v1.0.73: Mobil menü logosu — SVG önce
+      if (file_exists(__DIR__ . '/../assets/img/logo.svg')) {
+          $logoFile2 = 'assets/img/logo.svg';
+      } else {
+          $logoFile2 = settings('logo', '');
+          if (empty($logoFile2) || !file_exists(__DIR__ . '/../' . $logoFile2)) {
+              $logoFile2 = 'assets/img/logo.png';
+          }
       }
       ?>
       <?php if ($logoFile2 && file_exists(__DIR__ . '/../' . $logoFile2)): ?>
-        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img" width="290" height="73">
+        <?= picture_tag($logoFile2, [
+            'alt' => 'Tekcan Metal',
+            'class' => 'logo-img',
+            'width' => 290,
+            'height' => 73,
+            'loading' => 'lazy',
+        ]) ?>
       <?php else: ?>
         <span class="logo-mark">T</span>
         <span class="logo-text">
