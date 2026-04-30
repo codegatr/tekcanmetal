@@ -125,6 +125,7 @@ require __DIR__ . '/includes/header.php';
   --gold:#c9a86b;
   --gold-light:#e0c48a;
   --gold-dark:#a88a4a;
+  --gold-deep:#8b6f35;  /* WCAG AA: 4.75:1 — eyebrow/link kullanımı için */
   --red:#c8102e;
   --red-dark:#a00d24;
   --paper:#fafaf7;
@@ -421,7 +422,7 @@ require __DIR__ . '/includes/header.php';
   font-weight:700;
   letter-spacing:1.8px;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-deep);  /* v1.0.70: WCAG AA kontrast 4.75:1 (eski var(--gold) 2.26:1) */
   display:inline-flex;
   align-items:center;gap:6px;
   padding-top:14px;
@@ -635,7 +636,7 @@ require __DIR__ . '/includes/header.php';
   font-family:var(--sans);
   font-size:10px;font-weight:700;
   letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-deep);  /* v1.0.70: WCAG AA kontrast 4.75:1 */
   margin-bottom:10px;
 }
 .hp-news h3{

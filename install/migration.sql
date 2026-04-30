@@ -6932,3 +6932,20 @@ ON DUPLICATE KEY UPDATE
     content = VALUES(content),
     meta_title = VALUES(meta_title),
     meta_desc = VALUES(meta_desc);
+
+-- =====================================================
+-- v1.0.70 — Erişilebilirlik (a11y) iyileştirmeleri
+-- PageSpeed Insights raporu: 89 → 95+ hedef
+-- =====================================================
+
+-- Footer phone aria-label çevirileri (4 dilde)
+INSERT INTO tm_translations (lang, `key`, `value`) VALUES
+  ('tr', 'footer.aria_landline', 'Sabit hat:'),
+  ('en', 'footer.aria_landline', 'Landline:'),
+  ('ar', 'footer.aria_landline', 'الخط الثابت:'),
+  ('ru', 'footer.aria_landline', 'Стационарный телефон:'),
+  ('tr', 'footer.aria_mobile', 'Cep telefonu:'),
+  ('en', 'footer.aria_mobile', 'Mobile phone:'),
+  ('ar', 'footer.aria_mobile', 'الهاتف المحمول:'),
+  ('ru', 'footer.aria_mobile', 'Мобильный телефон:')
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);

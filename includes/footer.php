@@ -54,7 +54,7 @@
       </div>
 
       <div class="footer-col">
-        <h4><?= h(t('header.menu.corporate', 'Kurumsal')) ?></h4>
+        <h2 class="footer-h"><?= h(t('header.menu.corporate', 'Kurumsal')) ?></h2>
         <ul>
           <li><a href="<?= h(url_lang('hakkimizda.php')) ?>"><?= h(t('header.menu.about', 'Hakkımızda')) ?></a></li>
           <li><a href="<?= h(url_lang('partnerler.php')) ?>"><?= h(t('header.menu.partners', 'Çözüm Ortakları')) ?></a></li>
@@ -67,7 +67,7 @@
       </div>
 
       <div class="footer-col">
-        <h4><?= h(t('footer.quick_access', 'Hızlı Erişim')) ?></h4>
+        <h2 class="footer-h"><?= h(t('footer.quick_access', 'Hızlı Erişim')) ?></h2>
         <ul>
           <li><a href="<?= h(url_lang('urunler.php')) ?>"><?= h(t('footer.products', 'Tüm Ürünler')) ?></a></li>
           <li><a href="<?= h(url_lang('hizmetler.php')) ?>"><?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></a></li>
@@ -79,7 +79,7 @@
       </div>
 
       <div class="footer-col footer-col-contact">
-        <h4><?= h(t('footer.contact', 'İletişim')) ?></h4>
+        <h2 class="footer-h"><?= h(t('footer.contact', 'İletişim')) ?></h2>
         <ul class="footer-contact-list">
           <li>
             <span class="footer-contact-ico">📍</span>
@@ -91,8 +91,8 @@
           <li>
             <span class="footer-contact-ico">📞</span>
             <span>
-              <a href="<?= h(phone_link(settings('site_phone', '0 332 342 24 52'))) ?>"><?= h(settings('site_phone', '0 332 342 24 52')) ?></a><br>
-              <a href="<?= h(phone_link(settings('site_mobile', '0 554 835 0 226'))) ?>" class="footer-contact-mobile"><?= h(settings('site_mobile', '0 554 835 0 226')) ?></a>
+              <a href="<?= h(phone_link(settings('site_phone', '0 332 342 24 52'))) ?>" aria-label="<?= h(t('footer.aria_landline', 'Sabit hat:')) ?> <?= h(settings('site_phone', '0 332 342 24 52')) ?>"><?= h(settings('site_phone', '0 332 342 24 52')) ?></a><br>
+              <a href="<?= h(phone_link(settings('site_mobile', '0 554 835 0 226'))) ?>" class="footer-contact-mobile" aria-label="<?= h(t('footer.aria_mobile', 'Cep telefonu:')) ?> <?= h(settings('site_mobile', '0 554 835 0 226')) ?>"><?= h(settings('site_mobile', '0 554 835 0 226')) ?></a>
             </span>
           </li>
           <li>
@@ -221,7 +221,8 @@
 @media (max-width:600px){
   .footer-grid{grid-template-columns:1fr;gap:28px}
 }
-.footer-col h4{
+.footer-col .footer-h{
+  /* v1.0.70: H4 → H2 (semantik hiyerarşi düzeltmesi). Görsel olarak h4 boyutunda kalır */
   font-size:11.5px;
   font-weight:700;
   letter-spacing:2.5px;
@@ -231,7 +232,7 @@
   position:relative;
   padding-bottom:14px;
 }
-.footer-col h4::after{
+.footer-col .footer-h::after{
   content:'';position:absolute;
   bottom:0;left:0;width:32px;height:2px;
   background:var(--accent);
@@ -305,12 +306,17 @@
 }
 .footer-contact-list a{
   color:rgba(255,255,255,.75);
+  /* v1.0.70: Dokunma hedefi 44×44 px minimum (WCAG AAA + Google önerisi 24×24 min) */
+  display:inline-block;
+  min-height:32px;
+  line-height:32px;
+  padding:2px 0;
 }
 .footer-contact-list a:hover{
   color:#fff;padding-left:0;
 }
 .footer-contact-mobile{
-  font-size:12.5px;color:rgba(255,255,255,.55) !important;
+  font-size:13px;color:rgba(255,255,255,.65) !important;  /* v1.0.70: 12.5 → 13px (okunabilirlik) ve daha açık ton (kontrast) */
 }
 
 /* Bottom */
