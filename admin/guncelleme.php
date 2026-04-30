@@ -1279,7 +1279,7 @@ unset($_SESSION['update_detail']);
           </div>
           <div class="gm-form-row">
             <label>🌿 Branch</label>
-            <input type="text" value="<?= h($githubBranch) ?>" readonly style="background:var(--gm-bg-alt);cursor:not-allowed">
+            <input type="text" value="<?= h(settings('github_branch') ?: 'main') ?>" readonly style="background:var(--gm-bg-alt);cursor:not-allowed">
           </div>
           <div class="gm-form-row">
             <label>🔑 Token Durumu</label>
