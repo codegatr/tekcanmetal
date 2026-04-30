@@ -2,7 +2,17 @@
 /**
  * Admin Layout — yeni admin.css yapısına uygun
  * .adm-wrap > .adm-sidebar + .adm-main > .adm-top + .adm-content
+ *
+ * ÖNEMLİ: ob_start() — HTML output buffer'a alınır.
+ * Bu sayede sayfa içinde POST işlerken adm_back_with() / redirect() çağrılırsa
+ * header() güvenle çalışır ('Cannot modify header information' hatası önlenir).
+ *
+ * NOT: PHP'nin output_buffering=4096 default'u bizim için yeterli OLMUYOR çünkü
+ * 4096 byte sonra otomatik flush eder. Ekstra ob_start() ile sınırsız buffer
+ * sağlıyoruz — manuel flush'a kadar hiçbir şey gönderilmez.
  */
+ob_start();  // Her zaman ekstra buffer başlat (level 2 olsa da)
+
 if (!defined('TM_ADMIN')) define('TM_ADMIN', true);
 require_once __DIR__ . '/../includes/db.php';
 
@@ -113,8 +123,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         </div>
       <?php endif; ?>
       <div class="adm-version">
-        Sürüm <?= h(TM_VERSION) ?> ·
-        <a href="<?= h(url('')) ?>" target="_blank">↗ Siteyi Görüntüle</a>
+        Sürüm <?= h(TM_VERSION) ?>
       </div>
     </div>
   </aside>
@@ -128,6 +137,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
       </div>
       <div class="adm-top-actions">
         <button type="button" class="adm-mobile-toggle" id="admMenuBtn" aria-label="Menü">☰</button>
+        <a href="<?= h(url('')) ?>" target="_blank" class="adm-btn adm-btn-ghost adm-btn-sm">↗ Siteyi Görüntüle</a>
         <?php if ($adminUser): ?>
           <a href="<?= h(admin_url('logout.php')) ?>" class="adm-btn adm-btn-ghost adm-btn-sm">Çıkış</a>
         <?php endif; ?>

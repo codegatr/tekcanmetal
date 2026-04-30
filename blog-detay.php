@@ -17,7 +17,7 @@ $related = $post['category_id']
     : all("SELECT * FROM tm_blog_posts WHERE id<>? AND is_active=1 ORDER BY published_at DESC LIMIT 3", [$post['id']]);
 
 $pageTitle = $post['title'];
-$metaDesc  = $post['meta_description'] ?: ($post['excerpt'] ?: excerpt($post['content'], 160));
+$metaDesc  = $post['meta_desc'] ?: ($post['excerpt'] ?: excerpt($post['content'], 160));
 require __DIR__ . '/includes/header.php';
 ?>
 <article class="blog-detail">

@@ -19,7 +19,7 @@ if (!empty($p['specifications'])) {
 }
 
 $pageTitle = $p['name'];
-$metaDesc  = $p['meta_description'] ?: ($p['short_description'] ?: excerpt($p['description'], 160));
+$metaDesc  = $p['meta_desc'] ?: ($p['short_desc'] ?: excerpt($p['description'], 160));
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header page-header-sm">
@@ -64,8 +64,8 @@ require __DIR__ . '/includes/header.php';
       <div class="pd-info">
         <div class="pd-cat-tag"><a href="<?= h(url('kategori.php?slug=' . urlencode($p['cat_slug']))) ?>"><?= h($p['cat_name']) ?></a></div>
         <h1><?= h($p['name']) ?></h1>
-        <?php if (!empty($p['short_description'])): ?>
-          <p class="pd-short"><?= h($p['short_description']) ?></p>
+        <?php if (!empty($p['short_desc'])): ?>
+          <p class="pd-short"><?= h($p['short_desc']) ?></p>
         <?php endif; ?>
 
         <?php if ($specs): ?>

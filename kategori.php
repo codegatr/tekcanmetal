@@ -9,7 +9,7 @@ if (!$cat) {
 }
 $products = all("SELECT * FROM tm_products WHERE category_id=? AND is_active=1 ORDER BY is_featured DESC, sort_order, name", [$cat['id']]);
 $pageTitle = $cat['name'];
-$metaDesc  = $cat['meta_description'] ?: ('Tekcan Metal ' . $cat['name'] . ' kategorisi ürünleri.');
+$metaDesc  = $cat['meta_desc'] ?: ('Tekcan Metal ' . $cat['name'] . ' kategorisi ürünleri.');
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header">
@@ -47,8 +47,8 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div class="prod-body">
           <h3 class="prod-title"><?= h($p['name']) ?></h3>
-          <?php if (!empty($p['short_description'])): ?>
-            <p class="prod-desc"><?= h($p['short_description']) ?></p>
+          <?php if (!empty($p['short_desc'])): ?>
+            <p class="prod-desc"><?= h($p['short_desc']) ?></p>
           <?php endif; ?>
           <div class="prod-cta">Detayları Gör →</div>
         </div>

@@ -82,7 +82,7 @@ function reseed_empty_tables(): array
 
     /* 1) Settings — her zaman INSERT IGNORE */
     if (isset($seed['settings'])) {
-        $stmt = $pdo->prepare("INSERT IGNORE INTO tm_settings (setting_key, setting_value, group_name) VALUES (?,?,?)");
+        $stmt = $pdo->prepare("INSERT IGNORE INTO tm_settings (setting_key, setting_value, setting_group) VALUES (?,?,?)");
         $cnt = 0;
         foreach ($seed['settings'] as $s) {
             try { $stmt->execute([$s[0], $s[1], $s[2] ?? 'general']); if ($stmt->rowCount() > 0) $cnt++; }

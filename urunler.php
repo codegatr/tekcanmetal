@@ -76,8 +76,8 @@ require __DIR__ . '/includes/header.php';
         <div class="prod-body">
           <div class="prod-cat"><?= h($p['cat_name']) ?></div>
           <h3 class="prod-title"><?= h($p['name']) ?></h3>
-          <?php if (!empty($p['short_description'])): ?>
-            <p class="prod-desc"><?= h($p['short_description']) ?></p>
+          <?php if (!empty($p['short_desc'])): ?>
+            <p class="prod-desc"><?= h($p['short_desc']) ?></p>
           <?php endif; ?>
           <div class="prod-cta">Detayları Gör →</div>
         </div>

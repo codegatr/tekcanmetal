@@ -18,14 +18,31 @@
  */
 declare(strict_types=1);
 
-define('TM_ADMIN', true);
-$adminTitle = 'Site Sağlığı & Tek Tıkla Tamir';
-require __DIR__ . '/_layout.php';
-require __DIR__ . '/_helpers.php';
+// DEBUG: hata gösterimi açık (beyaz ekran sorunlarını görmek için)
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
-if (($adminUser['role'] ?? '') !== 'superadmin') {
-    adm_back_with('error', 'Bu sayfa için süperadmin yetkisi gerekli.', 'admin/index.php');
+define('TM_ADMIN', true);
+
+// Önce _helpers.php ve db.php'i yükle (yetki kontrolü için)
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/_helpers.php';
+
+// Session başlat
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Yetki kontrolü _layout'tan ÖNCE — output gönderilmeden önce redirect yapabilelim
+if (empty($_SESSION['admin_id'])) {
+    redirect('admin/login.php');
 }
+
+$adminUser = row("SELECT id, username, full_name, email, role FROM tm_users WHERE id=? AND is_active=1", [$_SESSION['admin_id']]);
+if (!$adminUser || ($adminUser['role'] ?? '') !== 'superadmin') {
+    flash('error', 'Bu sayfa için süperadmin yetkisi gerekli.');
+    redirect('admin/index.php');
+}
+
+$adminTitle = 'Site Sağlığı & Tek Tıkla Tamir';
 
 $ROOT = realpath(__DIR__ . '/..');
 $UPLOADS = $ROOT . '/uploads';
@@ -456,8 +473,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+/* ========== _layout SADECE POST işlendikten sonra çağrılır
+   (POST handler redirect yapabiliyor — header'lar gönderilmeden) ========== */
+require __DIR__ . '/_layout.php';
+
 /* ========== Render ========== */
-$diag = check_diagnostics($UPLOADS, $SEED_IMG);
+$diag = [];
+$diagError = null;
+try {
+    $diag = check_diagnostics($UPLOADS, $SEED_IMG);
+} catch (\Throwable $e) {
+    $diagError = $e->getMessage() . ' (Satır: ' . $e->getLine() . ' / ' . basename($e->getFile()) . ')';
+}
 $problems = array_filter($diag, fn($d) => !$d['ok'] && !empty($d['fix']));
 $problemCount = count($problems);
 ?>
@@ -583,6 +610,12 @@ $problemCount = count($problems);
     <div class="ss-body">
 
         <h3 style="margin:0 0 14px;font-size:16px;color:#1e4a9e">🩺 Tanı Sonuçları</h3>
+
+        <?php if ($diagError): ?>
+        <div style="background:#fff5f5;border:1px solid #fecaca;border-left:3px solid #c8102e;padding:14px 18px;margin-bottom:14px;color:#991b1b;font-size:13.5px;font-family:ui-monospace,monospace">
+          <strong>⚠ Tanı Hatası:</strong> <?= htmlspecialchars($diagError) ?>
+        </div>
+        <?php endif; ?>
 
         <div class="ss-diag">
             <?php foreach ($diag as $key => $info): ?>

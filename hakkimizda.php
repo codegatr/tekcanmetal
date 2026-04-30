@@ -3,7 +3,7 @@ require __DIR__ . '/includes/db.php';
 $page = row("SELECT * FROM tm_pages WHERE slug='hakkimizda' AND is_active=1");
 $team = all("SELECT * FROM tm_team WHERE is_active=1 ORDER BY sort_order");
 $pageTitle = $page['title'] ?? 'Hakkımızda';
-$metaDesc  = $page['meta_description'] ?? settings('site_description');
+$metaDesc  = $page['meta_desc'] ?? settings('site_description');
 require __DIR__ . '/includes/header.php';
 ?>
 

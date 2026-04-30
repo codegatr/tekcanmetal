@@ -8,7 +8,7 @@ if (!$page) {
     exit;
 }
 $pageTitle = $page['title'];
-$metaDesc  = $page['meta_description'] ?: excerpt($page['content'], 160);
+$metaDesc  = $page['meta_desc'] ?: excerpt($page['content'], 160);
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header">
