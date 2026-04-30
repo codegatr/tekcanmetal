@@ -19,6 +19,35 @@ Options -Indexes -ExecCGI
 </IfModule>
 
 # =====================================================
+# Admin sayfaları için NO-CACHE — yenilenmeme sorununu çözer
+# =====================================================
+<IfModule mod_headers.c>
+    <FilesMatch "^(admin/|.*\.(php))">
+        # PHP sayfaları cache'lenmesin
+    </FilesMatch>
+</IfModule>
+
+# /admin/ altındaki her şey cache'lenmesin
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/admin/
+    RewriteRule .* - [E=NO_CACHE:1]
+</IfModule>
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate" env=NO_CACHE
+    Header set Pragma "no-cache" env=NO_CACHE
+    Header set Expires "0" env=NO_CACHE
+</IfModule>
+
+# LiteSpeed Cache — admin'i hariç tut
+<IfModule LiteSpeed>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/admin/ [OR]
+    RewriteCond %{REQUEST_URI} \.php$
+    RewriteRule .* - [E=Cache-Control:no-cache]
+</IfModule>
+
+# =====================================================
 # Hassas dosyaları kapat
 # =====================================================
 <FilesMatch "^(config\.php|composer\.(json|lock)|package(-lock)?\.json|\.env|\.gitignore|\.gitattributes|README\.md|LICENSE|manifest\.json)$">

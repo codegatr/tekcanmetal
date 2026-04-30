@@ -89,7 +89,14 @@ function rcopy(string $src, string $dst): void {
 }
 
 function exclude_paths(): array {
-    return ['config.php', 'uploads', 'yedek', '.htaccess', 'install', '.git', '.github'];
+    // ÖNEMLİ: install/ ARTIK exclude_paths'TE DEĞİL — yeni sürümle birlikte
+    // install/seed-images/, install/migration.sql, install/wp-content.json.gz
+    // gibi dosyaların sunucuya gelmesi için. Sadece install.php çalıştırılmıyor
+    // çünkü TM_INSTALLED config'e gömülü.
+    // 'uploads' korunur — kullanıcının yüklediği dosyalar silinmesin
+    // 'config.php' korunur — DB credentials
+    // 'yedek' (backups), '.htaccess' korunur
+    return ['config.php', 'uploads', 'yedek', '.git', '.github'];
 }
 
 function backup_current(string $version): ?string {
@@ -254,7 +261,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
 
         log_activity('update', 'system', 0, "GitHub'dan güncellendi: " . TM_VERSION . ' → ' . $newVersion);
         unset($_SESSION['gh_latest']);
-        adm_back_with('success', "Sürüm $newVersion uygulandı. Sayfayı yenileyin.", 'admin/guncelleme.php');
+
+        // Cache temizle — yeni dosyalar etkili olsun
+        if (function_exists('opcache_reset')) { @opcache_reset(); }
+        if (function_exists('clearstatcache')) { clearstatcache(true); }
+        @touch(__DIR__ . '/../.htaccess');  // LiteSpeed cache invalidate sinyali
+
+        adm_back_with('success', "Sürüm $newVersion uygulandı. OPcache resetlendi. Ctrl+Shift+R ile yenileyin.", 'admin/guncelleme.php');
     }
 
     /* Manuel zip yükleme ile güncelle */
@@ -309,7 +322,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         ]);
 
         log_activity('update', 'system', 0, 'Manuel zip ile güncellendi');
-        adm_back_with('success', 'Manuel güncelleme uygulandı: ' . $res['msg'], 'admin/guncelleme.php');
+
+        // Cache temizle
+        if (function_exists('opcache_reset')) { @opcache_reset(); }
+        if (function_exists('clearstatcache')) { clearstatcache(true); }
+        @touch(__DIR__ . '/../.htaccess');
+
+        adm_back_with('success', 'Manuel güncelleme uygulandı: ' . $res['msg'] . ' OPcache resetlendi.', 'admin/guncelleme.php');
     }
 
     /* Yedek silme */

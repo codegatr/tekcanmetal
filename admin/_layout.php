@@ -92,6 +92,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         <a href="<?= h(admin_url('users.php')) ?>"<?= nav_active('users.php', $current) ?>>🔐 Kullanıcılar</a>
         <a href="<?= h(admin_url('guncelleme.php')) ?>"<?= nav_active('guncelleme.php', $current) ?>>🔄 Güncelleme</a>
         <?php if (($adminUser['role'] ?? '') === 'superadmin'): ?>
+        <a href="<?= h(admin_url('site-saglik.php')) ?>"<?= nav_active('site-saglik.php', $current) ?> style="color:#c8102e;font-weight:600">🔧 Site Sağlığı</a>
         <a href="<?= h(admin_url('teshis.php')) ?>"<?= nav_active('teshis.php', $current) ?>>🔍 Sistem Teşhisi</a>
         <?php endif; ?>
         <?php if (file_exists(__DIR__ . '/../install/wp-content.json.gz') && ($adminUser['role'] ?? '') === 'superadmin'): ?>

@@ -13,10 +13,42 @@ $stats = [
     'partners'  => (int)val("SELECT COUNT(*) FROM tm_partners WHERE is_active=1"),
     'gallery'   => (int)val("SELECT COUNT(*) FROM tm_gallery_images"),
 ];
+
+// Site sağlığı kontrolü — anasayfada uyarı gösterelim
+$healthIssues = 0;
+$healthMessages = [];
+try {
+    $catNullCount = (int)val("SELECT COUNT(*) FROM tm_categories WHERE image IS NULL OR image=''");
+    if ($catNullCount > 0) { $healthIssues++; $healthMessages[] = "$catNullCount kategori görselsiz"; }
+
+    $prodNullCount = (int)val("SELECT COUNT(*) FROM tm_products WHERE image IS NULL OR image=''");
+    if ($prodNullCount > 0) { $healthIssues++; $healthMessages[] = "$prodNullCount ürün görselsiz"; }
+
+    if ($stats['team'] === 0) { $healthIssues++; $healthMessages[] = "Ekip listesi boş"; }
+
+    $uploadsRoot = realpath(__DIR__ . '/..') . '/uploads';
+    if (!is_dir($uploadsRoot . '/categories')) { $healthIssues++; $healthMessages[] = "uploads/categories klasörü yok"; }
+    if (!is_dir($uploadsRoot . '/products')) { $healthIssues++; $healthMessages[] = "uploads/products klasörü yok"; }
+} catch (\Throwable $e) {}
+
 $lastMsg     = all("SELECT id, full_name, email, subject, created_at, is_read FROM tm_contact_messages ORDER BY created_at DESC LIMIT 8");
 $lastOrders  = all("SELECT id, full_name, amount, created_at, status FROM tm_mail_orders ORDER BY created_at DESC LIMIT 5");
 $lastLogs    = all("SELECT a.*, u.username FROM tm_activity_logs a LEFT JOIN tm_users u ON u.id=a.user_id ORDER BY a.created_at DESC LIMIT 8");
 ?>
+
+<?php if ($healthIssues > 0 && ($adminUser['role'] ?? '') === 'superadmin'): ?>
+<div style="background:linear-gradient(135deg, #c8102e 0%, #a00d24 100%);color:#fff;padding:18px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border-left:4px solid #fff;position:relative;overflow:hidden">
+  <div style="position:relative;z-index:2">
+    <h3 style="margin:0 0 4px;font-size:16px;font-weight:600;color:#fff">🔧 <?= $healthIssues ?> sorun tespit edildi</h3>
+    <p style="margin:0;font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.5">
+      <?= htmlspecialchars(implode(' · ', $healthMessages)) ?>
+    </p>
+  </div>
+  <a href="<?= h(url('admin/site-saglik.php')) ?>" style="background:#fff;color:#c8102e;padding:11px 22px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;position:relative;z-index:2">
+    🔧 Tek Tıkla Tamir Et →
+  </a>
+</div>
+<?php endif; ?>
 
 <div class="adm-stat-grid">
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['products'] ?></div><div class="adm-stat-label">Aktif Ürün</div></div>
