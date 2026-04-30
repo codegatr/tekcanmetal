@@ -5682,3 +5682,428 @@ UPDATE tm_pages SET
 <p>Настоящая Политика использования cookie опубликована Tekcan Metal Sanayi ve Ticaret Ltd. Şti. и действует.</p>
 '
 WHERE slug = 'cerez-politikasi';
+
+-- =====================================================
+-- v1.0.66 — SEO SÜPER İÇERİK: Genişletilmiş Sac + Baklava Sac
+-- Search Console verisi: 3.632 + 2.410 gösterim
+-- Hedef: 1. sayfa Google, %5+ CTR
+-- =====================================================
+
+-- 1) Blog kategorisi (yoksa) - 'urun-rehberi'
+INSERT IGNORE INTO tm_blog_categories (slug, name, description, sort_order)
+VALUES ('urun-rehberi', 'Ürün Rehberi', 'Demir-çelik ürün detayları, teknik özellikler ve kullanım rehberleri', 0);
+
+-- 2) Genişletilmiş Sac süper sayfa
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'genisletilmis-sac-rehberi',
+    'Genişletilmiş Sac: Ölçüler, Ağırlık Hesaplama, Çeşitler ve Kullanım Alanları',
+    'Genişletilmiş sac ölçüleri, ağırlık tablosu, DKP/HRP/galvaniz/paslanmaz/alüminyum çeşitleri ve kullanım alanları. Tekcan Metal — 20+ yıl tecrübe, Konya merkezli, 81 il sevkiyat.',
+    '<p class="lead"><strong>Genişletilmiş sac</strong> (genleştirilmiş, gerdirilmiş veya delikli sac olarak da bilinir), düz metal levhalarına özel preslerle çekme uygulanarak elde edilen, açık <strong>elmas, baklava veya altıgen desenli</strong> tek parça delikli yapıdır. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline genişletilmiş sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Genişletilmiş Sac Nedir? Üretim Süreci ve Yapısı</h2>
+
+<p>Genişletilmiş sac, düz bir sac levhanın özel kalıplı preslerde aynı anda kesilip esnetilmesiyle elde edilen, ağ benzeri açık desenlere sahip yapısal bir metal üründür. Üretim sürecinde tek bir saç levha kullanılır; <strong>kaynak ya da montaj yapılmaz</strong>. Bu yöntem, ürünün hem hafif hem de oldukça dayanıklı olmasını sağlar.</p>
+
+<h3>Üretim Aşamaları</h3>
+<ol>
+<li><strong>Hammadde seçimi:</strong> 0,5 mm – 6 mm kalınlığında DKP, HRP, paslanmaz, alüminyum veya galvaniz sac levhası</li>
+<li><strong>Pres ile kesme ve genleştirme:</strong> Kalıbın yukarı-aşağı hareketiyle saç eş zamanlı kesilir ve gerilir</li>
+<li><strong>Düzleştirme (opsiyonel):</strong> Yükseltilmiş yapıdan düzleştirilmiş yapıya geçirilir</li>
+<li><strong>Yüzey işlemi:</strong> Galvaniz, elektrostatik boya veya elektro-galvaniz uygulaması (ihtiyaca göre)</li>
+<li><strong>Kalite kontrol:</strong> Boyut, ağırlık, açıklık oranı, gerilim direnci ölçümü</li>
+</ol>
+
+<h2>Genişletilmiş Sac Ölçüleri ve Standart Boyutları</h2>
+
+<p>Tekcan Metal stoklarında bulunan <strong>standart genişletilmiş sac ölçüleri</strong> aşağıdaki tabloda listelenmiştir. Özel ölçü siparişleri için lazer kesim atölyemizden faydalanabilirsiniz.</p>
+
+<table>
+<thead>
+<tr><th>Levha Boyutu (mm)</th><th>Hücre Açıklığı</th><th>Hücre Yüksekliği</th><th>Sac Kalınlığı</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>15 × 30</td><td>2,5 mm</td><td>1,5 mm – 3 mm</td></tr>
+<tr><td>1000 × 2000</td><td>20 × 50</td><td>4 mm</td><td>2 mm – 4 mm</td></tr>
+<tr><td>1250 × 2500</td><td>30 × 60</td><td>5 mm</td><td>3 mm – 5 mm</td></tr>
+<tr><td>1500 × 3000</td><td>40 × 80</td><td>6 mm</td><td>3 mm – 6 mm</td></tr>
+<tr><td>Özel ölçü</td><td>Talebe göre</td><td>Talebe göre</td><td>0,8 mm – 8 mm</td></tr>
+</tbody>
+</table>
+
+<h3>Hücre Tipleri (Açıklık Geometrisi)</h3>
+<ul>
+<li><strong>Elmas (Diamond):</strong> En yaygın tip — yürüme yolları, koruyucu gridler</li>
+<li><strong>Altıgen (Hexagonal):</strong> Estetik mimari uygulamalar, dekoratif cepheler</li>
+<li><strong>Kare (Square):</strong> Endüstriyel filtreleme, hava sirkülasyonu</li>
+<li><strong>Yuvarlak (Round):</strong> Akustik paneller, hassas filtreleme</li>
+</ul>
+
+<h2>Genişletilmiş Sac Ağırlık Hesaplama</h2>
+
+<p>Genişletilmiş sacın <strong>m² ağırlığı</strong>, kullanılan baz sacın yoğunluğu, kalınlığı ve hücre açıklık oranına göre değişir. Tekcan Metal''in <a href="/hesaplama.php">online ağırlık hesaplama motoru</a> ile saniyeler içinde doğru hesabı yapabilirsiniz.</p>
+
+<h3>Pratik Ağırlık Tablosu (kg/m²)</h3>
+<table>
+<thead>
+<tr><th>Sac Kalınlığı</th><th>Hücre 15×30</th><th>Hücre 20×50</th><th>Hücre 30×60</th><th>Hücre 40×80</th></tr>
+</thead>
+<tbody>
+<tr><td>1,5 mm</td><td>5,8 kg</td><td>4,2 kg</td><td>3,5 kg</td><td>2,9 kg</td></tr>
+<tr><td>2 mm</td><td>7,7 kg</td><td>5,6 kg</td><td>4,7 kg</td><td>3,8 kg</td></tr>
+<tr><td>3 mm</td><td>11,5 kg</td><td>8,4 kg</td><td>7,0 kg</td><td>5,8 kg</td></tr>
+<tr><td>4 mm</td><td>15,4 kg</td><td>11,2 kg</td><td>9,3 kg</td><td>7,7 kg</td></tr>
+</tbody>
+</table>
+
+<p><em>Not: Yukarıdaki değerler standart DKP sac (yoğunluk 7,85 g/cm³) için yaklaşık değerlerdir. Kesin hesap için <a href="/hesaplama.php">hesaplama motorumuzu</a> kullanın.</em></p>
+
+<h2>Genişletilmiş Sac Çeşitleri ve Malzeme Seçenekleri</h2>
+
+<h3>1. DKP Genişletilmiş Sac</h3>
+<p>Soğuk haddelenmiş, düşük karbonlu çelikten üretilir. Yüzeyi pürüzsüz, kaynaklanabilir ve boyanabilir. Genel inşaat ve sanayi uygulamalarında en çok tercih edilen tiptir.</p>
+
+<h3>2. HRP (Sıcak Haddelenmiş) Genişletilmiş Sac</h3>
+<p>Sıcak haddelenmiş çelikten üretilir, daha kalın levha aralığında (3-8 mm) tercih edilir. Endüstriyel platformlar, ağır yük gridleri için uygundur.</p>
+
+<h3>3. Galvaniz Genişletilmiş Sac</h3>
+<p>Daldırma galvaniz (DDG) uygulamasıyla korozyon direnci kazandırılmıştır. <strong>Açık hava uygulamalarında</strong> 25-50 yıl ömür sunar. Çatı, cephe, çitler için idealdir.</p>
+
+<h3>4. Paslanmaz Genişletilmiş Sac (304 / 316)</h3>
+<p>Asit, baz ve yüksek nem ortamlarında dayanıklı. Gıda işleme tesisleri, kimya sanayisi, deniz uygulamaları için tercih edilir. <strong>304 paslanmaz</strong> standart kullanım, <strong>316L</strong> deniz suyu/kimyasal direnç.</p>
+
+<h3>5. Alüminyum Genişletilmiş Sac</h3>
+<p>%70 daha hafif, korozyona doğal dayanım. Mimari cephe, tavan kaplama, hafif filtre ve dekoratif uygulamalar için. Boyanabilir veya anodize edilmiş hâli mevcuttur.</p>
+
+<h2>Genişletilmiş Sac Kullanım Alanları</h2>
+
+<h3>İnşaat ve Yapı</h3>
+<ul>
+<li><strong>Yürüme yolları (cat walks):</strong> Endüstriyel platformlarda kaymaz zemin</li>
+<li><strong>Merdiven basamakları:</strong> Yangın merdivenleri, dış mekan basamak</li>
+<li><strong>Mimari cephe:</strong> Modern bina cephe kaplaması, ışık geçirgen panel</li>
+<li><strong>Çit ve bariyer:</strong> Endüstriyel saha, otoyol, demiryolu</li>
+<li><strong>Asma tavan:</strong> Akustik perforasyon, klima geçirgenlik</li>
+</ul>
+
+<h3>Sanayi ve Endüstri</h3>
+<ul>
+<li><strong>Filtreleme sistemleri:</strong> Hava, yağ, su filtreleri</li>
+<li><strong>Konveyör platformları:</strong> Bant taşıyıcı koruma kapakları</li>
+<li><strong>Makine korumaları:</strong> CNC tezgâh güvenlik gridleri</li>
+<li><strong>Havalandırma:</strong> HVAC kanal kapakları, fan koruma</li>
+<li><strong>Patoz sacı:</strong> Tarım makineleri, harman ekipmanları</li>
+</ul>
+
+<h3>Otomotiv ve Ulaşım</h3>
+<ul>
+<li>Kamyon kasası tabanı (kaymaz yüzey)</li>
+<li>Römork iç döşeme</li>
+<li>Konteyner havalandırma panelleri</li>
+<li>Gemi yürüme yolları (paslanmaz tip)</li>
+</ul>
+
+<h3>Mimari ve Dekoratif</h3>
+<ul>
+<li>Modern villa cephe paneli</li>
+<li>Bahçe pergola ve gölgelik</li>
+<li>İç mekan separator (oda ayırıcı)</li>
+<li>Restoran-ofis dekoratif duvar paneli</li>
+</ul>
+
+<h2>Avantajları</h2>
+<ul>
+<li><strong>Hafif ama dayanıklı:</strong> Düz saca göre %30-50 daha hafif, eşdeğer mukavemet</li>
+<li><strong>Tek parça yapısı:</strong> Kaynaksız, montajsız — yapısal zayıf nokta yok</li>
+<li><strong>Hava-ışık-su geçirgen:</strong> Doğal havalandırma, görüş açıklığı</li>
+<li><strong>Kaymaz yüzey:</strong> Yağlı/ıslak ortamda iş güvenliği sağlar</li>
+<li><strong>Modüler montaj:</strong> Vidalama, kaynak, klipsleme — esnek bağlantı</li>
+<li><strong>Geri dönüştürülebilir:</strong> %100 metal — sürdürülebilir malzeme</li>
+<li><strong>Maliyet avantajı:</strong> Eşit alanı kaplayan düz saca göre %20-40 daha ekonomik</li>
+</ul>
+
+<h2>Genişletilmiş Sac Fiyatları (2026)</h2>
+
+<p>Genişletilmiş sac fiyatları; <strong>malzeme cinsi, kalınlık, hücre boyutu ve sipariş miktarına</strong> göre değişir. Fiyat netliği için lütfen <a href="/iletisim.php">satış ekibimizle iletişime geçin</a>.</p>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>Hammadde:</strong> Paslanmaz > Alüminyum > Galvaniz > DKP > HRP (pahalıdan ucuza)</li>
+<li><strong>Kalınlık:</strong> Her milimetre artış kg ağırlığını ve dolayısıyla fiyatı etkiler</li>
+<li><strong>Hücre boyutu:</strong> Küçük açıklık (15×30) daha pahalı — daha çok metal</li>
+<li><strong>Yüzey işlemi:</strong> Boya, galvaniz, anodize ek maliyet</li>
+<li><strong>Sipariş miktarı:</strong> 100+ levha siparişlerde kademeli indirim</li>
+<li><strong>Sevkiyat mesafesi:</strong> Konya merkezli — Türkiye geneli sevkiyat hesabı</li>
+</ul>
+
+<h2>Genişletilmiş Sac Sipariş Süreci</h2>
+
+<ol>
+<li><strong>Talep iletme:</strong> Telefon (0 332 342 24 52), WhatsApp veya <a href="/iletisim.php">iletişim formu</a> üzerinden ölçü, kalınlık, miktar bilgisini iletin</li>
+<li><strong>Teklif:</strong> 2 saat içinde KDV dahil/hariç fiyat teklifi gönderilir</li>
+<li><strong>Onay ve avans:</strong> Sözleşme imzalanır, %30 avans alınır (cari ilişkilerde gerekmez)</li>
+<li><strong>Üretim/Stok hazırlığı:</strong> Stoklu ürünler aynı gün, üretim 3-5 iş günü</li>
+<li><strong>Sevkiyat:</strong> Konya''dan Türkiye geneline anlaşmalı nakliye ile</li>
+<li><strong>Teslim ve fatura:</strong> Sevk irsaliyesi imzası sonrası e-fatura kesilir</li>
+</ol>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Genişletilmiş sacı düz hâle getirebilir miyim?</h4>
+<p>Evet. Yükseltilmiş (raised) genişletilmiş sac, soğuk presleme ile düzleştirilebilir. Düzleştirilmiş (flattened) tip stoğumuzda da mevcuttur.</p>
+
+<h4>Genişletilmiş saç m² fiyatı ne kadar?</h4>
+<p>Mevcut hammadde fiyatlarına göre değişir. Standart 2 mm DKP / 30×60 hücre / 1000×2000 mm levha için 2026 yılı yaklaşık fiyat 280-380 TL/m² aralığındadır. Anlık fiyat için iletişime geçin.</p>
+
+<h4>Genişletilmiş sac mı, delikli sac mı kullanmalıyım?</h4>
+<p>Genişletilmiş sac kaynaksız tek parça olduğu için yapısal mukavemet daha yüksektir. Delikli sac (perforated) ise estetik açıdan daha düzgün desenli, hassas filtreleme için tercih edilir. Kullanım amacına göre değişir.</p>
+
+<h4>Türkiye dışına ihracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan ve Türkmenistan</strong>''a düzenli sevkiyatımız vardır. Gümrük belgeleri ve menşei şahadetnamesi tarafımızca düzenlenir.</p>
+
+<h4>Galvaniz genişletilmiş sac kaç yıl dayanır?</h4>
+<p>Sıcak daldırma galvaniz uygulamalı genişletilmiş sac, açık hava şartlarında <strong>25-50 yıl</strong> korozyona dayanır. Deniz kenarı ortamlarda paslanmaz 316 öneririz.</p>
+
+<h2>Tekcan Metal Genişletilmiş Sac Avantajı</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong> (2005''ten bu yana)</li>
+<li>✅ <strong>Üretici sertifikalı</strong> Erdemir, Borçelik, Tosyalı tedarik</li>
+<li>✅ <strong>Geniş stok</strong> — 5 standart ölçü her zaman hazır</li>
+<li>✅ <strong>Aynı gün sevkiyat</strong> (saat 09:00 öncesi sipariş)</li>
+<li>✅ <strong>Lazer kesim atölyesi</strong> — özel desenler, montaj delikleri</li>
+<li>✅ <strong>81 il sevkiyat</strong> + ihracat (Irak, Suriye, Azerbaycan, Türkmenistan)</li>
+<li>✅ <strong>e-Fatura, MASAK uyumu, vergi şeffaflığı</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Genişletilmiş sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/genisletilmis-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Genişletilmiş Sac Ölçüleri, Ağırlık Hesaplama, Fiyat — Tekcan Metal',
+    'Genişletilmiş sac ölçüleri, ağırlık tablosu, çeşitleri (DKP, HRP, galvaniz, paslanmaz, alüminyum), kullanım alanları ve fiyat hesaplama. Konya merkezli Tekcan Metal — 20+ yıl tecrübe, aynı gün sevkiyat.',
+    NOW(),
+    0,
+    1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- 3) Baklava Sac süper sayfa
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'baklava-sac-rehberi',
+    'Baklava Sac (Baklavalı Saç): Ölçüler, Ağırlık, Çeşitler ve Fiyatlar',
+    'Baklava sac (elmas/kareli sac) çeşitleri (DKP, HRP, paslanmaz, alüminyum, galvaniz), standart ölçüler, ağırlık hesaplama, kullanım alanları. Tekcan Metal Konya — aynı gün sevkiyat, lazer kesim.',
+    '<p class="lead"><strong>Baklava sac</strong> (baklavalı saç, elmas sac veya kareli saç olarak da bilinir), bir yüzü düz diğer yüzü baklava deseninde kabarık çıkıntılı, <strong>kaymaz yüzeyli yapısal çelik levhadır</strong>. Tekcan Metal olarak Konya merkezimizden Türkiye geneline DKP, paslanmaz ve alüminyum baklava sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Baklava Sac Nedir? Yapısı ve Tanımı</h2>
+
+<p>Baklava sac, sıcak haddeleme sürecinin son aşamasında özel desen merdaneleri arasından geçirilen çelik levhanın bir yüzünde <strong>baklava (elmas) şeklinde yükseltilmiş çıkıntılar</strong> oluşturulan üründür. Diğer yüzü düz kalır. Baklava deseni; sürtünme katsayısını artırarak yüzeyi <strong>kaymaz</strong> hale getirir.</p>
+
+<p>Sektörde "<strong>checker plate</strong>", "<strong>tear plate</strong>" veya "<strong>diamond plate</strong>" olarak da bilinir. İngilizce belgelerde EN 10025-2 ve ASTM A786/A786M standartlarında tanımlanır.</p>
+
+<h2>Baklava Sac Çeşitleri ve Malzemeleri</h2>
+
+<h3>1. DKP Baklava Sac (Soğuk Haddelenmiş)</h3>
+<p>Düşük karbonlu çelikten üretilir, <strong>2-8 mm kalınlık</strong> aralığında en çok tercih edilen tiptir. Boyanabilir, kaynaklanabilir ve esnek yapıdadır. İç mekan platformları, merdivenler için uygundur.</p>
+
+<h3>2. HRP Baklava Sac (Sıcak Haddelenmiş)</h3>
+<p>Sıcak haddelenmiş çelikten üretilir, <strong>3-12 mm kalınlık</strong> aralığında bulunur. Daha yüksek mukavemet gerektiren ağır endüstriyel uygulamalar (fabrika zemini, vinç platformları) için tercih edilir.</p>
+
+<h3>3. Paslanmaz Baklava Sac (304 / 316)</h3>
+<p>Korozyon direnci kritik olan ortamlar için. <strong>Gıda işleme tesisleri, kimya sanayisi, deniz uygulamaları</strong>, yat ve gemi platformlarında kullanılır. 304 standart, 316L deniz suyu/asit direnci için.</p>
+
+<h3>4. Alüminyum Baklava Sac</h3>
+<p>%70 daha hafif, doğal korozyon direnci. Karavan, römork, gezi teknesi, mimari uygulamalar için. Genelde 1,5-6 mm kalınlıkta üretilir.</p>
+
+<h3>5. Galvaniz Baklava Sac</h3>
+<p>Sıcak daldırma galvaniz kaplamalı. Açık hava uygulamaları (yangın merdivenleri, sundurma zemini, dış platform) için 25+ yıl ömürlü çözüm.</p>
+
+<h2>Baklava Sac Standart Ölçüleri</h2>
+
+<table>
+<thead>
+<tr><th>Levha Boyutu (mm)</th><th>Kalınlık Aralığı</th><th>Yaklaşık Ağırlık (DKP)</th><th>Tipik Uygulama</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>2 - 4 mm</td><td>32 - 64 kg</td><td>İç mekan basamak, kapak</td></tr>
+<tr><td>1250 × 2500</td><td>3 - 6 mm</td><td>75 - 150 kg</td><td>Endüstriyel platform</td></tr>
+<tr><td>1500 × 3000</td><td>4 - 8 mm</td><td>144 - 288 kg</td><td>Ağır yük sahneler, kamyon kasası</td></tr>
+<tr><td>2000 × 6000</td><td>5 - 12 mm</td><td>485 - 1166 kg</td><td>Fabrika zemini, vinç pisti</td></tr>
+<tr><td>Özel ölçü</td><td>2 - 12 mm</td><td>Talebe göre</td><td>Lazer/oksijen kesim ile</td></tr>
+</tbody>
+</table>
+
+<h2>Baklava Sac Ağırlık Hesaplama</h2>
+
+<p>Baklava sacın <strong>m² ağırlığı</strong>, baz sac kalınlığından biraz daha fazladır (yüzeydeki çıkıntılar nedeniyle yaklaşık <strong>%5-8 ek ağırlık</strong>). Standart hesap formülü:</p>
+
+<p><strong>Ağırlık (kg/m²) = Kalınlık (mm) × Yoğunluk (g/cm³) × 1,06</strong></p>
+
+<h3>Pratik Ağırlık Tablosu (DKP / 7,85 g/cm³)</h3>
+
+<table>
+<thead>
+<tr><th>Kalınlık</th><th>kg/m²</th><th>1×2 m levha</th><th>1,25×2,5 m levha</th></tr>
+</thead>
+<tbody>
+<tr><td>2 mm</td><td>16,6 kg</td><td>33 kg</td><td>52 kg</td></tr>
+<tr><td>2,5 mm</td><td>20,8 kg</td><td>42 kg</td><td>65 kg</td></tr>
+<tr><td>3 mm</td><td>25,0 kg</td><td>50 kg</td><td>78 kg</td></tr>
+<tr><td>4 mm</td><td>33,3 kg</td><td>67 kg</td><td>104 kg</td></tr>
+<tr><td>5 mm</td><td>41,6 kg</td><td>83 kg</td><td>130 kg</td></tr>
+<tr><td>6 mm</td><td>49,9 kg</td><td>100 kg</td><td>156 kg</td></tr>
+<tr><td>8 mm</td><td>66,6 kg</td><td>133 kg</td><td>208 kg</td></tr>
+</tbody>
+</table>
+
+<p><em>Not: Gerçek ağırlık desen yüksekliğine göre %2-3 değişebilir. Hassas hesap için <a href="/hesaplama.php">online hesaplama motorumuzu</a> kullanın.</em></p>
+
+<h2>Baklava Sac Kullanım Alanları</h2>
+
+<h3>Endüstriyel Zemin Uygulamaları</h3>
+<ul>
+<li><strong>Fabrika zemini ve makine altı:</strong> Yağ-su damlası ortamında kaymaz koruma</li>
+<li><strong>Yükleme rampaları:</strong> Forklift, transpalet erişim noktaları</li>
+<li><strong>Yürüme yolları:</strong> Endüstriyel platformlar, çelik konstrüksiyon zeminleri</li>
+<li><strong>Vinç ve kreyn pist:</strong> Operatör güvenlik platformu</li>
+</ul>
+
+<h3>Otomotiv ve Ulaşım</h3>
+<ul>
+<li><strong>Kamyon kasası tabanı:</strong> Standart - kaymaz yük zemin</li>
+<li><strong>Pickup arka kasa:</strong> Dayanım + estetik desen</li>
+<li><strong>Otobüs basamağı:</strong> Yolcu güvenliği — kaymaz</li>
+<li><strong>Tekne/yat platformu:</strong> Paslanmaz tip — deniz ortamı</li>
+<li><strong>Karavan / römork zemin:</strong> Alüminyum tip — hafiflik kritik</li>
+</ul>
+
+<h3>Yapı ve İnşaat</h3>
+<ul>
+<li><strong>Yangın merdiveni basamağı:</strong> Yönetmelik gereği kaymaz</li>
+<li><strong>Asansör boşluğu zemin:</strong> Yapısal koruma</li>
+<li><strong>Garaj ve otopark rampa:</strong> Yağmur-kar ortamında</li>
+<li><strong>Yükleme platformları:</strong> Depo, dağıtım merkezleri</li>
+<li><strong>Endüstriyel kapı eşiği:</strong> Forklift trafiği</li>
+</ul>
+
+<h3>Dekoratif ve Mimari</h3>
+<ul>
+<li>Bar ve restaurant tezgah önü</li>
+<li>Endüstriyel tarz duvar paneli</li>
+<li>Loft tasarım merdiven basamağı</li>
+<li>Garaj kapı paneli (dış cephe)</li>
+</ul>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Kaymaz yüzey:</strong> Baklava deseni sürtünme katsayısını %35-50 artırır</li>
+<li><strong>Yüksek dayanım:</strong> Düz saça göre eşit kalınlıkta daha rijit</li>
+<li><strong>Bakım gerektirmez:</strong> Boyalı/galvanizli tipler 20+ yıl bakımsız</li>
+<li><strong>Korozyon dayanımı:</strong> Galvaniz/paslanmaz tipte uzun ömür</li>
+<li><strong>Estetik:</strong> Modern endüstriyel görünüm sağlar</li>
+<li><strong>Kolay temizlik:</strong> Düz arka yüz nedeniyle alt taraf temizlenir</li>
+<li><strong>Kaynak ve montaj:</strong> Standart kaynak yöntemleriyle birleştirilebilir</li>
+</ul>
+
+<h2>Baklava Sac Fiyatları (2026)</h2>
+
+<p>Baklava sac fiyatları <strong>malzeme cinsi, kalınlık, levha ölçüsü ve sipariş miktarına</strong> göre belirlenir. Anlık fiyat için <a href="/iletisim.php">iletişim sayfamız</a> üzerinden teklif alabilirsiniz.</p>
+
+<h3>Fiyat Sıralaması (Pahalıdan Ucuza)</h3>
+<ol>
+<li>Paslanmaz 316L baklava sac</li>
+<li>Paslanmaz 304 baklava sac</li>
+<li>Alüminyum baklava sac</li>
+<li>Galvaniz baklava sac</li>
+<li>HRP baklava sac (sıcak haddelenmiş)</li>
+<li>DKP baklava sac (soğuk haddelenmiş — en ekonomik)</li>
+</ol>
+
+<p>Genellikle <strong>3 mm DKP baklava sac</strong> en çok tercih edilen ekonomik standart üründür.</p>
+
+<h2>Baklava Sac vs Genişletilmiş Sac — Hangisini Seçmeli?</h2>
+
+<table>
+<thead>
+<tr><th>Özellik</th><th>Baklava Sac</th><th>Genişletilmiş Sac</th></tr>
+</thead>
+<tbody>
+<tr><td>Yapı</td><td>Tam dolu, üst yüzü desenli</td><td>Açık delikli, hava-ışık geçirgen</td></tr>
+<tr><td>Ağırlık</td><td>Daha ağır</td><td>%30-50 daha hafif</td></tr>
+<tr><td>Kaymazlık</td><td>Çok iyi (yüksek desen)</td><td>İyi (kenar profili)</td></tr>
+<tr><td>Hava geçişi</td><td>Yok</td><td>Var (filtre etkisi)</td></tr>
+<tr><td>Yük taşıma</td><td>Çok yüksek</td><td>Orta-yüksek</td></tr>
+<tr><td>Maliyet</td><td>Daha ekonomik</td><td>Hücre boyutuna göre değişir</td></tr>
+<tr><td>Tipik kullanım</td><td>Zemin, basamak, kasa tabanı</td><td>Cephe, filtre, dekoratif</td></tr>
+</tbody>
+</table>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Baklava sac kaç yıl dayanır?</h4>
+<p>Boyalı DKP iç mekanda 15+ yıl, sıcak daldırma galvaniz açık havada 25+ yıl, paslanmaz 304 ise <strong>50+ yıl</strong> ömür sunar.</p>
+
+<h4>Baklava sac kaynaklanabilir mi?</h4>
+<p>Evet. MIG, MAG ve elektrik ark kaynağıyla kaynaklanabilir. Paslanmaz tipler için TIG kaynağı önerilir.</p>
+
+<h4>Baklava sac kesim hizmeti veriyor musunuz?</h4>
+<p>Evet. Tekcan Metal atölyesinde <a href="/hizmet/lazer-kesim">lazer kesim</a> ve <a href="/hizmet/oksijen-kesim">oksijen kesim</a> ile özel ölçüde baklava sac kesimi yapılır. Aynı gün sevkiyat seçeneği vardır.</p>
+
+<h4>Baklava sacı boyayabilir miyim?</h4>
+<p>Evet. DKP/HRP tipleri elektrostatik toz boya, akrilik veya yağlı boya ile boyanabilir. Galvaniz tip boyamadan kullanılır.</p>
+
+<h4>Hangi kalınlığı seçmeliyim?</h4>
+<p>Yaya yürüme yolu için 3 mm yeterli. Forklift/transpalet trafiği için 5-6 mm önerilir. Vinç altı/ağır endüstri için 8-12 mm gerekebilir.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli baklava sac sevkiyatı yapıyoruz. Gümrük dokümantasyonu tarafımızca düzenlenir.</p>
+
+<h2>Tekcan Metal Baklava Sac Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Erdemir, Borçelik, Tosyalı, Habaş</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>Stoklu satış</strong> — 5 standart ölçüde her zaman hazır</li>
+<li>✅ <strong>Aynı gün sevkiyat</strong> (saat 09:00 öncesi siparişlerde)</li>
+<li>✅ <strong>Lazer + oksijen kesim atölyesi</strong> — özel ölçü kesim</li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>e-Fatura, üretici sertifikası, kalite belgeleri</strong> dahil</li>
+</ul>
+
+<p class="cta-block"><strong>Baklava sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/baklava-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Baklava Sac (Baklavalı Saç) Ölçüleri, Ağırlık ve Fiyat — Tekcan Metal',
+    'Baklava sac (baklavalı saç, elmas sac) ölçüleri, ağırlık tablosu, çeşitleri (DKP, HRP, paslanmaz, alüminyum), kullanım alanları ve fiyat. Tekcan Metal — Konya merkezli, 20+ yıl, 81 il sevkiyat.',
+    NOW(),
+    0,
+    1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);

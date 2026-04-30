@@ -18,8 +18,83 @@ $related = $post['category_id']
 
 $pageTitle = tr_field($post, 'title') ?: $post['title'];
 $metaDesc  = tr_field($post, 'meta_desc') ?: tr_field($post, 'excerpt') ?: excerpt(tr_field($post, 'content'), 160);
+
+// SEO: Schema.org BlogPosting + Breadcrumb + FAQ markup
+$siteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$postUrl = $siteUrl . '/blog-detay.php?slug=' . urlencode($post['slug']);
+$postImage = !empty($post['cover_image']) ? $siteUrl . '/' . $post['cover_image'] : $siteUrl . '/' . settings('logo', 'assets/img/logo.png');
+$postContent = tr_field($post, 'content') ?: $post['content'];
+
+// FAQ extraction (içerikte <h4>...</h4><p>...</p> patterni varsa)
+$faqItems = [];
+if (preg_match_all('#<h4>([^<]+)</h4>\s*<p>(.+?)</p>#s', $postContent, $matches, PREG_SET_ORDER)) {
+    foreach ($matches as $m) {
+        $q = trim(strip_tags($m[1]));
+        $a = trim(strip_tags($m[2]));
+        // Sadece soru gibi görünenler (? ile bitiyor veya soru kelimesi içeriyor)
+        if (mb_substr($q, -1) === '?' || preg_match('/(nedir|kaç|hangi|nasıl|var mı|kimdir)/iu', $q)) {
+            if (mb_strlen($a) > 20 && mb_strlen($a) < 800) {
+                $faqItems[] = ['q' => $q, 'a' => $a];
+            }
+        }
+    }
+}
+
+// Build $schemaJson string before header include
+$schemaItems = [];
+
+// BlogPosting Schema
+$schemaItems[] = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BlogPosting',
+    'headline' => tr_field($post, 'title') ?: $post['title'],
+    'description' => $metaDesc,
+    'image' => $postImage,
+    'author' => ['@type' => 'Organization', 'name' => $post['author'] ?? 'Tekcan Metal', 'url' => $siteUrl],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => settings('site_short_name', 'Tekcan Metal'),
+        'logo' => ['@type' => 'ImageObject', 'url' => $siteUrl . '/' . settings('logo', 'assets/img/logo.png')],
+    ],
+    'datePublished' => date('c', strtotime($post['published_at'] ?: 'now')),
+    'dateModified' => date('c', strtotime($post['updated_at'] ?? $post['published_at'] ?? 'now')),
+    'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $postUrl],
+    'inLanguage' => current_lang(),
+];
+
+// Breadcrumb Schema
+$schemaItems[] = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Anasayfa', 'item' => $siteUrl],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => $siteUrl . '/blog.php'],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => tr_field($post, 'title') ?: $post['title']],
+    ],
+];
+
+// FAQ Schema (eğer içerikte SSS varsa)
+if (count($faqItems) >= 2) {
+    $faqEntities = [];
+    foreach ($faqItems as $f) {
+        $faqEntities[] = [
+            '@type' => 'Question',
+            'name' => $f['q'],
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']],
+        ];
+    }
+    $schemaItems[] = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => $faqEntities,
+    ];
+}
+
 require __DIR__ . '/includes/header.php';
 ?>
+<?php foreach ($schemaItems as $sch): ?>
+<script type="application/ld+json"><?= json_encode($sch, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?></script>
+<?php endforeach; ?>
 <article class="blog-detail">
   <header class="blog-detail-head">
     <div class="container container-narrow">

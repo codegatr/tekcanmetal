@@ -232,31 +232,30 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
 <?php endif; ?>
 
 <?php
-// BlogPosting schema (blog-detay.php sayfasında)
-if ($pageBaseName === 'blog-detay' && !empty($post) && is_array($post)) :
+// BlogPosting schema artık blog-detay.php tarafından yönetiliyor (v1.0.66+)
+// Burada handle edilmemeli — duplicate'ı önler
 ?>
+
+<!-- WebSite Schema with SearchAction (sitelinks search box için) -->
+<?php if ($current === 'index'): ?>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "<?= h($post['title']) ?>",
-  "datePublished": "<?= h(date('c', strtotime($post['published_at']))) ?>",
-  "dateModified": "<?= h(date('c', strtotime($post['updated_at'] ?? $post['published_at']))) ?>",
-  "author": {
-    "@type": "Organization",
-    "name": "<?= h($schemaSiteName) ?>"
+  "@type": "WebSite",
+  "@id": "<?= h($schemaSiteUrl) ?>/#website",
+  "url": "<?= h($schemaSiteUrl) ?>/",
+  "name": "<?= h($schemaSiteName) ?>",
+  "description": "<?= h(settings('site_description', '')) ?>",
+  "publisher": {"@id": "<?= h($schemaSiteUrl) ?>/#organization"},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "<?= h($schemaSiteUrl) ?>/urunler.php?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "<?= h($schemaSiteName) ?>",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "<?= h($schemaSiteLogo) ?>"
-    }
-  }
-  <?php if (!empty($post['cover_image'])): ?>,
-  "image": "<?= h($schemaSiteUrl . '/' . ltrim($post['cover_image'], '/')) ?>"
-  <?php endif; ?>
+  "inLanguage": ["tr", "en", "ar", "ru"]
 }
 </script>
 <?php endif; ?>
