@@ -5222,3 +5222,463 @@ UPDATE tm_pages SET
 <p><em>Последнее обновление: январь 2026</em></p>
 '
 WHERE slug = 'kvkk';
+
+-- v1.0.65 — Çerez Politikası content 3 dilde (~5000 kelime × 3 dil)
+UPDATE tm_pages SET
+  content_en = '<p>As Tekcan Metal Sanayi ve Ticaret Ltd. Şti., we use cookies on our website at www.tekcanmetal.com (hereinafter referred to as the <em>"Website"</em>) to improve user experience, ensure efficient operation of the site and enhance our service quality. This Cookie Policy has been prepared to inform you about which cookies we use and for what purposes, and how you can manage them.</p>
+
+<h2>1. What Is a Cookie?</h2>
+<p>Cookies are small files containing limited text data that are placed on your device (computer, tablet, smartphone) by the websites you visit through your browser. These files generally contain information such as an identifier (ID), site name and validity period.</p>
+
+<p>Cookies allow visitors to remember their interaction with the website, preserve session information, store user preferences and measure site performance. Cookies do not carry viruses on their own, cannot access your personal files, and do not damage your device.</p>
+
+<h2>2. Which Cookies Do We Use?</h2>
+<p>Four main cookie categories detailed below are used on our website:</p>
+
+<h3>A) Essential (Technical) Cookies</h3>
+<p><strong>Purpose:</strong> Cookies that are <em>strictly necessary</em> for the basic functions of the site to work. Without these cookies, the site does not work properly; you cannot log in, your forms cannot be submitted, security checks cannot be performed.</p>
+
+<table>
+<thead><tr><th>Cookie Name</th><th>Purpose</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td><code>PHPSESSID</code></td><td>Session management (login info, cart, form state)</td><td>Until browser closes</td></tr>
+<tr><td><code>csrf_token</code></td><td>Form security (CSRF attack protection)</td><td>Session duration</td></tr>
+<tr><td><code>cookie_consent</code></td><td>Remembering your cookie consent preference</td><td>1 year</td></tr>
+<tr><td><code>tm_admin</code></td><td>Admin panel access session</td><td>30 days</td></tr>
+</tbody>
+</table>
+
+<h4>Legal Basis</h4>
+<p>Can be processed without user consent under PDPL art. 5/2-c (establishment and performance of contract) and PDPL art. 5/2-f (legitimate interest).</p>
+
+<h3>B) Performance and Analytics Cookies</h3>
+<p><strong>Purpose:</strong> Allow us to understand how visitors use the site. We analyze which pages are visited more, how long users spend on the site, and where they struggle, to improve our service. The collected data is <strong>anonymized</strong> and does not personally identify the user.</p>
+
+<table>
+<thead><tr><th>Provider</th><th>Purpose</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td>Google Analytics 4 (<code>_ga, _gid</code>)</td><td>Page views, user journey, demographic anonymous analysis</td><td>2 years / 24 hours</td></tr>
+<tr><td>Yandex Metrica (<code>_ym_uid</code>)</td><td>Regional visitor analysis (especially Turkey, Russia markets)</td><td>1 year</td></tr>
+<tr><td>Site log (<code>tm_visit</code>)</td><td>Measuring popular product/category pages</td><td>30 days</td></tr>
+</tbody>
+</table>
+
+<h4>Legal Basis</h4>
+<p>PDPL art. 5/1 (explicit consent) — processed based on the consent given by the user via the cookie consent banner. These cookies are not created if you do not give consent.</p>
+
+<h3>C) Functionality (Preference) Cookies</h3>
+<p><strong>Purpose:</strong> Allow us to provide a personalized experience on subsequent visits by remembering your usage preferences on the site.</p>
+
+<table>
+<thead><tr><th>Cookie Name</th><th>Purpose</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td><code>tm_lang</code></td><td>Language preference (TR / EN / AR / RU)</td><td>1 year</td></tr>
+<tr><td><code>tm_theme</code></td><td>Light / dark theme selection</td><td>1 year</td></tr>
+<tr><td><code>tm_calc_history</code></td><td>Last selected product in calculation wizard</td><td>30 days</td></tr>
+<tr><td><code>tm_recent_views</code></td><td>Recently viewed products (quick access)</td><td>30 days</td></tr>
+</tbody>
+</table>
+
+<h4>Legal Basis</h4>
+<p>PDPL art. 5/1 (explicit consent) — activated if you give consent.</p>
+
+<h3>D) Targeting and Advertising Cookies</h3>
+<p><strong>Purpose:</strong> Used to show you ads <em>relevant to your interests</em> while browsing other sites after your visit to our website. As Tekcan Metal, these cookies may be used to deliver campaigns, new product announcements and seasonal price discounts to our customers in the steel sector.</p>
+
+<table>
+<thead><tr><th>Provider</th><th>Purpose</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td>Google Ads (<code>_gcl_au</code>, <code>NID</code>)</td><td>Remarketing, conversion tracking</td><td>3 months – 1 year</td></tr>
+<tr><td>Meta Pixel (<code>_fbp</code>)</td><td>Facebook and Instagram ad tracking</td><td>3 months</td></tr>
+<tr><td>LinkedIn Insight (<code>li_sugr</code>)</td><td>B2B sectoral targeting (industry, construction)</td><td>3 months</td></tr>
+</tbody>
+</table>
+
+<h4>Legal Basis</h4>
+<p>PDPL art. 5/1 (explicit consent) — activated only if you give consent. If declined, no remarketing targeting is performed, but you may continue to see random general ads.</p>
+
+<h2>3. Third-Party Cookies</h2>
+<p>In addition to cookies created directly by our Company on our website, there may also be cookies created by partners with whom we provide services. These third-party cookies are subject to the privacy policies of the respective providers:</p>
+<ul>
+<li><strong>Google LLC</strong> — Analytics, Maps, Ads, reCAPTCHA — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></li>
+<li><strong>Meta Platforms</strong> — Facebook, Instagram pixel — <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener">Cookie Policy</a></li>
+<li><strong>LinkedIn Corporation</strong> — Insight tag — <a href="https://www.linkedin.com/legal/cookie-policy" target="_blank" rel="noopener">Cookie Policy</a></li>
+<li><strong>YouTube</strong> — Embed video cookies — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy</a></li>
+<li><strong>OpenStreetMap</strong> — Shipping map — <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Privacy Policy</a></li>
+</ul>
+
+<blockquote>
+<p>Third-party cookies are not managed by us. The responsibility for how the data collected by these cookies is used belongs to the relevant third-party service providers.</p>
+</blockquote>
+
+<h2>4. Cookie Retention Period</h2>
+<p>Cookies are examined in two main groups according to their retention period:</p>
+
+<h4>A) Session Cookies</h4>
+<p>Deleted as soon as the browser is closed. Generally used for temporary operations such as session management and form security.</p>
+
+<h4>B) Persistent Cookies</h4>
+<p>Stored on your device for a predetermined period (e.g., 30 days, 1 year). When this period expires, they are automatically deleted or can be manually cleared by the user. The duration of each cookie is also specified in the tables.</p>
+
+<h2>5. How Do You Manage Your Cookie Preferences?</h2>
+
+<h3>A) On-Site Cookie Management</h3>
+<p>Through the <strong>Cookie Consent Banner</strong> displayed on your first visit to our website:</p>
+<ul>
+<li>You can give consent to all cookies by clicking <strong>"Accept All"</strong>;</li>
+<li>You can use only the technical cookies necessary for site operation by clicking <strong>"Essential Only"</strong>;</li>
+<li>You can give cookie permissions by category by clicking <strong>"Customize"</strong> (e.g., Analytics yes, Advertising no).</li>
+</ul>
+
+<p>You can change your preference at any time using the <em>Cookie Settings</em> link at the bottom of the site.</p>
+
+<h3>B) Browser Settings</h3>
+<p>You can manage cookies via your browser settings:</p>
+<ul>
+<li><strong>Google Chrome:</strong> Settings → Privacy and security → Cookies and other site data</li>
+<li><strong>Mozilla Firefox:</strong> Options → Privacy & Security → Cookies and Site Data</li>
+<li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data</li>
+<li><strong>Microsoft Edge:</strong> Settings → Cookies and site permissions</li>
+</ul>
+
+<h3>C) Mobile Device Settings</h3>
+<ul>
+<li><strong>iOS:</strong> Settings → Safari → Block All Cookies</li>
+<li><strong>Android:</strong> Chrome → Settings → Site settings → Cookies</li>
+</ul>
+
+<h2>6. Consequences of Refusing Cookies</h2>
+<p>You have the right to refuse cookies. However, please note the following:</p>
+<ul>
+<li><strong>If essential cookies are blocked:</strong> Site functionality (login, form submission, cart) will be disabled. The site cannot fully function.</li>
+<li><strong>If analytics cookies are blocked:</strong> Site browsing experience is not affected, but our ability to improve services is limited.</li>
+<li><strong>If functionality cookies are blocked:</strong> Your settings such as language and theme are not remembered, you must re-enter on each visit.</li>
+<li><strong>If advertising cookies are blocked:</strong> You will not see Tekcan Metal-specific personalized campaigns; however, random general ads on other sites may continue to appear.</li>
+</ul>
+
+<h2>7. Children and Cookies</h2>
+<p>Our website is intended for B2B (business-to-business) industrial customers and is not designed for children under the age of 13. We do not knowingly collect personal data from children. If we determine that a child''s data has been mistakenly collected, we will promptly delete it.</p>
+
+<h2>8. Data Transfer and Foreign Servers</h2>
+<p>Some third-party cookie data (especially Google, Meta, LinkedIn) may be processed on servers located outside Turkey. These transfers are subject to the privacy frameworks of the respective providers (such as EU-US Data Privacy Framework). For more detailed information, please review our <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">Privacy Notice</a>.</p>
+
+<h2>9. Changes to the Cookie Policy</h2>
+<p>This Cookie Policy may be updated as our service offering, third-party providers and legal regulations change. The current version is published on our website at <a href="https://www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi">www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi</a>. The "Last update" date will be revised in case of significant changes.</p>
+
+<p><em>Last update: January 2026</em></p>
+
+<h2>10. Related Documents</h2>
+<ul>
+<li><a href="/sayfa.php?slug=kvkk">Personal Data Protection Privacy Notice</a> — All our personal data processing operations</li>
+<li><a href="/iletisim.php">Contact</a> — For any questions and applications regarding cookies</li>
+<li><a href="/">Tekcan Metal Homepage</a> — Our products and services</li>
+</ul>
+
+<h4>Effective Date</h4>
+<p>This Cookie Policy has been published by Tekcan Metal Sanayi ve Ticaret Ltd. Şti. and is in effect.</p>
+',
+  content_ar = '<p>بصفتنا تكجان ميتال للصناعة والتجارة المحدودة، نستخدم ملفات تعريف الارتباط على موقعنا الإلكتروني www.tekcanmetal.com (المشار إليه فيما يلي بـ <em>"الموقع الإلكتروني"</em>) لتحسين تجربة المستخدم وضمان التشغيل الفعال للموقع وتعزيز جودة خدماتنا. تم إعداد سياسة ملفات تعريف الارتباط هذه لإعلامك بملفات تعريف الارتباط التي نستخدمها وأغراضها وكيفية إدارتها.</p>
+
+<h2>1. ما هي ملفات تعريف الارتباط؟</h2>
+<p>ملفات تعريف الارتباط (cookies) هي ملفات صغيرة تحتوي على بيانات نصية محدودة يتم وضعها على جهازك (الكمبيوتر، الجهاز اللوحي، الهاتف الذكي) من قبل المواقع الإلكترونية التي تزورها عبر متصفحك. تحتوي هذه الملفات عادةً على معلومات مثل المعرف (ID) واسم الموقع وفترة الصلاحية.</p>
+
+<p>تتيح ملفات تعريف الارتباط للزوار تذكر تفاعلهم مع الموقع الإلكتروني والحفاظ على معلومات الجلسة وتخزين تفضيلات المستخدم وقياس أداء الموقع. لا تحمل ملفات تعريف الارتباط فيروسات بمفردها ولا يمكنها الوصول إلى ملفاتك الشخصية ولا تلحق الضرر بجهازك.</p>
+
+<h2>2. ما هي ملفات تعريف الارتباط التي نستخدمها؟</h2>
+<p>يستخدم موقعنا الإلكتروني أربع فئات رئيسية من ملفات تعريف الارتباط الموضحة أدناه بالتفصيل:</p>
+
+<h3>أ) ملفات تعريف الارتباط الأساسية (التقنية)</h3>
+<p><strong>الغرض:</strong> ملفات تعريف الارتباط <em>الضرورية تماماً</em> لعمل الوظائف الأساسية للموقع. بدون ملفات تعريف الارتباط هذه لا يعمل الموقع بشكل صحيح؛ لا يمكنك تسجيل الدخول، ولا يمكن إرسال نماذجك، ولا يمكن إجراء فحوصات الأمان.</p>
+
+<table>
+<thead><tr><th>اسم ملف تعريف الارتباط</th><th>الغرض</th><th>المدة</th></tr></thead>
+<tbody>
+<tr><td><code>PHPSESSID</code></td><td>إدارة الجلسة (معلومات تسجيل الدخول، السلة، حالة النموذج)</td><td>حتى إغلاق المتصفح</td></tr>
+<tr><td><code>csrf_token</code></td><td>أمان النموذج (الحماية من هجمات CSRF)</td><td>طوال مدة الجلسة</td></tr>
+<tr><td><code>cookie_consent</code></td><td>تذكر تفضيل موافقتك على ملفات تعريف الارتباط</td><td>سنة واحدة</td></tr>
+<tr><td><code>tm_admin</code></td><td>جلسة الوصول إلى لوحة الإدارة</td><td>30 يوماً</td></tr>
+</tbody>
+</table>
+
+<h4>الأساس القانوني</h4>
+<p>يمكن معالجتها دون موافقة المستخدم بموجب مادة 5/2-ج من KVKK (إنشاء وتنفيذ العقد) ومادة 5/2-و من KVKK (المصلحة المشروعة).</p>
+
+<h3>ب) ملفات تعريف الارتباط الخاصة بالأداء والتحليلات</h3>
+<p><strong>الغرض:</strong> تتيح لنا فهم كيفية استخدام الزوار للموقع. نحلل الصفحات التي تتم زيارتها أكثر، والوقت الذي يقضيه المستخدمون على الموقع، والنقاط التي يواجهون فيها صعوبات، لتطوير خدماتنا. يتم <strong>إخفاء هوية</strong> البيانات التي تم جمعها ولا تحدد المستخدم شخصياً.</p>
+
+<table>
+<thead><tr><th>المزود</th><th>الغرض</th><th>المدة</th></tr></thead>
+<tbody>
+<tr><td>Google Analytics 4 (<code>_ga, _gid</code>)</td><td>مشاهدات الصفحة، رحلة المستخدم، التحليل الديموغرافي المجهول الهوية</td><td>سنتان / 24 ساعة</td></tr>
+<tr><td>Yandex Metrica (<code>_ym_uid</code>)</td><td>تحليل الزوار الإقليمي (خاصة أسواق تركيا وروسيا)</td><td>سنة واحدة</td></tr>
+<tr><td>سجل الموقع (<code>tm_visit</code>)</td><td>قياس صفحات المنتجات/الفئات الشائعة</td><td>30 يوماً</td></tr>
+</tbody>
+</table>
+
+<h4>الأساس القانوني</h4>
+<p>مادة 5/1 من KVKK (الموافقة الصريحة) — تتم المعالجة بناءً على الموافقة الممنوحة من قبل المستخدم عبر شعار موافقة ملفات تعريف الارتباط. لا يتم إنشاء ملفات تعريف الارتباط هذه إذا لم تعطِ موافقتك.</p>
+
+<h3>ج) ملفات تعريف الارتباط الوظيفية (التفضيل)</h3>
+<p><strong>الغرض:</strong> تتيح لنا تقديم تجربة شخصية في زياراتك اللاحقة من خلال تذكر تفضيلات الاستخدام الخاصة بك على الموقع.</p>
+
+<table>
+<thead><tr><th>اسم ملف تعريف الارتباط</th><th>الغرض</th><th>المدة</th></tr></thead>
+<tbody>
+<tr><td><code>tm_lang</code></td><td>تفضيل اللغة (TR / EN / AR / RU)</td><td>سنة واحدة</td></tr>
+<tr><td><code>tm_theme</code></td><td>اختيار السمة الفاتحة / الداكنة</td><td>سنة واحدة</td></tr>
+<tr><td><code>tm_calc_history</code></td><td>المنتج الأخير المحدد في معالج الحساب</td><td>30 يوماً</td></tr>
+<tr><td><code>tm_recent_views</code></td><td>المنتجات المعروضة مؤخراً (الوصول السريع)</td><td>30 يوماً</td></tr>
+</tbody>
+</table>
+
+<h4>الأساس القانوني</h4>
+<p>مادة 5/1 من KVKK (الموافقة الصريحة) — يتم تفعيلها إذا أعطيت موافقتك.</p>
+
+<h3>د) ملفات تعريف الارتباط الخاصة بالاستهداف والإعلانات</h3>
+<p><strong>الغرض:</strong> تستخدم لعرض إعلانات <em>ذات صلة باهتماماتك</em> أثناء تصفحك لمواقع أخرى بعد زيارتك لموقعنا. كتكجان ميتال، يمكن استخدام ملفات تعريف الارتباط هذه لإيصال الحملات وإعلانات المنتجات الجديدة وتخفيضات الأسعار الموسمية لعملائنا في قطاع الحديد والصلب.</p>
+
+<table>
+<thead><tr><th>المزود</th><th>الغرض</th><th>المدة</th></tr></thead>
+<tbody>
+<tr><td>Google Ads (<code>_gcl_au</code>, <code>NID</code>)</td><td>إعادة التسويق، تتبع التحويلات</td><td>3 أشهر – سنة واحدة</td></tr>
+<tr><td>Meta Pixel (<code>_fbp</code>)</td><td>تتبع إعلانات Facebook و Instagram</td><td>3 أشهر</td></tr>
+<tr><td>LinkedIn Insight (<code>li_sugr</code>)</td><td>الاستهداف القطاعي B2B (الصناعة، البناء)</td><td>3 أشهر</td></tr>
+</tbody>
+</table>
+
+<h4>الأساس القانوني</h4>
+<p>مادة 5/1 من KVKK (الموافقة الصريحة) — يتم تفعيلها فقط إذا أعطيت موافقتك. في حالة الرفض، لا يتم استهداف إعادة التسويق، ولكن قد تستمر في رؤية إعلانات عشوائية عامة.</p>
+
+<h2>3. ملفات تعريف الارتباط الخاصة بالأطراف الثالثة</h2>
+<p>بالإضافة إلى ملفات تعريف الارتباط التي تنشئها شركتنا مباشرة على موقعنا الإلكتروني، قد توجد أيضاً ملفات تعريف الارتباط التي ينشئها الشركاء الذين نقدم لهم الخدمات. تخضع ملفات تعريف الارتباط هذه الخاصة بالأطراف الثالثة لسياسات الخصوصية الخاصة بالمزودين المعنيين:</p>
+<ul>
+<li><strong>Google LLC</strong> — Analytics, Maps, Ads, reCAPTCHA — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">سياسة الخصوصية</a></li>
+<li><strong>Meta Platforms</strong> — Facebook, Instagram pixel — <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener">سياسة ملفات تعريف الارتباط</a></li>
+<li><strong>LinkedIn Corporation</strong> — Insight tag — <a href="https://www.linkedin.com/legal/cookie-policy" target="_blank" rel="noopener">سياسة ملفات تعريف الارتباط</a></li>
+<li><strong>YouTube</strong> — ملفات تعريف الارتباط الخاصة بالفيديو المضمن — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">خصوصية Google</a></li>
+<li><strong>OpenStreetMap</strong> — خريطة الشحن — <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Privacy Policy</a></li>
+</ul>
+
+<blockquote>
+<p>لا نقوم بإدارة ملفات تعريف الارتباط الخاصة بالأطراف الثالثة. تقع المسؤولية عن كيفية استخدام البيانات التي تم جمعها بواسطة ملفات تعريف الارتباط هذه على عاتق مزودي الخدمة من الأطراف الثالثة المعنيين.</p>
+</blockquote>
+
+<h2>4. فترة الاحتفاظ بملفات تعريف الارتباط</h2>
+<p>تنقسم ملفات تعريف الارتباط إلى مجموعتين رئيسيتين وفقاً لفترات الاحتفاظ:</p>
+
+<h4>أ) ملفات تعريف ارتباط الجلسة (Session Cookies)</h4>
+<p>تُحذف بمجرد إغلاق المتصفح. تُستخدم عموماً للعمليات المؤقتة مثل إدارة الجلسة وأمان النموذج.</p>
+
+<h4>ب) ملفات تعريف الارتباط الدائمة (Persistent Cookies)</h4>
+<p>يتم تخزينها على جهازك لفترة محددة مسبقاً (مثل 30 يوماً، سنة واحدة). عند انتهاء هذه الفترة، يتم حذفها تلقائياً أو يمكن للمستخدم مسحها يدوياً. يتم تحديد مدة كل ملف تعريف ارتباط في الجداول.</p>
+
+<h2>5. كيف تدير تفضيلات ملفات تعريف الارتباط الخاصة بك؟</h2>
+
+<h3>أ) إدارة ملفات تعريف الارتباط على الموقع</h3>
+<p>عبر <strong>شعار موافقة ملفات تعريف الارتباط</strong> الذي يظهر على شاشتك عند زيارتك الأولى لموقعنا الإلكتروني:</p>
+<ul>
+<li>يمكنك إعطاء موافقتك على جميع ملفات تعريف الارتباط بالنقر على <strong>"قبول الكل"</strong>؛</li>
+<li>يمكنك استخدام ملفات تعريف الارتباط التقنية الضرورية لتشغيل الموقع فقط بالنقر على <strong>"الضرورية فقط"</strong>؛</li>
+<li>يمكنك إعطاء أذونات ملفات تعريف الارتباط حسب الفئة بالنقر على <strong>"تخصيص"</strong> (مثلاً، التحليلات نعم، الإعلانات لا).</li>
+</ul>
+
+<p>يمكنك تغيير تفضيلك في أي وقت باستخدام رابط <em>إعدادات ملفات تعريف الارتباط</em> الموجود في أسفل الموقع.</p>
+
+<h3>ب) إعدادات المتصفح</h3>
+<p>يمكنك إدارة ملفات تعريف الارتباط عبر إعدادات المتصفح:</p>
+<ul>
+<li><strong>Google Chrome:</strong> الإعدادات → الخصوصية والأمان → ملفات تعريف الارتباط وبيانات الموقع الأخرى</li>
+<li><strong>Mozilla Firefox:</strong> الخيارات → الخصوصية والأمان → ملفات تعريف الارتباط وبيانات الموقع</li>
+<li><strong>Safari:</strong> التفضيلات → الخصوصية → إدارة بيانات الموقع</li>
+<li><strong>Microsoft Edge:</strong> الإعدادات → ملفات تعريف الارتباط وأذونات الموقع</li>
+</ul>
+
+<h3>ج) إعدادات الجهاز المحمول</h3>
+<ul>
+<li><strong>iOS:</strong> الإعدادات → Safari → حظر جميع ملفات تعريف الارتباط</li>
+<li><strong>Android:</strong> Chrome → الإعدادات → إعدادات الموقع → ملفات تعريف الارتباط</li>
+</ul>
+
+<h2>6. عواقب رفض ملفات تعريف الارتباط</h2>
+<p>لديك الحق في رفض ملفات تعريف الارتباط. ومع ذلك، يرجى ملاحظة ما يلي:</p>
+<ul>
+<li><strong>إذا تم حظر ملفات تعريف الارتباط الأساسية:</strong> ستتعطل وظيفة الموقع (تسجيل الدخول، إرسال النماذج، السلة). لا يمكن للموقع العمل بشكل كامل.</li>
+<li><strong>إذا تم حظر ملفات تعريف الارتباط التحليلية:</strong> لا تتأثر تجربة تصفح الموقع، ولكن قدرتنا على تحسين الخدمات تكون محدودة.</li>
+<li><strong>إذا تم حظر ملفات تعريف الارتباط الوظيفية:</strong> لن يتم تذكر إعداداتك مثل اللغة والسمة، ويجب عليك إعادة الإدخال في كل زيارة.</li>
+<li><strong>إذا تم حظر ملفات تعريف الارتباط الإعلانية:</strong> لن ترى الحملات الشخصية الخاصة بتكجان ميتال؛ ومع ذلك، قد تستمر الإعلانات العامة العشوائية في الظهور على المواقع الأخرى.</li>
+</ul>
+
+<h2>7. الأطفال وملفات تعريف الارتباط</h2>
+<p>موقعنا الإلكتروني مخصص لعملاء B2B (من شركة لشركة) الصناعيين وغير مصمم للأطفال دون سن 13 عاماً. لا نجمع عن قصد البيانات الشخصية من الأطفال. إذا تبين أنه تم جمع بيانات طفل عن طريق الخطأ، فسنقوم بحذفها على الفور.</p>
+
+<h2>8. نقل البيانات والخوادم الأجنبية</h2>
+<p>قد تتم معالجة بعض بيانات ملفات تعريف الارتباط الخاصة بالأطراف الثالثة (خاصة Google و Meta و LinkedIn) على خوادم موجودة خارج تركيا. تخضع عمليات النقل هذه لأطر الخصوصية الخاصة بالمزودين المعنيين (مثل EU-US Data Privacy Framework). للحصول على معلومات أكثر تفصيلاً، يرجى مراجعة <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">إشعار الخصوصية</a>.</p>
+
+<h2>9. التغييرات في سياسة ملفات تعريف الارتباط</h2>
+<p>قد يتم تحديث سياسة ملفات تعريف الارتباط هذه مع تغير عرض خدماتنا والمزودين الخارجيين واللوائح القانونية. يتم نشر النسخة الحالية على موقعنا الإلكتروني على <a href="https://www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi">www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi</a>. سيتم تعديل تاريخ "آخر تحديث" في حالة وجود تغييرات مهمة.</p>
+
+<p><em>آخر تحديث: يناير 2026</em></p>
+
+<h2>10. الوثائق ذات الصلة</h2>
+<ul>
+<li><a href="/sayfa.php?slug=kvkk">إشعار حماية البيانات الشخصية</a> — جميع عمليات معالجة البيانات الشخصية لدينا</li>
+<li><a href="/iletisim.php">اتصل بنا</a> — لأي أسئلة وطلبات تتعلق بملفات تعريف الارتباط</li>
+<li><a href="/">الصفحة الرئيسية لتكجان ميتال</a> — منتجاتنا وخدماتنا</li>
+</ul>
+
+<h4>تاريخ السريان</h4>
+<p>تم نشر سياسة ملفات تعريف الارتباط هذه من قبل تكجان ميتال للصناعة والتجارة المحدودة وهي سارية المفعول.</p>
+',
+  content_ru = '<p>Как Tekcan Metal Sanayi ve Ticaret Ltd. Şti., мы используем файлы cookie на нашем сайте www.tekcanmetal.com (далее именуемом <em>"Сайт"</em>) для улучшения пользовательского опыта, обеспечения эффективной работы сайта и повышения качества наших услуг. Настоящая Политика использования cookie подготовлена, чтобы информировать вас о том, какие cookie мы используем, для каких целей и как вы можете ими управлять.</p>
+
+<h2>1. Что такое cookie?</h2>
+<p>Cookie — это небольшие файлы, содержащие ограниченные текстовые данные, которые размещаются на вашем устройстве (компьютер, планшет, смартфон) посещаемыми вами веб-сайтами через ваш браузер. Эти файлы обычно содержат такую информацию, как идентификатор (ID), имя сайта и срок действия.</p>
+
+<p>Cookie позволяют посетителям запоминать своё взаимодействие с веб-сайтом, сохранять информацию о сеансе, хранить пользовательские предпочтения и измерять производительность сайта. Cookie сами по себе не содержат вирусов, не имеют доступа к вашим личным файлам и не наносят вреда вашему устройству.</p>
+
+<h2>2. Какие cookie мы используем?</h2>
+<p>На нашем сайте используются четыре основные категории cookie, подробно описанные ниже:</p>
+
+<h3>А) Обязательные (технические) cookie</h3>
+<p><strong>Цель:</strong> Cookie, <em>строго необходимые</em> для работы основных функций сайта. Без этих cookie сайт не работает должным образом; вы не можете войти в систему, не отправляются ваши формы, не выполняются проверки безопасности.</p>
+
+<table>
+<thead><tr><th>Имя cookie</th><th>Цель</th><th>Срок</th></tr></thead>
+<tbody>
+<tr><td><code>PHPSESSID</code></td><td>Управление сеансом (информация о входе, корзина, состояние формы)</td><td>До закрытия браузера</td></tr>
+<tr><td><code>csrf_token</code></td><td>Безопасность формы (защита от CSRF-атак)</td><td>На время сеанса</td></tr>
+<tr><td><code>cookie_consent</code></td><td>Запоминание ваших предпочтений согласия на cookie</td><td>1 год</td></tr>
+<tr><td><code>tm_admin</code></td><td>Сеанс доступа к панели администратора</td><td>30 дней</td></tr>
+</tbody>
+</table>
+
+<h4>Правовое основание</h4>
+<p>Может обрабатываться без согласия пользователя в соответствии со ст. 5/2-в ЗоЗПД (заключение и исполнение договора) и ст. 5/2-е ЗоЗПД (законный интерес).</p>
+
+<h3>Б) Cookie производительности и аналитики</h3>
+<p><strong>Цель:</strong> Позволяют нам понять, как посетители используют сайт. Мы анализируем, какие страницы посещаются чаще, сколько времени пользователи проводят на сайте и в каких местах испытывают трудности, чтобы улучшить наши услуги. Собранные данные <strong>анонимизируются</strong> и не идентифицируют пользователя лично.</p>
+
+<table>
+<thead><tr><th>Поставщик</th><th>Цель</th><th>Срок</th></tr></thead>
+<tbody>
+<tr><td>Google Analytics 4 (<code>_ga, _gid</code>)</td><td>Просмотры страниц, путь пользователя, демографический анонимный анализ</td><td>2 года / 24 часа</td></tr>
+<tr><td>Yandex Metrica (<code>_ym_uid</code>)</td><td>Региональный анализ посетителей (особенно рынки Турции и России)</td><td>1 год</td></tr>
+<tr><td>Журнал сайта (<code>tm_visit</code>)</td><td>Измерение популярных страниц продуктов/категорий</td><td>30 дней</td></tr>
+</tbody>
+</table>
+
+<h4>Правовое основание</h4>
+<p>Ст. 5/1 ЗоЗПД (явное согласие) — обрабатывается на основе согласия, данного пользователем через баннер согласия на cookie. Эти cookie не создаются, если вы не даёте согласия.</p>
+
+<h3>В) Функциональные cookie (предпочтений)</h3>
+<p><strong>Цель:</strong> Позволяют нам обеспечить персонализированный опыт при последующих визитах, запоминая ваши предпочтения использования на сайте.</p>
+
+<table>
+<thead><tr><th>Имя cookie</th><th>Цель</th><th>Срок</th></tr></thead>
+<tbody>
+<tr><td><code>tm_lang</code></td><td>Языковые предпочтения (TR / EN / AR / RU)</td><td>1 год</td></tr>
+<tr><td><code>tm_theme</code></td><td>Выбор светлой / тёмной темы</td><td>1 год</td></tr>
+<tr><td><code>tm_calc_history</code></td><td>Последний выбранный продукт в мастере расчёта</td><td>30 дней</td></tr>
+<tr><td><code>tm_recent_views</code></td><td>Недавно просмотренные продукты (быстрый доступ)</td><td>30 дней</td></tr>
+</tbody>
+</table>
+
+<h4>Правовое основание</h4>
+<p>Ст. 5/1 ЗоЗПД (явное согласие) — активируется, если вы даёте согласие.</p>
+
+<h3>Г) Cookie таргетинга и рекламы</h3>
+<p><strong>Цель:</strong> Используются для показа вам рекламы <em>соответствующей вашим интересам</em> при просмотре других сайтов после вашего визита на наш сайт. Как Tekcan Metal, эти cookie могут использоваться для доставки кампаний, анонсов новых продуктов и сезонных ценовых скидок нашим клиентам в металлургическом секторе.</p>
+
+<table>
+<thead><tr><th>Поставщик</th><th>Цель</th><th>Срок</th></tr></thead>
+<tbody>
+<tr><td>Google Ads (<code>_gcl_au</code>, <code>NID</code>)</td><td>Ремаркетинг, отслеживание конверсий</td><td>3 месяца – 1 год</td></tr>
+<tr><td>Meta Pixel (<code>_fbp</code>)</td><td>Отслеживание рекламы Facebook и Instagram</td><td>3 месяца</td></tr>
+<tr><td>LinkedIn Insight (<code>li_sugr</code>)</td><td>B2B отраслевой таргетинг (промышленность, строительство)</td><td>3 месяца</td></tr>
+</tbody>
+</table>
+
+<h4>Правовое основание</h4>
+<p>Ст. 5/1 ЗоЗПД (явное согласие) — активируется только при вашем согласии. В случае отказа таргетинг ремаркетинга не выполняется, но вы можете продолжать видеть случайную общую рекламу.</p>
+
+<h2>3. Сторонние cookie</h2>
+<p>В дополнение к cookie, создаваемым непосредственно нашей Компанией на нашем сайте, могут также присутствовать cookie, создаваемые партнёрами, которым мы предоставляем услуги. Эти сторонние cookie подпадают под политику конфиденциальности соответствующих поставщиков:</p>
+<ul>
+<li><strong>Google LLC</strong> — Analytics, Maps, Ads, reCAPTCHA — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Политика конфиденциальности</a></li>
+<li><strong>Meta Platforms</strong> — Facebook, Instagram pixel — <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener">Политика cookie</a></li>
+<li><strong>LinkedIn Corporation</strong> — Insight tag — <a href="https://www.linkedin.com/legal/cookie-policy" target="_blank" rel="noopener">Политика cookie</a></li>
+<li><strong>YouTube</strong> — cookie встроенного видео — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Конфиденциальность Google</a></li>
+<li><strong>OpenStreetMap</strong> — карта доставки — <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Privacy Policy</a></li>
+</ul>
+
+<blockquote>
+<p>Сторонние cookie не управляются нами. Ответственность за то, как используются данные, собираемые этими cookie, лежит на соответствующих сторонних поставщиках услуг.</p>
+</blockquote>
+
+<h2>4. Срок хранения cookie</h2>
+<p>Cookie рассматриваются в двух основных группах в зависимости от срока хранения:</p>
+
+<h4>А) Сеансовые cookie (Session Cookies)</h4>
+<p>Удаляются сразу после закрытия браузера. Обычно используются для временных операций, таких как управление сеансом и безопасность форм.</p>
+
+<h4>Б) Постоянные cookie (Persistent Cookies)</h4>
+<p>Хранятся на вашем устройстве в течение заранее определённого периода (например, 30 дней, 1 год). По истечении этого срока они автоматически удаляются или могут быть очищены пользователем вручную. Срок действия каждого cookie также указан в таблицах.</p>
+
+<h2>5. Как управлять предпочтениями cookie?</h2>
+
+<h3>А) Управление cookie на сайте</h3>
+<p>Через <strong>Баннер согласия на cookie</strong>, отображаемый при вашем первом посещении нашего сайта:</p>
+<ul>
+<li>Вы можете дать согласие на все cookie, нажав <strong>"Принять все"</strong>;</li>
+<li>Вы можете использовать только технические cookie, необходимые для работы сайта, нажав <strong>"Только обязательные"</strong>;</li>
+<li>Вы можете дать разрешения на cookie по категориям, нажав <strong>"Настроить"</strong> (например, аналитика — да, реклама — нет).</li>
+</ul>
+
+<p>Вы можете изменить свои предпочтения в любое время, используя ссылку <em>Настройки cookie</em> в нижней части сайта.</p>
+
+<h3>Б) Настройки браузера</h3>
+<p>Вы можете управлять cookie через настройки браузера:</p>
+<ul>
+<li><strong>Google Chrome:</strong> Настройки → Конфиденциальность и безопасность → Файлы cookie и другие данные сайта</li>
+<li><strong>Mozilla Firefox:</strong> Параметры → Приватность и защита → Куки и данные сайтов</li>
+<li><strong>Safari:</strong> Настройки → Конфиденциальность → Управление данными веб-сайтов</li>
+<li><strong>Microsoft Edge:</strong> Настройки → Файлы cookie и разрешения сайтов</li>
+</ul>
+
+<h3>В) Настройки мобильного устройства</h3>
+<ul>
+<li><strong>iOS:</strong> Настройки → Safari → Блокировать все cookie</li>
+<li><strong>Android:</strong> Chrome → Настройки → Настройки сайтов → Cookie</li>
+</ul>
+
+<h2>6. Последствия отказа от cookie</h2>
+<p>У вас есть право отказаться от cookie. Однако, пожалуйста, обратите внимание на следующее:</p>
+<ul>
+<li><strong>Если обязательные cookie заблокированы:</strong> Функциональность сайта (вход, отправка форм, корзина) будет отключена. Сайт не сможет полноценно работать.</li>
+<li><strong>Если аналитические cookie заблокированы:</strong> Опыт просмотра сайта не пострадает, но наша возможность улучшать услуги ограничена.</li>
+<li><strong>Если функциональные cookie заблокированы:</strong> Ваши настройки, такие как язык и тема, не запоминаются, вам нужно вводить их заново при каждом посещении.</li>
+<li><strong>Если рекламные cookie заблокированы:</strong> Вы не увидите персонализированных кампаний Tekcan Metal; однако случайные общие объявления на других сайтах могут продолжать появляться.</li>
+</ul>
+
+<h2>7. Дети и cookie</h2>
+<p>Наш сайт предназначен для B2B-клиентов (бизнес-бизнес) промышленных секторов и не предназначен для детей младше 13 лет. Мы сознательно не собираем персональные данные у детей. Если будет установлено, что данные ребёнка были собраны по ошибке, мы оперативно их удалим.</p>
+
+<h2>8. Передача данных и зарубежные серверы</h2>
+<p>Некоторые данные сторонних cookie (особенно Google, Meta, LinkedIn) могут обрабатываться на серверах, расположенных за пределами Турции. Эти передачи подпадают под рамки конфиденциальности соответствующих поставщиков (например, EU-US Data Privacy Framework). Для получения более подробной информации, пожалуйста, ознакомьтесь с нашим <a href="https://www.tekcanmetal.com/sayfa.php?slug=kvkk">Уведомлением о конфиденциальности</a>.</p>
+
+<h2>9. Изменения в Политике использования cookie</h2>
+<p>Настоящая Политика использования cookie может обновляться по мере изменения нашего предложения услуг, сторонних поставщиков и юридических нормативов. Текущая версия публикуется на нашем сайте по адресу <a href="https://www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi">www.tekcanmetal.com/sayfa.php?slug=cerez-politikasi</a>. Дата "Последнее обновление" будет пересмотрена в случае значительных изменений.</p>
+
+<p><em>Последнее обновление: январь 2026</em></p>
+
+<h2>10. Связанные документы</h2>
+<ul>
+<li><a href="/sayfa.php?slug=kvkk">Уведомление о защите персональных данных</a> — Все наши операции по обработке персональных данных</li>
+<li><a href="/iletisim.php">Контакты</a> — По любым вопросам и заявлениям относительно cookie</li>
+<li><a href="/">Главная страница Tekcan Metal</a> — Наши продукты и услуги</li>
+</ul>
+
+<h4>Дата вступления в силу</h4>
+<p>Настоящая Политика использования cookie опубликована Tekcan Metal Sanayi ve Ticaret Ltd. Şti. и действует.</p>
+'
+WHERE slug = 'cerez-politikasi';
