@@ -163,6 +163,54 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # ═══════════════════════════════════════════════════
+    # WORDPRESS GEÇİŞ 301 REDIRECT'LERİ (v1.0.67)
+    # Eski WP URL'lerinden yeni CMS URL'lerine kalıcı yönlendirme.
+    # SEO otoritesi (backlink + ranking) yeni URL'lere aktarılır.
+    # ═══════════════════════════════════════════════════
+
+    # Search Console'da en yüksek değerli (3.632 + 1.654 gösterim)
+    RewriteRule ^genisletilmis-ve-delikli-sac/?$ /blog/genisletilmis-sac-rehberi [R=301,L]
+    RewriteRule ^baklavali-sac/?$               /blog/baklava-sac-rehberi      [R=301,L]
+
+    # Diğer eski WP blog/ürün rehber URL'leri → yeni blog yapısı
+    RewriteRule ^kalin-levha-saclar/?$          /blog/kalin-levha-saclar       [R=301,L]
+    RewriteRule ^trapez-sac/?$                  /blog/trapez-sac               [R=301,L]
+    RewriteRule ^galvanizli-sac/?$              /blog/galvanizli-sac           [R=301,L]
+    RewriteRule ^siyah-dkp-hrp-ve-st-52-sac/?$  /blog/siyah-dkp-hrp-ve-st-52-sac [R=301,L]
+    RewriteRule ^baskili-sac/?$                 /blog/baskili-sac              [R=301,L]
+    RewriteRule ^delikli-sac/?$                 /blog/genisletilmis-sac-rehberi [R=301,L]
+
+    # Boru blog yazıları (eski WP)
+    RewriteRule ^beton-pompa-borusu/?$          /blog/beton-pompa-borusu       [R=301,L]
+    RewriteRule ^sanayi-borulari/?$             /blog/sanayi-borulari          [R=301,L]
+    RewriteRule ^galvanizli-borular/?$          /blog/galvanizli-borular       [R=301,L]
+    RewriteRule ^dogalgaz-borulari/?$           /blog/dogalgaz-borulari        [R=301,L]
+    RewriteRule ^kazan-borulari/?$              /blog/kazan-borulari           [R=301,L]
+    RewriteRule ^konstruksiyon-borulari/?$      /blog/konstruksiyon-borulari   [R=301,L]
+
+    # Hizmet sayfaları (eski WP)
+    RewriteRule ^lazer-kesim/?$                 /hizmet/lazer-kesim            [R=301,L]
+    RewriteRule ^oksijen-kesim/?$               /hizmet/oksijen-kesim          [R=301,L]
+    RewriteRule ^dekoratif-saclar/?$            /hizmet/dekoratif-saclar       [R=301,L]
+
+    # Kategori sayfaları (eski WP)
+    RewriteRule ^sac-cesitleri/?$               /kategori/sac                  [R=301,L]
+    RewriteRule ^boru-cesitleri/?$              /kategori/boru                 [R=301,L]
+    RewriteRule ^profil-cesitleri/?$            /kategori/profil               [R=301,L]
+    RewriteRule ^demir-cesitleri/?$             /kategori/insaat-demiri        [R=301,L]
+
+    # Yanlış yazılmış marka adı yakalama (Search Console: tekman metal 333 gösterim)
+    RewriteRule ^tekman-metal-?(.*)?$           / [R=301,L]
+    RewriteRule ^tekman/?$                      / [R=301,L]
+
+    # WP-spesifik path'ler (admin, feed) → 410 Gone (kalıcı kaybedildi mesajı)
+    RewriteRule ^wp-admin(/.*)?$                - [G,L]
+    RewriteRule ^wp-content(/.*)?$              - [G,L]
+    RewriteRule ^wp-includes(/.*)?$             - [G,L]
+    RewriteRule ^feed/?$                        / [R=301,L]
+    RewriteRule ^?p=([0-9]+)$                   / [R=301,L]
+
+    # ═══════════════════════════════════════════════════
     # i18n DİL ROUTING (v1.0.56)
     # /en/, /ar/, /ru/ prefix'lerini E=LANG ile PHP'ye geçir
     # Default dil (TR) prefix'siz çalışır

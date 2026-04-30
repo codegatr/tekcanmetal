@@ -1,5 +1,6 @@
 <?php
 http_response_code(404);
+header('X-Robots-Tag: noindex, nofollow', true);
 require_once __DIR__ . '/includes/db.php';
 $pageTitle = t('err404.title', 'Sayfa Bulunamadı (404)');
 $metaDesc  = t('err404.lead', 'Aradığınız sayfa bulunamadı.');

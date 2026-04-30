@@ -33,11 +33,60 @@ try {
 <!-- hreflang (v1.0.56 — i18n) -->
 <?= hreflang_tags() ?>
 
+<?php
+// SEO Meta v1.0.67: Open Graph + Twitter Card zenginleştirme
+$ogSiteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+
+// Sayfa-spesifik OG image (ürün/blog/kategoride özel image varsa o, yoksa logo)
+$ogImageDefault = is_file(__DIR__ . '/../assets/img/og-default.jpg')
+    ? 'assets/img/og-default.jpg'
+    : settings('logo', 'assets/img/logo.png');
+$ogImage = $ogSiteUrl . '/' . ltrim(settings('og_image', $ogImageDefault), '/');
+if (!empty($post['cover_image'])) {
+    $ogImage = $ogSiteUrl . '/' . ltrim($post['cover_image'], '/');
+} elseif (!empty($p['image'])) {
+    $ogImage = $ogSiteUrl . '/' . ltrim($p['image'], '/');
+} elseif (!empty($cat['image'])) {
+    $ogImage = $ogSiteUrl . '/' . ltrim($cat['image'], '/');
+} elseif (!empty($s['image'])) {
+    $ogImage = $ogSiteUrl . '/' . ltrim($s['image'], '/');
+}
+
+// Sayfa tipini OG'ye yansıt (article için blog, product için ürün)
+$ogType = 'website';
+if ($current === 'blog-detay') $ogType = 'article';
+elseif ($current === 'urun') $ogType = 'product';
+?>
 <meta property="og:title" content="<?= h($pageTitle) ?> — <?= h(settings('site_short_name')) ?>">
 <meta property="og:description" content="<?= h($metaDesc) ?>">
-<meta property="og:type" content="website">
+<meta property="og:type" content="<?= h($ogType) ?>">
 <meta property="og:url" content="<?= h($canonical) ?>">
 <meta property="og:locale" content="<?= h(lang_locale()) ?>">
+<meta property="og:image" content="<?= h($ogImage) ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="<?= h($pageTitle) ?>">
+<meta property="og:site_name" content="<?= h(settings('site_short_name')) ?>">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?= h($pageTitle) ?>">
+<meta name="twitter:description" content="<?= h($metaDesc) ?>">
+<meta name="twitter:image" content="<?= h($ogImage) ?>">
+<?php $twitterHandle = settings('site_twitter_handle'); if ($twitterHandle): ?>
+<meta name="twitter:site" content="<?= h($twitterHandle) ?>">
+<?php endif; ?>
+
+<!-- Article-spesifik (blog detay) -->
+<?php if ($current === 'blog-detay' && !empty($post)): ?>
+<meta property="article:published_time" content="<?= h(date('c', strtotime($post['published_at'] ?: 'now'))) ?>">
+<meta property="article:modified_time" content="<?= h(date('c', strtotime($post['updated_at'] ?? $post['published_at'] ?? 'now'))) ?>">
+<meta property="article:author" content="<?= h($post['author'] ?? 'Tekcan Metal') ?>">
+<?php endif; ?>
+
+<!-- Robots -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
 
 <link rel="icon" href="<?= h(url(settings('favicon', 'assets/img/favicon.png'))) ?>">
 
