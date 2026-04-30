@@ -966,3 +966,396 @@ UPDATE tm_pages SET
     updated_at = NOW()
 WHERE slug = 'cerez-politikasi';
 
+
+-- =====================================================
+-- v1.0.48 — tm_services kolonları (specs, meta_title, meta_desc)
+-- ve 3 hizmet için zenginleştirilmiş içerik
+-- =====================================================
+
+-- specs kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_services'
+                     AND COLUMN_NAME = 'specs');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_services ADD COLUMN specs LONGTEXT NULL AFTER features',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- meta_title kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_services'
+                     AND COLUMN_NAME = 'meta_title');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_services ADD COLUMN meta_title VARCHAR(200) NULL AFTER short_desc',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- meta_desc kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_services'
+                     AND COLUMN_NAME = 'meta_desc');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_services ADD COLUMN meta_desc VARCHAR(300) NULL AFTER meta_title',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- =====================================================
+-- LAZER KESİM — Zenginleştirilmiş içerik
+-- =====================================================
+UPDATE tm_services SET
+    short_desc = 'Fiber lazer teknolojisiyle 0,5–25 mm sac kalınlık aralığında ±0,1 mm hassasiyetle endüstriyel kesim hizmeti. DXF/DWG dosyanızı gönderin, aynı gün üretime alalım.',
+    meta_title = 'Lazer Kesim Hizmeti Konya | Tekcan Metal',
+    meta_desc = 'Tekcan Metal lazer kesim atölyesi — fiber lazer 0,5-25 mm kalınlık, ±0,1 mm hassasiyet, 1500x3000 mm tabla. DXF/DWG kabul, aynı gün teklif, 81 il sevkiyat.',
+    features = JSON_ARRAY(
+        '0,5 mm – 25 mm sac kalınlık aralığı',
+        '±0,1 mm endüstriyel hassasiyet',
+        '1500 × 3000 mm maksimum tabla boyutu',
+        'DXF, DWG, STEP, PDF dosya formatları',
+        'CAM yazılımıyla kesim yolu optimizasyonu',
+        'Karbon, paslanmaz ve galvanizli sac',
+        'Aynı gün kesim ve sevkiyat (09:00 öncesi onaylı dosyalar)',
+        '3D modelleme ve mühendislik danışmanlığı',
+        'Pürüzsüz kenar, sıfır çapak',
+        'Karmaşık geometrilerde optimum verim'
+    ),
+    specs = JSON_OBJECT(
+        'Kesim Tipi', 'Fiber Lazer',
+        'Sac Kalınlığı', '0,5 - 25 mm',
+        'Tabla Boyutu', '1500 × 3000 mm',
+        'Hassasiyet', '±0,1 mm',
+        'Kesim Hızı', '5-30 m/dk',
+        'Dosya Formatları', 'DXF, DWG, STEP, PDF',
+        'Malzeme', 'Karbon / Paslanmaz / Galvaniz',
+        'Termin Süresi', 'Aynı gün - 3 iş günü'
+    ),
+    description = '<p>Fiber lazer kesim teknolojisi, demir-çelik sektöründe <em>endüstriyel kesimin altın standardıdır</em>. Tekcan Metal olarak modern fiber lazer makinemizle, 0,5 mm''den 25 mm''ye kadar farklı kalınlıklardaki sac levhaları, ±0,1 mm gibi son derece dar bir tolerans aralığında kesiyoruz. CAD dosyanızdan dijital olarak doğrudan üretime geçen sistem; her parçada aynı kalitede, çapaksız ve pürüzsüz kenarlar oluşturur.</p>
+
+<h2>Lazer Kesimin Endüstriyel Avantajları</h2>
+<p>Geleneksel kesim yöntemlerine kıyasla lazer kesim; <strong>hassasiyet, hız ve geometri esnekliği</strong> üçgeninde belirgin üstünlük sunar. Her bir kesim noktasında lazer huzmesinin oluşturduğu dar kerf (kesim genişliği) sayesinde, malzeme israfı en aza iner. Karmaşık iç delikler, ince geometriler ve seri üretim parçalar için ideal yöntemdir.</p>
+
+<ul>
+<li><strong>Hassasiyet:</strong> ±0,1 mm tolerans ile mekatronik, otomotiv yan sanayi ve hassas mekanik üretim için uygundur</li>
+<li><strong>Hız:</strong> 5-30 m/dk kesim hızıyla seri üretim mümkün</li>
+<li><strong>Geometri Esnekliği:</strong> Daire, kavis, iç delik, oyma — tüm CAD geometrileri</li>
+<li><strong>Yüzey Kalitesi:</strong> Çapaksız, pürüzsüz, ek işleme gerek bırakmayan kenar</li>
+<li><strong>Malzeme Verimliliği:</strong> Dar kerf ile minimum fire</li>
+<li><strong>Termal Etki:</strong> Isı etki bölgesi (HAZ) çok dar — malzeme özellikleri korunur</li>
+</ul>
+
+<h2>Hangi Malzemelerde Lazer Kesim Yapılır?</h2>
+<p>Atölyemizde aşağıdaki malzeme türlerinde lazer kesim yapıyoruz:</p>
+
+<table>
+<thead><tr><th>Malzeme</th><th>Kalınlık Aralığı</th><th>Tipik Kullanım</th></tr></thead>
+<tbody>
+<tr><td>Karbon Çeliği (St37, St52)</td><td>0,5 - 25 mm</td><td>Yapı çeliği, makine imalatı, çelik konstrüksiyon</td></tr>
+<tr><td>Paslanmaz Çelik (304, 316)</td><td>0,5 - 12 mm</td><td>Gıda ekipmanı, mutfak imalatı, mimari</td></tr>
+<tr><td>Galvanizli Sac</td><td>0,5 - 6 mm</td><td>Beyaz eşya, klima, havalandırma kanalı</td></tr>
+<tr><td>DKP Sac</td><td>0,5 - 4 mm</td><td>Otomotiv kaport, hassas form parçaları</td></tr>
+<tr><td>HRP Sac</td><td>3 - 25 mm</td><td>Yapı, ağır iş makinesi parçaları</td></tr>
+<tr><td>Alüminyum</td><td>0,5 - 8 mm</td><td>Hafif konstrüksiyon, dekoratif uygulamalar</td></tr>
+</tbody>
+</table>
+
+<h2>Sipariş Süreci</h2>
+<p>Lazer kesim siparişiniz için gereken adımlar:</p>
+
+<ol>
+<li><strong>Dosya Hazırlığı:</strong> DXF, DWG, STEP veya PDF formatında çiziminizi hazırlayın. CAD dosyanız yoksa boyutlandırılmış teknik resim de yeterli.</li>
+<li><strong>Dosya Gönderimi:</strong> WhatsApp (0532 065 24 00) veya e-posta (info@tekcanmetal.com) yoluyla dosyayı bize iletin.</li>
+<li><strong>Teknik Analiz:</strong> CAM yazılımımızla dosyayı analiz eder, kesim yolunu optimize eder, malzeme planlamasını yaparız.</li>
+<li><strong>Detaylı Teklif:</strong> Aynı gün içinde, malzeme cinsi, kalınlık, parça sayısı ve termin süresine göre detaylı teklifimizi göndeririz.</li>
+<li><strong>Üretim:</strong> Onayınız sonrası, sabah 09:00''a kadar gelen acil siparişler aynı gün üretilebilir.</li>
+<li><strong>Kalite Kontrol:</strong> Her parti, ölçü ve kenar kalitesi açısından kontrol edilir.</li>
+<li><strong>Sevkiyat:</strong> 81 il sevkiyat ağımızla teslim ederiz; Konya il merkezi için aynı gün teslim mümkündür.</li>
+</ol>
+
+<h2>Lazer Kesim Tolerans Bilgisi</h2>
+<p>Profesyonel lazer kesimde tolerans, malzeme cinsine ve kalınlığına göre değişir. Tekcan Metal atölyesinde kullanılan toleranslar:</p>
+
+<table>
+<thead><tr><th>Kalınlık</th><th>Standart Tolerans</th><th>Hassas Tolerans (talep üzerine)</th></tr></thead>
+<tbody>
+<tr><td>0,5 - 3 mm</td><td>±0,1 mm</td><td>±0,05 mm</td></tr>
+<tr><td>3 - 8 mm</td><td>±0,15 mm</td><td>±0,1 mm</td></tr>
+<tr><td>8 - 16 mm</td><td>±0,2 mm</td><td>±0,15 mm</td></tr>
+<tr><td>16 - 25 mm</td><td>±0,3 mm</td><td>±0,2 mm</td></tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>Hassas tolerans gerektiren projelerinizde mutlaka önceden bilgi verin. Standart parametrelerin dışında özel ayarlamalar gerekebilir; bu durumda termin süresi 1-2 gün uzayabilir.</p>
+</blockquote>
+
+<h2>Hangi Sektörlere Hizmet Veriyoruz?</h2>
+<p>Lazer kesim hizmetimiz, geniş bir sanayi yelpazesine hitap eder:</p>
+
+<ul>
+<li><strong>Otomotiv Yan Sanayi:</strong> Kaport, şasi, iç-dış aksam parçaları (Bursa, Sakarya, Aksaray bölgelerine)</li>
+<li><strong>Beyaz Eşya:</strong> Çamaşır makinesi, buzdolabı sac parçaları (Manisa, Eskişehir)</li>
+<li><strong>Makine İmalatı:</strong> CNC, presler, tarım makineleri (Konya OSB, Ankara OSTİM)</li>
+<li><strong>Çelik Mobilya:</strong> Ofis ve hastane mobilyası (Kayseri, İstanbul)</li>
+<li><strong>HVAC ve Havalandırma:</strong> Klima kasası, kanal flanşı (her bölge)</li>
+<li><strong>Mimari ve Dekorasyon:</strong> Cephe panelleri, korkuluk, mobilya aksesuarı</li>
+<li><strong>Tarım ve Gıda Sanayi:</strong> Paslanmaz tank, makina sacı (Konya, Karaman)</li>
+<li><strong>Savunma Sanayi:</strong> Hassas mekanik komponent (Ankara TUSAŞ yan sanayi)</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular</h2>
+
+<h3>Minimum sipariş tutarı var mı?</h3>
+<p>Hayır. Tek bir parça için bile lazer kesim yapıyoruz. Ancak parça başı maliyeti yüksek olduğundan, küçük adetlerde fiyat avantajı sağlamak için 1-2 parça yerine 5-10 parça birleştirilmiş sipariş öneriyoruz.</p>
+
+<h3>Aynı gün teslimat var mı?</h3>
+<p>Evet, koşullu olarak. Sabah 09:00''a kadar onaylı dosyanız ve ödemeniz tamamlanırsa, aynı gün kesim ve teslimat (Konya il içi) mümkündür. Yoğunluk durumuna göre acil slot ayrılabilir.</p>
+
+<h3>DXF dosyam yok, kâğıt çizimle gelebilir miyim?</h3>
+<p>Evet. Boyutlandırılmış teknik resminizi getirebilir veya el çizimi/fotoğraf gönderebilirsiniz. Atölyemizde teknik ressamımız çizimi DXF''e çevirir (ek ücret talep edilebilir, basit geometriler ücretsiz).</p>
+
+<h3>Kestiğiniz sac aynı gün teslim alabilir miyim?</h3>
+<p>Tabii ki. Karatay/Konya''daki atölyemizden ürünlerinizi forklift veya vinç desteğiyle teslim alabilirsiniz. Yoğun sipariş günlerinde gelmeden önce telefon edin.</p>',
+    updated_at = NOW()
+WHERE slug = 'lazer-kesim';
+
+-- =====================================================
+-- OKSİJEN KESİM — Zenginleştirilmiş içerik
+-- =====================================================
+UPDATE tm_services SET
+    short_desc = '5–200 mm kalın levha kesimi için CNC oksijen kesim teknolojisi. 3000×6000 mm büyük tabla kapasitesi, ekonomik fiyat, ağır endüstriyel projeler için ideal.',
+    meta_title = 'Oksijen Kesim Hizmeti Konya | Tekcan Metal',
+    meta_desc = 'Tekcan Metal CNC oksijen kesim — 5-200 mm kalın levha, 3000×6000 mm tabla, ±1 mm tolerans. Yapı çeliği, gemi inşa, ağır makine projeleri için ekonomik kesim.',
+    features = JSON_ARRAY(
+        '5 mm – 200 mm kalın levha kapasitesi',
+        '3000 × 6000 mm büyük tabla boyutu',
+        '±1 mm endüstriyel tolerans',
+        'CNC kontrollü otomatik kesim',
+        'Yapı çeliği, gemi sacı, kazan plakası',
+        'Eğimli kenar (V/Y/X kaynak ağzı) opsiyonu',
+        'Ekonomik birim fiyat (kalın saclarda lazer alternatifi)',
+        'DXF, DWG, autodesk dosyaları kabul',
+        'Ağır endüstriyel proje deneyimi',
+        '6+ metre büyük levhalarda özel sevkiyat'
+    ),
+    specs = JSON_OBJECT(
+        'Kesim Tipi', 'CNC Oksijen (Oxy-Fuel)',
+        'Sac Kalınlığı', '5 - 200 mm',
+        'Tabla Boyutu', '3000 × 6000 mm',
+        'Hassasiyet', '±1 mm',
+        'Kesim Hızı', '0,3-2 m/dk (kalınlığa göre)',
+        'Dosya Formatları', 'DXF, DWG',
+        'Malzeme', 'Karbon Çeliği (yapı sacı)',
+        'Kaynak Ağzı', 'V / Y / X / I (talep üzerine)'
+    ),
+    description = '<p>Oksijen kesim, kalın çelik levhaların kesilmesinde <em>endüstrinin sürat motorudur</em>. 5 mm''den 200 mm''ye uzanan kalınlık aralığıyla, lazer kesimin verimsiz veya imkânsız olduğu noktalarda devreye girer. CNC kontrollü oksijen kesim sistemimiz; gemi inşa, ağır iş makinası, basınçlı kap, çelik konstrüksiyon ve büyük altyapı projelerinin ihtiyacı olan kalın levha kesimini ekonomik fiyat ve hızlı termin süresiyle sağlar.</p>
+
+<h2>Oksijen Kesim Teknolojisi</h2>
+<p>Oksijen kesimi (oxy-fuel cutting), saf oksijen jeti ve LPG/asetilen ısı kaynağı kombinasyonuyla çalışan termo-kimyasal bir kesim yöntemidir. Çeliğin tutuşma sıcaklığına ısıtılmasının ardından yüksek basınçlı oksijen jeti, demiri yakarak (oksitleyerek) kesim yapar. Bu sayede kalın çelik levhalar bile temiz kenarlı kesilebilir.</p>
+
+<p>Tekcan Metal''in CNC kontrollü oksijen kesim sistemi, manuel oksijen kesime göre çok daha hassas, tutarlı ve hızlı sonuçlar verir. CAD dosyasından doğrudan üretime geçen sistem, karmaşık geometrileri tam tekrarlanabilirlikle keser.</p>
+
+<h2>Oksijen Kesim Hangi Durumda Tercih Edilir?</h2>
+<p>Lazer kesim ile oksijen kesim arasındaki en önemli farklar:</p>
+
+<table>
+<thead><tr><th>Kriter</th><th>Lazer Kesim</th><th>Oksijen Kesim</th></tr></thead>
+<tbody>
+<tr><td>Kalınlık</td><td>0,5 - 25 mm</td><td>5 - 200 mm</td></tr>
+<tr><td>Hassasiyet</td><td>±0,1 mm</td><td>±1 mm</td></tr>
+<tr><td>Kesim Hızı</td><td>5-30 m/dk</td><td>0,3-2 m/dk</td></tr>
+<tr><td>Birim Maliyet</td><td>Yüksek</td><td>Ekonomik</td></tr>
+<tr><td>Tabla Boyutu</td><td>1500×3000 mm</td><td>3000×6000 mm</td></tr>
+<tr><td>Malzeme</td><td>Karbon/Paslanmaz/Galvaniz/Alüminyum</td><td>Yalnız karbon çeliği</td></tr>
+<tr><td>Kullanım Alanı</td><td>İnce, hassas iş</td><td>Ağır endüstri, kalın levha</td></tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>Genel kural: 25 mm üzerine ihtiyaç duyduğunuzda oksijen kesim, 25 mm altı hassas iş için lazer kesim tercih edin. 5-25 mm arasında her iki yöntem de mümkündür; tolerans ve maliyet kriterlerine göre seçim yapılır.</p>
+</blockquote>
+
+<h2>Hangi Sektörlere Hizmet Veriyoruz?</h2>
+<p>Oksijen kesim atölyemiz, kalın çelik gerektiren tüm endüstrilere hizmet verir:</p>
+
+<ul>
+<li><strong>Çelik Konstrüksiyon:</strong> Köprü, hangar, fabrika çatısı için kalın yapı çeliği parçaları</li>
+<li><strong>Gemi İnşa:</strong> Tersane uygulamaları için DH36, AH36 gemi sacı kesimi</li>
+<li><strong>Basınçlı Kap İmalatı:</strong> Kazan, tank, silo gövde sacı (P265GH, P355GH)</li>
+<li><strong>İş Makinası Üretimi:</strong> Excavator, dozer, vinç ana çelik şasi parçaları</li>
+<li><strong>Maden ve Çimento:</strong> Aşınma plakası, paletler, taşıyıcı sistemler</li>
+<li><strong>Petrokimya:</strong> Boru hattı flanşı, valf gövdesi, ekipman tabanı (Kocaeli TÜPRAŞ yan sanayi)</li>
+<li><strong>Demiryolu:</strong> Vagon ana şasi parçaları (Sakarya TÜVASAŞ yan sanayi)</li>
+<li><strong>Sulama ve Altyapı:</strong> Büyük çaplı pompa baskıları, batık çelik parçalar</li>
+</ul>
+
+<h2>Kaynak Ağzı (Bevel Cutting) Hizmetleri</h2>
+<p>CNC oksijen kesim sistemimiz, sadece düz kesim değil, eğimli kenar (kaynak ağzı) açma da yapabilir:</p>
+
+<ul>
+<li><strong>V Kaynak Ağzı:</strong> 30-45° tek taraflı eğim — yapı çeliği kaynaklarında</li>
+<li><strong>Y Kaynak Ağzı:</strong> Çift taraflı, üst düz alt eğim — basınçlı kaplarda</li>
+<li><strong>X Kaynak Ağzı:</strong> İki taraflı simetrik eğim — kalın levha tam penetrasyon kaynağı</li>
+<li><strong>I Düz Kesim:</strong> 90° dik kesim — standart uygulamalar</li>
+</ul>
+
+<p>Kaynak ağzı, ana levha kesim ücretine ek olarak ücretlendirilir. Projenizde kaç farklı tipte kaynak ağzı gerektiğini önceden belirtin, optimum maliyet planlaması yapalım.</p>
+
+<h2>Sipariş ve Teslimat Süreci</h2>
+
+<ol>
+<li><strong>Çizim Gönderimi:</strong> DXF/DWG dosyanızı veya boyutlandırılmış teknik resminizi gönderin.</li>
+<li><strong>Plaka Planlama:</strong> Mühendisimiz, dosyanızdaki parçaları büyük levhalarda <em>nesting</em> (sığdırma) ile yerleştirerek malzeme firesini minimize eder.</li>
+<li><strong>Teklif:</strong> 24 saat içinde detaylı teklif: malzeme + kesim + kaynak ağzı (varsa) + nakliye dahil.</li>
+<li><strong>Üretim:</strong> Onay sonrası, projenin büyüklüğüne göre 2-7 iş günü içinde üretim tamamlanır.</li>
+<li><strong>Kalite Kontrol:</strong> Her büyük parti için boyut ve kenar kalitesi kontrol edilir, gerekirse fotoğraf-rapor gönderilir.</li>
+<li><strong>Sevkiyat:</strong> 6 metre üstü büyük parçalar için özel uzun yük sevkiyatı düzenlenir.</li>
+</ol>
+
+<h2>Sıkça Sorulan Sorular</h2>
+
+<h3>Kaç metre kalın levha kesebiliyorsunuz?</h3>
+<p>Maksimum 200 mm kalınlık ve 3000×6000 mm tabla boyutuna kadar kesim yapabiliyoruz. Daha büyük parçalar için iki ya da daha fazla parça halinde kesip, müşteriye birleştirme talimatı verebiliyoruz.</p>
+
+<h3>Oksijen kesim toleransı neden lazer kadar hassas değil?</h3>
+<p>Oksijen kesim, ısı kontrollü termo-kimyasal bir süreç olduğundan, kesim kenarında ısı etki bölgesi (HAZ) oluşur ve kerf genişliği (kesim aralığı) lazere göre daha geniştir. Bu nedenle ±1 mm civarında tolerans normaldir. Hassasiyet kritik ise lazer kesim önerilir, ya da CNC işleme ile son kalibrasyon yapılabilir.</p>
+
+<h3>Kalın levhada lazer mi oksijen mi seçmeliyim?</h3>
+<p>25 mm üstü kalınlıklarda <strong>oksijen kesim daha ekonomik ve hızlıdır</strong>. Lazer kesim de 25 mm''ye kadar yapabilir ancak birim fiyat çok artar. Karar verirken tolerans ihtiyacınızı, parça sayısını ve bütçenizi birlikte değerlendirmek gerekir. Bizden her iki seçenek için de teklif isteyebilirsiniz.</p>
+
+<h3>Paslanmaz çelik kalın levhayı oksijen ile kesebilir misiniz?</h3>
+<p>Hayır, oksijen kesim yalnızca karbon çeliği için uygundur. Paslanmaz çelik ve alaşım çelikler için plazma kesim veya tel erozyon önerilir. İhtiyaç duyarsanız anlaşmalı atölye ortaklarımızdan tedarik edebiliriz.</p>',
+    updated_at = NOW()
+WHERE slug = 'oksijen-kesim';
+
+-- =====================================================
+-- DEKORATİF SACLAR — Zenginleştirilmiş içerik
+-- =====================================================
+UPDATE tm_services SET
+    title = 'Dekoratif Sac Üretimi',
+    short_desc = 'Mimari ve dekoratif uygulamalar için özel desenli sac üretimi. Cephe paneli, korkuluk, mobilya aksesuarı, peyzaj elemanı — fikirden üretime tek atölye.',
+    meta_title = 'Dekoratif Sac Üretimi | Tekcan Metal',
+    meta_desc = 'Tekcan Metal dekoratif sac atölyesi — mimari cephe, korkuluk, mobilya aksesuarı, peyzaj elemanı. Lazer kesim + bükme + kaplama, özel desen tasarımı.',
+    features = JSON_ARRAY(
+        'Mimari cephe panelleri (perforated, corten)',
+        'Korkuluk ve merdiven dekoratif paneller',
+        'Mobilya aksesuarı, ofis bölme paneli',
+        'Peyzaj eleman ve bahçe dekoru',
+        'Mağaza vitrin ve marka tabela uygulamaları',
+        'Özel desen tasarımı (CAD destekli)',
+        'Boya, elektrostatik toz boya, korten kaplama',
+        'Lazer + bükme + kaynak — tüm üretim tek atölyede',
+        'Mimar ve iç mimar danışmanlığı',
+        '3D görsel ile ön onay süreci'
+    ),
+    specs = JSON_OBJECT(
+        'Üretim Yöntemi', 'Lazer kesim + bükme + kaynak',
+        'Sac Kalınlığı', '1 - 8 mm (öneri)',
+        'Maksimum Boyut', '1500 × 3000 mm tek parça',
+        'Yüzey İşleme', 'Toz boya / Galvaniz / Korten / PVD',
+        'Desen', 'Özel CAD tasarım',
+        'Termin Süresi', '5-15 iş günü',
+        'Görsel', '3D render ön onay',
+        'Garanti', 'Üretim ve montaj garantili'
+    ),
+    description = '<p>Dekoratif sac, modern mimari ve iç tasarımın <em>en güçlü dilidir</em>. Tekcan Metal''in dekoratif sac atölyesi; mimari cephe panelleri, mağaza vitrini, korkuluk, mobilya aksesuarı ve peyzaj elemanları gibi geniş bir yelpazede özel üretim yapmaktadır. Konseptten 3D görsele, üretimden montaja kadar tek elden çözüm sunuyoruz.</p>
+
+<h2>Dekoratif Sac Uygulama Alanları</h2>
+<p>Dekoratif sac üretiminin kapsamı, sanayi tedariğinin çok ötesine geçer. Estetik, fonksiyon ve dayanıklılığı birleştiren özel tasarım uygulamalar:</p>
+
+<h3>Mimari Uygulamalar</h3>
+<ul>
+<li><strong>Cephe Panelleri:</strong> Bina dış cephesinde perforated (delikli desen) ya da düz dekoratif paneller</li>
+<li><strong>Korten Sac Cepheleri:</strong> Doğal pas dokulu, bakım gerektirmeyen yıllanmış görünüm</li>
+<li><strong>Otopark Cephe Karkası:</strong> Hava sirkülasyonu sağlayan delikli sac uygulamaları</li>
+<li><strong>Mağaza ve Showroom Vitrini:</strong> Marka kimliğine özel logolu, kesimli sac uygulamaları</li>
+<li><strong>Lobi ve Resepsiyon Duvarı:</strong> Otel, plaza, hastane gibi prestijli mekanlar için vurgu duvarı</li>
+</ul>
+
+<h3>İç Mekan Uygulamaları</h3>
+<ul>
+<li><strong>Korkuluk ve Merdiven Panelleri:</strong> Cam yerine veya cam ile entegre geometrik desenli sac panelleri</li>
+<li><strong>Ofis Bölme Panelleri:</strong> Mahremiyet sağlayan, akustik özellikli delikli saclar</li>
+<li><strong>Tavan Akustik Panelleri:</strong> Restoran, çalışma alanı, konser salonu</li>
+<li><strong>Mutfak ve Banyo Aksesuarı:</strong> Paslanmaz dekoratif raf, askılık, separatör</li>
+<li><strong>Aydınlatma Armatür Gövdesi:</strong> Modern endüstriyel iç mekan lambası</li>
+</ul>
+
+<h3>Peyzaj ve Dış Mekan</h3>
+<ul>
+<li><strong>Bahçe Çiti ve Korkuluk:</strong> Korten ya da toz boyalı dekoratif sac panelleri</li>
+<li><strong>Bahçe Heykeli ve Sanat Eseri:</strong> Lazer kesim ile özel form heykel</li>
+<li><strong>Ev Numarası ve İsim Plakası:</strong> Modern paslanmaz veya korten plaka</li>
+<li><strong>Şehir Mobilyası:</strong> Park bankı, çöp kutusu, bisiklet park yeri</li>
+<li><strong>Aydınlatma Direği Aksesuarı:</strong> Klasik veya modern stil dekoratif kapak</li>
+</ul>
+
+<h2>Yüzey İşleme Seçenekleri</h2>
+<p>Dekoratif sacın görünümünü ve dayanımını belirleyen yüzey işleme, her uygulama için ayrı seçilir:</p>
+
+<table>
+<thead><tr><th>Yüzey İşlemi</th><th>Görünüm</th><th>Önerilen Uygulama</th></tr></thead>
+<tbody>
+<tr><td>Elektrostatik Toz Boya</td><td>Mat veya parlak, tek renk</td><td>İç mekan, korkuluk, mobilya</td></tr>
+<tr><td>Sıcak Daldırma Galvaniz</td><td>Gri parlak çinko kaplama</td><td>Dış mekan, şehir mobilyası</td></tr>
+<tr><td>Korten Sac (COR-TEN)</td><td>Doğal kahverengi pas dokulu</td><td>Modern mimari cephe, peyzaj</td></tr>
+<tr><td>PVD Kaplama (Altın/Bronz)</td><td>Premium parlak kaplama</td><td>Lüks otel, plaza, butik</td></tr>
+<tr><td>Boyasız Paslanmaz</td><td>Doğal metalik, parlak</td><td>Mutfak, banyo, gıda alanı</td></tr>
+<tr><td>Fırın Boya</td><td>Yüksek dayanımlı, parlak</td><td>Endüstriyel, dış kapı</td></tr>
+</tbody>
+</table>
+
+<h2>Tasarımdan Üretime Süreç</h2>
+
+<ol>
+<li><strong>Konsept Görüşmesi:</strong> Mimari, iç mimar veya son kullanıcıyla yüz yüze veya online görüşme. İhtiyaç, mekan, bütçe netleştirilir.</li>
+<li><strong>Ölçü Alımı:</strong> Gerekirse keşif yapılır. Mevcut mekanın boyutları ve montaj noktaları belirlenir.</li>
+<li><strong>Tasarım ve 3D Render:</strong> CAD ortamında özel desen tasarlanır, 3D render ile size sunulur.</li>
+<li><strong>Onay ve Mockup:</strong> Büyük projelerde 1:1 ölçek mockup parça üretilir, fiziksel onay alınır.</li>
+<li><strong>Üretim:</strong> Lazer kesim → bükme → kaynak → yüzey işleme zinciri tamamlanır.</li>
+<li><strong>Kalite Kontrol:</strong> Her parça desen, ölçü ve yüzey kalitesi açısından denetlenir.</li>
+<li><strong>Paketleme ve Sevkiyat:</strong> Hassas paketleme, gerekirse kasalı sevkiyat.</li>
+<li><strong>Montaj Desteği:</strong> Talep üzerine montaj ekibimizle yerinde kurulum (Konya ve çevre iller için).</li>
+</ol>
+
+<blockquote>
+<p>Tasarım danışmanlığı tamamen ücretsizdir. Aklınızdaki fikri taslak halinde getirin, mühendisimiz size üretilebilirlik analiziyle profesyonel tasarımı çıkarsın.</p>
+</blockquote>
+
+<h2>Korten Sac — Modern Mimarinin Yıldızı</h2>
+<p>Korten sac (COR-TEN steel), atmosferik ortama maruz bırakıldığında yüzeyinde kontrollü ve durağan bir pas tabakası oluşturan özel alaşımlı bir çelik türüdür. İlk yıllarda kahverengi-turuncu tonlarda evrilir, 2-3 yıl içinde koyu kestane rengini alır. Bu pas tabakası, malzemeyi korozyona karşı korur — boya gerektirmez, bakımsızdır.</p>
+
+<h3>Korten Sacın Avantajları</h3>
+<ul>
+<li><strong>Bakım Gerektirmez:</strong> Doğal yıllanma, ek koruma istenmez</li>
+<li><strong>Modern Estetik:</strong> Çağdaş mimari ve peyzaj tasarımının en sevilen malzemesi</li>
+<li><strong>Uzun Ömür:</strong> 80+ yıl ortalama ömür</li>
+<li><strong>Çevre Dostu:</strong> Geri dönüştürülebilir, boya ve solvent kullanımı yok</li>
+</ul>
+
+<h3>Korten Sac Kullanımı</h3>
+<ul>
+<li>Modern villa cephesi ve giriş kapısı</li>
+<li>Peyzaj sınırlama, çiçeklik kaplaması</li>
+<li>Modern müze, kütüphane, kültür merkezi</li>
+<li>Şehir mobilyası, park aydınlatması</li>
+<li>Heykel ve dekoratif sanat eseri</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular</h2>
+
+<h3>Tasarımım yok, sadece fikrim var. Ne yapmalıyım?</h3>
+<p>Hiç sorun değil. Aklınızdaki fikri sözlü, eskiz, fotoğraf veya benzer örneklerle bize anlatın. Mimar/tasarımcı ekibimiz size 3-5 iş günü içinde 3D görselli tasarım sunsun. İlk konsept ücretsiz; revizyonlar ve detaylandırma süreciyle birlikte tasarım hizmeti ayrı kalemlendirilebilir.</p>
+
+<h3>Korten sac gerçekten paslanır mı?</h3>
+<p>Evet, ancak <strong>yıkıcı değil koruyucu</strong> bir pas. Yüzeyde oluşan dengeli oksit tabakası, alttaki malzemeye nem ve oksijen geçişini engeller. Bu nedenle hem güzel görünür, hem de uzun ömürlüdür.</p>
+
+<h3>Toz boya yıllar içinde solar mı?</h3>
+<p>Modern elektrostatik toz boyalar, dış mekan koşullarına göre formüle edilir ve UV stabilizatörlüdür. Genellikle 10-15 yıl boyunca canlı rengini korur. Ancak deniz kıyısı ve aşırı UV maruziyetinde birinci sınıf super-durable toz boya tercih edilmelidir.</p>
+
+<h3>Montaj hizmeti veriyor musunuz?</h3>
+<p>Evet, Konya ve çevre iller için kendi ekibimizle montaj yapıyoruz. Diğer iller için, anlaşmalı uzman montaj ekiplerini koordine ediyoruz veya yerel müteahhit ile iletişim sağlıyoruz. Montaj ücreti tasarım ve üretim toplamına ek olarak hesaplanır.</p>',
+    updated_at = NOW()
+WHERE slug = 'dekoratif-saclar';
+
