@@ -7,6 +7,11 @@
  *
  * Beklenen tasarruf: 600-900 KB per page → LCP'de 2-4 sn iyileşme
  */
+
+// v1.0.74: 500 debug için — sayfa yüklenirken oluşan tüm hataları yakala
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 define('TM_ADMIN', true);
 $adminTitle = 'Görsel Optimize (WebP)';
 require __DIR__ . '/_layout.php';
