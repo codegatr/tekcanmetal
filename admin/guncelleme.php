@@ -325,6 +325,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         adm_back_with('error', 'Yedek bulunamadı.', 'admin/guncelleme.php');
     }
 
+    /* ========== Rollback — yedekten geri dön ========== */
+    if ($action === 'rollback') {
+        $name = basename($_POST['file'] ?? '');
+        $bd = backup_dir();
+        $path = $bd . '/' . $name;
+        if (!str_ends_with($name, '.zip') || !file_exists($path)) {
+            adm_back_with('error', 'Yedek bulunamadı.', 'admin/guncelleme.php');
+        }
+
+        // Önce mevcut hâlin yedeğini al (rollback öncesi snapshot)
+        $preRollback = backup_current('pre-rollback-' . TM_VERSION);
+
+        // Sonra yedeği aç
+        $tmp = sys_get_temp_dir() . '/tm_rollback_' . uniqid();
+        @mkdir($tmp, 0755, true);
+        $zip = new ZipArchive();
+        if ($zip->open($path) !== true) {
+            adm_back_with('error', 'Yedek zip açılamadı.', 'admin/guncelleme.php');
+        }
+        if (!$zip->extractTo($tmp)) {
+            $zip->close();
+            adm_back_with('error', 'Yedek extract edilemedi.', 'admin/guncelleme.php');
+        }
+        $zip->close();
+
+        // Dosyaları root'a kopyala (config.php ve uploads hariç)
+        $root = realpath(__DIR__ . '/..');
+        $excluded = exclude_paths();
+        $copied = 0;
+        foreach (scandir($tmp) as $entry) {
+            if ($entry === '.' || $entry === '..') continue;
+            if (in_array($entry, $excluded, true)) continue;
+            $sp = $tmp . '/' . $entry;
+            $dp = $root . '/' . $entry;
+            if (is_dir($sp)) { rcopy($sp, $dp); $copied++; }
+            else { @copy($sp, $dp); $copied++; }
+        }
+        rrmdir($tmp);
+
+        log_activity('rollback', 'system', 0, "Yedekten geri dönüldü: $name ($copied öğe)");
+        adm_back_with('success', "Yedekten geri dönüldü: $copied öğe restore edildi.", 'admin/guncelleme.php');
+    }
+
     /* ========== Görselleri Yenile (Seed-Images Resync) ========== */
     if ($action === 'resync_images') {
         $seedDir   = __DIR__ . '/../install/seed-images';
@@ -368,7 +411,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     }
 }
 
-/* ========== RENDER ========== */
+
+/* ════════════════════════════════════════════════════════════════
+ * RENDER — Dark GitHub-style UI (5 sekme)
+ * ════════════════════════════════════════════════════════════════ */
 $latest = !empty($_SESSION['gh_latest']) ? json_decode($_SESSION['gh_latest'], true) : null;
 $latestVersion = $latest ? ltrim($latest['tag_name'] ?? '', 'v') : null;
 $hasUpdate = $latestVersion && version_gt($latestVersion, TM_VERSION);
@@ -386,158 +432,422 @@ if (is_dir($bd)) {
     }
     usort($backups, fn($a, $b) => $b['mtime'] - $a['mtime']);
 }
+
+$activeTab = $_GET['tab'] ?? 'overview';
+$valid = ['overview','releases','backups','tools','settings'];
+if (!in_array($activeTab, $valid, true)) $activeTab = 'overview';
+
+function fmt_bytes(int $b): string {
+    if ($b < 1024) return $b . ' B';
+    if ($b < 1024*1024) return number_format($b/1024, 1) . ' KB';
+    return number_format($b/1024/1024, 1) . ' MB';
+}
+function rel_time(int $ts): string {
+    $diff = time() - $ts;
+    if ($diff < 60) return $diff . ' sn önce';
+    if ($diff < 3600) return floor($diff/60) . ' dk önce';
+    if ($diff < 86400) return floor($diff/3600) . ' saat önce';
+    if ($diff < 604800) return floor($diff/86400) . ' gün önce';
+    return date('d.m.Y', $ts);
+}
 ?>
 
-<div class="adm-grid-2">
+<style>
+  /* ═══ DARK UI — Güncelleme Merkezi (GitHub Releases tarzı) ═══ */
+  .gm-shell{background:#0d1117;color:#c9d1d9;border:1px solid #30363d;margin:-20px -20px 0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+  .gm-head{padding:24px 28px;border-bottom:1px solid #30363d;background:linear-gradient(180deg, #161b22 0%, #0d1117 100%)}
+  .gm-head-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .gm-title{margin:0;font-size:20px;font-weight:600;color:#f0f6fc;letter-spacing:-.3px}
+  .gm-title small{display:block;font-size:12px;font-weight:400;color:#8b949e;letter-spacing:0;margin-top:4px}
+  .gm-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border-radius:20px}
+  .gm-badge-ok{background:rgba(46,160,67,.15);color:#3fb950;border:1px solid rgba(46,160,67,.4)}
+  .gm-badge-new{background:rgba(248,158,38,.15);color:#f8a337;border:1px solid rgba(248,158,38,.4);animation:gmPulse 1.8s infinite}
+  .gm-badge-off{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.4)}
+  @keyframes gmPulse{0%,100%{box-shadow:0 0 0 0 rgba(248,158,38,.4)}50%{box-shadow:0 0 0 6px rgba(248,158,38,0)}}
 
-    <div class="adm-panel">
-        <div class="adm-panel-head"><h2>📦 Sürüm Bilgisi</h2></div>
-        <div class="adm-panel-body">
-            <div class="adm-version-box">
-                <div>
-                    <small>Mevcut Sürüm</small>
-                    <div class="big"><?= h(TM_VERSION) ?></div>
-                </div>
-                <?php if ($latestVersion): ?>
-                    <div>
-                        <small>GitHub Son Sürüm</small>
-                        <div class="big"><?= h($latestVersion) ?>
-                            <?php if ($hasUpdate): ?>
-                                <span class="badge badge-warn">YENİ</span>
-                            <?php else: ?>
-                                <span class="badge badge-on">Güncel</span>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
+  .gm-version-row{display:flex;align-items:baseline;gap:18px;margin-top:18px;flex-wrap:wrap}
+  .gm-vbox{display:flex;flex-direction:column;gap:4px}
+  .gm-vbox label{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8b949e;font-weight:600}
+  .gm-vbox .val{font-size:24px;font-weight:600;color:#f0f6fc;font-family:ui-monospace,SFMono-Regular,monospace}
+  .gm-arrow{font-size:24px;color:#8b949e;align-self:center}
 
-            <hr style="margin:14px 0;border:0;border-top:1px solid #2a3552">
+  /* Sekmeler */
+  .gm-tabs{display:flex;gap:0;border-bottom:1px solid #30363d;background:#0d1117;padding:0 28px;overflow-x:auto}
+  .gm-tab{display:inline-flex;align-items:center;gap:8px;padding:14px 18px;font-size:13px;font-weight:500;color:#8b949e;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:.18s}
+  .gm-tab:hover{color:#c9d1d9;border-bottom-color:#484f58}
+  .gm-tab.active{color:#f0f6fc;border-bottom-color:#f8a337;font-weight:600}
+  .gm-tab-count{display:inline-block;padding:2px 8px;font-size:11px;background:#30363d;color:#c9d1d9;border-radius:20px;margin-left:4px}
 
-            <p style="font-size:13px;color:#aaa;margin:0 0 8px">
-                <strong>Repo:</strong> <code><?= h($githubRepo ?: 'AYARLANMADI') ?></code><br>
-                <strong>Token:</strong> <?= $githubToken ? '<span class="badge badge-on">Aktif</span>' : '<span class="badge badge-off">Yok</span>' ?>
-            </p>
+  .gm-body{padding:24px 28px}
 
-            <form method="post" action="?action=check" style="display:inline">
-                <?= csrf_field() ?>
-                <button type="submit" class="adm-btn adm-btn-primary">🔍 Güncelleme Kontrol Et</button>
-            </form>
-            <a href="<?= h(admin_url('settings.php#github')) ?>" class="adm-btn adm-btn-ghost">⚙ GitHub Ayarları</a>
+  /* Kartlar */
+  .gm-card{background:#161b22;border:1px solid #30363d;border-radius:6px;margin-bottom:14px;overflow:hidden}
+  .gm-card-head{padding:14px 18px;border-bottom:1px solid #30363d;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#0d1117}
+  .gm-card-head h3{margin:0;font-size:14px;font-weight:600;color:#f0f6fc;letter-spacing:-.1px}
+  .gm-card-head small{color:#8b949e;font-size:12px}
+  .gm-card-body{padding:18px}
+  .gm-card-body p{color:#c9d1d9;font-size:13.5px;line-height:1.7;margin:0 0 12px}
+  .gm-card-body p:last-child{margin-bottom:0}
+
+  /* Butonlar */
+  .gm-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;text-decoration:none;border:1px solid transparent;font-family:inherit;transition:.15s;line-height:1.4}
+  .gm-btn-primary{background:#238636;color:#fff;border-color:rgba(240,246,252,.1)}
+  .gm-btn-primary:hover{background:#2ea043}
+  .gm-btn-warn{background:#bb800a;color:#fff;border-color:rgba(240,246,252,.1)}
+  .gm-btn-warn:hover{background:#cc8e0c}
+  .gm-btn-danger{background:#da3633;color:#fff;border-color:rgba(240,246,252,.1)}
+  .gm-btn-danger:hover{background:#f85149}
+  .gm-btn-default{background:#21262d;color:#c9d1d9;border-color:#30363d}
+  .gm-btn-default:hover{background:#30363d;border-color:#484f58}
+  .gm-btn-block{display:flex;width:100%;justify-content:center}
+
+  /* Liste/tablo */
+  .gm-list{margin:0;padding:0;list-style:none}
+  .gm-list-item{padding:14px 18px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:.15s}
+  .gm-list-item:last-child{border-bottom:0}
+  .gm-list-item:hover{background:#0d1117}
+  .gm-list-meta{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+  .gm-list-name{font-size:13.5px;font-weight:600;color:#f0f6fc}
+  .gm-list-name code{background:transparent;font-size:13px;color:#79c0ff}
+  .gm-list-info{font-size:12px;color:#8b949e;display:flex;gap:14px;flex-wrap:wrap}
+  .gm-list-info span{display:inline-flex;gap:4px}
+  .gm-list-actions{display:flex;gap:6px;flex-shrink:0}
+
+  /* Empty state */
+  .gm-empty{text-align:center;padding:40px 20px;color:#8b949e}
+  .gm-empty .icon{font-size:36px;margin-bottom:8px;opacity:.5}
+  .gm-empty p{margin:0;font-size:13.5px}
+
+  /* Form */
+  .gm-form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .gm-form-row label{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#8b949e}
+  .gm-form-row input[type="text"],.gm-form-row input[type="password"],.gm-form-row input[type="file"]{
+    padding:9px 12px;font-size:13.5px;font-family:ui-monospace,monospace;
+    background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;outline:none;transition:.15s;
+  }
+  .gm-form-row input:focus{border-color:#388bfd;box-shadow:0 0 0 3px rgba(56,139,253,.25)}
+  .gm-form-row .help{font-size:11.5px;color:#8b949e;margin-top:4px}
+
+  /* Release notes */
+  .gm-release-notes{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px 20px;font-family:ui-monospace,monospace;font-size:12.5px;color:#c9d1d9;line-height:1.7;max-height:280px;overflow-y:auto;white-space:pre-wrap}
+
+  /* Update banner */
+  .gm-update-banner{background:linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);color:#fff;padding:18px 22px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px;border:1px solid rgba(255,255,255,.1)}
+  .gm-update-banner h3{margin:0 0 4px;font-size:16px;font-weight:600;color:#fff}
+  .gm-update-banner p{margin:0;font-size:13.5px;color:rgba(255,255,255,.85);line-height:1.5}
+  .gm-update-banner .gm-btn-primary{background:#fff;color:#1f6feb;border-color:rgba(0,0,0,.1)}
+  .gm-update-banner .gm-btn-primary:hover{background:rgba(255,255,255,.92)}
+
+  /* Stats grid */
+  .gm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+  .gm-stat{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px 16px}
+  .gm-stat .num{font-size:22px;font-weight:600;color:#f0f6fc;font-family:ui-monospace,monospace;letter-spacing:-.5px;line-height:1.2}
+  .gm-stat .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#8b949e;font-weight:600;margin-top:4px}
+
+  /* Mobile */
+  @media (max-width:768px){
+    .gm-shell{margin:-12px -12px 0}
+    .gm-head{padding:18px 16px}
+    .gm-tabs{padding:0 16px}
+    .gm-body{padding:18px 16px}
+  }
+</style>
+
+<div class="gm-shell">
+
+  <!-- ═══ ÜST BAŞLIK ═══ -->
+  <div class="gm-head">
+    <div class="gm-head-row">
+      <div>
+        <h1 class="gm-title">
+          🚀 Güncelleme Merkezi
+          <small>Tekcan Metal CMS — GitHub Releases üzerinden otomatik güncelleme</small>
+        </h1>
+      </div>
+      <div>
+        <?php if ($hasUpdate): ?>
+          <span class="gm-badge gm-badge-new">⚠ Yeni Sürüm Mevcut</span>
+        <?php elseif ($latestVersion): ?>
+          <span class="gm-badge gm-badge-ok">✓ Güncel</span>
+        <?php else: ?>
+          <span class="gm-badge gm-badge-off">Bilinmiyor</span>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <div class="gm-version-row">
+      <div class="gm-vbox">
+        <label>Mevcut Sürüm</label>
+        <div class="val">v<?= h(TM_VERSION) ?></div>
+      </div>
+      <?php if ($latestVersion): ?>
+        <div class="gm-arrow">→</div>
+        <div class="gm-vbox">
+          <label>GitHub Son Sürüm</label>
+          <div class="val" style="color:<?= $hasUpdate ? '#f8a337' : '#3fb950' ?>">v<?= h($latestVersion) ?></div>
         </div>
-    </div>
-
-    <?php if ($latest): ?>
-        <div class="adm-panel">
-            <div class="adm-panel-head"><h2>📋 Son Yayın Notları</h2></div>
-            <div class="adm-panel-body">
-                <h3 style="margin:0 0 6px"><?= h($latest['name'] ?? $latestVersion) ?></h3>
-                <p style="font-size:12px;color:#aaa">
-                    <?= h($latestVersion) ?>
-                    <?php if (!empty($latest['published_at'])): ?>
-                        · <?= h(tr_date($latest['published_at'])) ?>
-                    <?php endif; ?>
-                </p>
-                <div class="adm-changelog"><?= nl2br(h(mb_substr($latest['body'] ?? '(boş)', 0, 4000))) ?></div>
-
-                <?php if ($hasUpdate): ?>
-                    <hr style="margin:14px 0;border:0;border-top:1px solid #2a3552">
-                    <form method="post" action="?action=update_github" onsubmit="return confirm('Sürüm <?= h($latestVersion) ?> uygulanacak. Önce yedek alınacak. Devam edilsin mi?')">
-                        <?= csrf_field() ?>
-                        <button type="submit" class="adm-btn adm-btn-primary">⬇ Sürüm <?= h($latestVersion) ?> Uygula</button>
-                    </form>
-                <?php endif; ?>
-            </div>
+        <?php if ($latest && !empty($latest['published_at'])): ?>
+        <div class="gm-vbox" style="margin-left:14px">
+          <label>Yayın Tarihi</label>
+          <div class="val" style="font-size:14px;font-weight:400;color:#8b949e"><?= h(date('d.m.Y H:i', strtotime($latest['published_at']))) ?></div>
         </div>
-    <?php endif; ?>
-</div>
-
-<div class="adm-panel">
-    <div class="adm-panel-head"><h2>🖼 Görselleri Yenile</h2></div>
-    <div class="adm-panel-body">
-        <p style="font-size:13px;color:var(--text-muted);margin:0 0 14px">
-            Sitedeki ürün, kategori, hizmet, slider gibi görseller eksikse veya bozuksa, paketle gelen <code>install/seed-images/</code> klasöründeki dosyaları <code>uploads/</code>'a senkronize eder.
-        </p>
-        <form method="post" action="?action=resync_images" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <?= csrf_field() ?>
-            <button type="submit" class="adm-btn adm-btn-primary">
-                Sadece Eksik Olanları Kopyala
-            </button>
-            <button type="submit" name="force" value="1" class="adm-btn adm-btn-ghost"
-                    onclick="return confirm('Mevcut tüm görseller paket içindekilerle değiştirilecek. Devam edilsin mi?')">
-                Tüm Görselleri Üzerine Yaz
-            </button>
-        </form>
+        <?php endif; ?>
+      <?php endif; ?>
     </div>
-</div>
+  </div>
 
-<div class="adm-panel">
-    <div class="adm-panel-head"><h2>📥 Manuel Zip Yükle</h2></div>
-    <div class="adm-panel-body">
-        <p style="font-size:13px;color:#aaa">GitHub bağlantısı çalışmıyorsa, sürüm zip dosyasını buradan yükleyebilirsiniz. Yedek otomatik alınır.</p>
-        <form method="post" action="?action=manual_upload" enctype="multipart/form-data" style="display:flex;gap:8px;align-items:end;flex-wrap:wrap">
-            <?= csrf_field() ?>
-            <div style="flex:1;min-width:240px">
-                <label>Sürüm Zip</label>
-                <input type="file" name="zip" accept=".zip" required>
-            </div>
-            <button type="submit" class="adm-btn adm-btn-primary" onclick="return confirm('Zip uygulanacak. Yedek otomatik alınır. Devam?')">Yükle ve Uygula</button>
+  <!-- ═══ SEKMELER ═══ -->
+  <nav class="gm-tabs">
+    <a href="?tab=overview" class="gm-tab <?= $activeTab === 'overview' ? 'active' : '' ?>">📊 Genel Durum</a>
+    <a href="?tab=releases" class="gm-tab <?= $activeTab === 'releases' ? 'active' : '' ?>">🏷 Sürüm Geçmişi <span class="gm-tab-count"><?= count($versions) ?></span></a>
+    <a href="?tab=backups" class="gm-tab <?= $activeTab === 'backups' ? 'active' : '' ?>">💾 Yedekler <span class="gm-tab-count"><?= count($backups) ?></span></a>
+    <a href="?tab=tools" class="gm-tab <?= $activeTab === 'tools' ? 'active' : '' ?>">🔧 Araçlar</a>
+    <a href="?tab=settings" class="gm-tab <?= $activeTab === 'settings' ? 'active' : '' ?>">⚙ Ayarlar</a>
+  </nav>
+
+  <div class="gm-body">
+
+    <?php if ($activeTab === 'overview'): ?>
+      <!-- ═══ GENEL DURUM ═══ -->
+
+      <?php if ($hasUpdate): ?>
+      <div class="gm-update-banner">
+        <div>
+          <h3>🚀 Yeni sürüm hazır: v<?= h($latestVersion) ?></h3>
+          <p>Mevcut: v<?= h(TM_VERSION) ?> — Tek tıkla yedek alıp güncelleyebilirsin.</p>
+        </div>
+        <form method="post" action="?action=update_github" style="margin:0">
+          <?= csrf_field() ?>
+          <button type="submit" class="gm-btn gm-btn-primary"
+                  onclick="return confirm('Güncelleme uygulansın mı? Önce otomatik yedek alınacak.')">
+            ⬇ Güncelle (v<?= h($latestVersion) ?>)
+          </button>
         </form>
-    </div>
-</div>
+      </div>
+      <?php endif; ?>
 
-<div class="adm-panel">
-    <div class="adm-panel-head"><h2>🕒 Sürüm Geçmişi (<?= count($versions) ?>)</h2></div>
-    <div class="adm-panel-body" style="padding:0">
+      <div class="gm-stats">
+        <div class="gm-stat">
+          <div class="num">v<?= h(TM_VERSION) ?></div>
+          <div class="lbl">Mevcut Sürüm</div>
+        </div>
+        <div class="gm-stat">
+          <div class="num"><?= $latestVersion ? 'v' . h($latestVersion) : '—' ?></div>
+          <div class="lbl">GitHub Son</div>
+        </div>
+        <div class="gm-stat">
+          <div class="num"><?= count($versions) ?></div>
+          <div class="lbl">Toplam Güncelleme</div>
+        </div>
+        <div class="gm-stat">
+          <div class="num"><?= count($backups) ?></div>
+          <div class="lbl">Mevcut Yedek</div>
+        </div>
+      </div>
+
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>🔄 Sürüm Kontrolü</h3>
+          <small>GitHub Releases API üzerinden son sürümü kontrol et</small>
+        </div>
+        <div class="gm-card-body">
+          <p>GitHub'da yeni bir sürüm yayınlanıp yayınlanmadığını kontrol etmek için aşağıdaki butonu kullan. Kontrol sonucu üst bölümde görüntülenir.</p>
+          <form method="post" action="?action=check" style="display:inline">
+            <?= csrf_field() ?>
+            <button type="submit" class="gm-btn gm-btn-default">🔍 Güncelleme Kontrol Et</button>
+          </form>
+          <?php if (!$githubRepo || !$githubToken): ?>
+          <p style="color:#f85149;margin-top:12px;font-size:13px">
+            ⚠ GitHub ayarları eksik. <a href="?tab=settings" style="color:#79c0ff">Ayarlar</a> sekmesinden tamamla.
+          </p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <?php if ($latest && !empty($latest['body'])): ?>
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>📋 v<?= h($latestVersion) ?> — Yayın Notları</h3>
+          <small><?= !empty($latest['published_at']) ? h(date('d.m.Y H:i', strtotime($latest['published_at']))) : '' ?></small>
+        </div>
+        <div class="gm-card-body">
+          <div class="gm-release-notes"><?= h(mb_substr($latest['body'] ?? '', 0, 4000)) ?></div>
+        </div>
+      </div>
+      <?php endif; ?>
+
+    <?php elseif ($activeTab === 'releases'): ?>
+      <!-- ═══ SÜRÜM GEÇMİŞİ ═══ -->
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>🏷 Uygulanan Sürümler</h3>
+          <small><?= count($versions) ?> kayıt</small>
+        </div>
         <?php if (!$versions): ?>
-            <div class="adm-empty"><div class="ico">🕒</div>Henüz sürüm geçmişi yok.</div>
+          <div class="gm-empty">
+            <div class="icon">📭</div>
+            <p>Henüz hiç güncelleme uygulanmamış.</p>
+          </div>
         <?php else: ?>
-            <table class="adm-table">
-                <thead><tr><th>Sürüm</th><th>Kaynak</th><th>Yayın</th><th>Uygulanış</th><th>Uygulayan</th></tr></thead>
-                <tbody>
-                    <?php foreach ($versions as $v): ?>
-                        <tr>
-                            <td><strong><?= h($v['version']) ?></strong></td>
-                            <td><span class="badge"><?= h($v['source']) ?></span></td>
-                            <td><small><?= h($v['release_date'] ? tr_date($v['release_date']) : '—') ?></small></td>
-                            <td><small><?= h(tr_date($v['applied_at'])) ?></small></td>
-                            <td><small><?= h($v['applied_by'] ?: '—') ?></small></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+          <ul class="gm-list">
+            <?php foreach ($versions as $v): ?>
+            <li class="gm-list-item">
+              <div class="gm-list-meta">
+                <div class="gm-list-name">v<?= h($v['version']) ?> <span style="color:#8b949e;font-weight:400;font-size:12px">— <?= h($v['source'] ?? '') ?></span></div>
+                <div class="gm-list-info">
+                  <span>📅 <?= h(date('d.m.Y H:i', strtotime($v['created_at'] ?? 'now'))) ?></span>
+                  <?php if (!empty($v['applied_by'])): ?>
+                    <span>👤 <?= h($v['applied_by']) ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+              <div class="gm-list-actions">
+                <span style="color:#8b949e;font-size:12px;font-family:ui-monospace,monospace">#<?= (int)$v['id'] ?></span>
+              </div>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         <?php endif; ?>
-    </div>
-</div>
+      </div>
 
-<div class="adm-panel">
-    <div class="adm-panel-head"><h2>💾 Yedekler (<?= count($backups) ?>)</h2></div>
-    <div class="adm-panel-body" style="padding:0">
+    <?php elseif ($activeTab === 'backups'): ?>
+      <!-- ═══ YEDEKLER ═══ -->
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>💾 Otomatik Yedekler</h3>
+          <small>Her güncelleme öncesi otomatik alınır — geri dönmek için 'Geri Yükle'</small>
+        </div>
         <?php if (!$backups): ?>
-            <div class="adm-empty"><div class="ico">💾</div>Henüz yedek yok.</div>
+          <div class="gm-empty">
+            <div class="icon">💿</div>
+            <p>Henüz yedek yok. Bir güncelleme uygulandığında otomatik yedek alınır.</p>
+          </div>
         <?php else: ?>
-            <table class="adm-table">
-                <thead><tr><th>Dosya</th><th>Boyut</th><th>Tarih</th><th></th></tr></thead>
-                <tbody>
-                    <?php foreach ($backups as $b): ?>
-                        <tr>
-                            <td><code><?= h($b['name']) ?></code></td>
-                            <td><?= number_format($b['size'] / 1024 / 1024, 2, ',', '.') ?> MB</td>
-                            <td><small><?= h(date('Y-m-d H:i', $b['mtime'])) ?></small></td>
-                            <td class="actions">
-                                <a href="<?= h(url('yedek/' . $b['name'])) ?>" class="adm-btn adm-btn-sm adm-btn-ghost" download>İndir</a>
-                                <form method="post" action="?action=delete_backup" style="display:inline" onsubmit="return confirm('Yedek silinecek. Emin misiniz?')">
-                                    <?= csrf_field() ?>
-                                    <input type="hidden" name="file" value="<?= h($b['name']) ?>">
-                                    <button type="submit" class="adm-btn adm-btn-sm adm-btn-danger">×</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+          <ul class="gm-list">
+            <?php foreach ($backups as $b): ?>
+            <li class="gm-list-item">
+              <div class="gm-list-meta">
+                <div class="gm-list-name"><code><?= h($b['name']) ?></code></div>
+                <div class="gm-list-info">
+                  <span>📦 <?= fmt_bytes($b['size']) ?></span>
+                  <span>⏱ <?= rel_time($b['mtime']) ?></span>
+                  <span>📅 <?= date('d.m.Y H:i', $b['mtime']) ?></span>
+                </div>
+              </div>
+              <div class="gm-list-actions">
+                <form method="post" action="?action=rollback" style="display:inline" onsubmit="return confirm('⚠ DİKKAT: Bu işlem mevcut dosyaları yedekteki haliyle değiştirecek. Devam edilsin mi?')">
+                  <?= csrf_field() ?>
+                  <input type="hidden" name="file" value="<?= h($b['name']) ?>">
+                  <button type="submit" class="gm-btn gm-btn-warn">↶ Geri Yükle</button>
+                </form>
+                <form method="post" action="?action=delete_backup" style="display:inline" onsubmit="return confirm('Yedek silinsin mi?')">
+                  <?= csrf_field() ?>
+                  <input type="hidden" name="file" value="<?= h($b['name']) ?>">
+                  <button type="submit" class="gm-btn gm-btn-default">🗑</button>
+                </form>
+              </div>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         <?php endif; ?>
-    </div>
+      </div>
+
+    <?php elseif ($activeTab === 'tools'): ?>
+      <!-- ═══ ARAÇLAR ═══ -->
+
+      <!-- Manuel ZIP Yükle -->
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>📥 Manuel ZIP Yükle</h3>
+          <small>GitHub bağlantısı sorunluysa manuel sürüm zip yükle</small>
+        </div>
+        <div class="gm-card-body">
+          <p>GitHub bağlantısı çalışmıyorsa veya elde release zip dosyan varsa buradan yükleyebilirsin. Yedek otomatik alınır.</p>
+          <form method="post" action="?action=manual_upload" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+            <?= csrf_field() ?>
+            <div class="gm-form-row" style="flex:1;min-width:240px;margin:0">
+              <label>Sürüm ZIP Dosyası</label>
+              <input type="file" name="zip" accept=".zip" required>
+            </div>
+            <button type="submit" class="gm-btn gm-btn-primary"
+                    onclick="return confirm('ZIP uygulansın mı? Yedek otomatik alınır.')">
+              ⬆ Yükle ve Uygula
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Görselleri Yenile -->
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>🖼 Görselleri Yenile</h3>
+          <small>install/seed-images klasöründen uploads klasörüne kopyala</small>
+        </div>
+        <div class="gm-card-body">
+          <p>Sitedeki ürün/kategori/hizmet/slider görselleri eksikse, paketle gelen <code style="color:#79c0ff">install/seed-images/</code> klasöründeki dosyaları <code style="color:#79c0ff">uploads/</code>'a senkronize eder.</p>
+          <form method="post" action="?action=resync_images" style="display:flex;gap:8px;flex-wrap:wrap">
+            <?= csrf_field() ?>
+            <button type="submit" class="gm-btn gm-btn-default">📋 Sadece Eksik Olanları Kopyala</button>
+            <button type="submit" name="force" value="1" class="gm-btn gm-btn-warn"
+                    onclick="return confirm('Mevcut tüm görseller paket içindekilerle değiştirilecek. Devam edilsin mi?')">
+              ⚡ Tüm Görselleri Üzerine Yaz
+            </button>
+          </form>
+        </div>
+      </div>
+
+    <?php elseif ($activeTab === 'settings'): ?>
+      <!-- ═══ AYARLAR ═══ -->
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>⚙ GitHub Bağlantı Ayarları</h3>
+          <small>Otomatik güncelleme için gerekli bilgiler</small>
+        </div>
+        <div class="gm-card-body">
+          <div class="gm-form-row">
+            <label>📦 Repository</label>
+            <input type="text" value="<?= h($githubRepo ?: '—') ?>" readonly style="background:#0d1117;cursor:not-allowed">
+            <div class="help">Settings → System → GitHub Repo'dan değiştirilebilir</div>
+          </div>
+          <div class="gm-form-row">
+            <label>🌿 Branch</label>
+            <input type="text" value="<?= h($githubBranch) ?>" readonly style="background:#0d1117;cursor:not-allowed">
+          </div>
+          <div class="gm-form-row">
+            <label>🔑 Token Durumu</label>
+            <div>
+              <?php if ($githubToken): ?>
+                <span class="gm-badge gm-badge-ok">✓ Token Aktif (****<?= h(substr($githubToken, -6)) ?>)</span>
+              <?php else: ?>
+                <span class="gm-badge gm-badge-off">✗ Token Eksik</span>
+              <?php endif; ?>
+            </div>
+          </div>
+          <p style="margin-top:18px">
+            <a href="<?= h(url('admin/settings.php')) ?>" class="gm-btn gm-btn-default">→ Ayarlar Sayfasına Git</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="gm-card">
+        <div class="gm-card-head">
+          <h3>📍 Sürüm Bilgisi</h3>
+        </div>
+        <div class="gm-card-body">
+          <div class="gm-form-row">
+            <label>Mevcut Sürüm</label>
+            <input type="text" value="v<?= h(TM_VERSION) ?>" readonly>
+          </div>
+          <div class="gm-form-row">
+            <label>config.php Yolu</label>
+            <input type="text" value="<?= h(realpath(__DIR__ . '/../config.php')) ?>" readonly>
+            <div class="help">Sürüm güncellendiğinde TM_VERSION otomatik yazılır</div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+
+  </div>
 </div>
 
-<?php require __DIR__ . '/_footer.php'; ?>
+<?php include __DIR__ . '/_footer.php'; ?>
