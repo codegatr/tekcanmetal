@@ -784,3 +784,185 @@ UPDATE tm_pages SET
     updated_at = NOW()
 WHERE slug = 'kvkk';
 
+
+-- =====================================================
+-- v1.0.47 — Çerez Politikası kapsamlı ve detaylı şekilde
+-- güçlendirildi (KVKK ile uyumlu, modern tarayıcı ayarları,
+-- üçüncü taraf çerez tipleri, saklama süreleri vs.)
+-- =====================================================
+
+UPDATE tm_pages SET 
+    title = 'Çerez Politikası',
+    subtitle = 'Web sitemizde kullanılan çerezler, kullanım amaçları ve kontrol seçenekleriniz hakkında ayrıntılı bilgilendirme.',
+    meta_title = 'Çerez Politikası | Tekcan Metal',
+    meta_desc = 'Tekcan Metal çerez politikası — web sitemizde kullanılan zorunlu, performans, işlevsel ve hedefleme çerezleri, saklama süreleri ve tarayıcı kontrol ayarları hakkında detaylı bilgi.',
+    content = '<p>Tekcan Metal Sanayi ve Ticaret Ltd. Şti. olarak www.tekcanmetal.com adresinde yayında olan web sitemizi (bundan sonra <em>"Web Sitesi"</em> olarak anılacaktır) ziyaret eden kullanıcılarımızın deneyimini iyileştirmek, sitenin verimli çalışmasını sağlamak ve hizmet kalitemizi geliştirmek amacıyla çerezlerden faydalanmaktayız. İşbu Çerez Politikası, hangi çerezleri ne amaçla kullandığımız ve bu çerezleri nasıl yönetebileceğiniz konusunda sizi bilgilendirmek üzere hazırlanmıştır.</p>
+
+<h2>1. Çerez Nedir?</h2>
+<p>Çerezler (cookies); ziyaret ettiğiniz web siteleri tarafından tarayıcınız aracılığıyla cihazınıza (bilgisayar, tablet, akıllı telefon) yerleştirilen, içeriğinde sınırlı sayıda metin verisi barındıran küçük dosyalardır. Bu dosyalar genellikle bir tanımlayıcı (ID), site adı ve geçerlilik süresi gibi bilgiler içerir.</p>
+
+<p>Çerezler, ziyaretçilerin web sitesi ile etkileşimini hatırlamasına, oturum bilgilerinin korunmasına, kullanıcı tercihlerinin saklanmasına ve site performansının ölçülmesine olanak tanır. Çerezler tek başlarına virüs taşımaz, kişisel dosyalarınıza erişemez ve cihazınıza zarar vermez.</p>
+
+<h2>2. Hangi Çerezleri Kullanıyoruz?</h2>
+<p>Web sitemizde aşağıda detayları yer alan dört ana çerez kategorisi kullanılmaktadır:</p>
+
+<h3>A) Zorunlu (Teknik) Çerezler</h3>
+<p><strong>Amaç:</strong> Sitenin temel işlevlerinin çalışabilmesi için <em>kesinlikle gerekli</em> çerezlerdir. Bu çerezler olmadan site düzgün çalışmaz; oturumunuz açılamaz, formlarınız gönderilemez, güvenlik kontrolleri yapılamaz.</p>
+
+<table>
+<thead><tr><th>Çerez Adı</th><th>Amaç</th><th>Süre</th></tr></thead>
+<tbody>
+<tr><td><code>PHPSESSID</code></td><td>Oturum yönetimi (giriş bilgisi, sepet, form durumu)</td><td>Tarayıcı kapanana kadar</td></tr>
+<tr><td><code>csrf_token</code></td><td>Form güvenliği (CSRF saldırı koruması)</td><td>Oturum süresince</td></tr>
+<tr><td><code>cookie_consent</code></td><td>Çerez onay tercihinizin hatırlanması</td><td>1 yıl</td></tr>
+<tr><td><code>tm_admin</code></td><td>Yönetici paneli erişim oturumu</td><td>30 gün</td></tr>
+</tbody>
+</table>
+
+<h4>Hukuki Dayanak</h4>
+<p>KVKK m. 5/2-c (sözleşmenin kurulması ve ifası) ve KVKK m. 5/2-f (meşru menfaat) kapsamında, kullanıcı onayı aranmaksızın işlenebilir.</p>
+
+<h3>B) Performans ve Analitik Çerezler</h3>
+<p><strong>Amaç:</strong> Ziyaretçilerin siteyi nasıl kullandığını anlamamızı sağlar. Hangi sayfaların daha çok ziyaret edildiğini, kullanıcıların sitede ne kadar süre geçirdiğini, hangi noktalarda zorlandığını analiz ederek hizmetimizi geliştiririz. Toplanan veriler <strong>anonimleştirilir</strong>, kullanıcıyı kişisel olarak tanımlamaz.</p>
+
+<table>
+<thead><tr><th>Sağlayıcı</th><th>Amaç</th><th>Süre</th></tr></thead>
+<tbody>
+<tr><td>Google Analytics 4 (<code>_ga, _gid</code>)</td><td>Sayfa görüntüleme, kullanıcı yolu, demografik anonim analiz</td><td>2 yıl / 24 saat</td></tr>
+<tr><td>Yandex Metrica (<code>_ym_uid</code>)</td><td>Bölgesel ziyaretçi analizi (özellikle Türkiye, Rusya pazarları)</td><td>1 yıl</td></tr>
+<tr><td>Site içi log (<code>tm_visit</code>)</td><td>Hangi ürün/kategori sayfaları popüler ölçümü</td><td>30 gün</td></tr>
+</tbody>
+</table>
+
+<h4>Hukuki Dayanak</h4>
+<p>KVKK m. 5/1 (açık rıza) — kullanıcının çerez onay banner''ı ile vermiş olduğu rıza temelinde işlenir. Onay vermediğiniz takdirde bu çerezler oluşturulmaz.</p>
+
+<h3>C) İşlevsellik (Tercih) Çerezleri</h3>
+<p><strong>Amaç:</strong> Site üzerindeki kullanım tercihlerinizi hatırlayarak, sonraki ziyaretlerinizde kişiselleştirilmiş bir deneyim sunmamızı sağlar.</p>
+
+<table>
+<thead><tr><th>Çerez Adı</th><th>Amaç</th><th>Süre</th></tr></thead>
+<tbody>
+<tr><td><code>tm_lang</code></td><td>Dil tercihi (TR / EN)</td><td>1 yıl</td></tr>
+<tr><td><code>tm_theme</code></td><td>Açık / koyu tema seçimi</td><td>1 yıl</td></tr>
+<tr><td><code>tm_calc_history</code></td><td>Hesaplama wizard''ında son seçtiğiniz ürün</td><td>30 gün</td></tr>
+<tr><td><code>tm_recent_views</code></td><td>Son görüntülenen ürünler (hızlı erişim)</td><td>30 gün</td></tr>
+</tbody>
+</table>
+
+<h4>Hukuki Dayanak</h4>
+<p>KVKK m. 5/1 (açık rıza) — onay verdiğiniz takdirde aktifleştirilir.</p>
+
+<h3>D) Hedefleme ve Reklam Çerezleri</h3>
+<p><strong>Amaç:</strong> Web sitemizdeki ziyaretiniz sonrasında, başka sitelerde gezerken size <em>ilgi alanlarınıza uygun</em> reklamların gösterilmesini sağlamak için kullanılır. Tekcan Metal olarak, demir-çelik sektöründeki müşterilerimize yönelik kampanyalar, yeni ürün duyuruları ve mevsimsel fiyat indirimlerini ulaştırmak amacıyla bu çerezler kullanılabilir.</p>
+
+<table>
+<thead><tr><th>Sağlayıcı</th><th>Amaç</th><th>Süre</th></tr></thead>
+<tbody>
+<tr><td>Google Ads (<code>_gcl_au</code>, <code>NID</code>)</td><td>Yeniden pazarlama, dönüşüm takibi</td><td>3 ay – 1 yıl</td></tr>
+<tr><td>Meta Pixel (<code>_fbp</code>)</td><td>Facebook ve Instagram reklam takibi</td><td>3 ay</td></tr>
+<tr><td>LinkedIn Insight (<code>li_sugr</code>)</td><td>B2B sektörel hedefleme (sanayi, inşaat)</td><td>3 ay</td></tr>
+</tbody>
+</table>
+
+<h4>Hukuki Dayanak</h4>
+<p>KVKK m. 5/1 (açık rıza) — yalnızca onay vermeniz halinde aktifleştirilir. Reddetme durumunda yeniden pazarlama hedeflemesi yapılmaz, ancak rastgele genel reklamlar görmeye devam edebilirsiniz.</p>
+
+<h2>3. Üçüncü Taraf Çerezler</h2>
+<p>Web sitemizde, doğrudan Şirketimiz tarafından oluşturulan çerezlere ek olarak, hizmet sağladığımız ortakların oluşturduğu çerezler de bulunabilir. Bu üçüncü taraf çerezler, ilgili sağlayıcının kendi gizlilik politikalarına tabidir:</p>
+<ul>
+<li><strong>Google LLC</strong> — Analytics, Maps, Ads, reCAPTCHA — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Gizlilik Politikası</a></li>
+<li><strong>Meta Platforms</strong> — Facebook, Instagram pixel — <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener">Çerez Politikası</a></li>
+<li><strong>LinkedIn Corporation</strong> — Insight tag — <a href="https://www.linkedin.com/legal/cookie-policy" target="_blank" rel="noopener">Çerez Politikası</a></li>
+<li><strong>YouTube</strong> — Embed video çerezleri — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Gizlilik</a></li>
+<li><strong>OpenStreetMap</strong> — Sevkiyat haritası — <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Privacy Policy</a></li>
+</ul>
+
+<blockquote>
+<p>Üçüncü taraf çerezleri tarafımızca yönetilmemektedir. Bu çerezlerle toplanan verilerin nasıl kullanıldığı konusundaki sorumluluk, ilgili üçüncü taraf hizmet sağlayıcılarına aittir.</p>
+</blockquote>
+
+<h2>4. Çerezlerin Saklama Süresi</h2>
+<p>Çerezler, saklama sürelerine göre iki ana grupta incelenir:</p>
+
+<h4>A) Oturum Çerezleri (Session Cookies)</h4>
+<p>Tarayıcı kapatıldığı anda silinir. Genellikle oturum yönetimi ve form güvenliği gibi geçici işlemler için kullanılır.</p>
+
+<h4>B) Kalıcı Çerezler (Persistent Cookies)</h4>
+<p>Önceden belirlenmiş bir süre (örneğin 30 gün, 1 yıl) boyunca cihazınızda saklanır. Bu süre dolduğunda otomatik olarak silinir veya kullanıcı tarafından manuel temizlenebilir. Tablolarda her çerezin süresi ayrıca belirtilmiştir.</p>
+
+<h2>5. Çerez Tercihlerinizi Nasıl Yönetirsiniz?</h2>
+
+<h3>A) Site İçi Çerez Yönetimi</h3>
+<p>Web sitemize ilk girişinizde ekrana gelen <strong>Çerez Onay Banner''ı</strong> üzerinden:</p>
+<ul>
+<li><strong>Tümünü Kabul Et:</strong> Tüm çerez kategorilerini onaylar</li>
+<li><strong>Sadece Zorunlu:</strong> Yalnızca teknik çerezleri kabul eder, diğerlerini reddeder</li>
+<li><strong>Tercihlerimi Yönet:</strong> Her kategoriyi ayrı ayrı seçebilirsiniz</li>
+</ul>
+
+<p>Tercihlerinizi sonradan değiştirmek için sayfanın altındaki <strong>"Çerez Ayarları"</strong> bağlantısına tıklayarak banner''ı yeniden görüntüleyebilirsiniz.</p>
+
+<h3>B) Tarayıcı Üzerinden Çerez Yönetimi</h3>
+<p>Tarayıcı ayarlarınızdan çerezleri silebilir, engelleyebilir veya belirli sitelerden gelen çerezleri reddedebilirsiniz. Aşağıda popüler tarayıcılar için ayar bağlantıları yer almaktadır:</p>
+
+<table>
+<thead><tr><th>Tarayıcı</th><th>Çerez Yönetimi</th></tr></thead>
+<tbody>
+<tr><td>Google Chrome</td><td>Ayarlar → Gizlilik ve güvenlik → Çerezler ve diğer site verileri</td></tr>
+<tr><td>Mozilla Firefox</td><td>Ayarlar → Gizlilik ve Güvenlik → Çerezler ve Site Verileri</td></tr>
+<tr><td>Safari</td><td>Tercihler → Gizlilik → Çerezler ve web sitesi verileri</td></tr>
+<tr><td>Microsoft Edge</td><td>Ayarlar → Çerezler ve site izinleri → Çerezler ve site verileri</td></tr>
+<tr><td>Opera</td><td>Ayarlar → Gizlilik ve güvenlik → Site Ayarları → Çerezler</td></tr>
+</tbody>
+</table>
+
+<h3>C) Mobil Cihaz Reklam Tanımlayıcısı</h3>
+<p>Mobil cihazlarda reklam takibini sınırlamak için:</p>
+<ul>
+<li><strong>iOS:</strong> Ayarlar → Gizlilik ve Güvenlik → İzleme → "Uygulamaların İzleme Talep Etmesine İzin Ver" kapatın</li>
+<li><strong>Android:</strong> Ayarlar → Google → Reklamlar → "Reklam Kişiselleştirme" kapatın veya "Reklam Kimliğini Sıfırla"</li>
+</ul>
+
+<h2>6. Çerezleri Reddetmenin Sonuçları</h2>
+
+<h4>Zorunlu Çerezler Reddedilirse</h4>
+<p>Site çoğu işlevini yerine getiremez. Giriş yapamazsınız, form gönderemezsiniz, güvenlik kontrolleri çalışmaz. Bu nedenle zorunlu çerezler reddedilemez ve kullanıcı onayına tabi değildir (yasal zorunluluk).</p>
+
+<h4>Performans / Analitik Çerezler Reddedilirse</h4>
+<p>Site normal şekilde kullanılabilir, ancak ziyaretçi davranışlarını analiz etme ve bu doğrultuda iyileştirmeler yapma kapasitemiz azalır. Bu, uzun vadede sitemizin gelişimini olumsuz etkileyebilir.</p>
+
+<h4>İşlevsellik Çerezleri Reddedilirse</h4>
+<p>Dil tercihi, tema seçimi gibi kişisel ayarlar her ziyarette sıfırlanır. Hesaplama wizard''ında son kaldığınız yerden devam edemezsiniz.</p>
+
+<h4>Hedefleme / Reklam Çerezleri Reddedilirse</h4>
+<p>Yeniden pazarlama yapılmaz, ancak rastgele genel reklamlar görmeye devam edebilirsiniz. Reklam sayısı azalmaz; yalnızca kişiselleştirme kapatılır.</p>
+
+<h2>7. Çocuklar ve Çerezler</h2>
+<p>Web sitemiz <strong>13 yaş altı çocuklara yönelik değildir</strong>. Çocuklardan bilerek kişisel veri toplamaz, çerez yerleştirmeyiz. 13 yaş altı bir çocuğun rızası olmaksızın bilgilerinin sitemize ulaştığından şüphe duyarsanız, lütfen <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a> adresinden bizimle iletişime geçin.</p>
+
+<h2>8. Veri Aktarımı ve Yurt Dışı Sunucular</h2>
+<p>Bazı analitik ve reklam hizmet sağlayıcıları (Google, Meta, LinkedIn) verilerinizi yurt dışındaki sunucularda işleyebilir. Bu hizmetler, KVKK''nın 9. maddesi kapsamında yeterli korumaya sahip ülkeler veya açık rızanız temelinde gerçekleştirilir. Detaylı bilgi için ilgili hizmet sağlayıcının gizlilik politikasını incelemenizi öneririz.</p>
+
+<h2>9. Çerez Politikasındaki Değişiklikler</h2>
+<p>İşbu Çerez Politikası, mevzuat değişiklikleri, kullanılan teknolojilerin güncellenmesi veya iş süreçlerimizdeki dönüşümler doğrultusunda zaman zaman güncellenebilir. Önemli değişikliklerde, web sitesinde bildirim yayınlanır ve yeniden çerez onay banner''ı sunulur.</p>
+
+<p>Bu politika ile ilgili soru ve talepleriniz için <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a> adresinden bizimle iletişime geçebilirsiniz.</p>
+
+<h2>10. İlgili Belgeler</h2>
+<p>Çerez Politikamız aşağıdaki diğer kurumsal belgelerimizle birlikte değerlendirilmelidir:</p>
+<ul>
+<li><a href="/sayfa.php?slug=kvkk">Kişisel Verilerin Korunması Aydınlatma Metni</a> — Tüm kişisel veri işleme süreçlerimiz</li>
+<li>Gizlilik Politikası (yayınlandığında bağlantı buraya eklenecektir)</li>
+<li>Kullanım Şartları (yayınlandığında bağlantı buraya eklenecektir)</li>
+</ul>
+
+<blockquote>
+<p>Çerez teknolojileri sürekli evrilen bir alandır. Şirketimiz, kullanıcı gizliliğini koruma ve şeffaflık ilkelerimiz doğrultusunda en iyi uygulamaları takip etmeye devam etmektedir. Önerileriniz ve geri bildirimleriniz için bizimle iletişime geçmekten çekinmeyin.</p>
+</blockquote>
+
+<h4>Yürürlük</h4>
+<p>İşbu Çerez Politikası, Tekcan Metal Sanayi ve Ticaret Ltd. Şti. tarafından yayımlanmış olup yürürlüktedir.</p>',
+    updated_at = NOW()
+WHERE slug = 'cerez-politikasi';
+
