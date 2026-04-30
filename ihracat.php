@@ -12,8 +12,8 @@ if (!$ulke) {
 
 $cats = all("SELECT * FROM tm_categories WHERE is_active=1 AND parent_id IS NULL ORDER BY sort_order LIMIT 8");
 
-$pageTitle = $ulke['name'] . ' Demir Çelik Sevkiyat';
-$metaDesc  = $ulke['name'] . ' için demir-çelik ürün sevkiyat hattımız. ' . $ulke['cargo_info'] . ' Üretici sertifikalı, gümrük belgeleri dahil.';
+$pageTitle = $ulke['name'] . ' ' . t('export.iron_steel_shipping', 'Demir Çelik Sevkiyat');
+$metaDesc  = $ulke['name'] . ' ' . t('export.meta_for', 'için demir-çelik ürün sevkiyat hattımız.') . ' ' . (tr_field($ulke, 'cargo_info') ?: $ulke['cargo_info']) . ' ' . t('export.meta_certified', 'Üretici sertifikalı, gümrük belgeleri dahil.');
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -257,7 +257,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <div class="uu-intro-card-row">
             <span class="lbl">Teslim Süresi</span>
-            <span class="val"><?= h($ulke['cargo_info']) ?></span>
+            <span class="val"><?= h(tr_field($ulke, 'cargo_info') ?: $ulke['cargo_info']) ?></span>
           </div>
           <div class="uu-intro-card-row">
             <span class="lbl">Ticaret Hacmi</span>
@@ -321,7 +321,7 @@ require __DIR__ . '/includes/header.php';
           <li><strong>Teklif:</strong> İhtiyaç duyduğunuz ürün için ölçü, kalite, kalınlık ve adet bilgisini bize iletin. Aynı gün içinde proforma fatura ve sevkiyat planı sunuyoruz.</li>
           <li><strong>Gümrük Belgeleri:</strong> Menşei şahadetnamesi, ATR (AB ticareti için), EUR.1 (Türkiye-AB serbest ticaret), faturalandırma — hepsi tarafımızdan hazırlanır.</li>
           <li><strong>Üretici Sertifikası:</strong> Erdemir, Borçelik, Habaş gibi entegre üreticilerden gelen kalite belgeleri sevk evraklarına dahil edilir.</li>
-          <li><strong>Lojistik:</strong> Türkiye merkez stoğumuzdan <?= h($ulke['name']) ?>'a profesyonel nakliyat firmaları ile sevkiyat. <?= h($ulke['cargo_info']) ?></li>
+          <li><strong>Lojistik:</strong> Türkiye merkez stoğumuzdan <?= h($ulke['name']) ?>'a profesyonel nakliyat firmaları ile sevkiyat. <?= h(tr_field($ulke, 'cargo_info') ?: $ulke['cargo_info']) ?></li>
           <li><strong>Ödeme:</strong> Banka havalesi veya akreditif ile USD/EUR/TL bazlı ödeme.</li>
         </ul>
 

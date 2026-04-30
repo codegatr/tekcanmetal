@@ -21,8 +21,8 @@ $products = all("SELECT p.*, c.name AS cat_name, c.slug AS cat_slug
                  ORDER BY p.is_featured DESC, p.sort_order
                  LIMIT 12");
 
-$pageTitle = $il['name'] . ' Demir Çelik Tedarik';
-$metaDesc  = $il['name'] . ' için demir, çelik, sac, boru, profil tedariği. Tekcan Metal — ' . $il['cargo_info'];
+$pageTitle = $il['name'] . ' ' . t('city.iron_steel_supply', 'Demir Çelik Tedarik');
+$metaDesc  = $il['name'] . ' ' . t('city.meta_for', 'için demir, çelik, sac, boru, profil tedariği. Tekcan Metal') . ' — ' . (tr_field($il, 'cargo_info') ?: $il['cargo_info']);
 
 // Schema.org için
 $pageType = 'city';
@@ -313,7 +313,7 @@ require __DIR__ . '/includes/header.php';
       <div class="il-hero-eyebrow">İl Tedarik Sayfası</div>
       <h1><?= h($il['name']) ?> <em>Demir Çelik</em><br>Tedarikçiniz</h1>
       <p class="il-hero-lead">
-        <?= h($il['name']) ?> ve çevresine sac, boru, profil, hadde, demir, panel ve özel ölçü çelik ürünleri tedariği. <?= h($il['industry_focus']) ?>.
+        <?= h($il['name']) ?> ve çevresine sac, boru, profil, hadde, demir, panel ve özel ölçü çelik ürünleri tedariği. <?= h(tr_field($il, 'industry_focus') ?: $il['industry_focus']) ?>.
       </p>
       <div class="il-hero-stats">
         <div class="il-stat"><strong><?= h($il['population'] ?: '—') ?></strong><span>Şehir Nüfusu</span></div>
@@ -334,7 +334,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div class="il-intro-right">
           <p><?= h($il['intro_text']) ?></p>
-          <p><strong><?= h($il['cargo_info']) ?></strong> Konya merkez stoğumuzdan <?= h($il['name']) ?> ve çevresine düzenli sevkiyat sağlıyoruz. Belirli tutar üzeri siparişlerde nakliye dahil teklif sunabiliyoruz.</p>
+          <p><strong><?= h(tr_field($il, 'cargo_info') ?: $il['cargo_info']) ?></strong> Konya merkez stoğumuzdan <?= h($il['name']) ?> ve çevresine düzenli sevkiyat sağlıyoruz. Belirli tutar üzeri siparişlerde nakliye dahil teklif sunabiliyoruz.</p>
           <div class="il-intro-tags">
             <span class="il-intro-tag"><strong>📦</strong> Stok Hazır</span>
             <span class="il-intro-tag"><strong>📜</strong> Üretici Sertifikalı</span>
@@ -387,7 +387,7 @@ require __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <h3>Hızlı Teslimat</h3>
-          <p><?= h($il['cargo_info']) ?></p>
+          <p><?= h(tr_field($il, 'cargo_info') ?: $il['cargo_info']) ?></p>
         </div>
         <div class="il-why-item">
           <div class="il-why-icon">
@@ -419,7 +419,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="il-seo-text">
         <h2><?= h($il['name']) ?>'da Demir Çelik Tedariği</h2>
-        <p>Tekcan Metal olarak <?= h($il['name']) ?> ve çevresindeki sanayicilere, müteahhitlere, makine imalatçılarına ve bireysel müşterilere demir-çelik ürün tedariği sağlıyoruz. <?= h($il['name']) ?>'daki <?= h($il['industry_focus']) ?> sektörlerinin gereksinimlerine yönelik geniş stoğumuz ve hızlı sevkiyat ağımızla hizmetinizdeyiz.</p>
+        <p>Tekcan Metal olarak <?= h($il['name']) ?> ve çevresindeki sanayicilere, müteahhitlere, makine imalatçılarına ve bireysel müşterilere demir-çelik ürün tedariği sağlıyoruz. <?= h($il['name']) ?>'daki <?= h(tr_field($il, 'industry_focus') ?: $il['industry_focus']) ?> sektörlerinin gereksinimlerine yönelik geniş stoğumuz ve hızlı sevkiyat ağımızla hizmetinizdeyiz.</p>
 
         <h2><?= h($il['name']) ?>'da Hangi Ürünleri Tedarik Ediyoruz?</h2>
         <ul>
@@ -432,7 +432,7 @@ require __DIR__ . '/includes/header.php';
         </ul>
 
         <h2><?= h($il['name']) ?>'a Sevkiyat Sürecimiz</h2>
-        <p>Konya merkez stoğumuzdan <?= h($il['name']) ?>'a düzenli sevkiyat hattımız mevcuttur. Sipariş onayından sonra <strong><?= h($il['cargo_info']) ?></strong> Belirli tonaj üzeri siparişlerde direkt yük seferi düzenliyoruz; daha küçük siparişler için anlaşmalı nakliyat firmalarımızla parça yük sevkiyat çözümü sunuyoruz.</p>
+        <p>Konya merkez stoğumuzdan <?= h($il['name']) ?>'a düzenli sevkiyat hattımız mevcuttur. Sipariş onayından sonra <strong><?= h(tr_field($il, 'cargo_info') ?: $il['cargo_info']) ?></strong> Belirli tonaj üzeri siparişlerde direkt yük seferi düzenliyoruz; daha küçük siparişler için anlaşmalı nakliyat firmalarımızla parça yük sevkiyat çözümü sunuyoruz.</p>
 
         <h2>Neden Tekcan Metal?</h2>
         <p>2005'ten bu yana Konya merkezli faaliyet gösteren Tekcan Metal, Türkiye'nin önde gelen entegre çelik üretim tesislerinden (Erdemir, Borçelik, Habaş, İçdaş, Tosyalı Çelik, Kardemir) doğrudan tedarik gücüyle <?= h($il['name']) ?> müşterilerine fiyat avantajı ve üretici sertifikalı ürün güvencesi sunmaktadır.</p>

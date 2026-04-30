@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/includes/db.php';
-$pageTitle = 'Ağırlık Hesaplama';
-$metaDesc  = 'Demir-çelik ağırlık hesaplama. Görsel diyagramlı, canlı hesaplamalı, çoklu kalem listeli profesyonel hesap motoru.';
+$pageTitle = t('calc.title', 'Ağırlık Hesaplama');
+$metaDesc  = t('calc.meta_desc', 'Demir-çelik ağırlık hesaplama. Görsel diyagramlı, canlı hesaplamalı, çoklu kalem listeli profesyonel hesap motoru.');
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -720,14 +720,14 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hes-hero-inner">
         <div class="hes-hero-text">
-          <h1>📐 Ağırlık Hesaplama Motoru</h1>
-          <p>14 ürün grubu, 17 malzeme yoğunluğu, görsel diyagramlı canlı hesap, çoklu kalem listesi ve maliyet hesabı — hepsi tek ekranda.</p>
+          <h1>📐 <?= h(t('calc.engine_title', 'Ağırlık Hesaplama Motoru')) ?></h1>
+          <p><?= h(t('calc.hero_lead', '14 ürün grubu, 17 malzeme yoğunluğu, görsel diyagramlı canlı hesap, çoklu kalem listesi ve maliyet hesabı — hepsi tek ekranda.')) ?></p>
         </div>
         <div class="hes-hero-stats">
-          <div class="hes-hero-stat"><strong>14</strong><span>Ürün Tipi</span></div>
-          <div class="hes-hero-stat"><strong>17</strong><span>Malzeme</span></div>
-          <div class="hes-hero-stat"><strong>200+</strong><span>Hazır Ölçü</span></div>
-          <div class="hes-hero-stat"><strong>%99.7</strong><span>Hassasiyet</span></div>
+          <div class="hes-hero-stat"><strong>14</strong><span><?= h(t('calc.product_type', 'Ürün Tipi')) ?></span></div>
+          <div class="hes-hero-stat"><strong>17</strong><span><?= h(t('calc.material', 'Malzeme')) ?></span></div>
+          <div class="hes-hero-stat"><strong>200+</strong><span><?= h(t('calc.preset_size', 'Hazır Ölçü')) ?></span></div>
+          <div class="hes-hero-stat"><strong>%99.7</strong><span><?= h(t('services.principle_precision', 'Hassasiyet')) ?></span></div>
         </div>
       </div>
     </div>
@@ -741,7 +741,7 @@ require __DIR__ . '/includes/header.php';
         <div class="hes-step-head">
           <div class="hes-step-head-left">
             <div class="hes-step-num">1</div>
-            <h2>Ürün Tipi Seçin <small>14 farklı demir-çelik ürün grubu</small></h2>
+            <h2><?= h(t('calc.step1_title', 'Ürün Tipi Seçin')) ?> <small><?= h(t('calc.step1_subtitle', '14 farklı demir-çelik ürün grubu')) ?></small></h2>
           </div>
         </div>
         <div class="hes-step-body">
@@ -754,18 +754,18 @@ require __DIR__ . '/includes/header.php';
       <!-- ═══ MATERIAL SELECTOR ═══ -->
       <div class="hes-step">
         <div class="hes-material">
-          <span class="hes-material-label">Malzeme:</span>
+          <span class="hes-material-label"><?= h(t('calc.material', 'Malzeme')) ?>:</span>
           <div class="hes-material-pills" id="hesMaterials">
-            <button type="button" class="hes-material-pill active" data-density="7.85">Çelik</button>
+            <button type="button" class="hes-material-pill active" data-density="7.85"><?= h(t('calc.mat_steel', 'Çelik')) ?></button>
             <button type="button" class="hes-material-pill" data-density="7.85">DKP/HRP</button>
             <button type="button" class="hes-material-pill" data-density="7.85">ST52</button>
-            <button type="button" class="hes-material-pill" data-density="7.93">304 Paslanmaz</button>
-            <button type="button" class="hes-material-pill" data-density="8.00">316 Paslanmaz</button>
-            <button type="button" class="hes-material-pill" data-density="2.70">Alüminyum</button>
-            <button type="button" class="hes-material-pill" data-density="8.96">Bakır</button>
-            <button type="button" class="hes-material-pill" data-density="8.40">Pirinç</button>
-            <button type="button" class="hes-material-pill" data-density="8.73">Bronz</button>
-            <button type="button" class="hes-material-pill" data-density="custom">Özel...</button>
+            <button type="button" class="hes-material-pill" data-density="7.93">304 <?= h(t('calc.mat_stainless', 'Paslanmaz')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="8.00">316 <?= h(t('calc.mat_stainless', 'Paslanmaz')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="2.70"><?= h(t('calc.mat_aluminum', 'Alüminyum')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="8.96"><?= h(t('calc.mat_copper', 'Bakır')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="8.40"><?= h(t('calc.mat_brass', 'Pirinç')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="8.73"><?= h(t('calc.mat_bronze', 'Bronz')) ?></button>
+            <button type="button" class="hes-material-pill" data-density="custom"><?= h(t('calc.mat_custom', 'Özel')) ?>...</button>
           </div>
           <div class="hes-material-custom" id="hesMatCustomWrap">
             <input type="number" step="0.01" id="hesMatCustom" placeholder="g/cm³" value="7.85">
@@ -826,7 +826,7 @@ require __DIR__ . '/includes/header.php';
             <div class="hes-result-value big" id="hesTotal">— kg</div>
           </div>
           <div class="hes-result-actions">
-            <button type="button" class="hes-btn hes-btn-add" id="hesAddBtn">+ Listeye Ekle</button>
+            <button type="button" class="hes-btn hes-btn-add" id="hesAddBtn">+ <?= h(t('calc.add_to_list', 'Listeye Ekle')) ?></button>
             <a class="hes-btn hes-btn-quote" id="hesQuoteBtn" target="_blank" rel="noopener" href="#">💬 Teklif Al</a>
           </div>
         </div>
@@ -838,9 +838,9 @@ require __DIR__ . '/includes/header.php';
         <div class="hes-step-head">
           <div class="hes-step-head-left">
             <div class="hes-step-num">⇄</div>
-            <h2>Malzeme Karşılaştırma <small>Aynı ölçü farklı malzemelerde nasıl ağırlık verir?</small></h2>
+            <h2><?= h(t('calc.material_comparison', 'Malzeme Karşılaştırma')) ?> <small><?= h(t('calc.compare_subtitle', 'Aynı ölçü farklı malzemelerde nasıl ağırlık verir?')) ?></small></h2>
           </div>
-          <button type="button" class="hes-btn" style="background:var(--hp-text);color:#fff" id="hesCompareToggle">Kapat</button>
+          <button type="button" class="hes-btn" style="background:var(--hp-text);color:#fff" id="hesCompareToggle"><?= h(t('btn.close', 'Kapat')) ?></button>
         </div>
         <div class="hes-step-body">
           <div class="hes-compare-grid" id="hesCompareGrid"></div>
@@ -851,7 +851,7 @@ require __DIR__ . '/includes/header.php';
       <div class="hes-cost" id="hesCostBox">
         <div class="hes-cost-icon">₺</div>
         <div class="hes-cost-input">
-          <label>kg fiyatı:</label>
+          <label><?= h(t('calc.kg_price', 'kg fiyatı')) ?>:</label>
           <input type="number" step="0.01" id="hesCostInput" placeholder="0.00" value="35">
           <span style="font-family:var(--hp-mono);font-size:12px;color:#92400e">₺/kg</span>
         </div>
@@ -861,19 +861,19 @@ require __DIR__ . '/includes/header.php';
       <!-- TOOLBAR -->
       <div style="display:flex;gap:8px;justify-content:space-between;margin-top:18px;flex-wrap:wrap">
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesCompareBtn">⇄ Karşılaştır</button>
-          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesCostBtn">₺ Maliyet Hesabı</button>
+          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesCompareBtn">⇄ <?= h(t('calc.compare', 'Karşılaştır')) ?></button>
+          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesCostBtn">₺ <?= h(t('calc.cost_calc', 'Maliyet Hesabı')) ?></button>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesPrintBtn">🖨 Yazdır</button>
-          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-accent);border:1px solid var(--hp-border)" id="hesResetBtn">↺ Sıfırla</button>
+          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-text);border:1px solid var(--hp-border)" id="hesPrintBtn">🖨 <?= h(t('btn.print', 'Yazdır')) ?></button>
+          <button type="button" class="hes-btn" style="background:var(--hp-surface);color:var(--hp-accent);border:1px solid var(--hp-border)" id="hesResetBtn">↺ <?= h(t('calc.reset', 'Sıfırla')) ?></button>
         </div>
       </div>
 
       <!-- ═══ CART LIST ═══ -->
       <div class="hes-cart" id="hesCart">
         <div class="hes-cart-head">
-          <h3>📋 Hesaplama Listesi</h3>
+          <h3>📋 <?= h(t('calc.calc_list', 'Hesaplama Listesi')) ?></h3>
           <span id="hesCartCount">0 kalem</span>
         </div>
         <div style="overflow-x:auto">
@@ -898,7 +898,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <div class="hes-cart-actions">
             <a class="hes-btn hes-btn-quote" id="hesCartQuote" target="_blank" rel="noopener" href="#">💬 Listeyi WhatsApp'a Gönder</a>
-            <button type="button" class="hes-btn" style="background:var(--hp-text);color:#fff" id="hesCartClear">Listeyi Temizle</button>
+            <button type="button" class="hes-btn" style="background:var(--hp-text);color:#fff" id="hesCartClear"><?= h(t('calc.clear_list', 'Listeyi Temizle')) ?></button>
           </div>
         </div>
       </div>

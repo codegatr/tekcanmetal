@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/includes/db.php';
 
-$pageTitle = 'Mail Order Talimatı';
-$metaDesc  = 'Tekcan Metal Mail Order — kart bilgilerinizi telefonla teyit edip güvenli ödeme talimatı oluşturun.';
+$pageTitle = t('mailorder.title_long', 'Mail Order Talimatı');
+$metaDesc  = t('mailorder.meta_desc', 'Tekcan Metal Mail Order — kart bilgilerinizi telefonla teyit edip güvenli ödeme talimatı oluşturun.');
 
 $errors = [];
 $old = ['full_name'=>'','phone'=>'','email'=>'','card_holder'=>'','card_last4'=>'','amount'=>'','description'=>''];
@@ -308,7 +308,7 @@ require __DIR__ . '/includes/header.php';
   <section class="mo-hero">
     <div class="container">
       <div class="mo-hero-eyebrow">Tekcan Metal · Güvenli Ödeme</div>
-      <h1>Mail Order <em>Talimatı</em></h1>
+      <h1><?= t('mailorder.h1', 'Mail Order <em>Talimatı</em>') ?></h1>
       <p>Kart bilgilerinizi telefonla teyit ederek güvenli ödeme talimatı oluşturun. Müşteri temsilcimiz size en kısa sürede ulaşacaktır.</p>
     </div>
   </section>
@@ -456,7 +456,7 @@ require __DIR__ . '/includes/header.php';
               <input type="checkbox" name="kvkk" value="1" required>
               <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum ve mail order işlemi için kişisel verilerimin işlenmesine onay veriyorum.</span>
             </label>
-            <button type="submit" class="mo-submit-btn">Talimat Oluştur →</button>
+            <button type="submit" class="mo-submit-btn"><?= h(t('mailorder.create_btn', 'Talimat Oluştur')) ?> →</button>
           </div>
         </form>
 

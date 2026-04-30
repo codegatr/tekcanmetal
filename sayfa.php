@@ -44,9 +44,9 @@ $lastUpdate = !empty($page['updated_at']) ? $page['updated_at'] : ($page['create
 // Diğer kurumsal sayfaları al (sidebar için)
 $otherPages = all("SELECT slug, title FROM tm_pages WHERE is_active=1 AND id<>? ORDER BY sort_order, title LIMIT 8", [$page['id']]);
 
-$pageTitle = $page['title'];
-$metaDesc  = $page['meta_desc'] ?? '';
-if (!$metaDesc && function_exists('excerpt')) $metaDesc = excerpt($page['content'], 160);
+$pageTitle = tr_field($page, 'title') ?: $page['title'];
+$metaDesc  = tr_field($page, 'meta_desc') ?: ($page['meta_desc'] ?? '');
+if (!$metaDesc && function_exists('excerpt')) $metaDesc = excerpt(tr_field($page, 'content') ?: $page['content'], 160);
 if (!$metaDesc) $metaDesc = mb_substr(strip_tags($page['content']), 0, 160, 'UTF-8');
 
 require __DIR__ . '/includes/header.php';
@@ -427,9 +427,9 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="lp-hero-icon"><?= $pageIcon ?></div>
       <div class="lp-hero-eyebrow"><?= h($pageEyebrow) ?></div>
-      <h1><?= h($page['title']) ?></h1>
+      <h1><?= h(tr_field($page, 'title') ?: $page['title']) ?></h1>
       <?php if (!empty($page['subtitle'])): ?>
-        <p class="lp-hero-lead"><?= h($page['subtitle']) ?></p>
+        <p class="lp-hero-lead"><?= h(tr_field($page, 'subtitle') ?: ($page['subtitle'] ?? '')) ?></p>
       <?php endif; ?>
 
       <?php if ($lastUpdate): ?>
@@ -457,7 +457,7 @@ require __DIR__ . '/includes/header.php';
       <nav class="lp-breadcrumb">
         <a href="<?= h(url('')) ?>">Anasayfa</a>
         <span class="sep">›</span>
-        <span class="current"><?= h($page['title']) ?></span>
+        <span class="current"><?= h(tr_field($page, 'title') ?: $page['title']) ?></span>
       </nav>
     </div>
   </section>
@@ -469,7 +469,7 @@ require __DIR__ . '/includes/header.php';
 
         <!-- CONTENT -->
         <article class="lp-content">
-          <?= $page['content'] ?>
+          <?= tr_field($page, 'content') ?: $page['content'] ?>
 
           <!-- SIGNATURE BLOCK -->
           <div class="lp-signature">

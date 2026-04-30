@@ -8,20 +8,20 @@ if (!$album) {
     exit;
 }
 $images = all("SELECT * FROM tm_gallery_images WHERE album_id=? ORDER BY sort_order", [$album['id']]);
-$pageTitle = $album['title'];
-$metaDesc  = excerpt($album['description'], 160);
+$pageTitle = tr_field($album, 'title') ?: $album['title'];
+$metaDesc  = excerpt(tr_field($album, 'description') ?: $album['description'], 160);
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header">
   <div class="container">
     <nav class="breadcrumb">
       <a href="<?= h(url('')) ?>">Anasayfa</a> <span>›</span>
-      <a href="<?= h(url('galeri.php')) ?>">Galeri</a> <span>›</span>
-      <span><?= h($album['title']) ?></span>
+      <a href="<?= h(url_lang('galeri.php')) ?>">Galeri</a> <span>›</span>
+      <span><?= h(tr_field($album, 'title') ?: $album['title']) ?></span>
     </nav>
-    <h1><?= h($album['title']) ?></h1>
+    <h1><?= h(tr_field($album, 'title') ?: $album['title']) ?></h1>
     <?php if (!empty($album['description'])): ?>
-      <p class="lead"><?= h($album['description']) ?></p>
+      <p class="lead"><?= h(tr_field($album, 'description') ?: $album['description']) ?></p>
     <?php endif; ?>
   </div>
 </section>

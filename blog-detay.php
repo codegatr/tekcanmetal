@@ -16,22 +16,22 @@ $related = $post['category_id']
     ? all("SELECT * FROM tm_blog_posts WHERE category_id=? AND id<>? AND is_active=1 ORDER BY published_at DESC LIMIT 3", [$post['category_id'], $post['id']])
     : all("SELECT * FROM tm_blog_posts WHERE id<>? AND is_active=1 ORDER BY published_at DESC LIMIT 3", [$post['id']]);
 
-$pageTitle = $post['title'];
-$metaDesc  = $post['meta_desc'] ?: ($post['excerpt'] ?: excerpt($post['content'], 160));
+$pageTitle = tr_field($post, 'title') ?: $post['title'];
+$metaDesc  = tr_field($post, 'meta_desc') ?: tr_field($post, 'excerpt') ?: excerpt(tr_field($post, 'content'), 160);
 require __DIR__ . '/includes/header.php';
 ?>
 <article class="blog-detail">
   <header class="blog-detail-head">
     <div class="container container-narrow">
       <nav class="breadcrumb">
-        <a href="<?= h(url('')) ?>">Anasayfa</a> <span>›</span>
-        <a href="<?= h(url('blog.php')) ?>">Blog</a> <span>›</span>
-        <span><?= h($post['title']) ?></span>
+        <a href="<?= h(url_lang('')) ?>">Anasayfa</a> <span>›</span>
+        <a href="<?= h(url_lang('blog.php')) ?>">Blog</a> <span>›</span>
+        <span><?= h(tr_field($post, 'title') ?: $post['title']) ?></span>
       </nav>
       <?php if (!empty($post['cat_name'])): ?>
         <a href="<?= h(url('blog.php?kategori=' . urlencode($post['cat_slug']))) ?>" class="blog-cat-tag"><?= h($post['cat_name']) ?></a>
       <?php endif; ?>
-      <h1><?= h($post['title']) ?></h1>
+      <h1><?= h(tr_field($post, 'title') ?: $post['title']) ?></h1>
       <div class="blog-meta">
         <span>📅 <?= h(tr_date($post['published_at'])) ?></span>
         <?php if (!empty($post['author_name'])): ?><span>✍ <?= h($post['author_name']) ?></span><?php endif; ?>
@@ -43,14 +43,14 @@ require __DIR__ . '/includes/header.php';
   <?php if (!empty($post['cover_image'])): ?>
   <div class="blog-detail-img">
     <div class="container container-narrow">
-      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h($post['title']) ?>">
+      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h(tr_field($post, 'title') ?: $post['title']) ?>">
     </div>
   </div>
   <?php endif; ?>
 
   <div class="blog-detail-body">
     <div class="container container-narrow">
-      <div class="content-prose"><?= $post['content'] ?></div>
+      <div class="content-prose"><?= tr_field($post, 'content') ?: $post['content'] ?></div>
     </div>
   </div>
 </article>

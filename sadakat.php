@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/includes/db.php';
 
-$pageTitle = 'Sadakat Programı';
-$metaDesc  = 'Tekcan Metal Sadakat Programı — düzenli müşterilerimize özel indirim, öncelikli sevkiyat ve özel kampanyalar.';
+$pageTitle = t('loyalty.title', 'Sadakat Programı');
+$metaDesc  = t('loyalty.meta_desc', 'Tekcan Metal Sadakat Programı — düzenli müşterilerimize özel indirim, öncelikli sevkiyat ve özel kampanyalar.');
 
 $errors = [];
 $old = ['full_name'=>'','company_name'=>'','phone'=>'','email'=>'','tax_id'=>'','city'=>''];
@@ -379,7 +379,7 @@ require __DIR__ . '/includes/header.php';
   <section class="sad-hero">
     <div class="container">
       <div class="sad-hero-eyebrow">Tekcan Metal · Üyelik</div>
-      <h1>Sadakat <em>Programı</em></h1>
+      <h1><?= t('loyalty.h1', 'Sadakat <em>Programı</em>') ?></h1>
       <p class="sad-hero-lead">
         Düzenli müşterilerimize özel kademeli indirimler, öncelikli sevkiyat hakkı, özel kampanyalar ve davet usulü etkinlikler. Tekcan Metal ailesinin bir parçası olun.
       </p>
@@ -391,7 +391,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="sad-benefits-head">
         <div class="eyebrow">Üyelik Ayrıcalıkları</div>
-        <h2>Üyelerimize <em>Özel</em></h2>
+        <h2><?= t('loyalty.exclusive_h2', 'Üyelerimize <em>Özel</em>') ?></h2>
       </div>
       <div class="sad-benefits-grid">
         <div class="sad-benefit">
@@ -423,7 +423,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="sad-tiers-head">
         <div class="eyebrow">Üyelik Seviyeleri</div>
-        <h2>Üç Kademeli <em>Asaletli Avantaj</em></h2>
+        <h2><?= t('loyalty.tiers_h2', 'Üç Kademeli <em>Asaletli Avantaj</em>') ?></h2>
       </div>
       <div class="sad-tiers-grid">
 
@@ -493,7 +493,7 @@ require __DIR__ . '/includes/header.php';
 
         <div class="sad-form-head">
           <div class="eyebrow">Üyelik Başvurusu</div>
-          <h2>Aileye <em>Katılın</em></h2>
+          <h2><?= t('loyalty.join_family_h2', 'Aileye <em>Katılın</em>') ?></h2>
           <p>Aşağıdaki kısa formu doldurun, biz size en kısa sürede dönüş yapalım.</p>
         </div>
 
@@ -547,7 +547,7 @@ require __DIR__ . '/includes/header.php';
             <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum ve sadakat programı kapsamında verilerimin işlenmesine onay veriyorum.</span>
           </label>
 
-          <button type="submit">Üyelik Başvurusu Gönder →</button>
+          <button type="submit"><?= h(t('loyalty.apply_btn', 'Üyelik Başvurusu Gönder')) ?> →</button>
         </form>
 
       </div>
