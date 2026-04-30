@@ -579,3 +579,208 @@ PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 -- =====================================================
 DELETE FROM tm_settings WHERE setting_key = 'site_email_satis';
 
+
+-- =====================================================
+-- v1.0.46 — KVKK metni demir-çelik sektörü için zenginleştirildi
+-- (Yunus: 'sektöre özgü KVKK bilgilerini güçlendirelim')
+-- =====================================================
+
+UPDATE tm_pages SET 
+    title = 'Kişisel Verilerin Korunması Aydınlatma Metni',
+    subtitle = '6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında, demir-çelik tedarik sürecinde işlenen kişisel verileriniz hakkında bilgilendirme.',
+    meta_title = 'KVKK Aydınlatma Metni | Tekcan Metal',
+    meta_desc = 'Tekcan Metal KVKK aydınlatma metni — demir-çelik tedarik, sevkiyat, fatura ve müşteri ilişkileri kapsamında işlenen kişisel verileriniz hakkında detaylı bilgilendirme.',
+    content = '<p>Tekcan Metal Sanayi ve Ticaret Ltd. Şti. olarak; demir-çelik tedariği, atölye kesim hizmetleri, sevkiyat, fatura ve müşteri ilişkileri süreçlerinde işlemekte olduğumuz kişisel verilerinizin korunmasına azami önem veriyoruz. İşbu Aydınlatma Metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (<em>"KVKK"</em>) ve ilgili mevzuat kapsamındaki yükümlülüklerimizi yerine getirmek üzere hazırlanmıştır.</p>
+
+<h2>1. Veri Sorumlusunun Kimliği</h2>
+<p>6698 sayılı Kanun uyarınca, kişisel verileriniz; <strong>Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</strong> (bundan sonra <em>"Şirket"</em> olarak anılacaktır) tarafından, veri sorumlusu sıfatıyla, aşağıda açıklanan kapsamda işlenebilecektir.</p>
+
+<h4>Şirket İletişim Bilgileri</h4>
+<ul>
+<li><strong>Unvan:</strong> Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</li>
+<li><strong>Adres:</strong> Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS — Karatay/KONYA</li>
+<li><strong>Telefon:</strong> 0 332 342 24 52</li>
+<li><strong>E-posta:</strong> info@tekcanmetal.com</li>
+<li><strong>Web:</strong> www.tekcanmetal.com</li>
+</ul>
+
+<h2>2. Kişisel Verilerin İşlenme Amaçları</h2>
+<p>Demir-çelik sektöründeki tedarik faaliyetimizin niteliği gereği aşağıdaki amaçlarla kişisel verilerinizi işlemekteyiz:</p>
+
+<h3>A) Tedarik ve Satış Süreçleri</h3>
+<ul>
+<li>Sac, boru, profil, hadde ve diğer demir-çelik ürünlerine ilişkin <strong>fiyat teklifi hazırlanması</strong></li>
+<li><strong>Sipariş alımı ve onaylanması</strong>, ürün özelliklerine ilişkin teknik koordinasyon</li>
+<li><strong>Proforma fatura ve sözleşme</strong> düzenlenmesi</li>
+<li>Üretici sertifikası, menşei şahadetnamesi gibi <strong>kalite belgelerinin düzenlenmesi</strong></li>
+<li>Sipariş özeline yönelik <strong>özel ölçü kesim, lazer kesim ve oksijen kesim</strong> atölye operasyonlarının yürütülmesi</li>
+</ul>
+
+<h3>B) Sevkiyat ve Lojistik</h3>
+<ul>
+<li>Yurt içi 81 il sevkiyat ağında <strong>teslim adresi, alıcı bilgisi ve irtibat detaylarının</strong> kullanılması</li>
+<li>Anlaşmalı nakliyat firmaları ile <strong>yük koordinasyonu</strong> sağlanması</li>
+<li>Yurt dışı (Irak, Suriye, Azerbaycan, Türkmenistan) <strong>ihracat sevkiyatlarında gümrük belgesi düzenlenmesi</strong> ve transit lojistik koordinasyonu</li>
+<li>Sevk irsaliyesi ve teslim tutanağı düzenlenmesi</li>
+</ul>
+
+<h3>C) Faturalama ve Tahsilat</h3>
+<ul>
+<li>e-Fatura, e-Arşiv Fatura veya kâğıt fatura düzenlenmesi</li>
+<li>Banka havalesi, EFT, kredi kartı, KVK çek ve <strong>vadeli açık hesap işlemlerinin</strong> takibi</li>
+<li>Mali müşavirlik ve <strong>resmi makamlara karşı yasal yükümlülüklerin</strong> yerine getirilmesi</li>
+<li>Ödeme gecikmelerinde hukuki süreç başlatılması</li>
+</ul>
+
+<h3>D) Müşteri İlişkileri ve Pazarlama</h3>
+<ul>
+<li>Müşteri sadakat programı kapsamında <strong>üyelik kayıtlarının yönetilmesi</strong></li>
+<li>İletişim formları, WhatsApp ve telefon görüşmeleri yoluyla <strong>fiyat soruşturmalarına yanıt verilmesi</strong></li>
+<li>Açık rıza vermeniz halinde, <strong>yeni ürün, kampanya ve sektörel duyuruların</strong> tarafınıza iletilmesi</li>
+<li>Web sitesi üzerinde <strong>kullanıcı deneyiminin iyileştirilmesi</strong> (çerez politikamız ayrıca yayınlanmıştır)</li>
+</ul>
+
+<h3>E) Hukuki ve Mevzuat Yükümlülükleri</h3>
+<ul>
+<li>Vergi Usul Kanunu, Türk Ticaret Kanunu ve diğer ticari mevzuat çerçevesindeki <strong>defter ve belge saklama yükümlülükleri</strong></li>
+<li>Mali Suçları Araştırma Kurulu (MASAK), gümrük müsteşarlığı ve diğer <strong>yetkili kamu kurumlarının taleplerine yanıt verilmesi</strong></li>
+<li>Yasal denetim, soruşturma ve mahkeme süreçlerinde <strong>delil ve belge sunulması</strong></li>
+</ul>
+
+<h2>3. İşlenen Kişisel Veri Kategorileri</h2>
+<p>Yukarıda belirtilen amaçlar doğrultusunda aşağıdaki kişisel veri kategorileri işlenmektedir:</p>
+
+<table>
+<thead><tr><th>Veri Kategorisi</th><th>Örnek Veriler</th></tr></thead>
+<tbody>
+<tr><td><strong>Kimlik Bilgileri</strong></td><td>Ad, soyad, T.C. kimlik no, vergi kimlik no, vergi dairesi, ünvan</td></tr>
+<tr><td><strong>İletişim Bilgileri</strong></td><td>Telefon, GSM, e-posta, faks, adres, ülke/şehir/ilçe</td></tr>
+<tr><td><strong>Müşteri İşlem</strong></td><td>Sipariş geçmişi, teklif kayıtları, fatura bilgileri, ödeme detayları, sevkiyat adresleri</td></tr>
+<tr><td><strong>Finansal Veriler</strong></td><td>Banka hesap bilgisi (IBAN), ödeme planı, vadeli hesap durumu, kredi notu (gerektiğinde)</td></tr>
+<tr><td><strong>Mesleki Bilgiler</strong></td><td>Çalıştığı şirket, pozisyon, sektör (B2B müşteriler için)</td></tr>
+<tr><td><strong>Pazarlama Bilgileri</strong></td><td>İletişim tercihleri, ilgi alanları, tıklama/ziyaret kayıtları (açık rıza ile)</td></tr>
+<tr><td><strong>Hukuki İşlem</strong></td><td>Sözleşme, taahhütname, ihtilaf süreci kayıtları</td></tr>
+<tr><td><strong>İşlem Güvenliği</strong></td><td>IP adresi, log kayıtları, çerezler, kullanıcı oturum bilgileri</td></tr>
+</tbody>
+</table>
+
+<h2>4. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi</h2>
+<p>Kişisel verileriniz aşağıdaki yöntemlerle toplanmaktadır:</p>
+<ul>
+<li><strong>Web sitesi üzerinden:</strong> İletişim formu, mail order başvurusu, sadakat programı kayıt formu, teklif talep formu, fiyat hesaplama wizard'ı</li>
+<li><strong>Sözlü ve telefon ile:</strong> Telefon görüşmeleri, WhatsApp yazışmaları, satış danışmanlarına iletilen taleplerden</li>
+<li><strong>Yazılı belge ile:</strong> İmzalı sözleşme, sipariş formu, kıymetli evrak, teslim alındısı, sevk irsaliyesi</li>
+<li><strong>Fiziksel ziyaret ile:</strong> Konya merkez ofisimize ve depo tesisimize yapılan ziyaretler sırasında verilen kartvizit, ürün katalogu doldurmaları</li>
+<li><strong>Üçüncü taraflar yoluyla:</strong> Anlaşmalı nakliyat firmaları, banka onayları, mali müşavirler, gümrük komisyoncuları</li>
+<li><strong>Kamu kaynakları:</strong> GİB Vergi Levhası Sorgulama, MERSİS, Ticaret Sicili gibi açık erişimli sistemler</li>
+</ul>
+
+<h4>Hukuki Sebepler (KVKK m. 5 ve 6)</h4>
+<p>Kişisel verileriniz aşağıdaki hukuki sebeplerden bir veya birkaçı dahilinde işlenmektedir:</p>
+<ol>
+<li><strong>Açık rıza</strong> (KVKK m. 5/1) — Pazarlama iletişimi gibi rıza temelli işlemeler için</li>
+<li><strong>Sözleşmenin kurulması veya ifası</strong> (KVKK m. 5/2-c) — Sipariş, sevkiyat, fatura süreçleri için</li>
+<li><strong>Hukuki yükümlülüğün yerine getirilmesi</strong> (KVKK m. 5/2-ç) — Vergi, MASAK, ticari defter</li>
+<li><strong>Meşru menfaat</strong> (KVKK m. 5/2-f) — Tahsilat takibi, dolandırıcılık önleme, müşteri ilişkileri yönetimi</li>
+<li><strong>Bir hakkın tesisi, kullanılması veya korunması</strong> (KVKK m. 5/2-e) — Hukuki ihtilaf süreçleri</li>
+</ol>
+
+<h2>5. Kişisel Verilerin Aktarılması</h2>
+<p>İşlenen kişisel verileriniz, açıklanan amaçlarla sınırlı olmak üzere aşağıdaki üçüncü taraflara aktarılabilir:</p>
+
+<h4>Yurt İçi Aktarımlar</h4>
+<ul>
+<li><strong>Üretici partnerlerimiz:</strong> Erdemir, Borçelik, Habaş, İçdaş, Tosyalı Çelik, Kardemir gibi tedarikçi entegre çelik üretim tesislerine — özel sipariş üretim koordinasyonu için</li>
+<li><strong>Anlaşmalı nakliyat firmaları:</strong> Ürün sevkiyatının gerçekleştirilmesi için teslim adresi ve alıcı irtibat bilgileri</li>
+<li><strong>Bankalar ve ödeme kuruluşları:</strong> Tahsilat işlemleri için</li>
+<li><strong>Mali müşavirler ve denetçiler:</strong> Mali ve hukuki yükümlülüklerin yerine getirilmesi için</li>
+<li><strong>Yetkili kamu kurum ve kuruluşları:</strong> Mahkeme kararı veya yasal zorunluluk halinde (Vergi Dairesi, MASAK, Gümrük İdaresi vb.)</li>
+<li><strong>Hukuk müşavirlerimiz:</strong> Hukuki danışmanlık ve dava süreçlerinde</li>
+</ul>
+
+<h4>Yurt Dışı Aktarımlar (İhracat Sevkiyatları)</h4>
+<p>Irak, Suriye, Azerbaycan ve Türkmenistan'a yapılan ihracat sevkiyatları kapsamında, gümrük süreçleri ve uluslararası nakliye için zorunlu olduğu kadarıyla, alıcı ülke gümrük makamlarına ve uluslararası nakliye firmalarına kişisel veri aktarımı yapılabilir. Bu aktarımlar KVKK'nın 9. maddesi çerçevesinde, yeterli korumaya sahip ülkeler veya açık rızanız temelinde gerçekleştirilir.</p>
+
+<h2>6. Kişisel Verilerin Saklanma Süresi</h2>
+<p>Kişisel verileriniz, ilgili mevzuatta öngörülen süreler ve verilerin işlenmesini gerektiren amaçlar için gerekli olan süre boyunca saklanmaktadır:</p>
+<ul>
+<li><strong>Mali ve ticari belgeler:</strong> Vergi Usul Kanunu uyarınca <strong>10 yıl</strong></li>
+<li><strong>Sözleşme ve sipariş kayıtları:</strong> Türk Borçlar Kanunu zamanaşımı süresi <strong>10 yıl</strong></li>
+<li><strong>İletişim formu kayıtları:</strong> İletişim talebinden itibaren <strong>3 yıl</strong></li>
+<li><strong>Sadakat programı üyelik bilgileri:</strong> Üyelik aktif olduğu sürece + iptal sonrası <strong>2 yıl</strong></li>
+<li><strong>Pazarlama izinleri:</strong> İzin geri alınana kadar</li>
+<li><strong>Web sitesi log ve çerez verileri:</strong> En fazla <strong>1 yıl</strong></li>
+</ul>
+<p>Saklama süresi sona eren kişisel veriler, KVK Kurulu''nun ilgili kararları ve <em>"Kişisel Verilerin Silinmesi, Yok Edilmesi veya Anonim Hale Getirilmesi Hakkında Yönetmelik"</em> hükümlerine uygun olarak periyodik imha veya anonim hale getirme yoluyla işlemden kaldırılır.</p>
+
+<h2>7. Kişisel Verilerin Güvenliği</h2>
+<p>Şirketimiz, KVKK''nın 12. maddesi gereği, kişisel verilerinizin hukuka aykırı işlenmesini, erişilmesini önlemek ve verilerin muhafazasını sağlamak amacıyla aşağıdaki teknik ve idari tedbirleri uygulamaktadır:</p>
+
+<h4>Teknik Tedbirler</h4>
+<ul>
+<li>SSL/TLS şifreleme ile güvenli web bağlantısı (HTTPS)</li>
+<li>Veritabanı erişimi için PDO prepared statements (SQL injection koruması)</li>
+<li>CSRF token, honeypot ve rate limiting ile form güvenliği</li>
+<li>Düzenli yedekleme ve felaket kurtarma planı</li>
+<li>Yetkili olmayan erişimi tespit eden log sistemi</li>
+<li>Şifre hash''leme ve oturum güvenliği</li>
+</ul>
+
+<h4>İdari Tedbirler</h4>
+<ul>
+<li>Veri işleme süreçlerinin envanteri ve düzenli gözden geçirilmesi</li>
+<li>Çalışanlara KVKK farkındalık eğitimi</li>
+<li>Veri işleyen üçüncü taraflarla yapılan sözleşmelerde KVKK uyum maddeleri</li>
+<li>Erişim yetkilerinin görev tanımlarına göre sınırlandırılması</li>
+<li>Veri ihlali halinde KVK Kurulu''na 72 saat içinde bildirim prosedürü</li>
+</ul>
+
+<h2>8. Kişisel Veri Sahibinin Hakları (KVKK Madde 11)</h2>
+<p>Kişisel veri sahibi olarak, KVKK''nın 11. maddesi uyarınca aşağıdaki haklarınız bulunmaktadır:</p>
+<ol>
+<li>Kişisel verilerinizin <strong>işlenip işlenmediğini öğrenme</strong></li>
+<li>Kişisel verileriniz işlenmişse <strong>buna ilişkin bilgi talep etme</strong></li>
+<li>Kişisel verilerinizin <strong>işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme</strong></li>
+<li>Yurt içinde veya yurt dışında <strong>kişisel verilerin aktarıldığı üçüncü kişileri öğrenme</strong></li>
+<li>Kişisel verilerin <strong>eksik veya yanlış işlenmiş olması halinde düzeltilmesini isteme</strong></li>
+<li>KVKK''nın 7. maddesinde öngörülen şartlar çerçevesinde kişisel verilerin <strong>silinmesini veya yok edilmesini isteme</strong></li>
+<li>Düzeltme, silme ve yok edilme taleplerinin, kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme</li>
+<li>İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhe bir sonucun ortaya çıkmasına <strong>itiraz etme</strong></li>
+<li>Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması halinde <strong>zararın giderilmesini talep etme</strong></li>
+</ol>
+
+<h2>9. Başvuru Yöntemleri ve Sonuçlandırma</h2>
+<p>Yukarıda belirtilen haklarınızı kullanmak için talebinizi, <em>"Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ''e"</em> uygun olarak aşağıdaki yöntemlerden birini kullanarak Şirketimize iletebilirsiniz:</p>
+
+<h4>Başvuru Kanalları</h4>
+<ul>
+<li><strong>Yazılı başvuru:</strong> Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS — Karatay/KONYA adresine ıslak imzalı dilekçe ile</li>
+<li><strong>Kayıtlı Elektronik Posta (KEP):</strong> Şirket KEP adresimize</li>
+<li><strong>Güvenli elektronik imza ile:</strong> info@tekcanmetal.com adresine</li>
+<li><strong>Mobil imza veya kayıtlı e-posta ile:</strong> Sisteminizde kayıtlı e-posta adresinizden</li>
+</ul>
+
+<h4>Başvuruda Bulunması Gerekenler</h4>
+<ul>
+<li>Ad, soyad, T.C. kimlik numarası (Türkiye Cumhuriyeti vatandaşı iseniz)</li>
+<li>Tebligata esas yerleşim yeri veya iş yeri adresi</li>
+<li>Bildirime esas elektronik posta adresi, telefon ve faks numarası</li>
+<li>Talep konusu — açık ve net biçimde</li>
+<li>Konuya ilişkin destekleyici belge ve bilgiler (varsa)</li>
+</ul>
+
+<p>Talebiniz, niteliğine göre en kısa sürede ve <strong>en geç 30 (otuz) gün içinde</strong> ücretsiz olarak sonuçlandırılacaktır. Ancak işlemin ayrıca bir maliyet gerektirmesi halinde, KVK Kurulu''nca belirlenen tarifedeki ücret talep edilebilir.</p>
+
+<h2>10. Veri İhlali Bildirimleri</h2>
+<p>Şirketimiz, kişisel verilerinizin yetkisiz kişilerce ele geçirilmesi durumunda, KVKK''nın 12. maddesi gereği, durumu en geç <strong>72 saat içinde KVK Kurulu''na</strong> ve veri sahibi olarak <strong>size de</strong> uygun yöntemlerle bildirir.</p>
+
+<h2>11. Aydınlatma Metnindeki Değişiklikler</h2>
+<p>İşbu Aydınlatma Metni, mevzuat değişiklikleri, iş süreçlerimizdeki dönüşümler veya KVK Kurulu kararları doğrultusunda zaman zaman güncellenebilir. Güncellenmiş metin, web sitemizde yayımlandığı tarihte yürürlüğe girer. Metnin son güncellenme tarihi sayfanın üst kısmında belirtilmektedir.</p>
+
+<blockquote><p>İşbu Aydınlatma Metni, Tekcan Metal Sanayi ve Ticaret Ltd. Şti. tarafından 2005 yılından bu yana sürdürülen demir-çelik tedarik faaliyetinin tüm paydaşları için hazırlanmıştır. Sektörün doğal yapısı gereği işlenen verilerin niteliği ve süreçleri açıklanmış olup, KVKK ile uyum çabalarımız sürekli devam etmektedir.</p></blockquote>
+
+<h4>Yürürlük</h4>
+<p>İşbu metin, Tekcan Metal Sanayi ve Ticaret Ltd. Şti. tarafından yayımlanmış olup yürürlüktedir. Sorularınız için <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a> adresinden bizimle iletişime geçebilirsiniz.</p>',
+    updated_at = NOW()
+WHERE slug = 'kvkk';
+
