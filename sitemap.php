@@ -29,7 +29,6 @@ echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 $staticPages = [
     ''                  => ['daily',   '1.0'],
     'hakkimizda.php'    => ['monthly', '0.8'],
-    'ekibimiz.php'      => ['monthly', '0.6'],
     'partnerler.php'    => ['monthly', '0.6'],
     'urunler.php'       => ['weekly',  '0.9'],
     'hizmetler.php'     => ['monthly', '0.8'],

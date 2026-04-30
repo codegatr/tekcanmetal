@@ -137,11 +137,10 @@ try {
 
       <!-- Sağ Nav -->
       <ul class="main-nav main-nav-right">
-        <li class="has-sub <?= in_array($current,['hakkimizda','ekibimiz','partnerler','iban','sss','mail-order','sadakat'])?'active':'' ?>">
+        <li class="has-sub <?= in_array($current,['hakkimizda','partnerler','iban','sss','mail-order','sadakat'])?'active':'' ?>">
           <a href="<?= h(url('hakkimizda.php')) ?>">Kurumsal</a>
           <ul class="submenu submenu-right">
             <li><a href="<?= h(url('hakkimizda.php')) ?>">Hakkımızda</a></li>
-            <li><a href="<?= h(url('ekibimiz.php')) ?>">Ekibimiz</a></li>
             <li><a href="<?= h(url('partnerler.php')) ?>">Çözüm Ortakları</a></li>
             <li><a href="<?= h(url('iban.php')) ?>">IBAN Bilgilerimiz</a></li>
             <li><a href="<?= h(url('sss.php')) ?>">Sıkça Sorulan Sorular</a></li>
@@ -200,7 +199,6 @@ try {
   <nav class="offcanvas-nav">
     <a href="<?= h(url('/')) ?>" class="parent <?= $current==='index'?'active':'' ?>">🏠 Anasayfa</a>
     <a href="<?= h(url('hakkimizda.php')) ?>" class="parent <?= $current==='hakkimizda'?'active':'' ?>">📌 Hakkımızda</a>
-    <a href="<?= h(url('ekibimiz.php')) ?>" class="child">→ Ekibimiz</a>
     <a href="<?= h(url('partnerler.php')) ?>" class="child">→ Çözüm Ortakları</a>
     <a href="<?= h(url('iban.php')) ?>" class="child">→ IBAN Bilgilerimiz</a>
     <a href="<?= h(url('sss.php')) ?>" class="child">→ Sıkça Sorulan Sorular</a>

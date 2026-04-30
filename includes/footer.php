@@ -24,7 +24,6 @@
         <h4>Kurumsal</h4>
         <ul>
           <li><a href="<?= h(url('hakkimizda.php')) ?>">Hakkımızda</a></li>
-          <li><a href="<?= h(url('ekibimiz.php')) ?>">Ekibimiz</a></li>
           <li><a href="<?= h(url('partnerler.php')) ?>">Çözüm Ortakları</a></li>
           <li><a href="<?= h(url('iban.php')) ?>">IBAN Bilgilerimiz</a></li>
           <li><a href="<?= h(url('sss.php')) ?>">SSS</a></li>

@@ -13,13 +13,13 @@ $images = all("SELECT * FROM tm_product_images WHERE product_id=? ORDER BY sort_
 $related = all("SELECT * FROM tm_products WHERE category_id=? AND id<>? AND is_active=1 ORDER BY RAND() LIMIT 4", [$p['category_id'], $p['id']]);
 
 $specs = [];
-if (!empty($p['specifications'])) {
-    $tmp = json_decode($p['specifications'], true);
+if (!empty($p['specs'])) {
+    $tmp = json_decode($p['specs'], true);
     if (is_array($tmp)) $specs = $tmp;
 }
 
 $pageTitle = $p['name'];
-$metaDesc  = $p['meta_desc'] ?: ($p['short_desc'] ?: excerpt($p['description'], 160));
+$metaDesc  = ($p['meta_desc'] ?? null) ?: (($p['short_desc'] ?? null) ?: excerpt($p['description'] ?? '', 160));
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header page-header-sm">
@@ -38,7 +38,7 @@ require __DIR__ . '/includes/header.php';
     <div class="pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-img">
-          <?php $mainImg = $p['image'] ?: ($images[0]['image_path'] ?? null); ?>
+          <?php $mainImg = $p['image'] ?: ($images[0]['image'] ?? null); ?>
           <?php if ($mainImg): ?>
             <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h($p['name']) ?>">
           <?php else: ?>
@@ -55,7 +55,7 @@ require __DIR__ . '/includes/header.php';
             <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt=""></button>
           <?php endif; ?>
           <?php foreach ($images as $im): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image_path'])) ?>"><img src="<?= h(img_url($im['image_path'])) ?>" alt=""></button>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image'])) ?>"><img src="<?= h(img_url($im['image'])) ?>" alt=""></button>
           <?php endforeach; ?>
         </div>
         <?php endif; ?>
@@ -76,15 +76,6 @@ require __DIR__ . '/includes/header.php';
             <?php endforeach; ?>
           </tbody>
         </table>
-        <?php endif; ?>
-
-        <?php if ($p['stock_status']): ?>
-        <div class="pd-stock pd-stock-<?= h($p['stock_status']) ?>">
-          <?php
-          $stockLabel = ['in_stock' => '✓ Stoklarımızda Mevcut', 'low_stock' => '⚠ Stok Sınırlı', 'out_of_stock' => '✗ Stokta Yok', 'on_order' => 'ⓘ Sipariş Üzerine'];
-          echo h($stockLabel[$p['stock_status']] ?? '');
-          ?>
-        </div>
         <?php endif; ?>
 
         <div class="pd-actions">

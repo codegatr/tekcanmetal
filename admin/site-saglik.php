@@ -121,13 +121,6 @@ function check_diagnostics(string $uploads, string $seedImg): array {
             'ok' => $sldNullCount === 0,
             'fix' => "Seed path'leri yaz",
         ];
-
-        $teamCount = (int)val("SELECT COUNT(*) FROM tm_team");
-        $d['db_team'] = [
-            'label' => "tm_team — kayıt: $teamCount",
-            'ok' => $teamCount > 0,
-            'fix' => "Seed'den 3 kişi ekle",
-        ];
     } catch (\Throwable $e) {
         $d['db_error'] = ['label' => 'DB Hatası: ' . $e->getMessage(), 'ok' => false, 'fix' => null];
     }
@@ -436,19 +429,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $log = array_merge($log, fix_db_sliders());
         $log[] = "";
 
-        $log[] = "▶ 7. tm_team seed";
-        $log = array_merge($log, fix_db_team());
-        $log[] = "";
-
-        $log[] = "▶ 8. wp-imported klasör yapısı";
+        $log[] = "▶ 7. wp-imported klasör yapısı";
         $log = array_merge($log, fix_wp_imported($UPLOADS));
         $log[] = "";
 
-        $log[] = "▶ 9. OPcache reset";
+        $log[] = "▶ 8. OPcache reset";
         $log = array_merge($log, fix_opcache());
         $log[] = "";
 
-        $log[] = "▶ 10. Cache temizleme";
+        $log[] = "▶ 9. Cache temizleme";
         $log = array_merge($log, fix_clear_cache($ROOT));
         $log[] = "";
 

@@ -24,8 +24,6 @@ try {
     $prodNullCount = (int)val("SELECT COUNT(*) FROM tm_products WHERE image IS NULL OR image=''");
     if ($prodNullCount > 0) { $healthIssues++; $healthMessages[] = "$prodNullCount ürün görselsiz"; }
 
-    if ($stats['team'] === 0) { $healthIssues++; $healthMessages[] = "Ekip listesi boş"; }
-
     $uploadsRoot = realpath(__DIR__ . '/..') . '/uploads';
     if (!is_dir($uploadsRoot . '/categories')) { $healthIssues++; $healthMessages[] = "uploads/categories klasörü yok"; }
     if (!is_dir($uploadsRoot . '/products')) { $healthIssues++; $healthMessages[] = "uploads/products klasörü yok"; }

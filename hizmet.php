@@ -60,7 +60,7 @@ require __DIR__ . '/includes/header.php';
           <h2>Profesyonel <?= h($s['title']) ?> Hizmeti</h2>
         <?php endif; ?>
         <div class="content-prose">
-          <?= $s['description'] ?: '<p>Bu hizmet için detaylı içerik yakında eklenecektir.</p>' ?>
+          <?= !empty($s['description']) ? $s['description'] : '<p>Bu hizmet için detaylı içerik yakında eklenecektir.</p>' ?>
         </div>
       </div>
 
