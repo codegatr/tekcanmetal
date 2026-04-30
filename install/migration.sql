@@ -1018,7 +1018,7 @@ DELETE FROM tm_services WHERE slug IN ('lazer-kesim', 'oksijen-kesim', 'dekorati
 INSERT INTO tm_services (slug, title, short_desc, icon, image, is_active, sort_order) VALUES
   ('lazer-kesim',      'Lazer Kesim',           'Fiber lazer ile yüksek hassasiyetli endüstriyel kesim hizmeti.', 'zap',      'uploads/services/lazer-kesim.jpg',     1, 1),
   ('oksijen-kesim',    'Oksijen Kesim',         'Kalın saclar için ekonomik CNC oksijen kesim hizmeti.',          'flame',    'uploads/services/oksijen-kesim.jpg',   1, 2),
-  ('dekoratif-saclar', 'Dekoratif Sac Üretimi', 'Mimari ve dekoratif uygulamalar için özel desenli sac üretimi.', 'sparkles', 'uploads/services/dekoratif-saclar.jpg',1, 3);
+  ('dekoratif-saclar', 'Dekoratif Sac Üretimi', 'Mimari ve dekoratif uygulamalar için özel desenli sac üretimi.', 'sparkles', 'uploads/services/dekoratif-saclar.png',1, 3);
 
 -- LAZER-KESIM
 UPDATE tm_services SET
