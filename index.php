@@ -19,22 +19,33 @@ require __DIR__ . '/includes/header.php';
 <section class="hero-cinema" id="heroCinema">
   <?php if ($sliders): ?>
     <?php foreach ($sliders as $idx => $sl): ?>
-      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"></div>
+      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
+           style="background-image: linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('<?= h(img_url($sl['image'])) ?>');">
+      </div>
     <?php endforeach; ?>
   <?php else: ?>
     <div class="cinema-slide active"></div>
   <?php endif; ?>
 
-  <!-- Merkez Logo (Tekcan logosu — Limak'taki "50" gibi parlar) -->
-  <div class="cinema-center">
-    <div class="cinema-logo-glow">
-      <?php if (file_exists(__DIR__ . '/' . $logoFile)): ?>
-        <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal">
-      <?php else: ?>
-        <div class="cinema-text-logo">TEKCAN<span>METAL</span></div>
+  <!-- Slide içerik metinleri -->
+  <?php if ($sliders): ?>
+  <div class="cinema-content">
+    <?php foreach ($sliders as $idx => $sl): ?>
+    <div class="cinema-slide-text<?= $idx === 0 ? ' active' : '' ?>" data-index="<?= $idx ?>">
+      <?php if (!empty($sl['subtitle'])): ?>
+        <span class="cinema-eyebrow"><?= h($sl['subtitle']) ?></span>
+      <?php endif; ?>
+      <h2 class="cinema-title"><?= h($sl['title']) ?></h2>
+      <?php if (!empty($sl['description'])): ?>
+        <p class="cinema-desc"><?= h($sl['description']) ?></p>
+      <?php endif; ?>
+      <?php if (!empty($sl['link_url']) && !empty($sl['link_text'])): ?>
+        <a href="<?= h(url($sl['link_url'])) ?>" class="cinema-cta"><?= h($sl['link_text']) ?> <span>→</span></a>
       <?php endif; ?>
     </div>
+    <?php endforeach; ?>
   </div>
+  <?php endif; ?>
 
   <!-- Sol/Sağ Ok butonları (Limak'taki minimalist kutusuz oklar) -->
   <?php if (count($sliders) > 1): ?>
@@ -69,6 +80,7 @@ require __DIR__ . '/includes/header.php';
   const root = document.getElementById('heroCinema');
   if (!root) return;
   const slides = root.querySelectorAll('.cinema-slide');
+  const texts  = root.querySelectorAll('.cinema-slide-text');
   const dots   = root.querySelectorAll('.cinema-dot');
   const total  = slides.length;
   if (total < 2) return;
@@ -76,6 +88,7 @@ require __DIR__ . '/includes/header.php';
   function go(n){
     idx = (n + total) % total;
     slides.forEach((s,i) => s.classList.toggle('active', i === idx));
+    texts.forEach((s,i) => s.classList.toggle('active', i === idx));
     dots.forEach((d,i) => d.classList.toggle('active', i === idx));
   }
   function next(){ go(idx + 1); }

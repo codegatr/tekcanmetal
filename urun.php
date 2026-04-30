@@ -69,13 +69,19 @@ require __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <?php if ($specs): ?>
-        <table class="pd-specs">
-          <tbody>
-            <?php foreach ($specs as $k => $v): ?>
-            <tr><th><?= h($k) ?></th><td><?= h($v) ?></td></tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+        <div class="pd-specs-wrap">
+          <div class="pd-specs-head">
+            <span class="pd-specs-eyebrow">Teknik Özellikler</span>
+            <h3>Ürün Spesifikasyonları</h3>
+          </div>
+          <table class="pd-specs">
+            <tbody>
+              <?php foreach ($specs as $k => $v): ?>
+              <tr><th><?= h($k) ?></th><td><?= h($v) ?></td></tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
         <?php endif; ?>
 
         <div class="pd-actions">

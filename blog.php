@@ -452,8 +452,8 @@ function tr_date_long($date) {
   <div class="nyt-masthead">
     <div class="container">
       <div class="nyt-masthead-date"><?= tr_date_long(date('Y-m-d')) ?> · KONYA · TÜRKİYE</div>
-      <h1 class="nyt-masthead-title">The Tekcan Times</h1>
-      <p class="nyt-masthead-tagline">"All the steel that's fit to print." — Demir-çelik dünyasından haberler, basın açıklamaları ve teknik içerikler</p>
+      <h1 class="nyt-masthead-title">Haberler &amp; Basın</h1>
+      <p class="nyt-masthead-tagline">Tekcan Metal'den sektör haberleri, basın açıklamaları, ürün rehberleri ve teknik içerikler</p>
     </div>
   </div>
 
@@ -498,14 +498,14 @@ function tr_date_long($date) {
           <?php if (!empty($leadPost['cat_name'])): ?>
             <span class="nyt-lead-cat"><?= h($leadPost['cat_name']) ?></span>
           <?php else: ?>
-            <span class="nyt-lead-cat">Manşet</span>
+            <span class="nyt-lead-cat">Öne Çıkan</span>
           <?php endif; ?>
           <h2><a href="<?= h(url('blog-detay.php?slug=' . urlencode($leadPost['slug']))) ?>"><?= h($leadPost['title']) ?></a></h2>
           <p class="nyt-lead-excerpt">
             <?= h($leadPost['excerpt'] ?: excerpt(strip_tags($leadPost['content']), 220)) ?>
           </p>
           <div class="nyt-lead-meta">
-            <span class="nyt-lead-author">By <?= h($leadPost['author'] ?? 'Tekcan Metal') ?></span>
+            <span class="nyt-lead-author"><?= h($leadPost['author'] ?? 'Tekcan Metal') ?></span>
             <span><?= h(tr_date_long($leadPost['published_at'])) ?></span>
           </div>
         </div>
@@ -519,7 +519,7 @@ function tr_date_long($date) {
     <div class="container">
 
       <?php if (empty($posts) && empty($leadPost)): ?>
-        <div class="nyt-empty">"Henüz manşete çıkacak haberimiz yok…"</div>
+        <div class="nyt-empty">Henüz yayınlanmış bir haber bulunmuyor.</div>
       <?php elseif (!empty($posts)): ?>
 
         <div class="nyt-section-head">
