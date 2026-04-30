@@ -846,7 +846,7 @@ require __DIR__ . '/includes/header.php';
       <div class="hp-head">
         <div class="hp-eyebrow">Ürün Gruplarımız</div>
         <h2><?= count($cats) ?> Ana Grupta <em>Geniş Yelpaze</em></h2>
-        <p>Sanayi, inşaat ve özel proje gereksinimlerine yönelik tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün lider üreticilerinin yetkili temsilciliği güvencesiyle.</p>
+        <p>Sanayi, inşaat ve özel proje gereksinimlerine yönelik tedarik ve üretim hizmeti sunuyoruz. Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün lider üreticilerinden doğrudan tedarik güvencesiyle.</p>
       </div>
 
       <div class="hp-products">
@@ -917,7 +917,7 @@ require __DIR__ . '/includes/header.php';
         <div class="hp-value">
           <div class="hp-value-num">01</div>
           <h3>Kalite ve Standart</h3>
-          <p>Türkiye'nin lider çelik üreticilerinin yetkili temsilciliği güvencesiyle, her ürünümüz uluslararası kalite standartlarındadır. Sertifikalı, izlenebilir, garantili.</p>
+          <p>Türkiye'nin lider çelik üreticilerinden doğrudan tedarik ettiğimiz ürünler, uluslararası kalite standartlarındadır. Sertifikalı, izlenebilir, üretici onaylı.</p>
           <a href="<?= h(url('partnerler.php')) ?>" class="hp-value-link">Çözüm Ortaklarımız <span>→</span></a>
         </div>
         <div class="hp-value">
@@ -1005,8 +1005,8 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="hp-head">
         <div class="hp-eyebrow">Çözüm Ortaklarımız</div>
-        <h2>Türkiye'nin <em>Çelik Devleri</em><br>Yetkili Temsilciliği</h2>
-        <p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinin yetkili temsilcileri olarak görev yapıyoruz.</p>
+        <h2>Türkiye'nin <em>Çelik Devleri</em><br>Tedarik Ortaklarımız</h2>
+        <p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinden doğrudan ürün tedarik ediyoruz.</p>
       </div>
 
       <div class="hp-partners-wrap">

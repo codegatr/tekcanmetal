@@ -408,16 +408,16 @@ require __DIR__ . '/includes/header.php';
   <!-- HERO -->
   <section class="pn-hero">
     <div class="container">
-      <div class="pn-hero-eyebrow">Stratejik İş Birlikleri</div>
-      <h1>Türkiye'nin Çelik <em>Devleri</em><br>Yetkili Temsilciliği</h1>
+      <div class="pn-hero-eyebrow">Tedarik Ortaklıklarımız</div>
+      <h1>Türkiye'nin Çelik <em>Devlerinden</em><br>Doğrudan Tedarik</h1>
       <p class="pn-hero-lead">
-        Sektörün lider entegre çelik üretim tesislerinin yetkili temsilcileri olarak, tedarik gücümüzü doğrudan üreticilerden alıyor, müşterilerimize üretici garantisiyle sunuyoruz.
+        Sektörün lider entegre çelik üretim tesislerinden doğrudan ürün tedarik ediyor, müşterilerimize üretici sertifikalı, taze stoğumuzdan sunuyoruz.
       </p>
       <div class="pn-hero-stats">
         <div class="pn-hero-stat"><strong><?= count($partners) ?></strong><span>Çözüm Ortağı</span></div>
         <div class="pn-hero-stat"><strong>21+</strong><span>Yıllık Tedarik</span></div>
         <div class="pn-hero-stat"><strong>81</strong><span>İl Sevkiyat Ağı</span></div>
-        <div class="pn-hero-stat"><strong>%100</strong><span>Üretici Garantili</span></div>
+        <div class="pn-hero-stat"><strong>%100</strong><span>Sertifikalı Tedarik</span></div>
       </div>
     </div>
   </section>
@@ -428,7 +428,7 @@ require __DIR__ . '/includes/header.php';
       <div class="pn-manifesto-inner">
         <div class="pn-manifesto-eyebrow">Tedarik Felsefemiz</div>
         <p class="pn-manifesto-quote">
-          Sahte ürün, fason kalite, belirsiz menşe ile çalışmayız. Sektörün <strong>en büyük üreticilerinin</strong> yetkili temsilcisi olarak müşterimize ulaştırdığımız her parti, doğrudan üretici fabrikadan, sertifikalı, taze stoğumuzdan çıkar.
+          Sahte ürün, fason kalite, belirsiz menşe ile çalışmayız. Sektörün <strong>en büyük üreticilerinden</strong> doğrudan ürün temin ediyoruz; müşterimize ulaştırdığımız her parti, doğrudan üretici fabrikadan, sertifikalı, taze stoğumuzdan çıkar.
         </p>
         <div style="display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#3a3a3a;padding-top:20px;border-top:1px solid var(--line)">— Tekcan Metal Tedarik Politikası</div>
       </div>
@@ -439,9 +439,9 @@ require __DIR__ . '/includes/header.php';
   <section class="pn-partners-section">
     <div class="container">
       <div class="pn-partners-head">
-        <div class="eyebrow">Çözüm Ortaklarımız</div>
+        <div class="eyebrow">Tedarik Ortaklarımız</div>
         <h2>Birlikte Çalıştığımız <em>Üreticiler</em></h2>
-        <p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinin yetkili temsilciliği.</p>
+        <p>Borçelik, Erdemir, Habaş, Tosyalı Çelik, Kardemir ve İçdaş başta olmak üzere sektörün önde gelen entegre çelik üretim tesislerinden ürün tedarik ediyoruz.</p>
       </div>
 
       <?php if (!$partners): ?>
@@ -460,16 +460,16 @@ require __DIR__ . '/includes/header.php';
             <?php endif; ?>
           </div>
           <h3><?= h($p['name']) ?></h3>
-          <div class="pn-card-tagline">Yetkili Temsilci</div>
+          <div class="pn-card-tagline">Tedarik Ortağımız</div>
           <?php if (!empty($p['description'])): ?>
             <p><?= h($p['description']) ?></p>
           <?php else: ?>
-            <p>Türkiye'nin önde gelen demir-çelik üreticilerinden, üretici garantisiyle sertifikalı tedarik.</p>
+            <p>Türkiye'nin önde gelen demir-çelik üreticilerinden, üretici sertifikalı ve taze stok ile düzenli tedarik.</p>
           <?php endif; ?>
           <?php if ($href): ?>
             <span class="pn-card-link">Web Sitesini Ziyaret Et <span>↗</span></span>
           <?php else: ?>
-            <span class="pn-card-link">Yetkili Tedarikçi <span>✓</span></span>
+            <span class="pn-card-link">Aktif Tedarik <span>✓</span></span>
           <?php endif; ?>
         <?= $href ? '</a>' : '</div>' ?>
         <?php endforeach; ?>
@@ -483,8 +483,8 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="pn-trust-head">
         <div class="eyebrow">Tedarik Garantisi</div>
-        <h2>Üretici Ortaklığının <em>Avantajları</em></h2>
-        <p>Sektör lideri üreticilerle direkt çalışmanın size sağladığı somut faydalar.</p>
+        <h2>Doğrudan Üreticiden Tedariğin <em>Avantajları</em></h2>
+        <p>Sektör lideri üreticilerden doğrudan tedarik etmenin size sağladığı somut faydalar.</p>
       </div>
       <div class="pn-trust-grid">
 
@@ -540,7 +540,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="pn-cta-inner">
         <h2>Hangi marka, <strong>hangi ürün</strong> ihtiyacınız var?</h2>
-        <p>Anlaşmalı üreticilerimizden istediğiniz ürünü tedarik etmek için bizimle iletişime geçin. Aynı gün teklif, hızlı sevkiyat, üretici garantili teslim.</p>
+        <p>Tedarik ortağımız üreticilerden istediğiniz ürünü temin etmek için bizimle iletişime geçin. Aynı gün teklif, hızlı sevkiyat, üretici sertifikalı teslim.</p>
         <div class="pn-cta-actions">
           <a href="<?= h(url('iletisim.php')) ?>" class="pn-btn pn-btn-primary">Teklif İste</a>
           <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, ürün/teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" class="pn-btn pn-btn-ghost">WhatsApp ile İletişim</a>

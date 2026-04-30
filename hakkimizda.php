@@ -1409,7 +1409,7 @@ require __DIR__ . '/includes/header.php';
       <div class="kral-partners-head">
         <div class="kral-section-eyebrow">Çözüm Ortaklarımız</div>
         <h2>Türkiye'nin Önde Gelen <em>Üreticileri</em></h2>
-        <p>Demir-çelik sektörünün lider markalarının yetkili temsilcisi olarak; orijinal ürünleri, üretici garantisiyle ve rekabetçi fiyatlarla müşterilerimize ulaştırıyoruz.</p>
+        <p>Demir-çelik sektörünün lider markalarından doğrudan tedarik gücümüzle; orijinal ürünleri, üretici sertifikasıyla ve rekabetçi fiyatlarla müşterilerimize ulaştırıyoruz.</p>
       </div>
       <div class="kral-partners-grid">
         <?php foreach ($partners as $p): ?>

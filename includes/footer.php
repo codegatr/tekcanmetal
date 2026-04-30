@@ -24,7 +24,7 @@
 
       <div class="footer-col footer-col-about">
         <p class="footer-about">
-          <?= h(settings('site_description', 'Tekcan Metal — 2005\'ten bu yana Konya merkezli demir-çelik tedarikçisi. Sac, boru, profil, hadde ve özel çelik ürünlerinde Türkiye\'nin önde gelen üreticilerinin yetkili temsilciliği.')) ?>
+          <?= h(settings('site_description', 'Tekcan Metal — 2005\'ten bu yana Konya merkezli demir-çelik tedarikçisi. Sac, boru, profil, hadde ve özel çelik ürünlerinde Türkiye\'nin önde gelen üreticilerinden doğrudan tedarik.')) ?>
         </p>
         <div class="footer-social">
           <?php if ($f = settings('site_facebook')): ?>
