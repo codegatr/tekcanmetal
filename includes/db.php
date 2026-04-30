@@ -232,32 +232,6 @@ function img_url(?string $path, string $default = 'assets/img/placeholder.svg'):
     return url($path);
 }
 
-// ---- v1.0.72/v1.0.76: Picture tag helper ----
-// .htaccess WebP rewrite kuralı (line ~155) tarayıcı 'Accept: image/webp' gönderirse
-// otomatik olarak .webp versiyonu servis eder. HTML değişmez, basit <img> yeterli.
-// Bu fonksiyon backwards-compatibility için tutuluyor — sadece <img> dönüyor.
-function picture_tag(?string $path, array $attrs = []): string {
-    if (!$path) {
-        $path = 'assets/img/placeholder.svg';
-    }
-    $alt = $attrs['alt'] ?? '';
-    $class = $attrs['class'] ?? '';
-    $loading = $attrs['loading'] ?? 'lazy';
-    $width = $attrs['width'] ?? null;
-    $height = $attrs['height'] ?? null;
-    $fetchPriority = $attrs['fetchpriority'] ?? null;
-
-    $imgAttrs = 'alt="' . h($alt) . '"';
-    if ($class) $imgAttrs .= ' class="' . h($class) . '"';
-    if ($loading) $imgAttrs .= ' loading="' . h($loading) . '"';
-    if ($width) $imgAttrs .= ' width="' . h((string)$width) . '"';
-    if ($height) $imgAttrs .= ' height="' . h((string)$height) . '"';
-    if ($fetchPriority) $imgAttrs .= ' fetchpriority="' . h($fetchPriority) . '"';
-
-    $url = preg_match('#^https?://#i', $path) ? $path : url($path);
-    return '<img src="' . h($url) . '" ' . $imgAttrs . '>';
-}
-
 // ---- Sürüm karşılaştırma ----
 function version_gt(string $a, string $b): bool {
     return version_compare($a, $b, '>');

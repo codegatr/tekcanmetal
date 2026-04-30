@@ -12,16 +12,6 @@ $news     = all("SELECT * FROM tm_blog_posts WHERE is_active=1 AND published_at 
 
 $logoFile = settings('logo', 'assets/img/logo.png');
 
-// v1.0.72: LCP optimizasyonu — ilk slider görselini preload et (Largest Contentful Paint kısalır)
-// WebP varsa onu, yoksa orijinal'i preload et
-$preloadImages = [];
-if (!empty($sliders[0]['image'])) {
-    $firstImg = $sliders[0]['image'];
-    $webpVer = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $firstImg);
-    $hasWebp = ($webpVer !== $firstImg) && file_exists(__DIR__ . '/' . $webpVer);
-    $preloadImages[] = img_url($hasWebp ? $webpVer : $firstImg);
-}
-
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -866,12 +856,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-product-img">
             <span class="hp-product-num"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
             <?php if (!empty($c['image'])): ?>
-              <?= picture_tag($c['image'], [
-                  'alt' => tr_field($c, 'name'),
-                  'loading' => 'lazy',
-                  'width' => 422,
-                  'height' => 282,
-              ]) ?>
+              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy">
             <?php else: ?>
               <div class="hp-product-img-placeholder"><?= h(mb_strtoupper(mb_substr($c['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
@@ -904,12 +889,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-service-img">
             <span class="hp-service-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($s['image'])): ?>
-              <?= picture_tag($s['image'], [
-                  'alt' => tr_field($s, 'title'),
-                  'loading' => 'lazy',
-                  'width' => 422,
-                  'height' => 282,
-              ]) ?>
+              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
             <?php endif; ?>
           </div>
           <div class="hp-service-body">
@@ -1004,12 +984,7 @@ require __DIR__ . '/includes/header.php';
         <a class="hp-news" href="<?= h(url_lang('blog-detay.php?slug=' . $n['slug'])) ?>">
           <?php if (!empty($n['cover_image'])): ?>
           <div class="hp-news-thumb">
-            <?= picture_tag($n['cover_image'], [
-                'alt' => tr_field($n, 'title'),
-                'loading' => 'lazy',
-                'width' => 380,
-                'height' => 240,
-            ]) ?>
+            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h(tr_field($n, 'title')) ?>" loading="lazy">
           </div>
           <?php endif; ?>
           <div class="hp-news-body">

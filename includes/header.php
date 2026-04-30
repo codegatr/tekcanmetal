@@ -102,35 +102,9 @@ foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- v1.0.72: LCP optimizasyonu — sayfa-spesifik kritik görsel preload -->
-<?php if (!empty($preloadImages) && is_array($preloadImages)): ?>
-<?php foreach ($preloadImages as $preImg): ?>
-<link rel="preload" as="image" href="<?= h($preImg) ?>" fetchpriority="high">
-<?php endforeach; ?>
-<?php endif; ?>
-
-<!-- v1.0.72: Mobil performans için font preload + display=swap -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
-
-<?php
-// v1.0.73: Critical CSS inline (above-the-fold) — FCP/LCP optimizasyonu
-// Render-blocking ana CSS'i async yükleriz, kritik kısmı head'e gömeriz
-$criticalCssPath = __DIR__ . '/../assets/css/style.critical.min.css';
-if (file_exists($criticalCssPath)) {
-    echo "<style>" . file_get_contents($criticalCssPath) . "</style>\n";
-}
-
-// v1.0.72: Production'da minified CSS (15% daha küçük)
-$cssFile = file_exists(__DIR__ . '/../assets/css/style.min.css')
-    ? 'assets/css/style.min.css'
-    : 'assets/css/style.css';
-?>
-<!-- Ana CSS — async yüklenir (render-blocking değil) -->
-<link rel="preload" href="<?= h(url($cssFile)) ?>?v=<?= h(TM_VERSION) ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="<?= h(url($cssFile)) ?>?v=<?= h(TM_VERSION) ?>"></noscript>
+<link rel="stylesheet" href="<?= h(url('assets/css/style.css')) ?>?v=<?= h(TM_VERSION) ?>">
 
 <?php if ($code = settings('analytics_code')): ?>
 <?= $code ?>
@@ -421,27 +395,9 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
 
       <!-- Merkez Logo -->
       <a href="<?= h(url_lang('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> <?= h(t('header.menu.home', 'Anasayfa')) ?>">
-        <?php
-        // v1.0.73: Performance — SVG logo varsa ÖNCE SVG kullan (1 KB vs 12 KB)
-        // Settings'teki PNG path'i de varsa, SVG mevcut diye SVG'yi tercih et
-        if (file_exists(__DIR__ . '/../assets/img/logo.svg')) {
-            $logoFile = 'assets/img/logo.svg';
-        } else {
-            $logoFile = settings('logo', '');
-            if (empty($logoFile) || !file_exists(__DIR__ . '/../' . $logoFile)) {
-                $logoFile = 'assets/img/logo.png';
-            }
-        }
-        ?>
+        <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
-          <?= picture_tag($logoFile, [
-              'alt' => 'Tekcan Metal',
-              'class' => 'logo-img',
-              'width' => 290,
-              'height' => 73,
-              'loading' => 'eager',
-              'fetchpriority' => 'high',
-          ]) ?>
+          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img">
         <?php else: ?>
           <span class="logo-mark">T</span>
           <span class="logo-text">
@@ -514,25 +470,9 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
 <aside class="offcanvas" id="offcanvas">
   <div class="offcanvas-head">
     <a href="<?= h(url('/')) ?>" class="logo">
-      <?php
-      // v1.0.73: Mobil menü logosu — SVG önce
-      if (file_exists(__DIR__ . '/../assets/img/logo.svg')) {
-          $logoFile2 = 'assets/img/logo.svg';
-      } else {
-          $logoFile2 = settings('logo', '');
-          if (empty($logoFile2) || !file_exists(__DIR__ . '/../' . $logoFile2)) {
-              $logoFile2 = 'assets/img/logo.png';
-          }
-      }
-      ?>
+      <?php $logoFile2 = settings('logo', 'assets/img/logo.png'); ?>
       <?php if ($logoFile2 && file_exists(__DIR__ . '/../' . $logoFile2)): ?>
-        <?= picture_tag($logoFile2, [
-            'alt' => 'Tekcan Metal',
-            'class' => 'logo-img',
-            'width' => 290,
-            'height' => 73,
-            'loading' => 'lazy',
-        ]) ?>
+        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img">
       <?php else: ?>
         <span class="logo-mark">T</span>
         <span class="logo-text">
