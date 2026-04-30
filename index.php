@@ -28,25 +28,9 @@ require __DIR__ . '/includes/header.php';
 <!-- HERO — Limak'ın 50 logosu sahnesi gibi: koyu lacivert + ortada parlayan logo -->
 <section class="hero-cinema" id="heroCinema">
   <?php if ($sliders): ?>
-    <?php foreach ($sliders as $idx => $sl):
-        // v1.0.72: WebP varsa modern tarayıcılarda WebP servisi
-        $sliderImg = $sl['image'];
-        $sliderImgUrl = img_url($sliderImg);
-        $webpUrl = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $sliderImg);
-        $hasWebp = ($webpUrl !== $sliderImg) && file_exists(__DIR__ . '/' . $webpUrl);
-        $webpFullUrl = $hasWebp ? img_url($webpUrl) : null;
-
-        // image-set: WebP modern + JPG/PNG fallback
-        if ($hasWebp) {
-            $bgImage = "linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), "
-                     . "image-set(url('" . h($webpFullUrl) . "') type('image/webp'), url('" . h($sliderImgUrl) . "') type('image/jpeg'))";
-        } else {
-            $bgImage = "linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), "
-                     . "url('" . h($sliderImgUrl) . "')";
-        }
-    ?>
+    <?php foreach ($sliders as $idx => $sl): ?>
       <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
-           style="background-image: <?= $bgImage ?>;">
+           style="background-image: linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('<?= h(img_url($sl['image'])) ?>');">
       </div>
     <?php endforeach; ?>
   <?php else: ?>

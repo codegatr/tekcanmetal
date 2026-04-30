@@ -232,14 +232,14 @@ function img_url(?string $path, string $default = 'assets/img/placeholder.svg'):
     return url($path);
 }
 
-// ---- v1.0.72: Picture tag helper (WebP modern + JPG/PNG fallback) ----
-// Eğer resim yanında .webp versiyonu varsa <picture> ile servis eder.
-// Aksi takdirde standart <img> tag.
+// ---- v1.0.72/v1.0.76: Picture tag helper ----
+// .htaccess WebP rewrite kuralı (line ~155) tarayıcı 'Accept: image/webp' gönderirse
+// otomatik olarak .webp versiyonu servis eder. HTML değişmez, basit <img> yeterli.
+// Bu fonksiyon backwards-compatibility için tutuluyor — sadece <img> dönüyor.
 function picture_tag(?string $path, array $attrs = []): string {
     if (!$path) {
         $path = 'assets/img/placeholder.svg';
     }
-    // Default attribute'lar
     $alt = $attrs['alt'] ?? '';
     $class = $attrs['class'] ?? '';
     $loading = $attrs['loading'] ?? 'lazy';
@@ -247,7 +247,6 @@ function picture_tag(?string $path, array $attrs = []): string {
     $height = $attrs['height'] ?? null;
     $fetchPriority = $attrs['fetchpriority'] ?? null;
 
-    // Attribute string oluştur
     $imgAttrs = 'alt="' . h($alt) . '"';
     if ($class) $imgAttrs .= ' class="' . h($class) . '"';
     if ($loading) $imgAttrs .= ' loading="' . h($loading) . '"';
@@ -255,29 +254,8 @@ function picture_tag(?string $path, array $attrs = []): string {
     if ($height) $imgAttrs .= ' height="' . h((string)$height) . '"';
     if ($fetchPriority) $imgAttrs .= ' fetchpriority="' . h($fetchPriority) . '"';
 
-    // SVG'lerde picture gerekmiyor
-    if (preg_match('/\.svg$/i', $path)) {
-        return '<img src="' . h(img_url($path)) . '" ' . $imgAttrs . '>';
-    }
-
-    // External URL'lerde picture gerekmiyor
-    if (preg_match('#^https?://#i', $path)) {
-        return '<img src="' . h($path) . '" ' . $imgAttrs . '>';
-    }
-
-    // WebP versiyonu var mı?
-    $webpPath = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $path);
-    $webpExists = ($webpPath !== $path) && file_exists(__DIR__ . '/../' . $webpPath);
-
-    if ($webpExists) {
-        return '<picture>'
-             . '<source srcset="' . h(url($webpPath)) . '" type="image/webp">'
-             . '<img src="' . h(url($path)) . '" ' . $imgAttrs . '>'
-             . '</picture>';
-    }
-
-    // WebP yok — sadece img
-    return '<img src="' . h(url($path)) . '" ' . $imgAttrs . '>';
+    $url = preg_match('#^https?://#i', $path) ? $path : url($path);
+    return '<img src="' . h($url) . '" ' . $imgAttrs . '>';
 }
 
 // ---- Sürüm karşılaştırma ----
