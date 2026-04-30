@@ -214,3 +214,24 @@ function hreflang_tags(): string {
     $tags[] = '<link rel="alternate" hreflang="x-default" href="' . htmlspecialchars($base . $uri, ENT_QUOTES) . '">';
     return implode("\n  ", $tags);
 }
+
+// ---- i18n-aware settings ----
+/**
+ * Dil-farkındalı settings okuma.
+ * Önce tm_translations'tan setting.{key}.{lang} kontrol eder.
+ * Yoksa normal settings() değerine fallback.
+ *
+ * Kullanım:
+ *   t_setting('site_slogan')           // Aktif dilde slogan
+ *   t_setting('homepage_about_title')  // Aktif dilde ana sayfa başlığı
+ */
+function t_setting(string $key, $default = null): string {
+    $lang = current_lang();
+    if ($lang !== I18N_DEFAULT_LANG) {
+        $translated = t('setting.' . $key, '');
+        if ($translated !== '' && $translated !== 'setting.' . $key) {
+            return $translated;
+        }
+    }
+    return (string)settings($key, $default ?? '');
+}

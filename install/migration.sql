@@ -3496,3 +3496,365 @@ INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
   ('legal.terms_title', 'en', 'Terms of Use', 'legal'),
   ('legal.terms_title', 'ar', 'شروط الاستخدام', 'legal'),
   ('legal.terms_title', 'ru', 'Условия использования', 'legal');
+
+-- =====================================================
+-- v1.0.58 — DB İÇERİK ÇEVİRİLERİ (Bölüm 1)
+-- Settings + Slider + Kategoriler + 3 Hizmet
+-- =====================================================
+
+INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
+  ('setting.site_slogan', 'tr', 'Ticaret ile Bitmeyen Dostluk', 'setting'),
+  ('setting.site_slogan', 'en', 'Friendship Beyond Trade', 'setting'),
+  ('setting.site_slogan', 'ar', 'صداقة لا تنتهي بالتجارة', 'setting'),
+  ('setting.site_slogan', 'ru', 'Дружба, не ограниченная торговлей', 'setting'),
+  ('setting.site_description', 'tr', 'Demir adına Herşey... Sac, boru, profil, hadde ve özel çelik ürünleri ile inşaat, sanayi ve OEM müşterilerine 7/24 hizmet.', 'setting'),
+  ('setting.site_description', 'en', 'Everything in the name of Steel... Sheet, pipe, profile, rolled and special steel products serving construction, industrial and OEM customers 24/7.', 'setting'),
+  ('setting.site_description', 'ar', 'كل ما يخص الفولاذ... منتجات الألواح والأنابيب والمقاطع والصفائح المدرفلة والفولاذ الخاص للبناء والصناعة وعملاء التصنيع OEM على مدار الساعة.', 'setting'),
+  ('setting.site_description', 'ru', 'Всё для металла... Листы, трубы, профили, прокат и спецсталь для строительства, промышленности и OEM-клиентов круглосуточно.', 'setting'),
+  ('setting.site_address', 'tr', 'Fevziçakmak Mahallesi Gülistan Cad. Atiker 3, 2.Blok No:33 AS - Karatay - Konya', 'setting'),
+  ('setting.site_address', 'en', 'Fevzicakmak District, Gulistan Street, Atiker 3, Block 2 No:33 AS - Karatay - Konya', 'setting'),
+  ('setting.site_address', 'ar', 'حي فوزي تشاكماك، شارع غولستان، أتيكر 3، البلوك 2 رقم 33 AS - كاراتاي - قونية', 'setting'),
+  ('setting.site_address', 'ru', 'Район Февзичакмак, ул. Гюлистан, Атикер 3, Блок 2 № 33 AS - Каратай - Конья', 'setting'),
+  ('setting.site_district', 'tr', 'Karatay', 'setting'),
+  ('setting.site_district', 'en', 'Karatay', 'setting'),
+  ('setting.site_district', 'ar', 'كاراتاي', 'setting'),
+  ('setting.site_district', 'ru', 'Каратай', 'setting'),
+  ('setting.site_city', 'tr', 'Konya', 'setting'),
+  ('setting.site_city', 'en', 'Konya', 'setting'),
+  ('setting.site_city', 'ar', 'قونية', 'setting'),
+  ('setting.site_city', 'ru', 'Конья', 'setting'),
+  ('setting.site_country', 'tr', 'Türkiye', 'setting'),
+  ('setting.site_country', 'en', 'Turkey', 'setting'),
+  ('setting.site_country', 'ar', 'تركيا', 'setting'),
+  ('setting.site_country', 'ru', 'Турция', 'setting'),
+  ('setting.site_whatsapp_label', 'tr', 'Tekcan Metal - Danışman', 'setting'),
+  ('setting.site_whatsapp_label', 'en', 'Tekcan Metal - Consultant', 'setting'),
+  ('setting.site_whatsapp_label', 'ar', 'تكجان للحديد - مستشار', 'setting'),
+  ('setting.site_whatsapp_label', 'ru', 'Tekcan Metal - Консультант', 'setting'),
+  ('setting.site_whatsapp_msg', 'tr', 'Merhaba. Size nasıl yardımcı olabiliriz?', 'setting'),
+  ('setting.site_whatsapp_msg', 'en', 'Hello. How can we help you?', 'setting'),
+  ('setting.site_whatsapp_msg', 'ar', 'مرحبا. كيف يمكننا مساعدتك؟', 'setting'),
+  ('setting.site_whatsapp_msg', 'ru', 'Здравствуйте. Чем мы можем помочь?', 'setting'),
+  ('setting.working_hours', 'tr', 'Pazartesi–Cumartesi: 08:00 – 18:00', 'setting'),
+  ('setting.working_hours', 'en', 'Monday-Saturday: 08:00 - 18:00', 'setting'),
+  ('setting.working_hours', 'ar', 'الإثنين-السبت: 08:00 - 18:00', 'setting'),
+  ('setting.working_hours', 'ru', 'Понедельник-Суббота: 08:00 - 18:00', 'setting'),
+  ('setting.tax_office', 'tr', 'Selçuk', 'setting'),
+  ('setting.tax_office', 'en', 'Selcuk Tax Office', 'setting'),
+  ('setting.tax_office', 'ar', 'مكتب ضرائب سلجوق', 'setting'),
+  ('setting.tax_office', 'ru', 'Налоговая Сельчук', 'setting'),
+  ('setting.homepage_about_title', 'tr', 'Birlikte Daha Güçlüyüz', 'setting'),
+  ('setting.homepage_about_title', 'en', 'Stronger Together', 'setting'),
+  ('setting.homepage_about_title', 'ar', 'معاً أقوى', 'setting'),
+  ('setting.homepage_about_title', 'ru', 'Вместе — сильнее', 'setting'),
+  ('setting.homepage_about_text', 'tr', 'Tekcan Metal, demir-çelik sektöründe üretilen mamul ve yarı mamullerin pazarlama ve dağıtımını yapmak amacıyla 2005 yılında şahıs şirketi olarak kurulmuştur. Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle 2017 yılında şirketleşerek faaliyetlerini kurumsal yapıya taşımıştır. Bugün, Karatay/Konya adresinde faaliyet gösteren Tekcan Metal; yüksek kaliteli hizmet anlayışı, güler yüzlü ticaret yaklaşımı ve müşteri odaklı çözümleri ile sektörde güvenilir bir konum elde etmiştir.', 'setting'),
+  ('setting.homepage_about_text', 'en', 'Tekcan Metal was founded in 2005 as a sole proprietorship to market and distribute products and semi-finished goods produced in the iron and steel industry. With the trust gained from growing business volume and customer satisfaction, the company was incorporated in 2017, moving its operations to a corporate structure. Today, operating in Karatay/Konya, Tekcan Metal has established a reliable position in the industry with its high-quality service approach, friendly trade philosophy and customer-focused solutions.', 'setting'),
+  ('setting.homepage_about_text', 'ar', 'تأسست تكجان للحديد عام 2005 كمؤسسة فردية لتسويق وتوزيع المنتجات وشبه المصنعة في صناعة الحديد والصلب. بفضل الثقة المتزايدة من حجم الأعمال ورضا العملاء، تحولت الشركة عام 2017 إلى هيكل مؤسسي. اليوم، تعمل تكجان للحديد في كاراتاي/قونية، وقد حققت مكانة موثوقة في الصناعة من خلال نهج الخدمة عالية الجودة وفلسفة التجارة الودية والحلول المتمحورة حول العميل.', 'setting'),
+  ('setting.homepage_about_text', 'ru', 'Tekcan Metal была основана в 2005 году как индивидуальное предприятие для маркетинга и дистрибуции готовой и полуфабрикатной продукции металлургической промышленности. Благодаря растущему объёму бизнеса и доверию клиентов, в 2017 году компания получила корпоративную структуру. Сегодня Tekcan Metal, работающая в Каратае/Конья, заняла надёжную позицию в отрасли благодаря высокому качеству обслуживания, дружелюбному торговому подходу и клиентоориентированным решениям.', 'setting'),
+  ('setting.footer_about_text', 'tr', 'Tekcan Metal, demir-çelik sektöründe üretilen mamul ve yarı mamullerin pazarlama ve dağıtımını yapmak amacıyla 2005 yılında şahıs şirketi olarak kurulmuştur. Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle 2017 yılında şirketleşerek faaliyetlerini kurumsal yapıya taşımıştır.', 'setting'),
+  ('setting.footer_about_text', 'en', 'Tekcan Metal was founded in 2005 as a sole proprietorship to market and distribute products in the iron and steel industry. With the trust gained from growing business volume and customer satisfaction, the company was incorporated in 2017.', 'setting'),
+  ('setting.footer_about_text', 'ar', 'تأسست تكجان للحديد عام 2005 كمؤسسة فردية لتسويق وتوزيع المنتجات في صناعة الحديد والصلب. تحولت الشركة عام 2017 إلى هيكل مؤسسي بفضل الثقة المتزايدة.', 'setting'),
+  ('setting.footer_about_text', 'ru', 'Tekcan Metal была основана в 2005 году для маркетинга и дистрибуции металлургической продукции. С 2017 года компания работает как корпорация.', 'setting'),
+  ('setting.footer_keywords_text', 'tr', 'Yüksek kaliteli boru, profil, sac, HRP, DKP, ST52, galvaniz, trapez sac, çatı paneli, cephe paneli, lama, silme, kare demir, NPU, NPI, IPE, HEA, HEB ve inşaat demiri tedarikinde güvenilir çözüm ortağınız. TEKCAN METAL — Güçlü yapılar, sağlam çözümler. Geleceğe atılan çelik adımlar!', 'setting'),
+  ('setting.footer_keywords_text', 'en', 'Your reliable solution partner for high-quality pipes, profiles, sheets, HRP, DKP, ST52, galvanized, trapezoidal sheet, roof panels, facade panels, flat bars, square bars, NPU, NPI, IPE, HEA, HEB and construction steel. TEKCAN METAL — Strong structures, solid solutions. Steel steps into the future!', 'setting'),
+  ('setting.footer_keywords_text', 'ar', 'شريكك الموثوق للحلول في توريد الأنابيب والمقاطع والألواح عالية الجودة، HRP، DKP، ST52، المجلفن، الألواح شبه المنحرفة، ألواح السقف، ألواح الواجهة، القضبان المسطحة والمربعة، NPU، NPI، IPE، HEA، HEB وحديد البناء. تكجان للحديد - هياكل قوية وحلول صلبة. خطوات فولاذية نحو المستقبل!', 'setting'),
+  ('setting.footer_keywords_text', 'ru', 'Ваш надёжный партнёр в поставках высококачественных труб, профилей, листов, HRP, DKP, ST52, оцинкованных, трапециевидных листов, кровельных и фасадных панелей, полос, квадратных прутов, NPU, NPI, IPE, HEA, HEB и арматуры. TEKCAN METAL — Прочные конструкции, надёжные решения. Стальные шаги в будущее!', 'setting'),
+  ('setting.maintenance_message', 'tr', 'Şu anda geçici bir bakım yapılmaktadır. En kısa sürede sizlerleyiz. info@tekcanmetal.com — 0 554 835 0 226', 'setting'),
+  ('setting.maintenance_message', 'en', 'A temporary maintenance is currently in progress. We will be back as soon as possible. info@tekcanmetal.com - 0 554 835 0 226', 'setting'),
+  ('setting.maintenance_message', 'ar', 'يجري حالياً إجراء صيانة مؤقتة. سنعود في أقرب وقت ممكن. info@tekcanmetal.com - 0 554 835 0 226', 'setting'),
+  ('setting.maintenance_message', 'ru', 'Сейчас проводятся временные технические работы. Мы вернёмся в ближайшее время. info@tekcanmetal.com - 0 554 835 0 226', 'setting'),
+  ('setting.stat_year_label', 'tr', 'Yıllık Tecrübe', 'setting'),
+  ('setting.stat_year_label', 'en', 'Years Experience', 'setting'),
+  ('setting.stat_year_label', 'ar', 'سنة من الخبرة', 'setting'),
+  ('setting.stat_year_label', 'ru', 'Лет опыта', 'setting'),
+  ('setting.stat_products_label', 'tr', 'Ürün Çeşidi', 'setting'),
+  ('setting.stat_products_label', 'en', 'Product Variety', 'setting'),
+  ('setting.stat_products_label', 'ar', 'تنوع المنتجات', 'setting'),
+  ('setting.stat_products_label', 'ru', 'Видов продукции', 'setting'),
+  ('setting.stat_customers_label', 'tr', 'Mutlu Müşteri', 'setting'),
+  ('setting.stat_customers_label', 'en', 'Happy Customers', 'setting'),
+  ('setting.stat_customers_label', 'ar', 'عميل سعيد', 'setting'),
+  ('setting.stat_customers_label', 'ru', 'Довольных клиентов', 'setting'),
+  ('setting.stat_orders_label', 'tr', 'Ürün Siparişi', 'setting'),
+  ('setting.stat_orders_label', 'en', 'Product Orders', 'setting'),
+  ('setting.stat_orders_label', 'ar', 'طلبات المنتجات', 'setting'),
+  ('setting.stat_orders_label', 'ru', 'Заказов', 'setting'),
+  ('setting.stat_branches_label', 'tr', 'Firma Şubesi', 'setting'),
+  ('setting.stat_branches_label', 'en', 'Company Branch', 'setting'),
+  ('setting.stat_branches_label', 'ar', 'فروع الشركة', 'setting'),
+  ('setting.stat_branches_label', 'ru', 'Филиал', 'setting'),
+  ('setting.stat_delivery_label', 'tr', 'Sevkiyat Hizmeti', 'setting'),
+  ('setting.stat_delivery_label', 'en', 'Delivery Service', 'setting'),
+  ('setting.stat_delivery_label', 'ar', 'خدمة الشحن', 'setting'),
+  ('setting.stat_delivery_label', 'ru', 'Служба доставки', 'setting');
+
+-- Slider çevirileri (mevcut TR title'a göre WHERE)
+
+UPDATE tm_sliders SET
+  title_en = 'Trust of nearly half a century in the steel industry',
+  title_ar = 'ثقة تقترب من نصف قرن في صناعة الحديد والصلب',
+  title_ru = 'Почти полвека доверия в металлургии',
+  subtitle_en = 'Tekcan Metal',
+  subtitle_ar = 'تكجان للحديد',
+  subtitle_ru = 'Tekcan Metal',
+  description_en = 'Since 2005, based in Konya; we provide solutions to the industry and construction sectors as authorized representatives of Turkey''s leading manufacturers in sheet, pipe, profile, rolled and special steel products.',
+  description_ar = 'منذ 2005، مقرنا في قونية؛ نقدم الحلول لقطاعي الصناعة والبناء كممثلين معتمدين لكبار المصنعين في تركيا في منتجات الألواح والأنابيب والمقاطع والمنتجات المدرفلة والفولاذ الخاص.',
+  description_ru = 'С 2005 года, штаб-квартира в Конья; мы предоставляем решения для промышленности и строительства как авторизованные представители ведущих производителей Турции по листам, трубам, профилям, прокату и спецстали.',
+  link_text_en = 'Who We Are',
+  link_text_ar = 'من نحن',
+  link_text_ru = 'Кто мы'
+WHERE title = 'Demir-çelik sektöründe yarım asra yakın güven';
+
+UPDATE tm_sliders SET
+  title_en = 'End-to-end steel supply from a single source',
+  title_ar = 'توريد الحديد والصلب من نقطة واحدة من البداية للنهاية',
+  title_ru = 'Комплексные поставки металла из одних рук',
+  subtitle_en = 'Our Solution Range',
+  subtitle_ar = 'نطاق حلولنا',
+  subtitle_ru = 'Наш ассортимент решений',
+  description_en = 'With our extensive stock; laser and oxygen cutting workshops; same-day production and shipping capacity, we are by your side at every stage of your projects.',
+  description_ar = 'مع مخزوننا الواسع؛ وورش القطع بالليزر والأكسجين؛ وقدرة الإنتاج والشحن في نفس اليوم، نحن بجانبك في كل مرحلة من مراحل مشاريعك.',
+  description_ru = 'Большие складские запасы, лазерные и газокислородные цеха, производство и отгрузка в тот же день — мы с вами на каждом этапе проекта.',
+  link_text_en = 'Our Capabilities',
+  link_text_ar = 'قدراتنا',
+  link_text_ru = 'Наши возможности'
+WHERE title = 'Tek elden, uçtan uca demir-çelik tedariği';
+
+UPDATE tm_sliders SET
+  title_en = '24/7 shipping network across Turkey',
+  title_ar = 'شبكة شحن على مدار الساعة في جميع أنحاء تركيا',
+  title_ru = 'Доставка 24/7 по всей Турции',
+  subtitle_en = 'Operational Excellence',
+  subtitle_ar = 'التميز التشغيلي',
+  subtitle_ru = 'Операционное совершенство',
+  description_en = 'With our Konya-based warehouse and contracted transportation partners, we offer timely, complete delivery commitment to all 81 cities.',
+  description_ar = 'مع مستودعنا الرئيسي في قونية وشركاء النقل المتعاقدين معنا، نقدم التزاماً بالتسليم في الوقت المحدد والكامل لجميع المدن الـ81.',
+  description_ru = 'С нашим складом в Конья и партнёрами-перевозчиками мы гарантируем своевременную доставку во все 81 город Турции.',
+  link_text_en = 'Contact Us',
+  link_text_ar = 'تواصل معنا',
+  link_text_ru = 'Свяжитесь с нами'
+WHERE title = 'Türkiye genelinde 7/24 sevkiyat ağı';
+
+-- Kategori çevirileri
+
+UPDATE tm_categories SET
+  name_en = 'Sheet Products',
+  name_ar = 'منتجات الألواح',
+  name_ru = 'Листовая продукция',
+  short_desc_en = 'HRP, DKP, galvanized, stainless and non-oxide sheet varieties.',
+  short_desc_ar = 'أنواع الألواح HRP وDKP والمجلفنة والمقاومة للصدأ والخالية من الأكسيد.',
+  short_desc_ru = 'HRP, DKP, оцинкованный, нержавеющий лист.'
+WHERE slug = 'sac-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Pipe Products',
+  name_ar = 'منتجات الأنابيب',
+  name_ru = 'Трубная продукция',
+  short_desc_en = 'Welded/seamless, square/rectangular profile pipes, water and gas pipes.',
+  short_desc_ar = 'أنابيب ملحومة/بدون لحام، مربعة/مستطيلة، أنابيب المياه والغاز.',
+  short_desc_ru = 'Сварные/бесшовные, квадратные/прямоугольные профильные трубы, водо- и газопроводные.'
+WHERE slug = 'boru-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Profile Products',
+  name_ar = 'منتجات المقاطع',
+  name_ru = 'Профильная продукция',
+  short_desc_en = 'NPU, NPI, IPE, HEA, HEB, flat bar, square, T and L profiles.',
+  short_desc_ar = 'مقاطع NPU وNPI وIPE وHEA وHEB والقضبان المسطحة والمربعة وT وL.',
+  short_desc_ru = 'Профили NPU, NPI, IPE, HEA, HEB, полоса, квадрат, T и L.'
+WHERE slug = 'profil-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Construction Steel',
+  name_ar = 'حديد البناء',
+  name_ru = 'Арматура',
+  short_desc_en = 'Ribbed, plain construction steel and steel mesh varieties.',
+  short_desc_ar = 'حديد البناء المضلع والمستوي وأنواع الشبك الفولاذي.',
+  short_desc_ru = 'Рифлёная, гладкая арматура и сетка стальная.'
+WHERE slug = 'insaat-demiri';
+
+UPDATE tm_categories SET
+  name_en = 'Roof & Facade',
+  name_ar = 'السقف والواجهة',
+  name_ru = 'Кровля и фасад',
+  short_desc_en = 'Trapezoidal sheet, roof panel, facade panel, sandwich panel.',
+  short_desc_ar = 'الألواح شبه المنحرفة، ألواح السقف والواجهة، الألواح الساندويتش.',
+  short_desc_ru = 'Трапециевидный лист, кровельная и фасадная панель, сэндвич-панель.'
+WHERE slug = 'cati-cephe';
+
+UPDATE tm_categories SET
+  name_en = 'Special Products',
+  name_ar = 'منتجات خاصة',
+  name_ru = 'Спецпродукция',
+  short_desc_en = 'Decorative sheet, corten steel, perforated sheet and custom manufacturing.',
+  short_desc_ar = 'الألواح الزخرفية، الفولاذ كورتن، الألواح المثقبة والتصنيع المخصص.',
+  short_desc_ru = 'Декоративный лист, кортен-сталь, перфорированный лист, спецпроизводство.'
+WHERE slug = 'ozel-urunler';
+
+-- Slider çevirileri (mevcut TR title'a göre WHERE)
+
+UPDATE tm_sliders SET
+  title_en = 'Trust of nearly half a century in the steel industry',
+  title_ar = 'ثقة تقترب من نصف قرن في صناعة الحديد والصلب',
+  title_ru = 'Почти полвека доверия в металлургии',
+  subtitle_en = 'Tekcan Metal',
+  subtitle_ar = 'تكجان للحديد',
+  subtitle_ru = 'Tekcan Metal',
+  description_en = 'Since 2005, based in Konya; we provide solutions to the industry and construction sectors as authorized representatives of Turkey''s leading manufacturers in sheet, pipe, profile, rolled and special steel products.',
+  description_ar = 'منذ 2005، مقرنا في قونية؛ نقدم الحلول لقطاعي الصناعة والبناء كممثلين معتمدين لكبار المصنعين في تركيا في منتجات الألواح والأنابيب والمقاطع والمنتجات المدرفلة والفولاذ الخاص.',
+  description_ru = 'С 2005 года, штаб-квартира в Конья; мы предоставляем решения для промышленности и строительства как авторизованные представители ведущих производителей Турции по листам, трубам, профилям, прокату и спецстали.',
+  link_text_en = 'Who We Are',
+  link_text_ar = 'من نحن',
+  link_text_ru = 'Кто мы'
+WHERE title = 'Demir-çelik sektöründe yarım asra yakın güven';
+
+UPDATE tm_sliders SET
+  title_en = 'End-to-end steel supply from a single source',
+  title_ar = 'توريد الحديد والصلب من نقطة واحدة من البداية للنهاية',
+  title_ru = 'Комплексные поставки металла из одних рук',
+  subtitle_en = 'Our Solution Range',
+  subtitle_ar = 'نطاق حلولنا',
+  subtitle_ru = 'Наш ассортимент решений',
+  description_en = 'With our extensive stock; laser and oxygen cutting workshops; same-day production and shipping capacity, we are by your side at every stage of your projects.',
+  description_ar = 'مع مخزوننا الواسع؛ وورش القطع بالليزر والأكسجين؛ وقدرة الإنتاج والشحن في نفس اليوم، نحن بجانبك في كل مرحلة من مراحل مشاريعك.',
+  description_ru = 'Большие складские запасы, лазерные и газокислородные цеха, производство и отгрузка в тот же день — мы с вами на каждом этапе проекта.',
+  link_text_en = 'Our Capabilities',
+  link_text_ar = 'قدراتنا',
+  link_text_ru = 'Наши возможности'
+WHERE title = 'Tek elden, uçtan uca demir-çelik tedariği';
+
+UPDATE tm_sliders SET
+  title_en = '24/7 shipping network across Turkey',
+  title_ar = 'شبكة شحن على مدار الساعة في جميع أنحاء تركيا',
+  title_ru = 'Доставка 24/7 по всей Турции',
+  subtitle_en = 'Operational Excellence',
+  subtitle_ar = 'التميز التشغيلي',
+  subtitle_ru = 'Операционное совершенство',
+  description_en = 'With our Konya-based warehouse and contracted transportation partners, we offer timely, complete delivery commitment to all 81 cities.',
+  description_ar = 'مع مستودعنا الرئيسي في قونية وشركاء النقل المتعاقدين معنا، نقدم التزاماً بالتسليم في الوقت المحدد والكامل لجميع المدن الـ81.',
+  description_ru = 'С нашим складом в Конья и партнёрами-перевозчиками мы гарантируем своевременную доставку во все 81 город Турции.',
+  link_text_en = 'Contact Us',
+  link_text_ar = 'تواصل معنا',
+  link_text_ru = 'Свяжитесь с нами'
+WHERE title = 'Türkiye genelinde 7/24 sevkiyat ağı';
+
+-- Kategori çevirileri
+
+UPDATE tm_categories SET
+  name_en = 'Sheet Products',
+  name_ar = 'منتجات الألواح',
+  name_ru = 'Листовая продукция',
+  short_desc_en = 'HRP, DKP, galvanized, stainless and non-oxide sheet varieties.',
+  short_desc_ar = 'أنواع الألواح HRP وDKP والمجلفنة والمقاومة للصدأ والخالية من الأكسيد.',
+  short_desc_ru = 'HRP, DKP, оцинкованный, нержавеющий лист.'
+WHERE slug = 'sac-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Pipe Products',
+  name_ar = 'منتجات الأنابيب',
+  name_ru = 'Трубная продукция',
+  short_desc_en = 'Welded/seamless, square/rectangular profile pipes, water and gas pipes.',
+  short_desc_ar = 'أنابيب ملحومة/بدون لحام، مربعة/مستطيلة، أنابيب المياه والغاز.',
+  short_desc_ru = 'Сварные/бесшовные, квадратные/прямоугольные профильные трубы, водо- и газопроводные.'
+WHERE slug = 'boru-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Profile Products',
+  name_ar = 'منتجات المقاطع',
+  name_ru = 'Профильная продукция',
+  short_desc_en = 'NPU, NPI, IPE, HEA, HEB, flat bar, square, T and L profiles.',
+  short_desc_ar = 'مقاطع NPU وNPI وIPE وHEA وHEB والقضبان المسطحة والمربعة وT وL.',
+  short_desc_ru = 'Профили NPU, NPI, IPE, HEA, HEB, полоса, квадрат, T и L.'
+WHERE slug = 'profil-urunleri';
+
+UPDATE tm_categories SET
+  name_en = 'Construction Steel',
+  name_ar = 'حديد البناء',
+  name_ru = 'Арматура',
+  short_desc_en = 'Ribbed, plain construction steel and steel mesh varieties.',
+  short_desc_ar = 'حديد البناء المضلع والمستوي وأنواع الشبك الفولاذي.',
+  short_desc_ru = 'Рифлёная, гладкая арматура и сетка стальная.'
+WHERE slug = 'insaat-demiri';
+
+UPDATE tm_categories SET
+  name_en = 'Roof & Facade',
+  name_ar = 'السقف والواجهة',
+  name_ru = 'Кровля и фасад',
+  short_desc_en = 'Trapezoidal sheet, roof panel, facade panel, sandwich panel.',
+  short_desc_ar = 'الألواح شبه المنحرفة، ألواح السقف والواجهة، الألواح الساندويتش.',
+  short_desc_ru = 'Трапециевидный лист, кровельная и фасадная панель, сэндвич-панель.'
+WHERE slug = 'cati-cephe';
+
+UPDATE tm_categories SET
+  name_en = 'Special Products',
+  name_ar = 'منتجات خاصة',
+  name_ru = 'Спецпродукция',
+  short_desc_en = 'Decorative sheet, corten steel, perforated sheet and custom manufacturing.',
+  short_desc_ar = 'الألواح الزخرفية، الفولاذ كورتن، الألواح المثقبة والتصنيع المخصص.',
+  short_desc_ru = 'Декоративный лист, кортен-сталь, перфорированный лист, спецпроизводство.'
+WHERE slug = 'ozel-urunler';
+
+-- 3 Hizmet 4 dil çevirileri
+
+UPDATE tm_services SET
+  title_en = 'Laser Cutting',
+  title_ar = 'القطع بالليزر',
+  title_ru = 'Лазерная резка',
+  short_desc_en = 'Industrial cutting service with fiber laser technology in 0.5-25 mm sheet thickness range with ±0.1 mm precision. Send your DXF/DWG file, we put it into production same day.',
+  short_desc_ar = 'خدمة قطع صناعية بتقنية الليزر الليفي بسماكة الألواح من 0.5 إلى 25 مم بدقة ±0.1 مم. أرسل ملف DXF/DWG، ونبدأ الإنتاج في نفس اليوم.',
+  short_desc_ru = 'Промышленная резка волоконным лазером, толщина листа 0.5-25 мм, точность ±0.1 мм. Отправьте файл DXF/DWG — производство в тот же день.',
+  meta_title_en = 'Laser Cutting Service Konya | Tekcan Metal',
+  meta_title_ar = 'خدمة القطع بالليزر في قونية | تكجان للحديد',
+  meta_title_ru = 'Услуги лазерной резки в Конья | Tekcan Metal',
+  meta_desc_en = 'Tekcan Metal laser cutting workshop - fiber laser 0.5-25 mm thickness, ±0.1 mm precision, 1500x3000 mm table. DXF/DWG accepted, same-day quote, 81 cities shipping.',
+  meta_desc_ar = 'ورشة القطع بالليزر تكجان للحديد - الليزر الليفي بسماكة 0.5-25 مم، دقة ±0.1 مم، طاولة 1500x3000 مم. قبول ملفات DXF/DWG، عرض سعر في نفس اليوم، شحن إلى 81 مدينة.',
+  meta_desc_ru = 'Цех лазерной резки Tekcan Metal — волоконный лазер, толщина 0.5-25 мм, точность ±0.1 мм, стол 1500x3000 мм. Приём DXF/DWG, предложение в день обращения, доставка в 81 город.',
+  features_en = '["0.5 mm - 25 mm sheet thickness range", "±0.1 mm industrial precision", "1500 × 3000 mm maximum table size", "DXF, DWG, STEP, PDF file formats", "CAM software-optimized cutting paths", "Carbon, stainless and galvanized sheet", "Same-day cutting and shipping (before 09:00)", "3D modeling and engineering consultancy", "Smooth edge, zero burrs", "Optimum efficiency in complex geometries"]',
+  features_ar = '["نطاق سماكة الألواح من 0.5 إلى 25 مم", "دقة صناعية ±0.1 مم", "حجم طاولة أقصى 1500 × 3000 مم", "تنسيقات الملفات DXF و DWG و STEP و PDF", "مسارات قطع محسّنة ببرنامج CAM", "ألواح كربون ومقاومة للصدأ ومجلفنة", "قطع وشحن في نفس اليوم (قبل 09:00)", "نمذجة ثلاثية الأبعاد واستشارة هندسية", "حواف ناعمة، صفر نتوءات", "كفاءة مثالية في الأشكال الهندسية المعقدة"]',
+  features_ru = '["Толщина листа 0.5-25 мм", "Промышленная точность ±0.1 мм", "Максимальный стол 1500 × 3000 мм", "Форматы файлов DXF, DWG, STEP, PDF", "Оптимизация резки CAM-программой", "Углеродистый, нержавеющий и оцинкованный лист", "Резка и отгрузка в день обращения (до 09:00)", "3D-моделирование и инженерные консультации", "Гладкая кромка, без заусенцев", "Эффективность сложных геометрий"]',
+  specs_en = '{"Cutting Type":"Fiber Laser","Sheet Thickness":"0.5 - 25 mm","Table Size":"1500 × 3000 mm","Precision":"±0.1 mm","Cutting Speed":"5-30 m/min","File Formats":"DXF, DWG, STEP, PDF","Material":"Carbon / Stainless / Galvanized","Lead Time":"Same day - 3 business days"}',
+  specs_ar = '{"نوع القطع":"ليزر ليفي","سماكة اللوح":"0.5 - 25 مم","حجم الطاولة":"1500 × 3000 مم","الدقة":"±0.1 مم","سرعة القطع":"5-30 م/دقيقة","تنسيقات الملفات":"DXF, DWG, STEP, PDF","المادة":"كربون / مقاوم للصدأ / مجلفن","مدة التسليم":"نفس اليوم - 3 أيام عمل"}',
+  specs_ru = '{"Тип резки":"Волоконный лазер","Толщина листа":"0.5 - 25 мм","Размер стола":"1500 × 3000 мм","Точность":"±0.1 мм","Скорость резки":"5-30 м/мин","Форматы файлов":"DXF, DWG, STEP, PDF","Материал":"Углерод / Нерж / Оцинк","Срок":"В день - 3 дня"}'
+WHERE slug = 'lazer-kesim';
+
+UPDATE tm_services SET
+  title_en = 'Oxygen Cutting',
+  title_ar = 'القطع بالأكسجين',
+  title_ru = 'Газокислородная резка',
+  short_desc_en = 'Economical CNC oxygen cutting service for thick steel plates from 6 mm to 200 mm. Ideal for heavy structural, shipbuilding and machinery industries.',
+  short_desc_ar = 'خدمة قطع اقتصادية بالأكسجين CNC للألواح الفولاذية السميكة من 6 ملم إلى 200 ملم. مثالية لصناعات الهياكل الثقيلة وبناء السفن والآلات.',
+  short_desc_ru = 'Экономичная газокислородная CNC-резка толстых стальных листов от 6 до 200 мм. Идеально для тяжёлых металлоконструкций, судостроения и машиностроения.',
+  meta_title_en = 'Oxygen Cutting Service Konya | Tekcan Metal',
+  meta_title_ar = 'خدمة القطع بالأكسجين في قونية | تكجان للحديد',
+  meta_title_ru = 'Газокислородная резка в Конья | Tekcan Metal',
+  meta_desc_en = 'Tekcan Metal CNC oxygen cutting service - thick plate cutting from 6-200 mm. K-form, V-form, Y-form weld preparation. Heavy industry experience.',
+  meta_desc_ar = 'خدمة القطع بالأكسجين CNC من تكجان للحديد - قطع الألواح السميكة من 6-200 مم. تجهيز اللحام بأشكال K و V و Y. خبرة في الصناعة الثقيلة.',
+  meta_desc_ru = 'Газокислородная CNC-резка Tekcan Metal — толстый лист 6-200 мм. Подготовка кромок K, V, Y форм. Опыт в тяжёлой промышленности.',
+  features_en = '["6 mm - 200 mm carbon steel plate cutting", "K, V, Y, X form weld preparation", "Multi-torch CNC table 3000 × 12000 mm", "Economical price for thick plates", "Heavy industry, shipbuilding, machinery", "Standard ST37, ST44, ST52 carbon steel", "Same-day cutting capability", "DXF/DWG file acceptance"]',
+  features_ar = '["قطع ألواح الفولاذ الكربوني من 6-200 مم", "تجهيز اللحام بأشكال K و V و Y و X", "طاولة CNC متعددة المشاعل 3000 × 12000 مم", "أسعار اقتصادية للألواح السميكة", "الصناعة الثقيلة وبناء السفن والآلات", "الفولاذ الكربوني القياسي ST37, ST44, ST52", "إمكانية القطع في نفس اليوم", "قبول ملفات DXF/DWG"]',
+  features_ru = '["Резка углеродистого листа 6-200 мм", "Подготовка кромок K, V, Y, X форм", "Многорезаковый CNC-стол 3000 × 12000 мм", "Экономично для толстых листов", "Тяжёлая промышленность, судостроение", "Стандарт ST37, ST44, ST52", "Резка в день обращения", "Приём файлов DXF/DWG"]',
+  specs_en = '{"Cutting Type":"CNC Oxy-Fuel","Sheet Thickness":"6 - 200 mm","Table Size":"3000 × 12000 mm","Material":"Carbon Steel (ST37/ST44/ST52)","Weld Prep":"K, V, Y, X form","Lead Time":"Same day - 5 business days"}',
+  specs_ar = '{"نوع القطع":"CNC أكسجين-وقود","سماكة اللوح":"6 - 200 مم","حجم الطاولة":"3000 × 12000 مم","المادة":"فولاذ كربوني (ST37/ST44/ST52)","تجهيز اللحام":"أشكال K, V, Y, X","مدة التسليم":"نفس اليوم - 5 أيام عمل"}',
+  specs_ru = '{"Тип резки":"CNC газокислородная","Толщина":"6 - 200 мм","Стол":"3000 × 12000 мм","Материал":"Углерод (ST37/ST44/ST52)","Кромка":"K, V, Y, X","Срок":"В день - 5 дней"}'
+WHERE slug = 'oksijen-kesim';
+
+UPDATE tm_services SET
+  title_en = 'Decorative Sheet Manufacturing',
+  title_ar = 'تصنيع الألواح الزخرفية',
+  title_ru = 'Производство декоративных листов',
+  short_desc_en = 'Custom-pattern decorative sheet manufacturing for architectural and interior design applications. CNC laser-cut, powder-coated finish.',
+  short_desc_ar = 'تصنيع ألواح زخرفية بأنماط مخصصة لتطبيقات التصميم المعماري والداخلي. قطع بليزر CNC، طلاء بالمسحوق.',
+  short_desc_ru = 'Производство декоративных листов с индивидуальными узорами для архитектурного и интерьерного дизайна. Лазерная CNC-резка, порошковая окраска.',
+  meta_title_en = 'Decorative Sheet & Corten Steel | Tekcan Metal',
+  meta_title_ar = 'الألواح الزخرفية وفولاذ كورتن | تكجان للحديد',
+  meta_title_ru = 'Декоративные листы и кортен-сталь | Tekcan Metal',
+  meta_desc_en = 'Custom decorative sheet patterns, corten steel, perforated panels for villa facades, fences, balcony railings, ceiling panels. Architectural sheet manufacturing.',
+  meta_desc_ar = 'أنماط ألواح زخرفية مخصصة، فولاذ كورتن، ألواح مثقبة لواجهات الفلل والأسوار وحواجز الشرفات وألواح السقف. تصنيع الألواح المعمارية.',
+  meta_desc_ru = 'Декоративные листы с индивидуальным рисунком, кортен-сталь, перфорированные панели для фасадов вилл, заборов, перил балконов, потолочных панелей.',
+  features_en = '["Fiber laser cutting for custom patterns", "Steel, stainless, copper, aluminum sheets", "Corten steel for architectural facades", "Powder-coated finish (10+ year warranty)", "Free 3D rendering and consultation", "Mounting kit support", "Mockup production for large projects", "81 cities shipping with installation support"]',
+  features_ar = '["قطع بليزر ليفي للأنماط المخصصة", "ألواح فولاذ ومقاوم للصدأ ونحاس وألمنيوم", "فولاذ كورتن للواجهات المعمارية", "طلاء مسحوقي (ضمان 10+ سنوات)", "تصميم ثلاثي الأبعاد واستشارة مجانية", "دعم طقم التركيب", "إنتاج نموذج مصغر للمشاريع الكبيرة", "شحن إلى 81 مدينة مع دعم التركيب"]',
+  features_ru = '["Лазерная резка по индивидуальным узорам", "Сталь, нержавейка, медь, алюминий", "Кортен-сталь для архитектурных фасадов", "Порошковая окраска (гарантия 10+ лет)", "Бесплатный 3D-рендеринг и консультация", "Комплект для монтажа", "Макетное производство для крупных проектов", "Доставка в 81 город с поддержкой монтажа"]',
+  specs_en = '{"Cutting Type":"Fiber Laser","Sheet Thickness":"1 - 8 mm","Material":"Steel / Stainless / Copper / Aluminum / Corten","Finish":"Powder coat / Galvanized / Natural patina","Pattern":"Custom or library","Lead Time":"5-15 business days"}',
+  specs_ar = '{"نوع القطع":"ليزر ليفي","السماكة":"1 - 8 مم","المادة":"فولاذ / مقاوم للصدأ / نحاس / ألمنيوم / كورتن","التشطيب":"طلاء مسحوقي / مجلفن / طبقة طبيعية","النمط":"مخصص أو من المكتبة","مدة التسليم":"5-15 يوم عمل"}',
+  specs_ru = '{"Тип резки":"Волоконный лазер","Толщина":"1 - 8 мм","Материал":"Сталь / Нерж / Медь / Алюминий / Кортен","Покрытие":"Порошковое / Оцинковка / Натуральная патина","Узор":"Индивидуальный или из библиотеки","Срок":"5-15 рабочих дней"}'
+WHERE slug = 'dekoratif-saclar';
