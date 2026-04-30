@@ -516,3 +516,59 @@ WHERE `key` = 'site_keywords';
 UPDATE tm_settings SET value = 'Tekcan Metal — Türkiye genelinde 2005''ten bu yana faaliyet gösteren Konya merkezli demir-çelik tedarikçisi. Sac (DKP, HRP, ST-52, galvanizli), boru, profil, hadde, nervürlü demir, çelik hasır ve özel ölçü çelik ürünlerinde 81 il sevkiyat ağı. Erdemir, Borçelik, Habaş, İçdaş, Tosyalı Çelik tedarik ortaklığıyla üretici sertifikalı, rekabetçi fiyatlı tedarik. Lazer kesim, oksijen kesim ve dekoratif sac üretim atölyemizle endüstriyel projelere uçtan uca çözüm. Irak, Suriye, Azerbaycan ve Türkmenistan ihracat hattı.'
 WHERE `key` = 'site_description';
 
+
+-- =====================================================
+-- v1.0.40 — tm_categories kolonlarını garantile
+-- (Eski DB'lerde meta_desc, meta_title, short_desc, parent_id, image olmayabilir)
+-- =====================================================
+
+-- meta_title kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_categories'
+                     AND COLUMN_NAME = 'meta_title');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_categories ADD COLUMN meta_title VARCHAR(200) NULL AFTER image',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- meta_desc kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_categories'
+                     AND COLUMN_NAME = 'meta_desc');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_categories ADD COLUMN meta_desc VARCHAR(300) NULL AFTER meta_title',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- short_desc kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_categories'
+                     AND COLUMN_NAME = 'short_desc');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_categories ADD COLUMN short_desc VARCHAR(300) NULL AFTER name',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- parent_id kolonu yoksa ekle (alt kategori desteği)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_categories'
+                     AND COLUMN_NAME = 'parent_id');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_categories ADD COLUMN parent_id INT UNSIGNED NULL AFTER id',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- icon kolonu yoksa ekle
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_categories'
+                     AND COLUMN_NAME = 'icon');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_categories ADD COLUMN icon VARCHAR(80) NULL AFTER short_desc',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
