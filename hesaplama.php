@@ -2,8 +2,102 @@
 require __DIR__ . '/includes/db.php';
 $pageTitle = t('calc.title', 'Ağırlık Hesaplama');
 $metaDesc  = t('calc.meta_desc', 'Demir-çelik ağırlık hesaplama. Görsel diyagramlı, canlı hesaplamalı, çoklu kalem listeli profesyonel hesap motoru.');
+
+// SEO: HowTo + WebApplication Schema (v1.0.69)
+$siteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$calcUrl = $siteUrl . '/hesaplama.php';
+
 require __DIR__ . '/includes/header.php';
 ?>
+
+<!-- HowTo Schema — "demir çelik ağırlık nasıl hesaplanır" sorgu için -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Demir Çelik Sac Ağırlık Hesaplama Nasıl Yapılır?",
+  "description": "Sac, boru, profil, hadde gibi demir-çelik ürünlerinin ağırlığını online hesaplama aracıyla saniyeler içinde hesaplama adımları.",
+  "image": "<?= h($siteUrl . '/' . settings('logo', 'assets/img/logo.png')) ?>",
+  "totalTime": "PT2M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "TRY",
+    "value": "0"
+  },
+  "supply": [
+    {"@type": "HowToSupply", "name": "Ürün boyutları (en, boy, kalınlık)"},
+    {"@type": "HowToSupply", "name": "Malzeme türü (çelik, alüminyum, paslanmaz, bakır vs.)"}
+  ],
+  "tool": [
+    {"@type": "HowToTool", "name": "Tekcan Metal Online Ağırlık Hesaplama Motoru"}
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Ürün tipini seçin",
+      "text": "14 farklı demir-çelik ürün grubundan (sac levha, boru, profil, hadde vs.) hesaplama yapacağınız tipi seçin.",
+      "url": "<?= h($calcUrl) ?>#step-1"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Malzeme yoğunluğunu seçin",
+      "text": "Çelik (7.85 g/cm³), Paslanmaz 304 (7.93), Alüminyum (2.70), Bakır (8.96), Pirinç, Bronz veya özel yoğunluk girebilirsiniz. 17 hazır malzeme yoğunluğu mevcut.",
+      "url": "<?= h($calcUrl) ?>#step-2"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Ürün ölçülerini girin",
+      "text": "Seçtiğiniz ürün tipine göre kalınlık, en, boy, çap, profil ölçüleri ekrana gelir. Hazır ölçüler arasından da seçebilirsiniz.",
+      "url": "<?= h($calcUrl) ?>#step-3"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Anlık ağırlık sonucunu görün",
+      "text": "Tek parça ağırlığı, m²/m³ ağırlığı, toplam adet ağırlığı anında görünür. Listeye ekleyerek çoklu kalem hesabı yapabilir, kg fiyatı girerek toplam maliyeti görebilir, sonucu yazdırabilirsiniz.",
+      "url": "<?= h($calcUrl) ?>#step-4"
+    }
+  ]
+}
+</script>
+
+<!-- WebApplication Schema — "online metal calculator" arama için -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Tekcan Metal Ağırlık Hesaplama Motoru",
+  "alternateName": ["Demir Çelik Hesaplama", "Sac Ağırlık Hesaplama", "Metal Weight Calculator"],
+  "url": "<?= h($calcUrl) ?>",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Engineering Calculator",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TRY"
+  },
+  "featureList": [
+    "14 farklı ürün tipi (sac, boru, profil, hadde)",
+    "17 malzeme yoğunluğu (çelik, paslanmaz, alüminyum, bakır)",
+    "200+ hazır standart ölçü",
+    "Çoklu kalem listesi",
+    "₺ Maliyet hesaplama",
+    "Yazdırma desteği",
+    "Mobil uyumlu"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tekcan Metal",
+    "url": "<?= h($siteUrl) ?>"
+  }
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');

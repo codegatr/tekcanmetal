@@ -10,8 +10,48 @@ if (!$cat) {
 $products = all("SELECT * FROM tm_products WHERE category_id=? AND is_active=1 ORDER BY is_featured DESC, sort_order, name", [$cat['id']]);
 $pageTitle = tr_field($cat, 'name') ?: $cat['name'];
 $metaDesc  = tr_field($cat, 'meta_desc') ?: ('Tekcan Metal ' . tr_field($cat, 'name') . ' ' . t('products.category_meta_suffix', 'kategorisi ürünleri.'));
+
+// SEO: CollectionPage + ItemList Schema (v1.0.69)
+$siteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$catUrl = $siteUrl . '/kategori.php?slug=' . urlencode($cat['slug']);
+
 require __DIR__ . '/includes/header.php';
 ?>
+
+<!-- CollectionPage Schema — kategori sayfası için -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "<?= h(tr_field($cat, 'name')) ?>",
+  "description": <?= json_encode($metaDesc, JSON_UNESCAPED_UNICODE) ?>,
+  "url": "<?= h($catUrl) ?>",
+  "isPartOf": {"@id": "<?= h($siteUrl) ?>/#website"},
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "<?= h(t('bc.home', 'Anasayfa')) ?>", "item": "<?= h($siteUrl) ?>"},
+      {"@type": "ListItem", "position": 2, "name": "<?= h(t('bc.products', 'Ürünler')) ?>", "item": "<?= h($siteUrl) ?>/urunler.php"},
+      {"@type": "ListItem", "position": 3, "name": "<?= h(tr_field($cat, 'name')) ?>"}
+    ]
+  }<?php if ($products): ?>,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": <?= count($products) ?>,
+    "itemListElement": [
+<?php foreach ($products as $i => $p): ?>
+      {
+        "@type": "ListItem",
+        "position": <?= ($i + 1) ?>,
+        "url": "<?= h($siteUrl . '/urun.php?slug=' . urlencode($p['slug'])) ?>",
+        "name": <?= json_encode(tr_field($p, 'title') ?: $p['name'], JSON_UNESCAPED_UNICODE) ?>
+      }<?= ($i < count($products) - 1) ? ',' : '' ?>
+<?php endforeach; ?>
+    ]
+  }
+<?php endif; ?>
+}
+</script>
 <section class="page-header">
   <div class="container">
     <nav class="breadcrumb">

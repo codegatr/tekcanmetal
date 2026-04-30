@@ -199,9 +199,13 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^profil-cesitleri/?$            /kategori/profil               [R=301,L]
     RewriteRule ^demir-cesitleri/?$             /kategori/insaat-demiri        [R=301,L]
 
-    # Yanlış yazılmış marka adı yakalama (Search Console: tekman metal 333 gösterim)
-    RewriteRule ^tekman-metal-?(.*)?$           / [R=301,L]
-    RewriteRule ^tekman/?$                      / [R=301,L]
+    # Yanlış yazılmış marka adı yakalama (Search Console: tekman metal 333 gösterim/ay, %2.4 CTR)
+    # v1.0.69: Özel landing page'e yönlendir (tekman-metal.php)
+    # 'tekman-metal-fiyat-listesi/' gibi URL'ler dedicated landing'e gider
+    RewriteRule ^tekman-metal/?$                /tekman-metal.php              [R=301,L]
+    RewriteRule ^tekman-metal-(.+)/?$           /tekman-metal.php              [R=301,L]
+    RewriteRule ^tekman/?$                      /tekman-metal.php              [R=301,L]
+    RewriteRule ^tekman-demir(.*)$              /tekman-metal.php              [R=301,L]
 
     # WP-spesifik path'ler (admin, feed) → 410 Gone (kalıcı kaybedildi mesajı)
     RewriteRule ^wp-admin(/.*)?$                - [G,L]

@@ -56,8 +56,62 @@ if (!$metaDesc && tr_has($s, 'description')) {
     $metaDesc = mb_substr(strip_tags(tr_field($s, 'description')), 0, 160, 'UTF-8');
 }
 
+// SEO: Service Schema (v1.0.69)
+$siteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$serviceUrl = $siteUrl . '/hizmet.php?slug=' . urlencode($s['slug']);
+$serviceImage = !empty($s['image']) ? $siteUrl . '/' . ltrim($s['image'], '/') : $siteUrl . '/' . settings('logo', 'assets/img/logo.png');
+
 require __DIR__ . '/includes/header.php';
 ?>
+
+<!-- Service Schema — hizmet detay sayfası için -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": <?= json_encode(tr_field($s, 'title'), JSON_UNESCAPED_UNICODE) ?>,
+  "description": <?= json_encode($metaDesc, JSON_UNESCAPED_UNICODE) ?>,
+  "image": "<?= h($serviceImage) ?>",
+  "url": "<?= h($serviceUrl) ?>",
+  "serviceType": <?= json_encode(tr_field($s, 'title'), JSON_UNESCAPED_UNICODE) ?>,
+  "provider": {
+    "@type": "Organization",
+    "@id": "<?= h($siteUrl) ?>/#organization",
+    "name": "Tekcan Metal",
+    "url": "<?= h($siteUrl) ?>",
+    "telephone": "<?= h(settings('site_phone', '+90 332 342 24 52')) ?>",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Karatay",
+      "addressRegion": "Konya",
+      "addressCountry": "TR"
+    }
+  },
+  "areaServed": [
+    {"@type": "Country", "name": "Türkiye"},
+    {"@type": "Country", "name": "Irak"},
+    {"@type": "Country", "name": "Suriye"},
+    {"@type": "Country", "name": "Azerbaycan"},
+    {"@type": "Country", "name": "Türkmenistan"}
+  ]<?php if (!empty($features)): ?>,
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Hizmet Özellikleri",
+    "itemListElement": [
+<?php foreach (array_slice($features, 0, 10) as $i => $feat): ?>
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": <?= json_encode(is_array($feat) ? ($feat['title'] ?? $feat['name'] ?? '') : $feat, JSON_UNESCAPED_UNICODE) ?>
+        }
+      }<?= ($i < min(count($features), 10) - 1) ? ',' : '' ?>
+<?php endforeach; ?>
+    ]
+  }
+<?php endif; ?>
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');

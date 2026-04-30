@@ -62,6 +62,16 @@ elseif ($current === 'urun') $ogType = 'product';
 <meta property="og:type" content="<?= h($ogType) ?>">
 <meta property="og:url" content="<?= h($canonical) ?>">
 <meta property="og:locale" content="<?= h(lang_locale()) ?>">
+<?php
+// og:locale:alternate — diğer mevcut diller için (Facebook çoklu dil paylaşımı)
+$currentLangCode = current_lang();
+$localeMap = ['tr' => 'tr_TR', 'en' => 'en_US', 'ar' => 'ar_AR', 'ru' => 'ru_RU'];
+foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
+    if ($lang !== $currentLangCode) {
+        echo '<meta property="og:locale:alternate" content="' . $localeMap[$lang] . '">' . "\n";
+    }
+}
+?>
 <meta property="og:image" content="<?= h($ogImage) ?>">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">

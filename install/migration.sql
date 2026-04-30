@@ -6116,3 +6116,819 @@ UPDATE tm_settings
    SET setting_value = 'https://tekcanmetal.com'
  WHERE setting_key = 'site_url'
    AND setting_value LIKE '%v2.tekcanmetal%';
+
+-- =====================================================
+-- v1.0.69 — SEO Süper Sayfalar Bölüm 2: Galvanizli + Trapez + Kalın Levha
+-- v1.0.66'daki Genişletilmiş + Baklava sac patternine eklenir.
+-- Toplam 5 yüksek-değer SEO blog sayfası DB'de
+-- =====================================================
+
+-- 1) Galvanizli Sac süper sayfa
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'galvanizli-sac-rehberi',
+    'Galvanizli Sac: Çeşitleri (Z140-Z600), Ölçüler, Ağırlık ve Kullanım Alanları',
+    'Galvanizli sac (DDG, EZ, Galvalume) çeşitleri, kaplama sınıfları (Z100-Z600), kalite sınıfları (DX51D-DX56D, S250GD-S550GD), ağırlık tablosu, kullanım alanları ve fiyat. Tekcan Metal — Konya merkezli, 20+ yıl, 81 il sevkiyat.',
+    '<p class="lead"><strong>Galvanizli sac</strong>, çelik yüzeyine sıcak daldırma veya elektrolitik yöntemle <strong>çinko (Zn) kaplaması</strong> uygulanmış, korozyona yüksek dayanımlı yapısal çelik levhadır. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline DDG (Sıcak Daldırma Galvaniz) ve Elektrostatik Galvaniz sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Galvanizli Sac Nedir? Yapısı ve Üretim Yöntemleri</h2>
+
+<p>Galvanizli sac, baz çelik levhanın <strong>460°C''de erimiş çinko banyosundan</strong> geçirilerek her iki yüzünün de ince bir çinko tabakası ile kaplanmasıyla üretilir. Bu işlem sayesinde çelik, atmosferik korozyona, neme ve kimyasal etkilere karşı 25-50 yıl koruma altına alınır.</p>
+
+<h3>Üretim Yöntemleri</h3>
+
+<h4>1. Sıcak Daldırma Galvaniz (DDG / Hot-Dip)</h4>
+<p>Çelik levha; ön temizleme, asit yıkama ve flux uygulamasından sonra <strong>460°C erimiş çinko banyosuna</strong> daldırılır. Çıkışta soğuyan çinko tabakası baz çelikle metalurjik olarak bağlanır. Kaplama kalınlığı genellikle <strong>40-275 g/m²</strong> aralığındadır.</p>
+
+<h4>2. Elektrolitik Galvaniz (EZ / Electro-Galvanized)</h4>
+<p>Çelik levha çinko sülfat banyosunda elektrik akımıyla kaplanır. Daha ince ve düzgün yüzeyli (<strong>5-30 g/m²</strong>) kaplama elde edilir. Otomotiv ve beyaz eşya endüstrisinde tercih edilir.</p>
+
+<h4>3. Galvalume (Aluzinc, AZ)</h4>
+<p>%55 alüminyum + %43.5 çinko + %1.5 silisyum kaplama. <strong>Çatı ve cephe panelleri</strong> için, normal galvanizden 2-4 kat daha uzun ömür sunar.</p>
+
+<h2>Galvanizli Sac Çeşitleri</h2>
+
+<h3>Yüzey Karakterine Göre</h3>
+<ul>
+<li><strong>Normal Spangle (NS):</strong> Tipik kar tanesi deseni — en yaygın</li>
+<li><strong>Minimum Spangle (MS):</strong> İnce desen, daha düzgün yüzey — boyamaya uygun</li>
+<li><strong>Zero Spangle (ZS):</strong> Desensiz, pürüzsüz — yüksek kalite uygulamalar</li>
+<li><strong>Skin-Pass:</strong> Soğuk haddelenip yumuşatılmış — şekillendirilebilirlik artar</li>
+</ul>
+
+<h3>Kaplama Sınıflarına Göre (EN 10346)</h3>
+
+<table>
+<thead>
+<tr><th>Sınıf</th><th>Kaplama (g/m²)</th><th>Kaplama Kalınlığı</th><th>Kullanım Alanı</th></tr>
+</thead>
+<tbody>
+<tr><td>Z100</td><td>100</td><td>~7 µm</td><td>İç mekan, kuru ortam</td></tr>
+<tr><td>Z140</td><td>140</td><td>~10 µm</td><td>Standart kullanım</td></tr>
+<tr><td>Z200</td><td>200</td><td>~14 µm</td><td>Hafif endüstriyel</td></tr>
+<tr><td>Z275</td><td>275</td><td>~20 µm</td><td>Çatı, cephe, dış mekan</td></tr>
+<tr><td>Z350</td><td>350</td><td>~25 µm</td><td>Ağır korozif ortam</td></tr>
+<tr><td>Z450</td><td>450</td><td>~32 µm</td><td>Endüstriyel, kıyı bölgeleri</td></tr>
+<tr><td>Z600</td><td>600</td><td>~42 µm</td><td>Maksimum korozyon direnci</td></tr>
+</tbody>
+</table>
+
+<h3>Kalite Sınıflarına Göre (Çelik Cinsi)</h3>
+<ul>
+<li><strong>DX51D:</strong> Standart kalite — sıradan inşaat ve sanayi uygulamaları</li>
+<li><strong>DX52D:</strong> Çekme/Bükme uygulamaları — orta şekillendirilebilirlik</li>
+<li><strong>DX53D:</strong> Derin çekme — havalandırma kanalı, beyaz eşya</li>
+<li><strong>DX54D:</strong> Ekstra derin çekme — otomotiv parçaları, kompleks form</li>
+<li><strong>S250GD - S550GD:</strong> Yapısal galvaniz — yüksek mukavemet (kalkan paneller)</li>
+</ul>
+
+<h2>Galvanizli Sac Standart Ölçüleri</h2>
+
+<table>
+<thead>
+<tr><th>Levha Boyutu (mm)</th><th>Kalınlık Aralığı</th><th>Yaklaşık Ağırlık (1mm)</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>0,30 - 4 mm</td><td>15,7 kg</td><td>Standart panel, dolap</td></tr>
+<tr><td>1000 × 3000</td><td>0,40 - 4 mm</td><td>23,6 kg</td><td>Çatı kaplama</td></tr>
+<tr><td>1250 × 2500</td><td>0,50 - 4 mm</td><td>24,5 kg</td><td>Endüstriyel panel</td></tr>
+<tr><td>1500 × 3000</td><td>0,80 - 6 mm</td><td>35,3 kg</td><td>Ağır yapı, hangar</td></tr>
+<tr><td>Rulo (coil)</td><td>0,20 - 4 mm</td><td>Talebe göre</td><td>Şerit kesim, prosesler</td></tr>
+<tr><td>Özel ölçü</td><td>0,30 - 6 mm</td><td>Talebe göre</td><td>Lazer kesim ile</td></tr>
+</tbody>
+</table>
+
+<h3>Standart Kalınlıklar</h3>
+<p>Galvanizli sac kalınlıkları genellikle <strong>0,30 mm – 6 mm</strong> aralığındadır. En çok talep edilen kalınlıklar: 0,40 mm, 0,50 mm, 0,70 mm, 1 mm, 1,2 mm, 1,5 mm, 2 mm, 3 mm.</p>
+
+<h2>Galvanizli Sac Ağırlık Hesaplama</h2>
+
+<p>Galvanizli sac ağırlığı, baz çelik (7,85 g/cm³) + çinko kaplama (~7,14 g/cm³) yoğunluğuna göre hesaplanır. Pratik formül:</p>
+
+<p><strong>Ağırlık (kg/m²) = Kalınlık (mm) × 7,85</strong></p>
+
+<p><em>Çinko kaplaması ek %1-3 ağırlık katar, hassas hesap için <a href="/hesaplama.php">online hesaplama motorunu</a> kullanın.</em></p>
+
+<h3>Pratik Ağırlık Tablosu (kg/m²)</h3>
+
+<table>
+<thead>
+<tr><th>Kalınlık</th><th>kg/m²</th><th>1×2 m levha</th><th>1×3 m levha</th><th>1,25×2,5 m</th></tr>
+</thead>
+<tbody>
+<tr><td>0,30 mm</td><td>2,36 kg</td><td>4,7 kg</td><td>7,1 kg</td><td>7,4 kg</td></tr>
+<tr><td>0,40 mm</td><td>3,14 kg</td><td>6,3 kg</td><td>9,4 kg</td><td>9,8 kg</td></tr>
+<tr><td>0,50 mm</td><td>3,93 kg</td><td>7,9 kg</td><td>11,8 kg</td><td>12,3 kg</td></tr>
+<tr><td>0,70 mm</td><td>5,50 kg</td><td>11,0 kg</td><td>16,5 kg</td><td>17,2 kg</td></tr>
+<tr><td>1 mm</td><td>7,85 kg</td><td>15,7 kg</td><td>23,6 kg</td><td>24,5 kg</td></tr>
+<tr><td>1,5 mm</td><td>11,78 kg</td><td>23,6 kg</td><td>35,3 kg</td><td>36,8 kg</td></tr>
+<tr><td>2 mm</td><td>15,70 kg</td><td>31,4 kg</td><td>47,1 kg</td><td>49,1 kg</td></tr>
+<tr><td>3 mm</td><td>23,55 kg</td><td>47,1 kg</td><td>70,7 kg</td><td>73,6 kg</td></tr>
+<tr><td>4 mm</td><td>31,40 kg</td><td>62,8 kg</td><td>94,2 kg</td><td>98,1 kg</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanizli Sac Kullanım Alanları</h2>
+
+<h3>İnşaat ve Yapı</h3>
+<ul>
+<li><strong>Çatı kaplama panelleri:</strong> Trapez, sandviç panel, tek katmanlı çatı</li>
+<li><strong>Dış cephe kaplaması:</strong> Endüstriyel bina, hangar, depo</li>
+<li><strong>Çelik konstrüksiyon:</strong> Yapısal galvaniz (S350GD, S450GD)</li>
+<li><strong>Çelik kapı ve pencere kasası:</strong> Korozyon dayanımlı çerçeve</li>
+<li><strong>Kalkan panelleri:</strong> Hangar, fabrika dış cephe</li>
+<li><strong>Yağmur oluğu ve iniş borusu:</strong> 25+ yıl ömür</li>
+<li><strong>Çit ve bariyer:</strong> Endüstriyel saha çitleri, otoyol bariyerleri</li>
+</ul>
+
+<h3>HVAC ve Tesisat</h3>
+<ul>
+<li><strong>Havalandırma kanalı:</strong> DX52D-Z140, hijyenik tesisat</li>
+<li><strong>Klima dış ünite muhafazası:</strong> Açık hava korozyon koruması</li>
+<li><strong>Davlumbaz ve baca:</strong> Mutfak, endüstriyel duman tahliye</li>
+<li><strong>Su deposu:</strong> İçme suyu sertifikalı galvaniz</li>
+</ul>
+
+<h3>Otomotiv ve Beyaz Eşya</h3>
+<ul>
+<li>Otomotiv gövde panelleri (DX54D - derin çekme)</li>
+<li>Buzdolabı, çamaşır makinesi gövdesi</li>
+<li>Otobüs kabini iç paneli</li>
+<li>Kamyon kasası dış cephe</li>
+</ul>
+
+<h3>Mobilya ve Ofis</h3>
+<ul>
+<li>Çelik dolap, kasa</li>
+<li>Server kabinleri</li>
+<li>Endüstriyel raf sistemleri</li>
+<li>Bilgisayar kasası iç parçalar</li>
+</ul>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Korozyon dayanımı:</strong> Çinko, çelikten önce oksitlenir (sacrificial protection) — 25-50 yıl ömür</li>
+<li><strong>Kendi kendine onarım:</strong> Çizilen yüzeylerde çinko etrafa yayılır, çeliği korur</li>
+<li><strong>Boyanabilir:</strong> Phosphate veya wash primer sonrası boya tutar</li>
+<li><strong>Kaynaklanabilir:</strong> Punto, MIG, MAG kaynak yöntemleri uygulanabilir</li>
+<li><strong>Geri dönüştürülebilir:</strong> %100 çelik+çinko geri kazanım</li>
+<li><strong>Bakım gerektirmez:</strong> 25 yıl boyunca ek koruma uygulamasına gerek yok</li>
+<li><strong>Maliyet etkin:</strong> Paslanmaz çeliğe göre %60-70 daha ekonomik, eşdeğer korozyon koruması</li>
+<li><strong>Standart ölçü desteği:</strong> Geniş stok, hızlı tedarik</li>
+</ul>
+
+<h2>Galvanizli Sac vs Diğer Sac Tipleri</h2>
+
+<table>
+<thead>
+<tr><th>Özellik</th><th>Galvanizli</th><th>Paslanmaz 304</th><th>Boyalı Sac</th><th>Soğuk Haddelenmiş (DKP)</th></tr>
+</thead>
+<tbody>
+<tr><td>Korozyon dayanımı</td><td>Çok iyi (25-50 yıl)</td><td>Mükemmel (50+ yıl)</td><td>Orta (5-15 yıl)</td><td>Düşük (yağ korumalı)</td></tr>
+<tr><td>Maliyet</td><td>Orta</td><td>Yüksek</td><td>Düşük-orta</td><td>Düşük</td></tr>
+<tr><td>Boyanabilir</td><td>Evet (primer ile)</td><td>Zor</td><td>Hazır boyalı</td><td>Evet</td></tr>
+<tr><td>Kaynaklanabilir</td><td>Evet (özel)</td><td>Evet (TIG)</td><td>Boya yanar</td><td>Çok iyi</td></tr>
+<tr><td>Yüzey görünümü</td><td>Spangle desenli</td><td>Parlak/Mat</td><td>Renkli</td><td>Düz/Yağlı</td></tr>
+<tr><td>Tipik kullanım</td><td>Çatı, cephe, HVAC</td><td>Gıda, kimya</td><td>Mobilya, beyaz eşya</td><td>İç mekan, prosesli</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanizli Sac Fiyatları (2026)</h2>
+
+<p>Galvanizli sac fiyatları; <strong>kalınlık, kaplama sınıfı (Z100/Z275/Z450), kalite sınıfı (DX51D/DX54D), levha ölçüsü ve sipariş miktarı</strong> baz alınarak belirlenir.</p>
+
+<h3>Fiyat Sıralaması (Pahalıdan Ucuza)</h3>
+<ol>
+<li><strong>Galvalume (Aluzinc):</strong> En pahalı — alüminyum içeriği</li>
+<li><strong>Yapısal Galvaniz (S550GD):</strong> Yüksek mukavemet</li>
+<li><strong>Kalın kaplama (Z450, Z600):</strong> Korozif ortam</li>
+<li><strong>Standart Galvaniz (Z140-Z275):</strong> En yaygın — en ekonomik</li>
+<li><strong>Elektrostatik Galvaniz (EZ):</strong> İnce kaplama, ek kontrol</li>
+</ol>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>LME çinko fiyatı:</strong> Günlük borsa fiyatına göre değişir</li>
+<li><strong>Çelik hammadde:</strong> HRC + ek işlem maliyetleri</li>
+<li><strong>Kaplama kalınlığı:</strong> Z100 → Z600 arası %30-50 fiyat farkı</li>
+<li><strong>Levha boyutu:</strong> Standart 1000×2000 en ekonomik</li>
+<li><strong>Sipariş miktarı:</strong> 5+ ton siparişlerde toplu indirim</li>
+<li><strong>Sevkiyat:</strong> Konya merkezli, 81 il sevkiyat hesabı</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Galvanizli sac kaç yıl dayanır?</h4>
+<p>Kaplama sınıfına ve kullanım ortamına bağlı: <strong>Z140 iç mekanda 50+ yıl</strong>, Z275 açık havada 25-40 yıl, Z450 endüstriyel ortamda 30+ yıl, Z600 kıyı/agresif ortamda 25+ yıl ömür sunar.</p>
+
+<h4>Galvanizli sac kaynaklanabilir mi?</h4>
+<p>Evet ama özel teknik gerektirir. Punto kaynağı, MIG/MAG (gazaltı) kaynak uygulanabilir. Kaynak sırasında çinko buharı çıkar, <strong>iyi havalandırma</strong> şart. Kaynak sonrası bölge tekrar galvanizli boya ile koruma altına alınmalıdır.</p>
+
+<h4>Galvanizli sac üzerine boya tutar mı?</h4>
+<p>Evet. Ancak doğrudan değil. Önce yüzey <strong>fosfat banyosu</strong> veya <strong>wash primer</strong> ile hazırlanır, sonra epoxy ya da poliüretan boya uygulanır. Hazır boyalı galvanizli sac (PPGI) de stoğumuzda mevcut.</p>
+
+<h4>Z140 ile Z275 arasındaki fark nedir?</h4>
+<p>Sayı, m² başına çinko ağırlığını gösterir. Z140 = 140 g/m², Z275 = 275 g/m². <strong>Z275 yaklaşık 2 kat kaplama</strong> demek, dolayısıyla 2-3 kat uzun ömür. Açık hava için Z275, iç mekan için Z140 önerilir.</p>
+
+<h4>Galvanizli sac kesim hizmeti veriyor musunuz?</h4>
+<p>Evet. Tekcan Metal atölyesinde <a href="/hizmet/lazer-kesim">lazer kesim</a> ve <a href="/hizmet/oksijen-kesim">oksijen kesim</a> ile özel ölçüde galvanizli sac kesimi yapılır. Aynı gün sevkiyat seçeneği vardır.</p>
+
+<h4>Trapez galvanizli sac ile düz galvanizli sac farkı nedir?</h4>
+<p>Düz galvanizli sac düz levha hâlinde, <strong>trapez galvanizli sac</strong> ise yapısal mukavemet için kıvrımlı (trapez profilli) hale getirilmiştir. Çatı ve cephe için trapez tercih edilir.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli galvanizli sac sevkiyatı yapıyoruz. Üretici menşei şahadetnamesi ve gümrük dokümantasyonu tarafımızca düzenlenir.</p>
+
+<h2>Tekcan Metal Galvanizli Sac Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Borçelik, Erdemir, Tosyalı, MMK Metalurji</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>Tüm kaplama sınıfları:</strong> Z100, Z140, Z200, Z275, Z350, Z450, Z600</li>
+<li>✅ <strong>Tüm kalite sınıfları:</strong> DX51D - DX56D, S250GD - S550GD</li>
+<li>✅ <strong>Stoklu satış</strong> + özel ölçü kesim</li>
+<li>✅ <strong>Aynı gün sevkiyat</strong> (saat 09:00 öncesi siparişlerde)</li>
+<li>✅ <strong>Lazer + oksijen kesim atölyesi</strong></li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>e-Fatura, üretici sertifikası, kalite belgeleri</strong> dahil</li>
+</ul>
+
+<p class="cta-block"><strong>Galvanizli sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/galvanizli-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Galvanizli Sac Çeşitleri, Ölçüleri, Ağırlık ve Fiyat — Tekcan Metal',
+    'Galvanizli sac çeşitleri (Z140, Z275, Z450, Galvalume), kalite sınıfları (DX51D, DX54D, S350GD), ağırlık hesaplama tablosu, kullanım alanları, fiyat. Konya merkezli Tekcan Metal — 20+ yıl, aynı gün sevkiyat.',
+    NOW(),
+    0,
+    1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- 2) Trapez Sac süper sayfa
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'trapez-sac-rehberi',
+    'Trapez Sac (Oluklu Sac): TR-18, TR-27, TR-35, TR-45 Profilleri, Renkler ve Fiyatlar',
+    'Trapez sac (oluklu sac, çatı sacı) çeşitleri TR-18 / TR-27 / TR-35 / TR-45 / TR-55 / TR-100, RAL renkleri (3009 bordo, 7016 antrasit, 8017 kahve), galvanizli + boyalı + galvalume seçenekleri, mahya/vida/aksesuar. Konya merkezli Tekcan Metal.',
+    '<p class="lead"><strong>Trapez sac</strong> (oluklu sac veya kanal sac olarak da bilinir), düz galvanizli/boyalı çelik levhanın özel rulo formlama makinesinde <strong>trapezoidal (yamuk) profil</strong> hâline getirilmiş, çatı ve cephe kaplamalarında en yaygın kullanılan endüstriyel sac türüdür. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline trapez sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Trapez Sac Nedir? Yapısı ve Üretimi</h2>
+
+<p>Trapez sac, düz galvanizli ya da boyalı sac levhanın <strong>seri rulo formlama (roll forming)</strong> makinesinden geçirilerek belirli aralıklarla yamuk şekilli yükseltiler oluşturulan üründür. Trapezoidal profil sayesinde sac, kendi ağırlığının yanında ek yapısal mukavemet kazanır — daha geniş açıklıkları taşıyabilir.</p>
+
+<p>Sektörde "<strong>oluklu sac</strong>", "<strong>çatı sacı</strong>", "<strong>profil sac</strong>" veya İngilizce "<strong>corrugated sheet</strong>" olarak da bilinir.</p>
+
+<h2>Trapez Sac Çeşitleri (Profile Yüksekliğine Göre)</h2>
+
+<h3>1. TR-18 (Düşük Profil)</h3>
+<p><strong>Profil yüksekliği:</strong> 18 mm | <strong>Etkin genişlik:</strong> 1062 mm | <strong>Toplam genişlik:</strong> 1100 mm<br>
+Hafif yapı, dekoratif çatı ve duvar uygulamaları için. Konut ve villa projelerinde estetik tercih.</p>
+
+<h3>2. TR-27 (Standart)</h3>
+<p><strong>Profil yüksekliği:</strong> 27 mm | <strong>Etkin genişlik:</strong> 1075 mm<br>
+En yaygın kullanılan tip. <strong>3-5 metre açıklık</strong> taşıyabilir. Konut, küçük endüstriyel yapı, ahır, ambar.</p>
+
+<h3>3. TR-35 / TR-40 (Orta Profil)</h3>
+<p><strong>Profil yüksekliği:</strong> 35-40 mm | <strong>Etkin genişlik:</strong> 1000-1080 mm<br>
+Endüstriyel çatı ve cephe uygulamaları. <strong>5-7 metre açıklık</strong> taşır. Hangar, fabrika, depo, market kurulumu.</p>
+
+<h3>4. TR-45 / TR-55 (Yüksek Profil)</h3>
+<p><strong>Profil yüksekliği:</strong> 45-55 mm | <strong>Etkin genişlik:</strong> 800-960 mm<br>
+Ağır yapı çatı sistemleri. <strong>7-12 metre açıklık</strong> taşıyabilir. Büyük ölçekli sanayi tesisleri, lojistik depolar.</p>
+
+<h3>5. TR-75 / TR-100 (Mega Profil — Sandviç Panel İçin)</h3>
+<p><strong>Profil yüksekliği:</strong> 75-100 mm | <strong>Etkin genişlik:</strong> 600-800 mm<br>
+Sandviç panel iç-dış yüzey sacı, soğuk hava deposu, gıda fabrikası. Polyurethane (PU) veya polystyrene (EPS) izolasyon ile kombinlenir.</p>
+
+<h3>6. Sinüs (Dalgalı) Trapez Sac</h3>
+<p>Trapezoidal değil, sinüs eğrili. Yarı dekoratif uygulamalar, retro mimari, kıyı bölgeleri için.</p>
+
+<h2>Trapez Sac Malzeme Seçenekleri</h2>
+
+<h3>Galvanizli Trapez Sac</h3>
+<p>Sıcak daldırma galvaniz kaplamalı (Z140-Z275). <strong>En ekonomik</strong> seçenek. 25-40 yıl ömür. Renksiz, gümüş gri görünüm. Hangar, depo, geçici yapı, ahır için ideal.</p>
+
+<h3>Boyalı (Renkli) Trapez Sac (PPGI)</h3>
+<p>Pre-Painted Galvanized Iron — <strong>fabrika çıkışlı renkli</strong> (5-25 mikron PE veya PVDF boya). RAL renk kataloğundan seçim. Konut, ticari yapı, ofis, AVM, restoran, villa için. <strong>20-30 yıl renk dayanımı</strong>.</p>
+
+<h3>Galvalume Trapez Sac (Aluzinc, AZ)</h3>
+<p>%55 alüminyum + %43.5 çinko kaplama. <strong>Galvanizden 2-4 kat uzun ömür</strong> (50+ yıl). Kıyı bölgeleri, korozif endüstriyel ortam, yüksek nem.</p>
+
+<h3>Paslanmaz Trapez Sac</h3>
+<p>304 veya 316 paslanmaz çelik. <strong>Gıda fabrikası, kimya tesisi, asit üretim sahası</strong> gibi agresif ortamlar için.</p>
+
+<h3>Alüminyum Trapez Sac</h3>
+<p>Hafif, doğal korozyon dayanımı. Karavan, römork, hafif çatı uygulamaları için. Boyalı veya anodize halleri mevcut.</p>
+
+<h2>Trapez Sac Standart Renkleri (RAL)</h2>
+
+<table>
+<thead>
+<tr><th>RAL Kodu</th><th>Renk Adı</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>RAL 9002</td><td>Gri Beyaz</td><td>Konut, ofis</td></tr>
+<tr><td>RAL 9006</td><td>Beyaz Alüminyum</td><td>Endüstriyel</td></tr>
+<tr><td>RAL 3000</td><td>Bayrak Kırmızısı</td><td>Tarımsal yapı</td></tr>
+<tr><td>RAL 3009</td><td>Oksit Kırmızısı (Bordo)</td><td>Çatı — en popüler</td></tr>
+<tr><td>RAL 5005</td><td>Sinyal Mavisi</td><td>Endüstriyel logo renkleri</td></tr>
+<tr><td>RAL 5010</td><td>Aralık Mavisi</td><td>Hangar, fabrika</td></tr>
+<tr><td>RAL 6005</td><td>Yosun Yeşili</td><td>Tarım, ahır</td></tr>
+<tr><td>RAL 6020</td><td>Krom Yeşili</td><td>Doğa uyumu</td></tr>
+<tr><td>RAL 7016</td><td>Antrasit Gri</td><td>Modern villa, lüks konut</td></tr>
+<tr><td>RAL 8004</td><td>Bakır Kahve</td><td>Geleneksel yapı</td></tr>
+<tr><td>RAL 8017</td><td>Çikolata Kahve</td><td>Konut</td></tr>
+<tr><td>RAL 9005</td><td>Trafik Siyah</td><td>Modern mimari</td></tr>
+</tbody>
+</table>
+
+<h2>Trapez Sac Standart Ölçüleri</h2>
+
+<table>
+<thead>
+<tr><th>Boy</th><th>Açıklama</th></tr>
+</thead>
+<tbody>
+<tr><td>2-12 metre</td><td>Standart boy aralığı (50 cm artırımlarla)</td></tr>
+<tr><td>İstenen ölçü</td><td>Sipariş üzerine kesim (rulo açma)</td></tr>
+</tbody>
+</table>
+
+<p><strong>Standart kalınlıklar:</strong> 0,30 mm | 0,40 mm | 0,50 mm | 0,60 mm | 0,70 mm | 0,80 mm | 1 mm | 1,2 mm</p>
+
+<p><em>Not: Trapez sac, her zaman sabit profil genişliğinde üretilir. Sadece boy değişir. Genişlik kesimi (ek profil) yapılmaz — bu trapez sacın yapısal özelliğini bozar.</em></p>
+
+<h2>Trapez Sac Ağırlık Hesaplama</h2>
+
+<p>Trapez sac ağırlığı, baz galvanizli sacın kalınlığına göre hesaplanır. <strong>Profil etkisiyle %5-10 ek alan</strong> oluşur (yükseltiler nedeniyle).</p>
+
+<h3>Pratik Ağırlık Tablosu (kg/m² etkin alan)</h3>
+
+<table>
+<thead>
+<tr><th>Kalınlık</th><th>TR-18</th><th>TR-27</th><th>TR-35</th><th>TR-45</th></tr>
+</thead>
+<tbody>
+<tr><td>0,40 mm</td><td>3,3 kg</td><td>3,5 kg</td><td>3,7 kg</td><td>3,9 kg</td></tr>
+<tr><td>0,50 mm</td><td>4,1 kg</td><td>4,4 kg</td><td>4,6 kg</td><td>4,9 kg</td></tr>
+<tr><td>0,60 mm</td><td>5,0 kg</td><td>5,3 kg</td><td>5,6 kg</td><td>5,9 kg</td></tr>
+<tr><td>0,70 mm</td><td>5,8 kg</td><td>6,1 kg</td><td>6,5 kg</td><td>6,8 kg</td></tr>
+<tr><td>0,80 mm</td><td>6,6 kg</td><td>7,0 kg</td><td>7,4 kg</td><td>7,8 kg</td></tr>
+<tr><td>1,00 mm</td><td>8,3 kg</td><td>8,8 kg</td><td>9,3 kg</td><td>9,8 kg</td></tr>
+</tbody>
+</table>
+
+<p><em>Hassas hesaplama için <a href="/hesaplama.php">online ağırlık hesaplama motorumuzu</a> kullanın.</em></p>
+
+<h2>Trapez Sac Kullanım Alanları</h2>
+
+<h3>Çatı Kaplama</h3>
+<ul>
+<li><strong>Konut çatısı:</strong> RAL 3009 bordo, RAL 7016 antrasit, RAL 8017 kahve</li>
+<li><strong>Endüstriyel çatı:</strong> Hangar, fabrika, depo, atölye</li>
+<li><strong>Tarımsal yapı:</strong> Ahır, ambar, sera, samanlık</li>
+<li><strong>Ticari yapı:</strong> AVM, market, restaurant, ofis binası</li>
+<li><strong>Geçici yapı:</strong> Şantiye, prefabrik, mobil ofis</li>
+</ul>
+
+<h3>Cephe Kaplama</h3>
+<ul>
+<li><strong>Endüstriyel cephe:</strong> Modern fabrika dış cephesi (TR-35, TR-45)</li>
+<li><strong>Showroom ve mağaza:</strong> Otomotiv galerisi, kafe</li>
+<li><strong>Spor tesisleri:</strong> Halı saha, kapalı pazar yeri</li>
+<li><strong>Sandviç panel sistemleri:</strong> İzolasyonlu cephe — soğuk hava deposu</li>
+</ul>
+
+<h3>Diğer Uygulamalar</h3>
+<ul>
+<li>Otopark üst örtüsü</li>
+<li>Bahçe seperatorü, çit kaplaması</li>
+<li>Kapı, pencere, panjur dış kaplaması</li>
+<li>Endüstriyel kasa, makine muhafazası</li>
+<li>Geri dönüşüm konteyner kapağı</li>
+</ul>
+
+<h2>Trapez Sac Aksesuarları</h2>
+
+<p>Trapez sac sistem komple çözüm gerektirir. Tedarik ettiğimiz aksesuarlar:</p>
+
+<ul>
+<li><strong>Mahya:</strong> Çatı tepe birleşim profili (60 cm × 200 cm standart)</li>
+<li><strong>Yan kapatma:</strong> Çatı kenarı, saçak profili</li>
+<li><strong>Su yutucu:</strong> Çatı yağmur drenajı</li>
+<li><strong>Bel profili:</strong> Yatay birleşim</li>
+<li><strong>Vida:</strong> Self-drilling, EPDM contalı (renkli kafa)</li>
+<li><strong>Conta bantı:</strong> Sızdırmazlık (EPDM, butil)</li>
+<li><strong>Köpük dolgu:</strong> Trapez profil arası akustik/termal yalıtım</li>
+<li><strong>Cıvata-rondela seti:</strong> EPDM contalı renkli galvaniz vidalama</li>
+<li><strong>Yağmur oluğu ve iniş borusu:</strong> Eşleşen RAL renkte</li>
+</ul>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Yapısal mukavemet:</strong> Profil sayesinde geniş açıklık taşır — daha az iskelet</li>
+<li><strong>Hızlı montaj:</strong> Vidalama yöntemi — kaynak gerekmez</li>
+<li><strong>Hafif:</strong> Geleneksel kiremit/beton plak çatıya göre %80-90 daha hafif</li>
+<li><strong>Ekonomik:</strong> M² fiyatı en düşük çatı malzemesi</li>
+<li><strong>Renk seçeneği:</strong> 12+ standart RAL renk + özel renk</li>
+<li><strong>Uzun ömür:</strong> Boyalı 20-30 yıl, galvalume 50+ yıl</li>
+<li><strong>Hava dayanımı:</strong> -40°C ile +80°C arası deformasyon yok</li>
+<li><strong>Yangın direnci:</strong> A1 sınıfı — yanıcı değil</li>
+<li><strong>Geri dönüşüm:</strong> %100 metal — sürdürülebilir</li>
+<li><strong>Kolay nakliye:</strong> Plaka olarak istiflenir, vinçle hızlı yükleme</li>
+</ul>
+
+<h2>Trapez Sac Fiyatları (2026)</h2>
+
+<p>Trapez sac fiyatları; <strong>kalınlık, malzeme cinsi (galvanizli/boyalı/galvalume), profil tipi, boy ve sipariş miktarı</strong> baz alınarak belirlenir.</p>
+
+<h3>Fiyat Sıralaması (Pahalıdan Ucuza)</h3>
+<ol>
+<li>Paslanmaz trapez (304/316)</li>
+<li>Galvalume / Aluzinc trapez</li>
+<li>Boyalı (PPGI) trapez — Premium boyalar (PVDF)</li>
+<li>Boyalı (PPGI) trapez — Standart (PE) boyalar</li>
+<li>Galvanizli trapez — En ekonomik</li>
+</ol>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>Kalınlık:</strong> 0,30 → 1,00 mm arası %200+ fark</li>
+<li><strong>Profil yüksekliği:</strong> TR-18 → TR-100 arası %30-50 fark</li>
+<li><strong>Boy:</strong> Standart 2-6 metre en ekonomik, 6+ metre özel kesim ek maliyet</li>
+<li><strong>Renk:</strong> RAL 9006/9002 (beyaz) standart, özel RAL ek %5-10</li>
+<li><strong>Boya kalitesi:</strong> PE (5 mikron) ekonomik, PVDF (25 mikron) premium</li>
+<li><strong>Sipariş miktarı:</strong> 1+ ton siparişlerde toplu indirim</li>
+<li><strong>Sevkiyat:</strong> Konya merkezli, 81 il sevkiyat hesabı</li>
+</ul>
+
+<h2>Trapez Sac Sipariş Süreci</h2>
+
+<ol>
+<li><strong>Talep iletme:</strong> Çatı ölçüleri (en × boy), eğim açısı, açıklık (mertek aralığı), istenen renk ve kalınlık</li>
+<li><strong>Mühendislik kontrolü:</strong> Sektör tecrübemizle önerilen profil tipi (TR-27/TR-35/TR-45) ve kalınlık önerisi</li>
+<li><strong>Detaylı teklif:</strong> Sac + aksesuar (mahya, vida, conta) komple liste</li>
+<li><strong>Onay ve avans:</strong> Sözleşme sonrası %30 avans (cari ilişkide gerekmez)</li>
+<li><strong>Üretim:</strong> Standart renkler 24 saat, özel renkler 5-7 iş günü</li>
+<li><strong>Sevkiyat:</strong> Açık kasa kamyon ile (vinç gerektiren büyük gönderiler için ön planlamayla)</li>
+<li><strong>Teslim:</strong> Sevk irsaliyesi imzası sonrası e-fatura</li>
+</ol>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Trapez sac kaç yıl dayanır?</h4>
+<p>Galvanizli trapez 25-40 yıl, boyalı (PE) trapez 20-25 yıl, boyalı (PVDF) trapez 30+ yıl, galvalume trapez 50+ yıl ömür sunar. Yıllık bakım gerektirmez.</p>
+
+<h4>Hangi profil tipini seçmeliyim?</h4>
+<p>Mertek (kiriş) açıklığına göre: 3 metreye kadar TR-27, 5 metreye kadar TR-35, 7 metreye kadar TR-45, 12 metreye kadar TR-55 önerilir. Cephe için estetik açıdan TR-18/TR-27 yaygındır.</p>
+
+<h4>Hangi kalınlığı seçmeliyim?</h4>
+<p>Hafif konut çatısı için 0,40-0,50 mm, endüstriyel çatı için 0,50-0,70 mm, kar yükü ağır bölgeler için 0,70-1 mm önerilir. Cephe için 0,40-0,50 mm yeterli.</p>
+
+<h4>Hangi RAL renkler stoğunuzda var?</h4>
+<p>RAL 3009 (oksit kırmızısı), RAL 7016 (antrasit gri), RAL 8017 (çikolata kahve), RAL 6020 (krom yeşili), RAL 9002 (gri beyaz), RAL 9005 (trafik siyahı) — bu 6 renk her zaman stoğumuzdadır. Diğer RAL renkler 5-7 iş günü içinde tedarik edilir.</p>
+
+<h4>Trapez sac altına ne döşenir?</h4>
+<p>İzolasyon için cam yünü (camyünü), taş yünü, polyurethane (PU) köpük veya XPS kullanılır. Su yalıtımı için membran. Sandviç panel sistemde izolasyon iki sac arasında entegre.</p>
+
+<h4>Trapez sac kesim hizmeti veriyor musunuz?</h4>
+<p>Evet. <strong>Boy kesimi</strong> (uzunluk) standart hizmettir. Genişlik kesimi yapılmaz — trapez profili bozulur. Özel açı kesimleri için <a href="/hizmet/lazer-kesim">lazer kesim atölyemizden</a> faydalanabilirsiniz.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli trapez sac sevkiyatı yapıyoruz. Gümrük dokümantasyonu ve menşei şahadetnamesi tarafımızca düzenlenir.</p>
+
+<h2>Tekcan Metal Trapez Sac Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Borçelik, Erdemir, Tezcan, Pasiform</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>Tüm profiller:</strong> TR-18, TR-27, TR-35, TR-45, TR-55, TR-75, TR-100</li>
+<li>✅ <strong>12+ stoklu RAL renk</strong> — özel renk tedariği 5-7 gün</li>
+<li>✅ <strong>Komple aksesuar:</strong> Mahya, vida, conta, oluk dahil tek adresten</li>
+<li>✅ <strong>Mühendislik desteği:</strong> Açıklık ve kalınlık önerisi ücretsiz</li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>e-Fatura, üretici sertifikası, kalite belgeleri</strong> dahil</li>
+</ul>
+
+<p class="cta-block"><strong>Trapez sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/trapez-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Trapez Sac Çatı Cephe Profilleri, RAL Renkleri ve Fiyat — Tekcan Metal',
+    'Trapez sac (oluklu sac) profilleri TR-18, TR-27, TR-35, TR-45, TR-55, TR-100 — galvanizli, boyalı (PPGI), galvalume seçenekleri. RAL 12+ renk stokta, mahya + vida + aksesuar dahil. Konya merkezli Tekcan Metal — 20+ yıl, 81 il sevkiyat.',
+    NOW(),
+    0,
+    1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
+
+-- 3) Kalın Levha Sac süper sayfa
+INSERT INTO tm_blog_posts (
+    category_id, slug, title, excerpt, content, cover_image,
+    author, meta_title, meta_desc, published_at, view_count, is_active
+) VALUES (
+    (SELECT id FROM tm_blog_categories WHERE slug='urun-rehberi' LIMIT 1),
+    'kalin-levha-sac-rehberi',
+    'Kalın Levha Sac (Slab): S235-S460 Kalite Sınıfları, 5-100 mm Kalınlık, Ağırlık ve Fiyat',
+    'Kalın levha sac (slab, plate) kalite sınıfları S235JR / S275JR / S355J2 / S420N / S460N / P355GH, 5-100 mm kalınlık, EN 10025 / EN 10028 / ASTM A36 / A572 / A516 standartları. Köprü, gemi, basınç kabı, ağır endüstri uygulamaları. Konya merkezli Tekcan Metal.',
+    '<p class="lead"><strong>Kalın levha sac</strong> (slab veya kalın çelik levha olarak da bilinir), kalınlığı <strong>5 mm – 200 mm</strong> arasında değişen, sıcak haddelenmiş yüksek mukavemetli yapısal çelik levhadır. Tekcan Metal olarak 2005''ten bu yana Konya merkezimizden Türkiye geneline kalın levha sac tedariği gerçekleştiriyoruz.</p>
+
+<h2>Kalın Levha Sac Nedir?</h2>
+
+<p>Kalın levha sac, sektörel olarak <strong>"slab"</strong>, <strong>"plate"</strong> veya <strong>"kalın çelik plaka"</strong> olarak da adlandırılır. <strong>5 mm üzeri</strong> kalınlıktaki yassı haddelenmiş çelik ürünler bu kategoriye girer. EN 10029 ve EN 10025 standartlarında üretilirler.</p>
+
+<p>İnce sac (<5 mm) ile karşılaştırıldığında kalın levha sac:</p>
+<ul>
+<li>Çok daha yüksek <strong>yapısal mukavemet</strong> taşır</li>
+<li><strong>Ağır endüstriyel</strong> uygulamalar için uygundur</li>
+<li>Sıcak haddeleme yöntemiyle üretilir (soğuk haddeleme değil)</li>
+<li>Genelde yüzeyi <strong>oksitli/karbonlu</strong> görünümdedir (yağlı değil)</li>
+</ul>
+
+<h2>Kalın Levha Sac Kalınlık Aralıkları</h2>
+
+<h3>Sınıflandırma</h3>
+
+<table>
+<thead>
+<tr><th>Kategori</th><th>Kalınlık Aralığı</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>Orta kalın</td><td>5 - 12 mm</td><td>Genel konstrüksiyon, çelik konstrüksiyon</td></tr>
+<tr><td>Standart kalın</td><td>12 - 25 mm</td><td>Köprü, yapısal çelik, gemi inşası</td></tr>
+<tr><td>Kalın levha</td><td>25 - 50 mm</td><td>Basınç kabı, ağır makina, vinç parçaları</td></tr>
+<tr><td>Ekstra kalın</td><td>50 - 100 mm</td><td>Petrokimya, nükleer, savunma</td></tr>
+<tr><td>Süper kalın</td><td>100 - 200 mm</td><td>Özel endüstriyel uygulama</td></tr>
+</tbody>
+</table>
+
+<h2>Kalın Levha Sac Standart Ölçüleri</h2>
+
+<table>
+<thead>
+<tr><th>En × Boy (mm)</th><th>Kalınlık Aralığı</th><th>Tipik Kullanım</th></tr>
+</thead>
+<tbody>
+<tr><td>1500 × 6000</td><td>5 - 80 mm</td><td>Standart endüstriyel</td></tr>
+<tr><td>2000 × 6000</td><td>5 - 100 mm</td><td>Köprü, gemi parçaları</td></tr>
+<tr><td>2500 × 8000</td><td>10 - 120 mm</td><td>Petrokimya basınçlı kap</td></tr>
+<tr><td>2500 × 12000</td><td>10 - 150 mm</td><td>Büyük ölçekli yapısal</td></tr>
+<tr><td>3000 × 12000</td><td>15 - 200 mm</td><td>Maksimum boyut, özel imal</td></tr>
+<tr><td>Özel ölçü</td><td>Talebe göre</td><td>Oksijen kesim ile</td></tr>
+</tbody>
+</table>
+
+<h2>Kalın Levha Sac Kalite Sınıfları</h2>
+
+<h3>Genel Yapısal (EN 10025-2)</h3>
+<ul>
+<li><strong>S235JR / S235J0 / S235J2:</strong> Genel inşaat — en yaygın</li>
+<li><strong>S275JR / S275J0:</strong> Orta mukavemet — köprü, yapısal çelik</li>
+<li><strong>S355JR / S355J2 / S355K2:</strong> Yüksek mukavemet — ağır endüstriyel</li>
+<li><strong>S420N / S420NL:</strong> Çok yüksek mukavemet — özel uygulamalar</li>
+<li><strong>S460N / S460NL:</strong> Ultra yüksek mukavemet — petrokimya, deniz</li>
+</ul>
+
+<h3>Basınçlı Kap (EN 10028)</h3>
+<ul>
+<li><strong>P235GH / P265GH / P295GH:</strong> Yüksek sıcaklık servisi — kazan, basınç kabı</li>
+<li><strong>P355GH / P420GH:</strong> Yüksek basınç + sıcaklık — petrokimya, enerji</li>
+</ul>
+
+<h3>Gemi İnşası (Lloyd''s, ABS, DNV onaylı)</h3>
+<ul>
+<li><strong>GR.A, GR.B, GR.D, GR.E:</strong> Gemi gövdesi sınıflar</li>
+<li><strong>AH32, DH32, EH32:</strong> Yüksek mukavemet gemi sacı</li>
+<li><strong>AH36, DH36, EH36:</strong> Ekstra yüksek mukavemet</li>
+</ul>
+
+<h3>ASTM Standartları (Amerikan)</h3>
+<ul>
+<li><strong>ASTM A36:</strong> Genel yapısal çelik (S275JR muadili)</li>
+<li><strong>ASTM A572 Gr.50:</strong> Yüksek mukavemet (S355 muadili)</li>
+<li><strong>ASTM A516 Gr.70:</strong> Basınç kabı çeliği</li>
+<li><strong>ASTM A283 Gr.C:</strong> Düşük/orta gerilme yapı çeliği</li>
+</ul>
+
+<h2>Kalın Levha Sac Ağırlık Hesaplama</h2>
+
+<p>Kalın levha sac ağırlığı standart çelik yoğunluğu (7,85 g/cm³) baz alınarak hesaplanır:</p>
+
+<p><strong>Ağırlık (kg) = En (m) × Boy (m) × Kalınlık (mm) × 7,85</strong></p>
+
+<h3>Pratik Ağırlık Tablosu (kg/m²)</h3>
+
+<table>
+<thead>
+<tr><th>Kalınlık</th><th>kg/m²</th><th>1,5×6 m levha</th><th>2×6 m levha</th><th>2,5×8 m levha</th></tr>
+</thead>
+<tbody>
+<tr><td>5 mm</td><td>39,3 kg</td><td>353 kg</td><td>471 kg</td><td>785 kg</td></tr>
+<tr><td>8 mm</td><td>62,8 kg</td><td>565 kg</td><td>754 kg</td><td>1.256 kg</td></tr>
+<tr><td>10 mm</td><td>78,5 kg</td><td>707 kg</td><td>942 kg</td><td>1.570 kg</td></tr>
+<tr><td>12 mm</td><td>94,2 kg</td><td>848 kg</td><td>1.130 kg</td><td>1.884 kg</td></tr>
+<tr><td>15 mm</td><td>117,8 kg</td><td>1.060 kg</td><td>1.413 kg</td><td>2.355 kg</td></tr>
+<tr><td>20 mm</td><td>157 kg</td><td>1.413 kg</td><td>1.884 kg</td><td>3.140 kg</td></tr>
+<tr><td>25 mm</td><td>196 kg</td><td>1.766 kg</td><td>2.355 kg</td><td>3.925 kg</td></tr>
+<tr><td>30 mm</td><td>235,5 kg</td><td>2.120 kg</td><td>2.826 kg</td><td>4.710 kg</td></tr>
+<tr><td>40 mm</td><td>314 kg</td><td>2.826 kg</td><td>3.768 kg</td><td>6.280 kg</td></tr>
+<tr><td>50 mm</td><td>392,5 kg</td><td>3.533 kg</td><td>4.710 kg</td><td>7.850 kg</td></tr>
+<tr><td>60 mm</td><td>471 kg</td><td>4.239 kg</td><td>5.652 kg</td><td>9.420 kg</td></tr>
+<tr><td>80 mm</td><td>628 kg</td><td>5.652 kg</td><td>7.536 kg</td><td>12.560 kg</td></tr>
+<tr><td>100 mm</td><td>785 kg</td><td>7.065 kg</td><td>9.420 kg</td><td>15.700 kg</td></tr>
+</tbody>
+</table>
+
+<p><em>Hassas hesap için <a href="/hesaplama.php">online ağırlık hesaplama motorumuzu</a> kullanın.</em></p>
+
+<h2>Kalın Levha Sac Kullanım Alanları</h2>
+
+<h3>Çelik Konstrüksiyon</h3>
+<ul>
+<li><strong>Çelik yapı kolonları:</strong> H profil + flanş plakaları için kalın levha</li>
+<li><strong>Köprü tabliyesi:</strong> Karayolu ve demiryolu köprü uygulamaları</li>
+<li><strong>Vinç ana kirişleri:</strong> Üst kalkan ve alt flanş plakaları</li>
+<li><strong>Stadyum çatı sistemi:</strong> Büyük açıklıklı yapısal eleman</li>
+<li><strong>Yüksek bina çelik iskeleti:</strong> Düşey kolon, yatay kiriş bağlantı plakaları</li>
+</ul>
+
+<h3>Ağır Makine ve Endüstri</h3>
+<ul>
+<li><strong>Vinç gövdesi:</strong> Tower crane, mobile crane, gantry crane</li>
+<li><strong>İş makinesi şasi:</strong> Ekskavatör, kepçe, dozer ana çelik gövde</li>
+<li><strong>Hidrolik pres tablası:</strong> 1000+ ton hidrolik makina</li>
+<li><strong>Konveyör band ana platformu:</strong> Maden, çimento, demir-çelik fabrika</li>
+<li><strong>Endüstriyel kalıp tablası:</strong> Pres, döküm, dövme uygulamaları</li>
+</ul>
+
+<h3>Gemi İnşası ve Denizcilik</h3>
+<ul>
+<li><strong>Gemi gövdesi (hull):</strong> Tanker, kargo, yolcu gemisi</li>
+<li><strong>Petrol platformu:</strong> Açık deniz çelik strüktürü</li>
+<li><strong>Liman vinçleri:</strong> Konteyner taşıma vinçleri</li>
+<li><strong>Yat ve yarış teknesi:</strong> Yapısal güçlendirme plakaları</li>
+</ul>
+
+<h3>Petrokimya ve Enerji</h3>
+<ul>
+<li><strong>Basınçlı kazan:</strong> P235GH, P355GH levha</li>
+<li><strong>Buhar kazanı:</strong> Termal santral, fabrika buharı</li>
+<li><strong>Petrol depolama tankı:</strong> 10.000+ ton kapasite</li>
+<li><strong>Boru hattı vana ve flanş:</strong> Yüksek basınç gaz/petrol hatları</li>
+<li><strong>Reaktör cidarı:</strong> Petrol rafinerisi, kimya tesisi</li>
+</ul>
+
+<h3>Tarım ve İş Makineleri</h3>
+<ul>
+<li>Traktör şasisi</li>
+<li>Hasat makinesi ana iskelet</li>
+<li>Patos sacı (silaj kıyıcı, harman)</li>
+<li>Tank treyleri ana plaka</li>
+</ul>
+
+<h3>Savunma ve Askeri</h3>
+<ul>
+<li>Zırhlı araç gövde plakaları (özel zırh çeliği)</li>
+<li>Gemi savaş ekipmanı</li>
+<li>Mühimmat depo cidarı</li>
+<li>Köprü inşa askeri yapı</li>
+</ul>
+
+<h2>Kalın Levha Sac Kesim Yöntemleri</h2>
+
+<h3>1. Oksijen Kesim (Otojen)</h3>
+<p>Tekcan Metal''de en yaygın yöntem. <strong>5 mm – 100 mm</strong> aralığında ekonomik ve hassas kesim. <a href="/hizmet/oksijen-kesim">Oksijen kesim atölyemizde</a> CNC kontrollü, ±2 mm hassasiyet.</p>
+
+<h3>2. Plazma Kesim</h3>
+<p>5-50 mm kalınlık aralığı. Daha hızlı, daha temiz kesim. CNC plazma sistemleri.</p>
+
+<h3>3. Lazer Kesim (12 mm''ye kadar)</h3>
+<p>İnce-orta kalın levhalarda <strong>±0,1 mm hassasiyet</strong>. <a href="/hizmet/lazer-kesim">Fiber lazer atölyemizde</a> 12 mm''ye kadar.</p>
+
+<h3>4. Su Jeti Kesim</h3>
+<p>Termal etki istemeyen özel uygulamalar için. Maliyet yüksek, kalite mükemmel.</p>
+
+<h3>5. Sürtünme Disk (Testere) Kesim</h3>
+<p>Düz kesim, basit projelerde 100+ mm kalınlık için.</p>
+
+<h2>Avantajları</h2>
+
+<ul>
+<li><strong>Yüksek mukavemet:</strong> Yapısal yük taşıma kapasitesi maksimum</li>
+<li><strong>Kaynak edilebilirlik:</strong> S235-S460 sınıfları kolayca kaynaklanır</li>
+<li><strong>Şekillendirilebilir:</strong> Sıcak ve soğuk şekillendirme uygulanabilir</li>
+<li><strong>Standart stoklu:</strong> 5-100 mm kalınlık aralığında geniş stok</li>
+<li><strong>Sertifikalı kalite:</strong> EN 10204 3.1 / 3.2 sertifikaları</li>
+<li><strong>Çoklu kesim seçeneği:</strong> Oksijen, plazma, lazer, su jeti</li>
+<li><strong>Yüksek dayanıklılık:</strong> 50+ yıl yapısal ömür</li>
+<li><strong>Ekonomik:</strong> Birim mukavemet başına en uygun maliyet</li>
+</ul>
+
+<h2>Kalın Levha Sac Fiyatları (2026)</h2>
+
+<p>Kalın levha sac fiyatları; <strong>kalite sınıfı, kalınlık, levha boyutu ve sipariş miktarı</strong> baz alınarak belirlenir.</p>
+
+<h3>Fiyat Sıralaması (Pahalıdan Ucuza)</h3>
+<ol>
+<li>Özel yüksek mukavemet (S690, AHSS sınıfları)</li>
+<li>Aşınmaya dayanıklı (Hardox, Wear plate)</li>
+<li>Basınç kabı (P355GH, P460N)</li>
+<li>Yüksek mukavemet (S420, S460)</li>
+<li>Yapısal (S355 - en popüler)</li>
+<li>Standart (S275 - genel inşaat)</li>
+<li>Genel kullanım (S235JR - en ekonomik)</li>
+</ol>
+
+<h3>Fiyatı Belirleyen Faktörler</h3>
+<ul>
+<li><strong>Çelik fiyatı:</strong> LME ve Türkiye İhracatçılar Birliği fiyatlarına göre</li>
+<li><strong>Kalınlık:</strong> 5-100 mm arası ton fiyatı %10-30 değişir</li>
+<li><strong>Levha boyutu:</strong> Standart 1,5×6 m en ekonomik</li>
+<li><strong>Yüzey işlemi:</strong> Ham, primer-boyalı, paslanmaz seçenekleri</li>
+<li><strong>Sertifika seviyesi:</strong> EN 10204 2.2 vs 3.1 vs 3.2 fiyat farklı</li>
+<li><strong>Sipariş miktarı:</strong> 5+ ton siparişlerde toplu indirim</li>
+<li><strong>Sevkiyat:</strong> Ağır yük taşıma — vinç, kamyon</li>
+</ul>
+
+<h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+<h4>Kalın levha sac kaç ton tonajla satılır?</h4>
+<p>Genelde minimum sipariş 1 ton (1.000 kg). Standart bir 2×6m levha 30 mm kalınlıkta zaten ~2,8 ton. Daha küçük miktarlar için <strong>kesim hizmetiyle</strong> kupon halinde tedarik edilir.</p>
+
+<h4>Hangi kalite sınıfını seçmeliyim?</h4>
+<p>Genel inşaat için <strong>S235JR / ASTM A36</strong>; köprü ve yapısal çelik için <strong>S355J2 / ASTM A572</strong>; basınçlı kap için <strong>P355GH / ASTM A516 Gr.70</strong>; ağır endüstriyel makina için S460 önerilir.</p>
+
+<h4>Kalın levha sac üretici sertifikası verir misiniz?</h4>
+<p>Evet. Tüm kalın levha sevkiyatlarımızda <strong>üretici sertifikası (Mill Test Certificate, EN 10204 3.1)</strong> dahildir. 3.2 sertifikası (3. taraf onaylı) talebe göre temin edilir.</p>
+
+<h4>Kalın levhayı oksijen kesimle keser misiniz?</h4>
+<p>Evet. <a href="/hizmet/oksijen-kesim">CNC oksijen kesim atölyemizde</a> 5-100 mm aralığında, ±2 mm hassasiyetle özel ölçü kesim yapıyoruz. DXF/DWG dosyanızı gönderin, aynı gün üretime alalım.</p>
+
+<h4>Kaç gün içinde teslim edebilirsiniz?</h4>
+<p>Stoklu sınıflar (S235, S275, S355) <strong>aynı gün</strong> sevkiyatla. Özel sipariş (S420, basınç kabı, gemi sacı) <strong>10-15 iş günü</strong>. Yurtdışı menşeli özel kalite <strong>30-45 gün</strong>.</p>
+
+<h4>İhracat yapıyor musunuz?</h4>
+<p>Evet. <strong>Irak, Suriye, Azerbaycan, Türkmenistan</strong>''a düzenli kalın levha sac sevkiyatı yapıyoruz. Üretici menşei şahadetnamesi, TSE/EN sertifikaları ve gümrük dokümantasyonu dahildir.</p>
+
+<h2>Tekcan Metal Kalın Levha Sac Avantajları</h2>
+
+<ul>
+<li>✅ <strong>20+ yıl sektör tecrübesi</strong></li>
+<li>✅ <strong>Erdemir, Kardemir, İçdaş, Tosyalı</strong> üretici sertifikalı tedarik</li>
+<li>✅ <strong>Tüm kalite sınıfları:</strong> S235, S275, S355, S420, S460</li>
+<li>✅ <strong>Basınç kabı sınıfları:</strong> P235GH, P265GH, P355GH</li>
+<li>✅ <strong>5-100 mm geniş kalınlık stoğu</strong></li>
+<li>✅ <strong>EN 10204 3.1 / 3.2 üretici sertifikaları</strong> dahil</li>
+<li>✅ <strong>Oksijen + plazma + lazer kesim</strong> atölyeleri</li>
+<li>✅ <strong>Vinç servisi:</strong> Ağır yük yükleme/boşaltma desteği</li>
+<li>✅ <strong>81 il sevkiyat ağı</strong> + uluslararası ihracat</li>
+<li>✅ <strong>Mühendislik desteği:</strong> Kalite sınıfı + kalınlık önerisi ücretsiz</li>
+</ul>
+
+<p class="cta-block"><strong>Kalın levha sac fiyat teklifi almak için:</strong><br>
+📞 0 332 342 24 52 | 📱 WhatsApp 0 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Teklif İste</a> · <a href="/hesaplama.php" class="btn btn-ghost">Ağırlık Hesaplama</a></p>
+
+<p><em>Son güncelleme: Nisan 2026 — Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</em></p>
+',
+    'uploads/blog/kalin-levha-sac-rehberi.jpg',
+    'Tekcan Metal',
+    'Kalın Levha Sac (Slab) Kalite Sınıfları, Kalınlık ve Fiyat — Tekcan Metal',
+    'Kalın levha sac (slab) S235JR, S275JR, S355J2, S420N, S460N, P355GH kalite sınıfları, 5-100 mm kalınlık, EN 10025 / ASTM A36 / A572 standartları. Oksijen + plazma + lazer kesim, EN 10204 3.1 sertifika. Konya merkezli Tekcan Metal — 20+ yıl tecrübe.',
+    NOW(),
+    0,
+    1
+)
+ON DUPLICATE KEY UPDATE
+    title = VALUES(title),
+    excerpt = VALUES(excerpt),
+    content = VALUES(content),
+    meta_title = VALUES(meta_title),
+    meta_desc = VALUES(meta_desc);
