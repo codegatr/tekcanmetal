@@ -30,7 +30,7 @@ if ($cat_slug) {
 $totalCount = count($products);
 $catCount   = count($cats);
 
-$pageTitle = $cat_slug ? 'Ürünler — ' . $activeCatName : 'Ürün Katalogumuz';
+$pageTitle = $cat_slug ? t('products.title_prefix', 'Ürünler') . ' — ' . $activeCatName : t('products.catalog_title', 'Ürün Katalogumuz');
 $metaDesc  = 'Tekcan Metal ürün katalogu — sac, boru, profil, hadde, flanş, demir, panel ve daha fazlası. ' . $totalCount . ' aktif ürün, ' . $catCount . ' ana kategori.';
 require __DIR__ . '/includes/header.php';
 ?>
@@ -579,17 +579,17 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="urn-hero-eyebrow">Ürün Katalogumuz</div>
       <?php if ($cat_slug && $activeCatName): ?>
-        <h1><em><?= h($activeCatName) ?></em><br>Ürünleri</h1>
+        <h1><em><?= h($activeCatName) ?></em><br><?= h(t('products.products_label', 'Ürünleri')) ?></h1>
         <p class="urn-hero-lead">
           <?= h($activeCatName) ?> kategorisindeki tüm ürünlerimiz, kalite ve fiyat avantajıyla stoğumuzda hazır.
         </p>
       <?php elseif ($search): ?>
-        <h1>Arama: <em>"<?= h($search) ?>"</em></h1>
+        <h1><?= h(t('products.search', 'Arama')) ?>: <em>"<?= h($search) ?>"</em></h1>
         <p class="urn-hero-lead">
           Arama sonuçlarınız aşağıdadır.
         </p>
       <?php else: ?>
-        <h1>Çeliğin <em>Sonsuz Yelpazesi</em><br>Tek Adreste</h1>
+        <h1><?= t('products.hero_h1', 'Çeliğin <em>Sonsuz Yelpazesi</em><br>Tek Adreste') ?></h1>
         <p class="urn-hero-lead">
           Sac, boru, profil, hadde, flanş, demir ve panel ürünlerimizin tüm yelpazesi. Türkiye'nin lider üreticilerinden tedarik ettiğimiz, sertifikalı ve stok hazır ürün katalogumuz.
         </p>
@@ -698,7 +698,7 @@ require __DIR__ . '/includes/header.php';
             <?php if (!empty($p['cat_name'])): ?>
               <div class="urn-card-cat"><?= h($p['cat_name']) ?></div>
             <?php endif; ?>
-            <h3 class="urn-card-name"><?= h($p['name']) ?></h3>
+            <h3 class="urn-card-name"><?= h(tr_field($p, 'title') ?: $p['name']) ?></h3>
             <?php if (!empty($p['short_desc'])): ?>
               <p class="urn-card-desc"><?= h($p['short_desc']) ?></p>
             <?php else: ?>
@@ -714,7 +714,7 @@ require __DIR__ . '/includes/header.php';
       <!-- EMPTY STATE -->
       <div class="urn-empty">
         <div class="urn-empty-icon">🔍</div>
-        <h3>Aradığınız ürün bulunamadı</h3>
+        <h3><?= h(t('products.not_found', 'Aradığınız ürün bulunamadı')) ?></h3>
         <p>Bu kriterlere uygun ürün bulunamadı. Farklı bir kategori seçebilir veya tüm ürünleri görüntüleyebilirsiniz. Stoğumuzda olmayan ürünler için bizimle iletişime geçin — üretici partnerlerimizden 24-72 saat içinde tedarik edebiliriz.</p>
         <a href="<?= h(url('urunler.php')) ?>" class="urn-empty-btn">Tüm Ürünleri Göster</a>
       </div>
@@ -729,7 +729,7 @@ require __DIR__ . '/includes/header.php';
       <div class="urn-cta-inner">
         <div>
           <div class="urn-cta-eyebrow">Aradığınızı bulamadınız mı?</div>
-          <h2>Stoğumuzda <strong>olmayan ürün</strong> için<br>tedarik desteği</h2>
+          <h2><?= t('products.cta_h2', 'Stoğumuzda <strong>olmayan ürün</strong> için<br>tedarik desteği') ?></h2>
           <p class="urn-cta-lead">Tedarik ortağımız üretici fabrikalardan, sipariş üzerine 24-72 saat içinde özel ürün temin edebiliyoruz. Aradığınızı söyleyin, biz bulalım.</p>
         </div>
         <div class="urn-cta-actions">

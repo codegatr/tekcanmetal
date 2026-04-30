@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/includes/db.php';
 $services = all("SELECT * FROM tm_services WHERE is_active=1 ORDER BY sort_order");
-$pageTitle = 'Endüstriyel Yetkinliklerimiz';
-$metaDesc  = 'Tekcan Metal hizmetleri: lazer kesim, oksijen kesim, dekoratif sac üretimi. CNC tabanlı tam donanımlı atölye yetkinliği.';
+$pageTitle = t('services.list_title', 'Endüstriyel Yetkinliklerimiz');
+$metaDesc  = t('services.list_meta', 'Tekcan Metal hizmetleri: lazer kesim, oksijen kesim, dekoratif sac üretimi. CNC tabanlı tam donanımlı atölye yetkinliği.');
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -360,8 +360,8 @@ require __DIR__ . '/includes/header.php';
   <!-- HERO -->
   <section class="hz-hero">
     <div class="container">
-      <div class="hz-hero-eyebrow">Endüstriyel Yetkinlikler</div>
-      <h1>Tedarikçinizden <em>Çözüm</em><br>Ortağınıza</h1>
+      <div class="hz-hero-eyebrow"><?= h(t('bc.industrial_capabilities', 'Endüstriyel Yetkinlikler')) ?></div>
+      <h1><?= t('services.hero_h1', 'Tedarikçinizden <em>Çözüm</em><br>Ortağınıza') ?></h1>
       <p class="hz-hero-lead">
         Tekcan Metal'in tam donanımlı atölye yetkinlikleri ile sadece çelik tedarik etmiyor; ihtiyacınız olan biçim, ölçü ve hassasiyetle işlenmiş ürünleri kapınıza teslim ediyoruz.
       </p>
@@ -396,8 +396,8 @@ require __DIR__ . '/includes/header.php';
   <section class="hz-services">
     <div class="container">
       <div class="hz-services-head">
-        <div class="eyebrow">Hizmetlerimiz</div>
-        <h2>Çelik İşleme <em>Sanatı</em></h2>
+        <div class="eyebrow"><?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></div>
+        <h2><?= t('services.list_h2', 'Çelik İşleme <em>Sanatı</em>') ?></h2>
       </div>
 
       <?php if (!$services): ?>
@@ -408,16 +408,16 @@ require __DIR__ . '/includes/header.php';
         <div class="hz-service-img">
           <span class="hz-service-img-num">— <?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
           <?php if (!empty($s['image'])): ?>
-            <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h($s['title']) ?>" loading="lazy">
+            <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
           <?php else: ?>
             <div class="hz-service-img-placeholder"><?= h(mb_strtoupper(mb_substr($s['title'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
           <?php endif; ?>
         </div>
         <div class="hz-service-body">
-          <div class="hz-service-eyebrow"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> · Atölye Hizmeti</div>
-          <h3><?= h($s['title']) ?></h3>
+          <div class="hz-service-eyebrow"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> · <?= h(t('services.workshop_service', 'Atölye Hizmeti')) ?></div>
+          <h3><?= h(tr_field($s, 'title')) ?></h3>
           <?php if (!empty($s['short_desc'])): ?>
-            <p class="hz-service-short"><?= h($s['short_desc']) ?></p>
+            <p class="hz-service-short"><?= h(tr_field($s, 'short_desc')) ?></p>
           <?php endif; ?>
           <?php
           // Servis özelliklerini description'dan veya statik özelliklerden çıkar
@@ -450,8 +450,8 @@ require __DIR__ . '/includes/header.php';
   <section class="hz-cap">
     <div class="container">
       <div class="hz-cap-head">
-        <div class="eyebrow">Atölye Kapasitemiz</div>
-        <h2>Üç İlke Üzerinde <em>Yükseliriz</em></h2>
+        <div class="eyebrow"><?= h(t('services.workshop_capacity', 'Atölye Kapasitemiz')) ?></div>
+        <h2><?= t('services.three_principles', 'Üç İlke Üzerinde <em>Yükseliriz</em>') ?></h2>
       </div>
       <div class="hz-cap-grid">
 
@@ -463,7 +463,7 @@ require __DIR__ . '/includes/header.php';
               <circle cx="12" cy="12" r="2" fill="currentColor"/>
             </svg>
           </div>
-          <h3>Hassasiyet</h3>
+          <h3><?= h(t('services.principle_precision', 'Hassasiyet')) ?></h3>
           <p>CNC kontrollü makinelerimiz mikron toleransla çalışır. Hassasiyet bizim için bir lüks değil, standart.</p>
         </div>
 
@@ -474,7 +474,7 @@ require __DIR__ . '/includes/header.php';
               <polyline points="12 6 12 12 16 14"/>
             </svg>
           </div>
-          <h3>Hız</h3>
+          <h3><?= h(t('services.principle_speed', 'Hız')) ?></h3>
           <p>Aynı gün sipariş, aynı gün üretim. 24 saat içinde nakil hazır. Sıkışık projelerde rakipsiziz.</p>
         </div>
 
@@ -485,7 +485,7 @@ require __DIR__ . '/includes/header.php';
               <path d="M9 12l2 2 4-4"/>
             </svg>
           </div>
-          <h3>Garanti</h3>
+          <h3><?= h(t('services.principle_warranty', 'Garanti')) ?></h3>
           <p>Yanlış üretilen parça bizim sorunumuzdur. Müşterimiz parça ile uğraşmaz, biz üretir, biz teslim ederiz.</p>
         </div>
 
@@ -497,10 +497,10 @@ require __DIR__ . '/includes/header.php';
   <section class="hz-cta">
     <div class="container">
       <div class="hz-cta-inner">
-        <h2>Projeniz için <strong>özel teklif</strong> alın</h2>
+        <h2><?= t('services.cta_h2', 'Projeniz için <strong>özel teklif</strong> alın') ?></h2>
         <p>DXF/DWG dosyanızı bize iletin, aynı gün hassas teklif sunalım. Lazer kesimden plaka açmaya kadar tüm atölye yetkinliklerimiz hizmetinizde.</p>
         <div class="hz-cta-actions">
-          <a href="<?= h(url('iletisim.php')) ?>" class="hz-btn hz-btn-primary">Teklif İste</a>
+          <a href="<?= h(url_lang('iletisim.php')) ?>" class="hz-btn hz-btn-primary">Teklif İste</a>
           <a href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, atölye hizmetleri için fiyat teklifi almak istiyorum.')) ?>" target="_blank" rel="noopener" class="hz-btn hz-btn-ghost">WhatsApp Teklif</a>
         </div>
       </div>

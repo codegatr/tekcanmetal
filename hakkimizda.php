@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/includes/db.php';
 $page = row("SELECT * FROM tm_pages WHERE slug='hakkimizda' AND is_active=1");
-$pageTitle = $page['title'] ?? 'Hakkımızda';
-$metaDesc  = $page['meta_desc'] ?? settings('site_description');
+$pageTitle = tr_field($page, 'title') ?: t('about.title', 'Hakkımızda');
+$metaDesc  = tr_field($page, 'meta_desc') ?: t_setting('site_description');
 
 // Sayfa için ek veriler
 $partners = all("SELECT * FROM tm_partners WHERE is_active=1 ORDER BY sort_order LIMIT 11");
@@ -1038,30 +1038,29 @@ require __DIR__ . '/includes/header.php';
   <!-- ═══ 1. HERO ═══ -->
   <section class="kral-hero">
     <div class="container">
-      <div class="kral-hero-eyebrow kral-reveal kral-reveal-1">Tekcan Metal · 2005</div>
+      <div class="kral-hero-eyebrow kral-reveal kral-reveal-1"><?= h(t('about.hero_eyebrow', 'Tekcan Metal · 2005')) ?></div>
       <h1 class="kral-reveal kral-reveal-2">
-        Demir adına <em>Herşey.</em><br>
-        <strong>Yarım asra yakın güven.</strong>
+        <?= t('about.hero_h1', 'Demir adına <em>Herşey.</em><br><strong>Yarım asra yakın güven.</strong>') ?>
       </h1>
       <p class="kral-hero-lead kral-reveal kral-reveal-3">
-        Konya'nın köklü demir-çelik tedarikçisi olarak, 2005'ten bu yana sanayi ve inşaat sektörünün her ölçekteki ihtiyacını karşılamak için çalışıyoruz. Türkiye'nin önde gelen üreticilerinin temsilciliği bizim, kalite ve güven sözümüz sizin.
+        <?= h(t('about.hero_lead', "Konya'nın köklü demir-çelik tedarikçisi olarak, 2005'ten bu yana sanayi ve inşaat sektörünün her ölçekteki ihtiyacını karşılamak için çalışıyoruz. Türkiye'nin önde gelen üreticilerinin temsilciliği bizim, kalite ve güven sözümüz sizin.")) ?>
       </p>
       <div class="kral-hero-meta kral-reveal kral-reveal-4">
         <div class="kral-hero-meta-item">
-          <div class="kral-hero-meta-label">Kuruluş</div>
+          <div class="kral-hero-meta-label"><?= h(t('about.founded', 'Kuruluş')) ?></div>
           <div class="kral-hero-meta-value">2005</div>
         </div>
         <div class="kral-hero-meta-item">
-          <div class="kral-hero-meta-label">Şirketleşme</div>
+          <div class="kral-hero-meta-label"><?= h(t('about.incorporated', 'Şirketleşme')) ?></div>
           <div class="kral-hero-meta-value">2017 <em>Ltd.</em></div>
         </div>
         <div class="kral-hero-meta-item">
-          <div class="kral-hero-meta-label">Merkez</div>
-          <div class="kral-hero-meta-value">Karatay <em>·</em> Konya</div>
+          <div class="kral-hero-meta-label"><?= h(t('about.headquarters', 'Merkez')) ?></div>
+          <div class="kral-hero-meta-value"><?= t('about.city_value', 'Karatay <em>·</em> Konya') ?></div>
         </div>
         <div class="kral-hero-meta-item">
-          <div class="kral-hero-meta-label">Tedarik Ağı</div>
-          <div class="kral-hero-meta-value">Türkiye <em>geneli</em></div>
+          <div class="kral-hero-meta-label"><?= h(t('about.supply_network', 'Tedarik Ağı')) ?></div>
+          <div class="kral-hero-meta-value"><?= t('about.network_value', 'Türkiye <em>geneli</em>') ?></div>
         </div>
       </div>
     </div>
@@ -1071,11 +1070,11 @@ require __DIR__ . '/includes/header.php';
   <section class="kral-manifesto">
     <div class="container">
       <div class="kral-manifesto-inner">
-        <div class="kral-manifesto-eyebrow">Kurum Felsefemiz</div>
+        <div class="kral-manifesto-eyebrow"><?= h(t('about.philosophy_eyebrow', 'Kurum Felsefemiz')) ?></div>
         <p class="kral-manifesto-quote">
-          Bizim için ticaret yalnızca alım-satım değildir. Demir-çelik, asırlardır insanlığın inşasında yer almış asil bir malzemedir; <strong>onu doğru şekilde tedarik etmek de bir sorumluluktur.</strong> İşte bu yüzden her partide kaliteyi, her teslimatta sözümüzü, her müşteride dostluğu ararız.
+          <?= t('about.philosophy_quote', 'Bizim için ticaret yalnızca alım-satım değildir. Demir-çelik, asırlardır insanlığın inşasında yer almış asil bir malzemedir; <strong>onu doğru şekilde tedarik etmek de bir sorumluluktur.</strong> İşte bu yüzden her partide kaliteyi, her teslimatta sözümüzü, her müşteride dostluğu ararız.') ?>
         </p>
-        <div class="kral-manifesto-sig">— Tekcan Metal Yönetimi</div>
+        <div class="kral-manifesto-sig"><?= h(t('about.management_sig', '— Tekcan Metal Yönetimi')) ?></div>
       </div>
     </div>
   </section>
@@ -1168,13 +1167,13 @@ require __DIR__ . '/includes/header.php';
     <div class="kral-ed-opener">
       <div class="container">
         <div class="kral-ed-opener-meta">
-          <span>Bölüm I</span>
-          <span>Hikâyemiz</span>
-          <span>2005 – Bugün</span>
+          <span><?= h(t('about.section_i', 'Bölüm I')) ?></span>
+          <span><?= h(t('about.our_story', 'Hikâyemiz')) ?></span>
+          <span><?= h(t('about.timeline_today', '2005 – Bugün')) ?></span>
         </div>
-        <h2>Seçkin Markalar <em>Tekcan Metal'de</em></h2>
+        <h2><?= t('about.opener_h2', "Seçkin Markalar <em>Tekcan Metal'de</em>") ?></h2>
         <p class="kral-ed-opener-deck">
-          <strong>Yarım asra yakın güven, tek bir adreste.</strong> Sayfaları çevirdikçe; her partide kaliteyi, her teslimatta sözümüzü, her müşteride dostluğu arayan bir kurumun hikâyesi şekillenecek. <em>Hoşgeldiniz.</em>
+          <?= t('about.opener_deck', '<strong>Yarım asra yakın güven, tek bir adreste.</strong> Sayfaları çevirdikçe; her partide kaliteyi, her teslimatta sözümüzü, her müşteride dostluğu arayan bir kurumun hikâyesi şekillenecek. <em>Hoşgeldiniz.</em>') ?>
         </p>
       </div>
     </div>
@@ -1256,7 +1255,7 @@ require __DIR__ . '/includes/header.php';
       <div class="container">
         <div class="kral-ed-finale-inner">
           <div class="kral-ed-finale-eyebrow">Bölüm Sonu · Tekcan Metal'i Seçin</div>
-          <h3>Geleceğe atılan <strong>çelik adımlar</strong> için, bizden teklif almayı <strong>unutmayın</strong>.</h3>
+          <h3><?= t('about.cta_h3', 'Geleceğe atılan <strong>çelik adımlar</strong> için, bizden teklif almayı <strong>unutmayın</strong>.') ?></h3>
         </div>
       </div>
     </div>
@@ -1268,7 +1267,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="kral-timeline-head">
         <div class="kral-section-eyebrow">Yolculuğumuz</div>
-        <h2>Yıllara Sığan <em>Bir Miras</em></h2>
+        <h2><?= t('about.timeline_h2', 'Yıllara Sığan <em>Bir Miras</em>') ?></h2>
         <p>Konya'nın küçük bir tedarik dükkânından, Türkiye'nin önde gelen demir-çelik tedarikçilerinden biri olmaya uzanan kurumsal yolculuğumuz.</p>
       </div>
 
@@ -1278,7 +1277,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-year">2005</div>
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2005">
-            <h3 class="kral-tl-title">Kuruluş</h3>
+            <h3 class="kral-tl-title"><?= h(t('about.timeline_founding', 'Kuruluş')) ?></h3>
             <p class="kral-tl-desc">Demir-çelik sektörünün pazarlama ve dağıtım ihtiyacını karşılamak amacıyla şahıs şirketi olarak Konya'da kuruldu. İlk yıllarda sınırlı bir ürün portföyüyle Karatay sanayi bölgesine hizmet verdik.</p>
           </div>
         </div>
@@ -1287,7 +1286,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-year">2017</div>
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2017">
-            <h3 class="kral-tl-title">Şirketleşme</h3>
+            <h3 class="kral-tl-title"><?= h(t('about.timeline_incorporation', 'Şirketleşme')) ?></h3>
             <p class="kral-tl-desc">Artan iş hacmi ve müşteri memnuniyetinin getirdiği güvenle <strong>Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</strong> unvanıyla kurumsal yapıya geçildi. Aynı yıl üretici temsilcilikleri portföyü genişletildi.</p>
           </div>
         </div>
@@ -1296,7 +1295,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-year">2020</div>
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2020">
-            <h3 class="kral-tl-title">Hizmet Çeşitlenmesi</h3>
+            <h3 class="kral-tl-title"><?= h(t('about.timeline_services', 'Hizmet Çeşitlenmesi')) ?></h3>
             <p class="kral-tl-desc">Lazer kesim ve oksijen kesim hizmetleri devreye alındı. Mamul tedariğine ek olarak müşterilerin proje bazlı kesim ihtiyaçları tek elden karşılanmaya başladı.</p>
           </div>
         </div>
@@ -1305,7 +1304,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-year">2024</div>
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2024">
-            <h3 class="kral-tl-title">Müşteri Sadakat Programı</h3>
+            <h3 class="kral-tl-title"><?= h(t('about.timeline_loyalty', 'Müşteri Sadakat Programı')) ?></h3>
             <p class="kral-tl-desc">Uzun yıllardır birlikte çalıştığımız müşterilerimize özel <em>Tekcan Metal Sadakat Programı</em> başlatıldı. Sürekli iş ortaklarımıza özel fiyat avantajı, sevkiyat önceliği ve davet usulü etkinlikler.</p>
           </div>
         </div>
@@ -1314,7 +1313,7 @@ require __DIR__ . '/includes/header.php';
           <div class="kral-tl-year">2026</div>
           <div class="kral-tl-marker"></div>
           <div class="kral-tl-content" data-year="2026">
-            <h3 class="kral-tl-title">Dijital Dönüşüm</h3>
+            <h3 class="kral-tl-title"><?= h(t('about.timeline_digital', 'Dijital Dönüşüm')) ?></h3>
             <p class="kral-tl-desc">Yeni nesil <strong>v2.tekcanmetal.com</strong> kurumsal sitesi ve <em>Android mobil uygulamamız</em> yayında. Müşterilerimiz artık ürün katalogları, anlık fiyat sorgulaması, mail-order talimatı ve ağırlık hesaplamasına dijital olarak erişebiliyor.</p>
           </div>
         </div>
@@ -1328,7 +1327,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="kral-values-head">
         <div class="kral-section-eyebrow">İlkelerimiz</div>
-        <h2>Üç Sütun Üzerinde <em>Yükseliriz</em></h2>
+        <h2><?= t('about.values_h2', 'Üç Sütun Üzerinde <em>Yükseliriz</em>') ?></h2>
       </div>
 
       <div class="kral-values-grid">
@@ -1341,7 +1340,7 @@ require __DIR__ . '/includes/header.php';
             </svg>
           </div>
           <div class="kral-value-num">— Birinci ilke —</div>
-          <h3 class="kral-value-title">Kalite</h3>
+          <h3 class="kral-value-title"><?= h(t('about.value_kalite', 'Kalite')) ?></h3>
           <p class="kral-value-desc">Her partiyi Türkiye'nin önde gelen üreticilerinden tedarik ederiz. Standartların altında ürün, müşterimize değil; bize geri döner.</p>
         </div>
 
@@ -1353,7 +1352,7 @@ require __DIR__ . '/includes/header.php';
             </svg>
           </div>
           <div class="kral-value-num">— İkinci ilke —</div>
-          <h3 class="kral-value-title">Söz</h3>
+          <h3 class="kral-value-title"><?= h(t('about.value_soz', 'Söz')) ?></h3>
           <p class="kral-value-desc">Verdiğimiz teslim tarihi, taahhüt ettiğimiz fiyat, vaat ettiğimiz miktar. Sözümüz, mührümüzdür.</p>
         </div>
 
@@ -1367,7 +1366,7 @@ require __DIR__ . '/includes/header.php';
             </svg>
           </div>
           <div class="kral-value-num">— Üçüncü ilke —</div>
-          <h3 class="kral-value-title">Dostluk</h3>
+          <h3 class="kral-value-title"><?= h(t('about.value_dostluk', 'Dostluk')) ?></h3>
           <p class="kral-value-desc">Bizim için müşteri yalnızca alıcı değil, yıllar süren bir yol arkadaşıdır. <em>Ticaret ile bitmeyen dostluk</em> sloganımız buradan gelir.</p>
         </div>
 
@@ -1379,7 +1378,7 @@ require __DIR__ . '/includes/header.php';
   <section class="kral-stats">
     <div class="container">
       <div class="kral-stats-head">
-        <h2>Rakamlarla <em>Tekcan Metal</em></h2>
+        <h2><?= t('about.stats_h2', 'Rakamlarla <em>Tekcan Metal</em>') ?></h2>
       </div>
       <div class="kral-stats-grid">
         <div class="kral-stat">
@@ -1408,7 +1407,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="kral-partners-head">
         <div class="kral-section-eyebrow">Çözüm Ortaklarımız</div>
-        <h2>Türkiye'nin Önde Gelen <em>Üreticileri</em></h2>
+        <h2><?= t('about.partners_h2', "Türkiye'nin Önde Gelen <em>Üreticileri</em>") ?></h2>
         <p>Demir-çelik sektörünün lider markalarından doğrudan tedarik gücümüzle; orijinal ürünleri, üretici sertifikasıyla ve rekabetçi fiyatlarla müşterilerimize ulaştırıyoruz.</p>
       </div>
       <div class="kral-partners-grid">
@@ -1435,7 +1434,7 @@ require __DIR__ . '/includes/header.php';
             <path d="M12 2L4 6v6c0 5.5 3.5 10.5 8 12 4.5-1.5 8-6.5 8-12V6l-8-4z"/>
           </svg>
         </div>
-        <h2>"Ticaret ile bitmeyen <strong>Dostluk</strong>."</h2>
+        <h2><?= t('about.philosophy_short', '"Ticaret ile bitmeyen <strong>Dostluk</strong>."') ?></h2>
         <div class="kral-closing-sig">— Tekcan Metal Sanayi ve Ticaret Ltd. Şti.</div>
         <div class="kral-closing-actions">
           <a href="<?= h(url('iletisim.php')) ?>" class="kral-btn kral-btn-primary">İletişime Geç</a>
