@@ -7,7 +7,7 @@
     <div class="footer-strip">
       <div class="footer-strip-brand">
         <?php $logo = settings('logo', 'assets/img/logo.png'); ?>
-        <img src="<?= h(img_url($logo)) ?>" alt="<?= h(settings('site_name', 'Tekcan Metal')) ?>" class="footer-logo">
+        <img src="<?= h(img_url($logo)) ?>" alt="<?= h(settings('site_name', 'Tekcan Metal')) ?>" class="footer-logo" width="240" height="60" loading="lazy">
       </div>
       <div class="footer-strip-tagline">
         <span class="footer-strip-eyebrow"><?= h(t('footer.tagline', 'Demir adına Herşey…')) ?></span>

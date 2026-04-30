@@ -12,15 +12,37 @@ $news     = all("SELECT * FROM tm_blog_posts WHERE is_active=1 AND published_at 
 
 $logoFile = settings('logo', 'assets/img/logo.png');
 
+// v1.0.72: LCP optimizasyonu — ilk slider görselini preload et (Largest Contentful Paint kısalır)
+$preloadImages = [];
+if (!empty($sliders[0]['image'])) {
+    $preloadImages[] = img_url($sliders[0]['image']);
+}
+
 require __DIR__ . '/includes/header.php';
 ?>
 
 <!-- HERO — Limak'ın 50 logosu sahnesi gibi: koyu lacivert + ortada parlayan logo -->
 <section class="hero-cinema" id="heroCinema">
   <?php if ($sliders): ?>
-    <?php foreach ($sliders as $idx => $sl): ?>
+    <?php foreach ($sliders as $idx => $sl):
+        // v1.0.72: WebP varsa modern tarayıcılarda WebP servisi
+        $sliderImg = $sl['image'];
+        $sliderImgUrl = img_url($sliderImg);
+        $webpUrl = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $sliderImg);
+        $hasWebp = ($webpUrl !== $sliderImg) && file_exists(__DIR__ . '/' . $webpUrl);
+        $webpFullUrl = $hasWebp ? img_url($webpUrl) : null;
+
+        // image-set: WebP modern + JPG/PNG fallback
+        if ($hasWebp) {
+            $bgImage = "linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), "
+                     . "image-set(url('" . h($webpFullUrl) . "') type('image/webp'), url('" . h($sliderImgUrl) . "') type('image/jpeg'))";
+        } else {
+            $bgImage = "linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), "
+                     . "url('" . h($sliderImgUrl) . "')";
+        }
+    ?>
       <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
-           style="background-image: linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('<?= h(img_url($sl['image'])) ?>');">
+           style="background-image: <?= $bgImage ?>;">
       </div>
     <?php endforeach; ?>
   <?php else: ?>
@@ -856,7 +878,12 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-product-img">
             <span class="hp-product-num"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
             <?php if (!empty($c['image'])): ?>
-              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy">
+              <?= picture_tag($c['image'], [
+                  'alt' => tr_field($c, 'name'),
+                  'loading' => 'lazy',
+                  'width' => 422,
+                  'height' => 282,
+              ]) ?>
             <?php else: ?>
               <div class="hp-product-img-placeholder"><?= h(mb_strtoupper(mb_substr($c['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
@@ -889,7 +916,12 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-service-img">
             <span class="hp-service-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($s['image'])): ?>
-              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
+              <?= picture_tag($s['image'], [
+                  'alt' => tr_field($s, 'title'),
+                  'loading' => 'lazy',
+                  'width' => 422,
+                  'height' => 282,
+              ]) ?>
             <?php endif; ?>
           </div>
           <div class="hp-service-body">
@@ -984,7 +1016,12 @@ require __DIR__ . '/includes/header.php';
         <a class="hp-news" href="<?= h(url_lang('blog-detay.php?slug=' . $n['slug'])) ?>">
           <?php if (!empty($n['cover_image'])): ?>
           <div class="hp-news-thumb">
-            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h(tr_field($n, 'title')) ?>" loading="lazy">
+            <?= picture_tag($n['cover_image'], [
+                'alt' => tr_field($n, 'title'),
+                'loading' => 'lazy',
+                'width' => 380,
+                'height' => 240,
+            ]) ?>
           </div>
           <?php endif; ?>
           <div class="hp-news-body">
