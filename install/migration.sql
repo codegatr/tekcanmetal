@@ -8405,3 +8405,824 @@ UPDATE tm_blog_posts SET
     meta_title_en = 'Trapezoidal Sheet TR-18 to TR-55: Profiles, Colors, Pricing — Tekcan Metal',
     meta_desc_en  = 'Trapezoidal sheet (corrugated metal) profiles TR-18, TR-27, TR-35, TR-45, TR-55, weight tables, RAL color range, roofing and cladding applications. Konya-based Tekcan Metal.'
 WHERE slug = 'trapez-sac-rehberi';
+
+-- =====================================================
+-- v1.0.79 — SEO Süper Sayfa EN Çevirileri (Son 4 sayfa)
+-- =====================================================
+-- 5) Kalın Levha Sac → Heavy Plate
+-- 6) Delikli Sac → Perforated Sheet
+-- 7) Galvanizli Boru → Galvanized Pipe
+-- 8) Ferforje → Wrought Iron
+
+
+-- ===== kalin-levha-sac-rehberi (EN, ~1111 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Heavy Plate (Slab): S235-S460 Quality Grades, 5-100 mm Thickness, Weight and Pricing',
+    excerpt_en    = 'Heavy plate (slab, structural plate) quality grades S235JR/S275JR/S355J2/S420N/S460N/S690QL, 5-100mm thickness range, weight tables, structural/pressure vessel/shipbuilding applications. Tekcan Metal — mill-certified, 81-province shipping.',
+    content_en    = '<p class="lead"><strong>Heavy plate</strong> (also known as steel plate, slab, or thick plate) refers to flat steel products with thickness ranging from 5 mm to 100 mm or more, used in heavy industrial, structural, and pressure vessel applications. Tekcan Metal has been supplying heavy plate from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Heavy Plate? Production and Standards</h2>
+
+<p>Heavy plate is produced through <strong>hot-rolling slab steel</strong> on heavy-duty rolling mills. The slab passes through multiple roll stands, progressively reducing thickness while controlling temperature and microstructure. After rolling, plates are typically <strong>quenched, tempered, or normalized</strong> to achieve the required mechanical properties.</p>
+
+<p>Industry alternative names: "structural plate", "boiler plate", "pressure vessel plate", "shipbuilding plate", "abrasion-resistant plate" (AR plate).</p>
+
+<h3>Production Methods</h3>
+<ol>
+<li><strong>Hot rolling:</strong> Slab heated to 1200°C, rolled progressively</li>
+<li><strong>Normalizing:</strong> Heat treatment for uniform grain structure</li>
+<li><strong>Quenching and tempering (Q&amp;T):</strong> High-strength variants (S690, S960)</li>
+<li><strong>Thermomechanical control process (TMCP):</strong> Modern technique for shipbuilding plates</li>
+<li><strong>Surface treatment:</strong> Pickled, primer-painted, or galvanized (optional)</li>
+</ol>
+
+<h2>Heavy Plate Quality Grades (EN 10025)</h2>
+
+<table>
+<thead>
+<tr><th>Grade</th><th>Yield Strength (MPa)</th><th>Tensile Strength (MPa)</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>S235JR</td><td>235</td><td>360-510</td><td>General construction</td></tr>
+<tr><td>S275JR</td><td>275</td><td>410-560</td><td>Building structures</td></tr>
+<tr><td>S355J2</td><td>355</td><td>470-630</td><td>Heavy structural — most common</td></tr>
+<tr><td>S420N</td><td>420</td><td>520-680</td><td>High-strength structures</td></tr>
+<tr><td>S460N</td><td>460</td><td>540-720</td><td>Bridges, offshore</td></tr>
+<tr><td>S690QL</td><td>690</td><td>770-940</td><td>Crane booms, mining equipment</td></tr>
+</tbody>
+</table>
+
+<h3>Specialized Grades</h3>
+<ul>
+<li><strong>P265GH, P355GH:</strong> Pressure vessel grades (boiler plates)</li>
+<li><strong>A283, A516:</strong> ASTM pressure vessel grades</li>
+<li><strong>AH36, DH36, EH36:</strong> Shipbuilding plates (Lloyd''s, ABS, BV certified)</li>
+<li><strong>HARDOX 400/450/500:</strong> Abrasion-resistant plate</li>
+<li><strong>WELDOX 700/900:</strong> High-strength weldable structural plate</li>
+</ul>
+
+<h2>Heavy Plate Standard Sizes</h2>
+
+<table>
+<thead>
+<tr><th>Plate Size (mm)</th><th>Thickness Range</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>1500 × 6000</td><td>5 - 50 mm</td><td>General industrial</td></tr>
+<tr><td>2000 × 6000</td><td>6 - 60 mm</td><td>Heavy structural</td></tr>
+<tr><td>2000 × 12000</td><td>8 - 80 mm</td><td>Shipbuilding, large structures</td></tr>
+<tr><td>2500 × 12000</td><td>10 - 100 mm</td><td>Pressure vessels, offshore</td></tr>
+<tr><td>3000 × 12000</td><td>15 - 150 mm</td><td>Heavy industry</td></tr>
+<tr><td>Custom cut</td><td>5 - 200 mm</td><td>By project</td></tr>
+</tbody>
+</table>
+
+<h2>Heavy Plate Material Options</h2>
+
+<h3>1. Carbon Structural Steel (S235-S355)</h3>
+<p>Standard mild steel — most economical and versatile. Used in <strong>building frames, bridges, machinery bases</strong>. Excellent weldability and machinability.</p>
+
+<h3>2. High-Strength Low-Alloy (HSLA) Steel</h3>
+<p>S420, S460, S550 grades — <strong>1.5-2× higher yield</strong> than mild steel. Used in <strong>crane structures, mining equipment, offshore platforms</strong>.</p>
+
+<h3>3. Quenched and Tempered (Q&amp;T) Steel</h3>
+<p>S690QL, S960QL — extreme strength, used in <strong>military equipment, heavy lifting, dump truck bodies</strong>.</p>
+
+<h3>4. Pressure Vessel Steel (P265GH, P355GH)</h3>
+<p>EN 10028 standard — <strong>elevated temperature service</strong>. Used in boilers, pressure vessels, heat exchangers.</p>
+
+<h3>5. Abrasion-Resistant Plate (HARDOX, QUARD)</h3>
+<p>Hardness 400-500 HBW — used in <strong>mining equipment, crusher liners, dump truck beds, recycling plants</strong>.</p>
+
+<h3>6. Shipbuilding Plate (AH36, DH36, EH36)</h3>
+<p>Classification society approved (Lloyd''s, ABS, BV, DNV). Used in ship hulls, offshore platforms, and marine structures.</p>
+
+<h2>Heavy Plate Weight Calculation</h2>
+
+<p>Plate weight (kg/m²) = thickness (mm) × 7.85 (steel density):</p>
+
+<table>
+<thead>
+<tr><th>Thickness (mm)</th><th>Weight (kg/m²)</th><th>Weight per Plate (1500×6000)</th><th>Weight per Plate (2000×12000)</th></tr>
+</thead>
+<tbody>
+<tr><td>5</td><td>39.25</td><td>353 kg</td><td>942 kg</td></tr>
+<tr><td>10</td><td>78.50</td><td>706 kg</td><td>1,884 kg</td></tr>
+<tr><td>15</td><td>117.75</td><td>1,060 kg</td><td>2,826 kg</td></tr>
+<tr><td>20</td><td>157.00</td><td>1,413 kg</td><td>3,768 kg</td></tr>
+<tr><td>25</td><td>196.25</td><td>1,766 kg</td><td>4,710 kg</td></tr>
+<tr><td>30</td><td>235.50</td><td>2,120 kg</td><td>5,652 kg</td></tr>
+<tr><td>40</td><td>314.00</td><td>2,826 kg</td><td>7,536 kg</td></tr>
+<tr><td>50</td><td>392.50</td><td>3,533 kg</td><td>9,420 kg</td></tr>
+<tr><td>60</td><td>471.00</td><td>4,239 kg</td><td>11,304 kg</td></tr>
+<tr><td>80</td><td>628.00</td><td>5,652 kg</td><td>15,072 kg</td></tr>
+<tr><td>100</td><td>785.00</td><td>7,065 kg</td><td>18,840 kg</td></tr>
+</tbody>
+</table>
+
+<p>Use our <a href="/hesaplama.php">online weight calculator</a> for custom dimensions.</p>
+
+<h2>Heavy Plate Applications</h2>
+
+<h3>Structural Construction</h3>
+<ul>
+<li><strong>Building frames:</strong> Industrial halls, warehouses, multi-story buildings</li>
+<li><strong>Bridge construction:</strong> Highway, railway, pedestrian bridges</li>
+<li><strong>Crane structures:</strong> Tower cranes, mobile cranes, gantry cranes</li>
+<li><strong>Stadium roofing:</strong> Long-span steel structures</li>
+<li><strong>Pylon construction:</strong> Transmission towers, telecommunications</li>
+</ul>
+
+<h3>Heavy Industry and Mining</h3>
+<ul>
+<li><strong>Mining equipment:</strong> Excavator buckets, dump truck beds (HARDOX)</li>
+<li><strong>Crusher liners:</strong> Aggregate, mining processing plants</li>
+<li><strong>Conveyor systems:</strong> Heavy-duty material handling</li>
+<li><strong>Foundry equipment:</strong> Furnace structures, ladle covers</li>
+<li><strong>Steel mill components:</strong> Mill housings, rolling stand frames</li>
+</ul>
+
+<h3>Pressure Equipment</h3>
+<ul>
+<li><strong>Boilers:</strong> Steam generators, water tube boilers</li>
+<li><strong>Pressure vessels:</strong> Reactors, separators, columns</li>
+<li><strong>Heat exchangers:</strong> Tube sheets, shell construction</li>
+<li><strong>Storage tanks:</strong> Oil, gas, chemical storage</li>
+<li><strong>Pipeline components:</strong> Manifolds, valve bodies</li>
+</ul>
+
+<h3>Energy Sector</h3>
+<ul>
+<li>Wind turbine towers (S355, S420)</li>
+<li>Hydroelectric penstock pipes</li>
+<li>Solar plant mounting structures</li>
+<li>Nuclear plant components (specialized grades)</li>
+</ul>
+
+<h3>Marine and Shipbuilding</h3>
+<ul>
+<li>Ship hulls (AH36, DH36, EH36)</li>
+<li>Offshore platform structures</li>
+<li>Submarine components</li>
+<li>Naval vessel armor</li>
+</ul>
+
+<h3>Defense and Special Applications</h3>
+<ul>
+<li>Armor plate (specialized grades)</li>
+<li>Military vehicle hulls</li>
+<li>Bunker construction</li>
+<li>Blast-resistant structures</li>
+</ul>
+
+<h2>Surface Conditions and Preparation</h2>
+
+<h3>Mill-Finish Heavy Plate</h3>
+<p>Standard surface from rolling mill. Black scale (mill scale) typically present. Used as-supplied for many structural applications.</p>
+
+<h3>Pickled and Oiled (P&amp;O)</h3>
+<p>Acid-pickled to remove mill scale, lightly oiled for short-term protection. Better surface for painting and welding.</p>
+
+<h3>Shot-Blasted</h3>
+<p>SA 2.5 or SA 3 cleanliness — ready for painting. Required for offshore, marine, and high-quality industrial paint systems.</p>
+
+<h3>Painted (Workshop Primer)</h3>
+<p>Pre-applied epoxy or zinc-rich primer (50-80 µm). Provides 6-12 months exterior protection during construction.</p>
+
+<h2>Heavy Plate Pricing (2026)</h2>
+
+<p>Heavy plate pricing depends on <strong>grade, thickness, dimensions, surface condition, certification, and order quantity</strong>. International HRC steel prices (CME, LME) and alloy element costs (Cr, Mo, Ni) drive base pricing.</p>
+
+<h3>Pricing Order (Most Expensive to Most Economical)</h3>
+<ol>
+<li>HARDOX 500 / abrasion-resistant plate</li>
+<li>S690QL / Q&amp;T high-strength</li>
+<li>Pressure vessel (P355GH, A516)</li>
+<li>Shipbuilding (AH36, DH36)</li>
+<li>S460N / S420N (HSLA)</li>
+<li>S355J2 (most common)</li>
+<li>S275JR / S235JR (most economical)</li>
+</ol>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>What is the maximum thickness available?</h4>
+<p>Standard production: <strong>up to 100 mm</strong>. Special heavy plate up to 200 mm available on request (3-4 week lead time).</p>
+
+<h4>What is the difference between S355JR and S355J2?</h4>
+<p>Notch toughness rating. <strong>JR = +20°C</strong>, <strong>J2 = -20°C</strong>. J2 is required for cold-climate or impact-prone applications. Standard recommendation: J2 for outdoor structures.</p>
+
+<h4>Do you provide mill test certificates?</h4>
+<p>Yes. <strong>EN 10204 3.1</strong> certificates included with all orders. <strong>3.2 (third-party witnessed)</strong> available for critical applications (pressure vessels, nuclear, shipbuilding).</p>
+
+<h4>Can plates be cut to size?</h4>
+<p>Yes. We provide:</p>
+<ul>
+<li><strong>Plasma cutting:</strong> Up to 50 mm thick</li>
+<li><strong>Oxy-fuel cutting:</strong> Up to 200 mm thick</li>
+<li><strong>Laser cutting:</strong> Up to 30 mm (precision cuts)</li>
+<li><strong>Waterjet cutting:</strong> Up to 100 mm (no heat affected zone)</li>
+</ul>
+
+<h4>What is the lead time?</h4>
+<p>Standard grades (S235, S275, S355) up to 50 mm: <strong>same-week shipping</strong> from stock. Special grades or thicknesses 60-100 mm: <strong>2-4 weeks</strong>. Custom rolling: 6-8 weeks.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. We regularly export to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Heavy plate typically ships in 20''/40'' containers or break-bulk for very large pieces. Customs and origin documentation provided.</p>
+
+<h2>Why Choose Tekcan Metal for Heavy Plate</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Mill-certified supply</strong> (Erdemir, Borçelik, ArcelorMittal, Tata)</li>
+<li>✅ <strong>Wide grade range:</strong> S235 to S690QL, HARDOX, P265GH</li>
+<li>✅ <strong>Thickness 5-100 mm in stock</strong></li>
+<li>✅ <strong>Custom cutting:</strong> Plasma, oxy-fuel, laser, waterjet</li>
+<li>✅ <strong>Surface treatment:</strong> Pickling, blasting, primer painting</li>
+<li>✅ <strong>EN 10204 3.1/3.2 certificates</strong></li>
+<li>✅ <strong>81-province domestic shipping</strong> + international export</li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for heavy plate:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Heavy Plate S235-S690: Grades, Thickness, Weight, Pricing — Tekcan Metal',
+    meta_desc_en  = 'Heavy plate (slab, structural steel) S235JR/S355J2/S460N/HARDOX grades, 5-100mm thickness, weight tables, construction/pressure vessel/shipbuilding applications. Konya-based Tekcan Metal — 20+ years.'
+WHERE slug = 'kalin-levha-sac-rehberi';
+
+
+-- ===== delikli-sac-rehberi (EN, ~1125 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Perforated Sheet (Punched Metal): Types, Sizes, Open Area Ratios and Pricing',
+    excerpt_en    = 'Perforated sheet (perforated metal, punched plate) types (round, square, slot, hexagonal), CRS/galvanized/stainless/aluminum materials, standard sizes, open area ratios. Tekcan Metal — Konya, CNC press + laser cutting workshop.',
+    content_en    = '<p class="lead"><strong>Perforated sheet</strong> (perforated metal, punched sheet) is a structural metal sheet with regularly spaced precision-punched holes, providing controlled air, light, and fluid permeability. Tekcan Metal has been supplying CRS, stainless, aluminum, and galvanized perforated sheet from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Perforated Sheet? Production Process</h2>
+
+<p>Perforated sheet is produced by <strong>punching regularly-spaced holes</strong> in a flat sheet using CNC-controlled presses with custom dies, or laser systems for precision applications. Unlike expanded metal, the punched material is <strong>removed from the sheet</strong>, creating clean, precise, symmetrical openings.</p>
+
+<p>Industry alternative names: "perforated metal", "punching plate", "screen plate", "sieve plate".</p>
+
+<h3>Production Methods</h3>
+<ol>
+<li><strong>CNC press punching:</strong> Multi-die + servo motor — 100+ holes per second. Most economical for standard patterns.</li>
+<li><strong>Laser perforation:</strong> Custom patterns, 0.1 mm precision. For precision filtering applications.</li>
+<li><strong>Waterjet perforation:</strong> Special applications without thermal effect.</li>
+<li><strong>Photo-etching (chemical):</strong> Micro-perforated products, 0.05 mm spacing for high-precision use.</li>
+</ol>
+
+<h2>Perforated Sheet Hole Geometries</h2>
+
+<h3>1. Round Hole Perforated Sheet</h3>
+<p>Most common type. Round holes evenly spaced. Available in <strong>RV (60° square pitch)</strong> and <strong>RU (90° staggered)</strong> arrangements. Used for filters, acoustic panels, decorative applications.</p>
+
+<h3>2. Square Hole Perforated Sheet</h3>
+<p>Square holes — provides <strong>maximum open area</strong>. Used in screening, sorting, and ventilation applications.</p>
+
+<h3>3. Slot Perforated Sheet (Rectangular)</h3>
+<p>Long rectangular openings, horizontal or vertical arrangement. Used for airflow control and precision filtering.</p>
+
+<h3>4. Hexagonal Perforated Sheet</h3>
+<p>Honeycomb appearance. Used in <strong>aesthetic architectural applications</strong>, design panels, modern façades.</p>
+
+<h3>5. Custom Pattern Perforated Sheet</h3>
+<p>Star, triangle, oval, or logo-shaped holes — produced via <strong>laser cutting</strong> with custom CAD designs.</p>
+
+<h2>Perforated Sheet Standard Sizes</h2>
+
+<table>
+<thead>
+<tr><th>Sheet Size (mm)</th><th>Thickness Range</th><th>Hole Diameter</th><th>Typical Open Area</th></tr>
+</thead>
+<tbody>
+<tr><td>1000 × 2000</td><td>0.5 - 5 mm</td><td>1 - 25 mm</td><td>20% - 50%</td></tr>
+<tr><td>1250 × 2500</td><td>1 - 6 mm</td><td>2 - 30 mm</td><td>25% - 55%</td></tr>
+<tr><td>1500 × 3000</td><td>1.5 - 8 mm</td><td>3 - 40 mm</td><td>30% - 60%</td></tr>
+<tr><td>Custom size</td><td>0.5 - 10 mm</td><td>0.3 - 50 mm</td><td>By request</td></tr>
+</tbody>
+</table>
+
+<h3>Standard Round Hole Patterns</h3>
+
+<table>
+<thead>
+<tr><th>Hole Diameter</th><th>Pitch</th><th>Open Area</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>3 mm</td><td>5 mm</td><td>32.7%</td><td>Precision filtering, acoustic</td></tr>
+<tr><td>5 mm</td><td>8 mm</td><td>35.4%</td><td>Standard filter, decorative</td></tr>
+<tr><td>8 mm</td><td>12 mm</td><td>40.3%</td><td>Industrial filtering</td></tr>
+<tr><td>10 mm</td><td>15 mm</td><td>40.3%</td><td>Ventilation channels</td></tr>
+<tr><td>15 mm</td><td>22 mm</td><td>42.1%</td><td>Façade, screening</td></tr>
+<tr><td>20 mm</td><td>28 mm</td><td>46.2%</td><td>Aesthetic panels</td></tr>
+</tbody>
+</table>
+
+<h2>Perforated Sheet Material Options</h2>
+
+<h3>1. CRS Perforated Sheet</h3>
+<p>Cold-rolled steel — most common and economical. 0.5-3 mm thickness. Indoor, protected applications. Can be painted.</p>
+
+<h3>2. Galvanized Perforated Sheet</h3>
+<p>Hot-dip galvanized coating. <strong>Outdoor + humid environment</strong> applications. Roof and façade perforation, outdoor filters.</p>
+
+<h3>3. Stainless Perforated Sheet (304 / 316)</h3>
+<p>Critical corrosion resistance. <strong>Food, chemical, pharmaceutical industries</strong>, kitchen equipment, marine applications (316L).</p>
+
+<h3>4. Aluminum Perforated Sheet</h3>
+<p>Lightweight, naturally corrosion-resistant. <strong>Architectural façades, acoustic ceilings, air filters</strong>, automotive components. Anodized variants available.</p>
+
+<h3>5. Copper / Brass Perforated Sheet</h3>
+<p>Decorative applications, musical instrument parts, antenna components, luxury architectural panels. Patina or polished finishes.</p>
+
+<h2>Perforated Sheet Applications</h2>
+
+<h3>Filtration and Screening</h3>
+<ul>
+<li><strong>Industrial filters:</strong> Air, oil, water, gas filter beds</li>
+<li><strong>Agricultural screening:</strong> Grain, nut, bean classification</li>
+<li><strong>Mining screening:</strong> Coal, sand, gravel, stone separation</li>
+<li><strong>Waste processing:</strong> Recycling plant classification</li>
+<li><strong>Food screening:</strong> Flour, sugar, spice particle sizing</li>
+</ul>
+
+<h3>Architecture and Building</h3>
+<ul>
+<li><strong>Modern façade panels:</strong> Luxury villas, offices, malls, hotels</li>
+<li><strong>Decorative interiors:</strong> Restaurant, café, retail dividers</li>
+<li><strong>Acoustic panels:</strong> Conference rooms, cinemas, recording studios</li>
+<li><strong>Suspended ceilings:</strong> Combined ventilation + acoustic control</li>
+<li><strong>Railings and barriers:</strong> Transparent appearance + security</li>
+<li><strong>Garden pergolas:</strong> Aesthetic shade panels</li>
+</ul>
+
+<h3>HVAC and Ventilation</h3>
+<ul>
+<li><strong>Air diffusers:</strong> HVAC, mechanical ventilation</li>
+<li><strong>Exhaust wall panels:</strong> Industrial smoke discharge</li>
+<li><strong>Sound-absorbing panels:</strong> Industrial spaces</li>
+<li><strong>Ventilation channels:</strong> Even air circulation</li>
+</ul>
+
+<h3>Automotive and Transport</h3>
+<ul>
+<li>Exhaust silencer internals</li>
+<li>Air filter cages</li>
+<li>Oil filter perforated plates</li>
+<li>Marine ventilation panels</li>
+</ul>
+
+<h3>Industrial Machinery</h3>
+<ul>
+<li>CNC machine safety panels</li>
+<li>Conveyor safety covers</li>
+<li>Paint shop filtering chambers</li>
+<li>Industrial kitchen grills</li>
+</ul>
+
+<h2>Perforated Sheet Weight Calculation</h2>
+
+<p>Perforated sheet weight is reduced from base sheet weight by the open area ratio:</p>
+
+<p><strong>Perforated Sheet Weight = Flat Sheet Weight × (1 - Open Area / 100)</strong></p>
+
+<p><em>Example:</em> 2 mm CRS flat sheet = 15.7 kg/m². Perforated sheet with 35% open area = 15.7 × (1 - 0.35) = <strong>10.2 kg/m²</strong>.</p>
+
+<p>Use our <a href="/hesaplama.php">online weight calculator</a> for precise calculations.</p>
+
+<h2>Advantages of Perforated Sheet</h2>
+
+<ul>
+<li><strong>Weight reduction:</strong> 20-60% lighter than flat sheet (open area dependent)</li>
+<li><strong>Permeability:</strong> Controlled air, light, sound, fluid passage</li>
+<li><strong>Aesthetics:</strong> Modern, contemporary appearance</li>
+<li><strong>Hygiene:</strong> Stainless variant meets food-grade standards</li>
+<li><strong>Acoustic control:</strong> Functions as sound absorption panel</li>
+<li><strong>Filtration precision:</strong> Micron-level cross-flow capture</li>
+<li><strong>Wind load reduction:</strong> 30%+ wind permeability for façades</li>
+<li><strong>100% recyclable:</strong> Sustainable metal product</li>
+</ul>
+
+<h2>Perforated Sheet vs Expanded Metal</h2>
+
+<table>
+<thead>
+<tr><th>Feature</th><th>Perforated Sheet</th><th>Expanded Metal</th></tr>
+</thead>
+<tbody>
+<tr><td>Production</td><td>Hole punching (material removed)</td><td>Press expansion (single piece)</td></tr>
+<tr><td>Hole shape</td><td>Precise, geometric</td><td>Natural diamond/rhomboid</td></tr>
+<tr><td>Open area</td><td>20% - 60%</td><td>50% - 80% (high)</td></tr>
+<tr><td>Strength</td><td>Medium</td><td>High (no welds)</td></tr>
+<tr><td>Aesthetics</td><td>Excellent (modern, precise)</td><td>Good (industrial)</td></tr>
+<tr><td>Cost</td><td>Higher (material loss)</td><td>More economical</td></tr>
+<tr><td>Typical use</td><td>Architecture, filters, acoustics</td><td>Façades, walkways</td></tr>
+</tbody>
+</table>
+
+<h2>Perforated Sheet Pricing (2026)</h2>
+
+<p>Perforated sheet pricing depends on <strong>material grade, thickness, hole geometry, open area ratio, sheet dimensions, and order quantity</strong>.</p>
+
+<h3>Pricing Order (Most Expensive to Most Economical)</h3>
+<ol>
+<li>Copper/brass perforated sheet</li>
+<li>Stainless 316L perforated sheet</li>
+<li>Stainless 304 perforated sheet</li>
+<li>Aluminum perforated sheet</li>
+<li>Galvanized perforated sheet</li>
+<li>CRS perforated sheet (most economical)</li>
+</ol>
+
+<h3>Cost Factors</h3>
+<ul>
+<li><strong>Open area:</strong> More holes = less metal but more labor</li>
+<li><strong>Hole diameter:</strong> Very small holes (1-2 mm) require precision tooling</li>
+<li><strong>Geometry:</strong> Round most economical, custom patterns expensive</li>
+<li><strong>Method:</strong> CNC press &lt; Laser &lt; Waterjet (increasing cost)</li>
+<li><strong>Quantity:</strong> Tiered discounts for 50+ sheets</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>How many hole geometries are available?</h4>
+<p>Standard: round, square, rectangular (slot), hexagonal, triangular, oval, and custom CAD designs. <strong>Laser cutting</strong> enables practically unlimited patterns.</p>
+
+<h4>What is the smallest possible hole diameter?</h4>
+<p>CNC press: <strong>0.8 mm</strong>. Laser cutting: <strong>0.3 mm</strong>. Photo-etching: down to <strong>0.05 mm</strong>.</p>
+
+<h4>What is the minimum order?</h4>
+<p>Standard patterns (round, square): <strong>1 sheet minimum</strong>. Custom CAD patterns: minimum 5-10 m² for cost-efficiency.</p>
+
+<h4>Do you produce galvanized perforated sheet?</h4>
+<p>Yes — both options:</p>
+<ul>
+<li><strong>Punch pre-galvanized sheet</strong> (hole edges are uncoated)</li>
+<li><strong>Galvanize CRS perforated sheet after punching</strong> (full coverage)</li>
+</ul>
+
+<h4>What is the lead time?</h4>
+<p>Standard patterns (round 5/8/10 mm) in stock: <strong>same-day shipping</strong>. Custom patterns: <strong>3-5 business days</strong>. Micro-perforation custom orders: <strong>10-15 days</strong>.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. Regular shipments to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Customs and origin documentation included.</p>
+
+<h2>Why Choose Tekcan Metal for Perforated Sheet</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Mill-certified supply</strong> (Erdemir, Borçelik, Tosyalı)</li>
+<li>✅ <strong>5 standard geometries in stock</strong> (round, square, slot, hexagonal, custom)</li>
+<li>✅ <strong>CNC press + laser cutting workshop</strong> — custom pattern production</li>
+<li>✅ <strong>All materials:</strong> CRS, galvanized, stainless 304/316, aluminum, copper</li>
+<li>✅ <strong>0.3 mm precision</strong> (laser cutting)</li>
+<li>✅ <strong>81-province shipping</strong> + international export</li>
+<li>✅ <strong>e-Invoice, mill certificate, quality certificates included</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for perforated sheet:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Perforated Sheet Types, Sizes, Open Area, Pricing — Tekcan Metal',
+    meta_desc_en  = 'Perforated sheet (punched metal) types round/square/slot/hexagonal, CRS/galvanized/stainless/aluminum, weight tables, applications. CNC press + laser workshop. Konya-based Tekcan Metal — 20+ years.'
+WHERE slug = 'delikli-sac-rehberi';
+
+
+-- ===== galvanizli-boru-rehberi (EN, ~1130 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'Galvanized Pipe (GI Pipe): Diameters, Sizing Table, Types and Pricing',
+    excerpt_en    = 'Galvanized pipe (GI, hot-dip galvanized steel pipe) DN 15-DN 200 (1/2-8 inch) diameter range, industrial/gas/fire protection/plumbing types, weight and pricing. Tekcan Metal — gas authority approved, 81-province shipping.',
+    content_en    = '<p class="lead"><strong>Galvanized pipe</strong> (galvanized steel pipe, GP, hot-dip galvanized pipe) is steel pipe coated inside and outside with a zinc layer through hot-dip immersion, providing exceptional corrosion resistance and a 25-50 year service life. Tekcan Metal has been supplying galvanized pipe in various diameters and wall thicknesses from our Konya headquarters across Turkey since 2005.</p>
+
+<h2>What Is Galvanized Pipe? Production Process</h2>
+
+<p>Galvanized pipe is produced by passing finished steel pipe through a <strong>molten zinc bath at 460°C</strong>. This process coats both inner and outer surfaces with zinc, protecting against atmospheric corrosion, moisture, chemical attack, and oxygen reaction for 25-50 years.</p>
+
+<p>Industry alternative names: "GI pipe" (galvanized iron), "zinc-coated steel pipe", "HDG pipe" (hot-dip galvanized).</p>
+
+<h3>Production Methods</h3>
+
+<h4>1. Hot-Dip Galvanizing (HDG)</h4>
+<p>Finished steel pipe <strong>fully immersed</strong> in zinc bath. Both inner and outer surfaces coated simultaneously. Coating: 50-200 g/m². <strong>Most common and durable method</strong>.</p>
+
+<h4>2. Pre-Galvanized Forming</h4>
+<p>Sheet galvanized first, then formed into pipe. More economical but weld seam lacks zinc — visible <strong>blue-white stripe</strong> at weld line.</p>
+
+<h4>3. External-Only Galvanizing</h4>
+<p>Only outer surface galvanized; inner surface bare. For high-pressure applications where weld integrity is critical.</p>
+
+<h2>Galvanized Pipe Types</h2>
+
+<h3>1. Industrial Galvanized Pipe</h3>
+<p>EN 10219 / TS EN 10255 standard. General construction and industrial use. <strong>1/2" - 8" diameter</strong> range. Most commonly used type.</p>
+
+<h3>2. Natural Gas Galvanized Pipe</h3>
+<p>Approved for <strong>natural gas distribution</strong> by gas authorities. TS EN 10255-G certified. Low-pressure indoor gas lines.</p>
+
+<h3>3. Water Plumbing Galvanized Pipe</h3>
+<p>Common in older systems (now replaced by PEX or composite pipes). <strong>Drinking water certified</strong> coatings available.</p>
+
+<h3>4. Fire Protection Galvanized Pipe</h3>
+<p>Sprinkler, hydrant, fire main systems. UL/FM approved. <strong>Schedule 40</strong> or thick-wall variants.</p>
+
+<h3>5. Construction Galvanized Pipe</h3>
+<p>Roof structures, steel construction, tent poles. Carries <strong>structural load, not pressure</strong>.</p>
+
+<h3>6. Profile Galvanized Pipe</h3>
+<p>Square or rectangular section galvanized profile. Furniture, architecture, fencing, railings.</p>
+
+<h2>Galvanized Pipe Diameters and Sizing</h2>
+
+<p>Galvanized pipes are sold by <strong>nominal diameter (DN) system</strong>. Common sizes:</p>
+
+<table>
+<thead>
+<tr><th>Nominal Diameter (DN)</th><th>Inch (")</th><th>Outside Diameter (mm)</th><th>Standard Wall Thickness (mm)</th><th>Typical Use</th></tr>
+</thead>
+<tbody>
+<tr><td>DN 15</td><td>1/2"</td><td>21.3</td><td>2.3 - 2.9</td><td>Plumbing, air lines</td></tr>
+<tr><td>DN 20</td><td>3/4"</td><td>26.9</td><td>2.3 - 2.9</td><td>Plumbing, small lines</td></tr>
+<tr><td>DN 25</td><td>1"</td><td>33.7</td><td>2.9 - 3.2</td><td>General industrial, gas</td></tr>
+<tr><td>DN 32</td><td>1¼"</td><td>42.4</td><td>2.9 - 3.2</td><td>Liquid/gas transmission</td></tr>
+<tr><td>DN 40</td><td>1½"</td><td>48.3</td><td>2.9 - 3.6</td><td>Industrial lines</td></tr>
+<tr><td>DN 50</td><td>2"</td><td>60.3</td><td>3.2 - 3.6</td><td>Fire protection, industrial</td></tr>
+<tr><td>DN 65</td><td>2½"</td><td>76.1</td><td>3.2 - 4.0</td><td>Fire protection</td></tr>
+<tr><td>DN 80</td><td>3"</td><td>88.9</td><td>3.2 - 4.0</td><td>Hydrant, main lines</td></tr>
+<tr><td>DN 100</td><td>4"</td><td>114.3</td><td>3.6 - 4.5</td><td>Industrial main lines</td></tr>
+<tr><td>DN 125</td><td>5"</td><td>139.7</td><td>4.0 - 5.0</td><td>Large distribution</td></tr>
+<tr><td>DN 150</td><td>6"</td><td>168.3</td><td>4.5 - 5.4</td><td>Industrial</td></tr>
+<tr><td>DN 200</td><td>8"</td><td>219.1</td><td>5.4 - 6.3</td><td>Main lines, heavy industry</td></tr>
+</tbody>
+</table>
+
+<h3>Standard Length</h3>
+<p>Galvanized pipes are typically supplied in <strong>6-meter lengths</strong> (4 m, 12 m options available). Bundle quantities vary by diameter.</p>
+
+<h2>Galvanized Pipe Weight Calculation</h2>
+
+<p>Pipe weight (kg/m) calculation based on outside diameter and wall thickness:</p>
+
+<p><strong>Weight (kg/m) = (OD - WT) × WT × π × 7.85 / 1000</strong></p>
+
+<h3>Practical Weight Reference (kg/m)</h3>
+
+<table>
+<thead>
+<tr><th>Diameter</th><th>WT 2.3 mm</th><th>WT 2.9 mm</th><th>WT 3.2 mm</th><th>WT 4.0 mm</th></tr>
+</thead>
+<tbody>
+<tr><td>1/2" (21.3 mm)</td><td>1.08</td><td>1.32</td><td>—</td><td>—</td></tr>
+<tr><td>3/4" (26.9 mm)</td><td>1.40</td><td>1.72</td><td>—</td><td>—</td></tr>
+<tr><td>1" (33.7 mm)</td><td>—</td><td>2.21</td><td>2.42</td><td>—</td></tr>
+<tr><td>1½" (48.3 mm)</td><td>—</td><td>3.25</td><td>3.57</td><td>4.38</td></tr>
+<tr><td>2" (60.3 mm)</td><td>—</td><td>—</td><td>4.52</td><td>5.57</td></tr>
+<tr><td>3" (88.9 mm)</td><td>—</td><td>—</td><td>6.77</td><td>8.38</td></tr>
+<tr><td>4" (114.3 mm)</td><td>—</td><td>—</td><td>—</td><td>10.90</td></tr>
+<tr><td>6" (168.3 mm)</td><td>—</td><td>—</td><td>—</td><td>16.21</td></tr>
+</tbody>
+</table>
+
+<p><em>Use our <a href="/hesaplama.php">online weight calculator</a> for precise calculations. Zinc coating adds approximately 1-2% additional weight.</em></p>
+
+<h2>Galvanized Pipe Applications</h2>
+
+<h3>Plumbing and Sanitary</h3>
+<ul>
+<li><strong>Indoor water plumbing:</strong> Cold-hot water lines (PEX/PE preferred for new construction)</li>
+<li><strong>Natural gas plumbing:</strong> Low-pressure indoor gas lines (DN 15 - DN 50)</li>
+<li><strong>Greenhouse irrigation:</strong> Agricultural water mains</li>
+<li><strong>Industrial water:</strong> Cooling, process water lines</li>
+</ul>
+
+<h3>Fire Protection Systems</h3>
+<ul>
+<li><strong>Sprinkler systems:</strong> Automatic fire suppression</li>
+<li><strong>Hydrant networks:</strong> External fire mains</li>
+<li><strong>Fire hose cabinets:</strong> Indoor fire hose systems</li>
+<li><strong>Industrial suppression:</strong> Dry-pipe fire systems</li>
+</ul>
+
+<h3>Construction</h3>
+<ul>
+<li><strong>Roof framing:</strong> Hangars, tents, greenhouse steel structures</li>
+<li><strong>Steel railings:</strong> Stairways, balconies, offices</li>
+<li><strong>Fencing and barriers:</strong> Industrial sites, parking lots</li>
+<li><strong>Guardrails:</strong> Highway barrier systems</li>
+<li><strong>Sign structures:</strong> Outdoor advertising structures</li>
+</ul>
+
+<h3>Agriculture and Greenhouses</h3>
+<ul>
+<li>Greenhouse roof structures</li>
+<li>Drip irrigation main lines</li>
+<li>Animal shelter roof framing</li>
+<li>Agricultural machinery chassis</li>
+</ul>
+
+<h3>Industrial and Manufacturing</h3>
+<ul>
+<li>Pneumatic (compressed air) lines</li>
+<li>Industrial steam lines (low pressure)</li>
+<li>Air cooling channel systems</li>
+<li>Conveyor main framework</li>
+</ul>
+
+<h2>Advantages of Galvanized Pipe</h2>
+
+<ul>
+<li><strong>Corrosion resistance:</strong> Zinc oxidizes sacrificially before steel — 25-50 year service life</li>
+<li><strong>Inner and outer coating:</strong> Both pipe surfaces protected</li>
+<li><strong>Cost-effective:</strong> 60-70% cheaper than stainless steel pipe</li>
+<li><strong>Weldable:</strong> Spot, MIG, MAG welding supported</li>
+<li><strong>Threadable:</strong> Connects via threaded fittings (BSPT/NPT)</li>
+<li><strong>Fire safety:</strong> Non-combustible — Class A1 material</li>
+<li><strong>Recyclable:</strong> 100% metal — sustainable</li>
+<li><strong>Standard sizing support:</strong> Wide stock, fast supply</li>
+</ul>
+
+<h2>Galvanized Pipe vs Other Pipes</h2>
+
+<table>
+<thead>
+<tr><th>Property</th><th>Galvanized</th><th>Black Steel</th><th>Stainless</th><th>PE/PEX</th></tr>
+</thead>
+<tbody>
+<tr><td>Corrosion resistance</td><td>Very good (25-50 yr)</td><td>Low (5-10 yr)</td><td>Excellent (50+ yr)</td><td>Excellent (50+ yr)</td></tr>
+<tr><td>Cost</td><td>Medium</td><td>Low</td><td>High</td><td>Low-medium</td></tr>
+<tr><td>Fire resistance</td><td>Excellent</td><td>Excellent</td><td>Excellent</td><td>Low</td></tr>
+<tr><td>Pressure rating</td><td>High</td><td>High</td><td>Very high</td><td>Medium</td></tr>
+<tr><td>Drinking water suitable</td><td>Yes (certified)</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Typical use</td><td>Plumbing, fire, gas</td><td>Industrial</td><td>Food, chemical</td><td>New buildings plumbing</td></tr>
+</tbody>
+</table>
+
+<h2>Galvanized Pipe Pricing (2026)</h2>
+
+<p>Galvanized pipe pricing depends on <strong>diameter, wall thickness, quality grade, and order quantity</strong>.</p>
+
+<h3>Pricing Factors</h3>
+<ul>
+<li><strong>LME zinc price:</strong> Daily exchange rate variation</li>
+<li><strong>Steel raw material:</strong> HRC price + processing costs</li>
+<li><strong>Diameter:</strong> 1/2" most economical, 8" most expensive (per meter)</li>
+<li><strong>Wall thickness:</strong> Standard 2.9 mm common; thick wall (4-5 mm) premium</li>
+<li><strong>Certification:</strong> EN 10204 3.1, gas-approved, fire-approved cost extra</li>
+<li><strong>Quantity:</strong> Tonnage-based discount tiers</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>How long does galvanized pipe last?</h4>
+<p>Service life depends on conditions: <strong>50+ years indoor</strong>, 25-40 years outdoor, 15-25 years in aggressive environments. Indoor plumbing systems last half a century without issue.</p>
+
+<h4>Can I use galvanized pipe for drinking water?</h4>
+<p>For new construction, <strong>PE/PEX pipe is preferred</strong> for drinking water. Existing galvanized plumbing may need replacement as internal corrosion can build up sediment. <strong>Drinking water certified galvanized pipe</strong> is available for specific applications.</p>
+
+<h4>What is the smallest galvanized pipe size?</h4>
+<p>Standard production starts at <strong>1/2" (DN 15)</strong>. Smaller diameters (1/4", 3/8") are special order.</p>
+
+<h4>Do you provide cutting services?</h4>
+<p>Yes. Custom length cutting available. Standard 6 m, custom lengths 1-12 m available without additional charge.</p>
+
+<h4>Is gas-approved galvanized pipe available?</h4>
+<p>Yes. <strong>Gas authority approved</strong> TS EN 10255-G certified pipes available for indoor gas distribution systems.</p>
+
+<h4>Can galvanized pipe be welded?</h4>
+<p>Yes, but requires special precautions. Zinc fumes are released during welding — <strong>good ventilation is essential</strong>. Welded zone should be re-coated with zinc-rich spray/paint.</p>
+
+<h4>Do you ship internationally?</h4>
+<p>Yes. Regular galvanized pipe shipments to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Customs documentation and certificates of origin handled by us.</p>
+
+<h2>Why Choose Tekcan Metal for Galvanized Pipe</h2>
+
+<ul>
+<li>✅ <strong>20+ years industry experience</strong></li>
+<li>✅ <strong>Manufacturer-certified supply</strong> (Erbosan, Borçelik, Borusan, Tezcan)</li>
+<li>✅ <strong>All diameters:</strong> 1/2" - 8" wide stock</li>
+<li>✅ <strong>Gas authority approved</strong> certified pipes</li>
+<li>✅ <strong>Fire protection approved</strong> sprinkler/hydrant pipes</li>
+<li>✅ <strong>Custom length cutting</strong> — standard 6 m, custom 1-12 m</li>
+<li>✅ <strong>EN 10204 3.1 mill certificates</strong></li>
+<li>✅ <strong>81-province domestic shipping</strong> + international export</li>
+<li>✅ <strong>e-Invoice, quality certificates, customs documentation</strong></li>
+</ul>
+
+<p class="cta-block"><strong>Request a quote for galvanized pipe:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Get a Quote</a> · <a href="/hesaplama.php" class="btn btn-ghost">Weight Calculator</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Galvanized Pipe (GI) Diameters, Sizing, Types, Pricing — Tekcan Metal',
+    meta_desc_en  = 'Galvanized pipe (GI, HDG) diameters DN 15-DN 200 (1/2-8 inch), industrial/gas/fire/plumbing types, weight tables, pricing. Gas authority approved, EN 10204 3.1 certified. Konya Tekcan Metal — 20+ years.'
+WHERE slug = 'galvanizli-boru-rehberi';
+
+
+-- ===== ferforje-nedir (EN, ~600 kelime) =====
+UPDATE tm_blog_posts SET
+    title_en      = 'What Is Wrought Iron? Production Methods, Applications and Raw Material Supply',
+    excerpt_en    = 'Wrought iron (forged iron — Turkish: ferforje) production methods (hot forging, cold forming, CNC plasma), applications (garden gates, balcony railings, stair handrails), raw materials. Tekcan Metal raw material supply — Konya, flat iron, round iron, wrought iron accessories.',
+    content_en    = '<p class="lead"><strong>Wrought iron</strong> (decorative wrought ironwork — Turkish: <em>ferforje</em>) is the art of shaping forged iron or steel products by hand or industrially for decorative purposes. Common applications include garden gates, balcony railings, stair handrails, window grilles, and decorative interior elements.</p>
+
+<h2>What Is Wrought Iron?</h2>
+
+<p>The word "ferforje" comes from French "fer forgé" — meaning "<strong>forged iron</strong>". It is a metal art form where decorative patterns are created by bending, twisting, curving, helixing, and combining steel rods through <strong>hot forging</strong> or <strong>cold forming</strong> techniques.</p>
+
+<h3>Wrought Iron Production Methods</h3>
+<ul>
+<li><strong>Hot forging:</strong> Steel heated to 1100°C, shaped with hammer and anvil</li>
+<li><strong>Cold forming:</strong> Bending/curving with hydraulic or manual presses</li>
+<li><strong>CNC plasma cutting:</strong> Modern technology for complex patterns</li>
+<li><strong>Hand craftsmanship:</strong> Traditional wrought iron (special projects)</li>
+</ul>
+
+<h2>Wrought Iron Applications</h2>
+
+<h3>Building and Construction</h3>
+<ul>
+<li><strong>Garden gates and walls:</strong> Aesthetic entrances, villa gates</li>
+<li><strong>Balcony railings:</strong> Apartment, villa balconies</li>
+<li><strong>Stair handrails:</strong> Indoor and outdoor stair railings</li>
+<li><strong>Window grilles:</strong> Security + aesthetics combination</li>
+<li><strong>Pergolas and gazebos:</strong> Garden roof structures</li>
+<li><strong>Planter supports:</strong> Outdoor decoration</li>
+</ul>
+
+<h3>Interior Decoration</h3>
+<ul>
+<li>Decorative wall ornaments</li>
+<li>Living room chandelier and sconce designs</li>
+<li>Candle holders and candelabras</li>
+<li>Fireplace screens and tools</li>
+<li>Restaurant/café decorative elements</li>
+</ul>
+
+<h3>Commercial and Industrial</h3>
+<ul>
+<li>Hotel entrances and decoration</li>
+<li>Restaurant signage frames</li>
+<li>Storefront exterior ornamentation</li>
+<li>Park and garden fencing</li>
+</ul>
+
+<h2>Wrought Iron Materials</h2>
+<p>Materials commonly used in wrought iron production:</p>
+<ul>
+<li><strong>Flat iron (lama):</strong> 12×3 mm to 80×10 mm rectangular section iron</li>
+<li><strong>Round iron:</strong> Ø8 - Ø25 mm round steel rod</li>
+<li><strong>Square iron:</strong> 10×10 - 30×30 mm square profile</li>
+<li><strong>Steel pipe:</strong> Galvanized/black pipe for structural support</li>
+<li><strong>Pre-made wrought iron accessories:</strong> Helixes, flower motifs, leaves, rings, spear tips</li>
+</ul>
+
+<h2>Wrought Iron Order and Production Process</h2>
+<p>At Tekcan Metal, we provide <strong>raw material supply</strong> for wrought iron products:</p>
+<ol>
+<li>We supply flat iron, round iron, and square iron to customers working with wrought iron workshops or craftsmen</li>
+<li>Pre-made wrought iron accessories (helixes, motifs, etc.) available by order</li>
+<li>We can connect you with wrought iron producers</li>
+<li>In the Konya region, we provide referral services for wrought iron manufacturers</li>
+</ol>
+
+<h2>Advantages of Wrought Iron</h2>
+<ul>
+<li><strong>Durability:</strong> 50+ year lifespan with proper maintenance</li>
+<li><strong>Aesthetics:</strong> Compatible with classic, antique, and modern styles</li>
+<li><strong>Customizable:</strong> Unique pattern for each project</li>
+<li><strong>Security:</strong> Combines beauty and protection for windows/doors</li>
+<li><strong>Maintenance:</strong> Renewable through periodic painting</li>
+<li><strong>Recyclable:</strong> 100% metal — sustainable</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h4>What does "ferforje" mean?</h4>
+<p>"Ferforje" comes from French <em>"fer forgé"</em>, meaning "<strong>forged iron</strong>". It refers to decorative metalwork made from iron through hand-crafted or industrial forging methods.</p>
+
+<h4>Does wrought iron rust?</h4>
+<p>Untreated wrought iron rusts in open air. <strong>Galvanizing or anti-rust + paint</strong> coating is applied for corrosion protection. With periodic maintenance, it lasts 50+ years.</p>
+
+<h4>Do you produce wrought iron?</h4>
+<p>Tekcan Metal does not operate as a wrought iron workshop; however, we provide <strong>raw material supply</strong> and <strong>referral services</strong> for wrought iron manufacturers and craftsmen. Flat iron, round iron, and pre-made wrought iron accessories are in our stock.</p>
+
+<h4>How much does a wrought iron gate cost?</h4>
+<p>Wrought iron prices are calculated per project as labor is intensive. Costs vary based on raw material + craftsmanship + paint combination. For Konya region wrought iron workshops we work with, please contact us.</p>
+
+<h4>Do you ship wrought iron raw materials internationally?</h4>
+<p>Yes. We supply flat iron, round iron, and pre-made wrought iron components to <strong>Iraq, Syria, Azerbaijan, Turkmenistan</strong>. Customs documentation provided.</p>
+
+<p class="cta-block"><strong>For wrought iron raw material supply:</strong><br>
+📞 +90 332 342 24 52 | 📱 WhatsApp +90 532 065 24 00 | ✉ info@tekcanmetal.com<br>
+<a href="/iletisim.php" class="btn btn-primary">Contact Us</a> · <a href="/urunler.php" class="btn btn-ghost">Our Products</a></p>
+
+<p><em>Last updated: April 2026 — Tekcan Metal Industry and Trade Ltd.</em></p>
+',
+    meta_title_en = 'Wrought Iron: Production, Applications and Raw Materials — Tekcan Metal',
+    meta_desc_en  = 'Wrought iron (forged iron) production methods, applications (garden gates, balcony railings, stair handrails), raw material supply (flat iron, round iron). Konya-based Tekcan Metal — 20+ years experience.'
+WHERE slug = 'ferforje-nedir';
