@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/includes/db.php';
 $partners = all("SELECT * FROM tm_partners WHERE is_active=1 ORDER BY sort_order, name");
-$pageTitle = 'Çözüm Ortaklarımız';
+$pageTitle = t('partners.title', 'Çözüm Ortaklarımız');
 $metaDesc  = 'Türkiye\'nin önde gelen demir-çelik üreticileri ile stratejik tedarik ortaklıklarımız. Borçelik, Erdemir, Habaş ve daha fazlası.';
 require __DIR__ . '/includes/header.php';
 ?>

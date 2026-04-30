@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/includes/db.php';
 
-$pageTitle = 'İletişim';
-$metaDesc  = 'Tekcan Metal iletişim — adres, telefon, çalışma saatleri ve mesaj formu.';
+$pageTitle = t('contact.title', 'İletişim');
+$metaDesc  = t('contact.meta_desc', 'Tekcan Metal iletişim — adres, telefon, çalışma saatleri ve mesaj formu.');
 
 $errors = []; $sent = false;
 $old = ['full_name'=>'','email'=>'','phone'=>'','subject'=>'','message'=>''];
@@ -469,7 +469,7 @@ require __DIR__ . '/includes/header.php';
   <!-- HERO -->
   <section class="cb-hero">
     <div class="container">
-      <div class="cb-hero-eyebrow">İletişim Merkezi</div>
+      <div class="cb-hero-eyebrow"><?= h(t('contact.eyebrow', 'İletişim Merkezi')) ?></div>
       <h1>Bizimle <em>İletişim</em> Kurun</h1>
       <p class="cb-hero-lead">
         Sorularınız, ürün talepleriniz, özel proje teklifleriniz ve iş birlikleri için satış ve operasyon ekibimiz hizmetinizdedir.
@@ -487,7 +487,7 @@ require __DIR__ . '/includes/header.php';
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
           </div>
-          <div class="cb-quick-label">Telefon</div>
+          <div class="cb-quick-label"><?= h(t('footer.phone', 'Telefon')) ?></div>
           <div class="cb-quick-value"><?= h(settings('site_phone', '0 332 342 24 52')) ?></div>
         </a>
         <a class="cb-quick-item" href="<?= h(whatsapp_link(settings('site_whatsapp', '905320652400'), 'Merhaba, web sitenizden size ulaşıyorum.')) ?>" target="_blank" rel="noopener">
@@ -496,7 +496,7 @@ require __DIR__ . '/includes/header.php';
               <path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2s-.8.9-1 1.1c-.2.2-.4.2-.7 0a8.4 8.4 0 0 1-2.5-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5a.5.5 0 0 0 0-.5c-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6c0 1.5 1.1 3 1.3 3.2.1.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 2 .1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3M12 22a10 10 0 0 1-5.1-1.4l-3.7 1 1-3.5A10 10 0 1 1 12 22"/>
             </svg>
           </div>
-          <div class="cb-quick-label">WhatsApp</div>
+          <div class="cb-quick-label"><?= h(t('btn.whatsapp', 'WhatsApp')) ?></div>
           <div class="cb-quick-value"><?= h(settings('site_mobile', '0 554 835 0 226')) ?></div>
         </a>
         <a class="cb-quick-item" href="mailto:<?= h(settings('site_email', 'info@tekcanmetal.com')) ?>">
@@ -506,7 +506,7 @@ require __DIR__ . '/includes/header.php';
               <polyline points="22,6 12,13 2,6"/>
             </svg>
           </div>
-          <div class="cb-quick-label">E-Posta</div>
+          <div class="cb-quick-label"><?= h(t('footer.email', 'E-Posta')) ?></div>
           <div class="cb-quick-value"><?= h(settings('site_email', 'info@tekcanmetal.com')) ?></div>
         </a>
         <a class="cb-quick-item" href="https://www.google.com/maps?q=<?= urlencode(settings('contact_address', 'Fevziçakmak Mh. Gülistan Cad. Atiker 3, 2.Blok No:33 AS Karatay Konya')) ?>" target="_blank" rel="noopener">
@@ -551,7 +551,7 @@ require __DIR__ . '/includes/header.php';
           </div>
 
           <div class="cb-info-block">
-            <h3>Çalışma Saatleri</h3>
+            <h3><?= h(t('footer.working_hours', 'Çalışma Saatleri')) ?></h3>
             <p><strong>Pazartesi – Cuma:</strong> 08:00 – 18:00</p>
             <p><strong>Cumartesi:</strong> 08:00 – 13:00</p>
             <p><strong>Pazar:</strong> Kapalı</p>
@@ -619,7 +619,7 @@ require __DIR__ . '/includes/header.php';
               <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank">KVKK Aydınlatma Metni</a>'ni okudum, kişisel verilerimin işlenmesine onay veriyorum.</span>
             </label>
 
-            <button type="submit" class="cb-form-submit">Mesajı Gönder →</button>
+            <button type="submit" class="cb-form-submit"><?= h(t('contact.send_btn', 'Mesajı Gönder')) ?> →</button>
           </form>
         </div>
 

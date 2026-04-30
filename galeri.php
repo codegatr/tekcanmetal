@@ -3,8 +3,8 @@ require __DIR__ . '/includes/db.php';
 $albums = all("SELECT a.*, (SELECT image FROM tm_gallery_images WHERE album_id = a.id ORDER BY sort_order LIMIT 1) AS cover,
                           (SELECT COUNT(*) FROM tm_gallery_images WHERE album_id = a.id) AS img_count
                FROM tm_gallery_albums a WHERE is_active=1 ORDER BY sort_order, id DESC");
-$pageTitle = 'Foto Galeri';
-$metaDesc  = 'Tekcan Metal galeri — atölye, ürünlerimiz, sevkiyat ve makinelerimizden görseller.';
+$pageTitle = t('gallery.title', 'Foto Galeri');
+$metaDesc  = t('gallery.meta_desc', 'Tekcan Metal galeri — atölye, ürünlerimiz, sevkiyat ve makinelerimizden görseller.');
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-header">

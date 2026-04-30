@@ -33,8 +33,8 @@ foreach ($grouped as $k => $v) {
 
 $totalCount = count($faqs);
 
-$pageTitle = 'Sıkça Sorulan Sorular';
-$metaDesc  = 'Tekcan Metal — demir, çelik, sac, boru, profil ve hesaplama konularında müşterilerimizin en çok sorduğu sorular ve detaylı yanıtları.';
+$pageTitle = t('faq.title', 'Sıkça Sorulan Sorular');
+$metaDesc  = t('faq.meta_desc', 'Tekcan Metal — demir, çelik, sac, boru, profil ve hesaplama konularında müşterilerimizin en çok sorduğu sorular ve detaylı yanıtları.');
 require __DIR__ . '/includes/header.php';
 ?>
 
