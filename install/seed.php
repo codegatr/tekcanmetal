@@ -14,7 +14,6 @@ return [
     ['site_description',  'Demir adına Herşey... Sac, boru, profil, hadde ve özel çelik ürünleri ile inşaat, sanayi ve OEM müşterilerine 7/24 hizmet.', 'general'],
     ['site_keywords',     'demir, çelik, sac, boru, profil, hadde, lazer kesim, oksijen kesim, dekoratif sac, konya demir, karatay demir', 'seo'],
     ['site_email',        'info@tekcanmetal.com',                      'contact'],
-    ['site_email_satis',  'satis@tekcanmetal.com',                     'contact'],
     ['site_phone',        '0 332 342 24 52',                           'contact'],
     ['site_mobile',       '0 554 835 0 226',                           'contact'],
     ['site_whatsapp',     '905320652400',                              'contact'],
@@ -303,6 +302,6 @@ return [
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.43',
+'version' => '1.0.44',
 
 ];

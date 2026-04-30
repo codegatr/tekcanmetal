@@ -546,9 +546,8 @@ require __DIR__ . '/includes/header.php';
           </div>
 
           <div class="cb-info-block">
-            <h3>E-Posta Adresleri</h3>
-            <p>Genel: <a href="mailto:<?= h(settings('site_email', 'info@tekcanmetal.com')) ?>"><?= h(settings('site_email', 'info@tekcanmetal.com')) ?></a></p>
-            <p>Satış: <a href="mailto:satis@tekcanmetal.com">satis@tekcanmetal.com</a></p>
+            <h3>E-Posta</h3>
+            <p><a href="mailto:<?= h(settings('site_email', 'info@tekcanmetal.com')) ?>"><?= h(settings('site_email', 'info@tekcanmetal.com')) ?></a></p>
           </div>
 
           <div class="cb-info-block">

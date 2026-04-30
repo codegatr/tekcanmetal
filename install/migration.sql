@@ -572,3 +572,10 @@ SET @sql = IF(@col_exists = 0,
   'SELECT 1');
 PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
+
+-- =====================================================
+-- v1.0.44 — Satış email adresini kaldır
+-- (Yunus: 'sadece info@tekcanmetal.com kullanıyoruz')
+-- =====================================================
+DELETE FROM tm_settings WHERE setting_key = 'site_email_satis';
+
