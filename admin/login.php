@@ -88,22 +88,21 @@ $siteName = settings('site_short_name', 'Tekcan Metal');
     z-index:2;
   }
   .brand-logo{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:14px;
+    display:block;
+    margin-bottom:18px;
+  }
+  .brand-name-fallback{
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+    letter-spacing:-.5px;
   }
   .brand-logo img{
-    height:54px;
+    height:60px;
     width:auto;
-    filter:brightness(0) invert(1);
-  }
-  .brand-name{
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.85);
+    max-width:280px;
+    object-fit:contain;
+    display:block;
   }
   .brand-tag{
     display:inline-block;
@@ -380,10 +379,9 @@ $siteName = settings('site_short_name', 'Tekcan Metal');
       <div class="brand-logo">
         <?php if ($logoPath && file_exists(__DIR__ . '/../' . $logoPath)): ?>
           <img src="<?= h(url($logoPath)) ?>" alt="<?= h($siteName) ?>">
+        <?php else: ?>
+          <div class="brand-name-fallback"><?= h($siteName) ?></div>
         <?php endif; ?>
-        <div>
-          <div class="brand-name"><?= h($siteName) ?></div>
-        </div>
       </div>
       <span class="brand-tag">Yönetim Paneli</span>
     </div>

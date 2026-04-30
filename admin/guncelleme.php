@@ -453,103 +453,244 @@ function rel_time(int $ts): string {
 ?>
 
 <style>
-  /* ═══ DARK UI — Güncelleme Merkezi (GitHub Releases tarzı) ═══ */
-  .gm-shell{background:#0d1117;color:#c9d1d9;border:1px solid #30363d;margin:-20px -20px 0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
-  .gm-head{padding:24px 28px;border-bottom:1px solid #30363d;background:linear-gradient(180deg, #161b22 0%, #0d1117 100%)}
-  .gm-head-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
-  .gm-title{margin:0;font-size:20px;font-weight:600;color:#f0f6fc;letter-spacing:-.3px}
-  .gm-title small{display:block;font-size:12px;font-weight:400;color:#8b949e;letter-spacing:0;margin-top:4px}
-  .gm-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border-radius:20px}
-  .gm-badge-ok{background:rgba(46,160,67,.15);color:#3fb950;border:1px solid rgba(46,160,67,.4)}
-  .gm-badge-new{background:rgba(248,158,38,.15);color:#f8a337;border:1px solid rgba(248,158,38,.4);animation:gmPulse 1.8s infinite}
-  .gm-badge-off{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.4)}
-  @keyframes gmPulse{0%,100%{box-shadow:0 0 0 0 rgba(248,158,38,.4)}50%{box-shadow:0 0 0 6px rgba(248,158,38,0)}}
+  /* ═══ Güncelleme Merkezi — Tekcan Metal palet (lacivert + kırmızı) ═══ */
+  :root{
+    --gm-primary:#1e4a9e;
+    --gm-primary-dark:#143672;
+    --gm-primary-soft:#ebf1fb;
+    --gm-accent:#c8102e;
+    --gm-accent-dark:#a00d24;
+    --gm-accent-soft:#fff0f2;
+    --gm-bg:#fff;
+    --gm-bg-alt:#f5f7fa;
+    --gm-bg-section:#fafbfd;
+    --gm-border:#e3e8ef;
+    --gm-border-strong:#d0d7e0;
+    --gm-text:#1a1a1a;
+    --gm-text-muted:#5e6470;
+    --gm-text-dim:#94a3b8;
+    --gm-success:#16a34a;
+    --gm-success-soft:#dcfce7;
+    --gm-warn:#d97706;
+    --gm-warn-soft:#fef3c7;
+  }
 
-  .gm-version-row{display:flex;align-items:baseline;gap:18px;margin-top:18px;flex-wrap:wrap}
-  .gm-vbox{display:flex;flex-direction:column;gap:4px}
-  .gm-vbox label{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8b949e;font-weight:600}
-  .gm-vbox .val{font-size:24px;font-weight:600;color:#f0f6fc;font-family:ui-monospace,SFMono-Regular,monospace}
-  .gm-arrow{font-size:24px;color:#8b949e;align-self:center}
+  .gm-shell{background:var(--gm-bg);border:1px solid var(--gm-border);margin:0 0 16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;color:var(--gm-text)}
 
-  /* Sekmeler */
-  .gm-tabs{display:flex;gap:0;border-bottom:1px solid #30363d;background:#0d1117;padding:0 28px;overflow-x:auto}
-  .gm-tab{display:inline-flex;align-items:center;gap:8px;padding:14px 18px;font-size:13px;font-weight:500;color:#8b949e;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:.18s}
-  .gm-tab:hover{color:#c9d1d9;border-bottom-color:#484f58}
-  .gm-tab.active{color:#f0f6fc;border-bottom-color:#f8a337;font-weight:600}
-  .gm-tab-count{display:inline-block;padding:2px 8px;font-size:11px;background:#30363d;color:#c9d1d9;border-radius:20px;margin-left:4px}
+  /* ÜST BAŞLIK — koyu lacivert holding banner */
+  .gm-head{
+    padding:28px 30px;
+    background:linear-gradient(135deg, #050d24 0%, #0c1e44 50%, var(--gm-primary-dark) 100%);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .gm-head::before{
+    content:'';
+    position:absolute;
+    top:-30%;right:-15%;
+    width:60%;height:160%;
+    background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(74,139,214,.18) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .gm-head::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:0;
+    width:100%;height:3px;
+    background:var(--gm-accent);
+  }
+  .gm-head-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;z-index:2}
+  .gm-title{margin:0;font-size:22px;font-weight:600;color:#fff;letter-spacing:-.4px;line-height:1.2}
+  .gm-title small{display:block;font-size:12.5px;font-weight:400;color:rgba(255,255,255,.7);letter-spacing:0;margin-top:6px}
+  .gm-kicker{
+    display:inline-block;
+    font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:#fff;background:var(--gm-accent);padding:5px 12px;margin-bottom:10px;
+  }
 
-  .gm-body{padding:24px 28px}
+  /* Sürüm kartı */
+  .gm-version-row{display:flex;align-items:flex-end;gap:24px;margin-top:22px;flex-wrap:wrap;position:relative;z-index:2}
+  .gm-vbox{display:flex;flex-direction:column;gap:6px;min-width:140px}
+  .gm-vbox label{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.65);font-weight:700}
+  .gm-vbox .val{font-size:28px;font-weight:600;color:#fff;font-family:ui-monospace,SFMono-Regular,monospace;letter-spacing:-.5px;line-height:1}
+  .gm-vbox .val.muted{font-size:14px;font-weight:400;color:rgba(255,255,255,.85);font-family:inherit;letter-spacing:0}
+  .gm-arrow{font-size:24px;color:rgba(255,255,255,.4);align-self:center;font-weight:300;padding:0 4px}
+
+  /* Badge'ler */
+  .gm-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:7px 14px;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    border:1px solid;
+  }
+  .gm-badge-ok{background:rgba(34,197,94,.15);color:#86efac;border-color:rgba(34,197,94,.4)}
+  .gm-badge-new{background:var(--gm-accent);color:#fff;border-color:var(--gm-accent);animation:gmPulse 1.8s infinite}
+  .gm-badge-off{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)}
+  @keyframes gmPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,16,46,.5)}50%{box-shadow:0 0 0 10px rgba(200,16,46,0)}}
+
+  /* SEKMELER — Light tema */
+  .gm-tabs{
+    display:flex;gap:0;
+    border-bottom:1px solid var(--gm-border);
+    background:var(--gm-bg);
+    padding:0 30px;
+    overflow-x:auto;
+  }
+  .gm-tab{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:16px 22px;
+    font-size:13px;font-weight:600;letter-spacing:.3px;
+    color:var(--gm-text-muted);
+    text-decoration:none;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+    transition:.18s;
+  }
+  .gm-tab:hover{color:var(--gm-primary);background:var(--gm-bg-section)}
+  .gm-tab.active{color:var(--gm-primary);border-bottom-color:var(--gm-accent);font-weight:700}
+  .gm-tab-count{
+    display:inline-block;padding:2px 9px;font-size:11px;font-weight:600;
+    background:var(--gm-bg-alt);color:var(--gm-text-muted);
+    border-radius:20px;margin-left:4px;
+  }
+  .gm-tab.active .gm-tab-count{background:var(--gm-accent-soft);color:var(--gm-accent)}
+
+  .gm-body{padding:24px 30px}
 
   /* Kartlar */
-  .gm-card{background:#161b22;border:1px solid #30363d;border-radius:6px;margin-bottom:14px;overflow:hidden}
-  .gm-card-head{padding:14px 18px;border-bottom:1px solid #30363d;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#0d1117}
-  .gm-card-head h3{margin:0;font-size:14px;font-weight:600;color:#f0f6fc;letter-spacing:-.1px}
-  .gm-card-head small{color:#8b949e;font-size:12px}
-  .gm-card-body{padding:18px}
-  .gm-card-body p{color:#c9d1d9;font-size:13.5px;line-height:1.7;margin:0 0 12px}
+  .gm-card{background:#fff;border:1px solid var(--gm-border);margin-bottom:16px;overflow:hidden}
+  .gm-card-head{
+    padding:16px 22px;
+    border-bottom:1px solid var(--gm-border);
+    background:var(--gm-bg-section);
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  .gm-card-head h3{margin:0;font-size:15px;font-weight:700;color:var(--gm-primary);letter-spacing:-.1px}
+  .gm-card-head small{color:var(--gm-text-muted);font-size:12px}
+  .gm-card-body{padding:20px 22px}
+  .gm-card-body p{color:var(--gm-text);font-size:13.5px;line-height:1.7;margin:0 0 12px}
   .gm-card-body p:last-child{margin-bottom:0}
 
   /* Butonlar */
-  .gm-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;text-decoration:none;border:1px solid transparent;font-family:inherit;transition:.15s;line-height:1.4}
-  .gm-btn-primary{background:#238636;color:#fff;border-color:rgba(240,246,252,.1)}
-  .gm-btn-primary:hover{background:#2ea043}
-  .gm-btn-warn{background:#bb800a;color:#fff;border-color:rgba(240,246,252,.1)}
-  .gm-btn-warn:hover{background:#cc8e0c}
-  .gm-btn-danger{background:#da3633;color:#fff;border-color:rgba(240,246,252,.1)}
-  .gm-btn-danger:hover{background:#f85149}
-  .gm-btn-default{background:#21262d;color:#c9d1d9;border-color:#30363d}
-  .gm-btn-default:hover{background:#30363d;border-color:#484f58}
+  .gm-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 18px;
+    font-size:12.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    cursor:pointer;text-decoration:none;
+    border:1px solid transparent;
+    font-family:inherit;
+    transition:.18s;
+    line-height:1.4;
+  }
+  .gm-btn-primary{background:var(--gm-primary);color:#fff}
+  .gm-btn-primary:hover{background:var(--gm-primary-dark);transform:translateY(-1px);box-shadow:0 8px 16px rgba(30,74,158,.2)}
+  .gm-btn-accent{background:var(--gm-accent);color:#fff}
+  .gm-btn-accent:hover{background:var(--gm-accent-dark);transform:translateY(-1px);box-shadow:0 8px 16px rgba(200,16,46,.2)}
+  .gm-btn-warn{background:var(--gm-warn);color:#fff}
+  .gm-btn-warn:hover{background:#b45309;transform:translateY(-1px)}
+  .gm-btn-default{background:#fff;color:var(--gm-text);border-color:var(--gm-border)}
+  .gm-btn-default:hover{background:var(--gm-bg-alt);border-color:var(--gm-border-strong)}
+  .gm-btn-danger{background:#fff;color:var(--gm-accent);border-color:var(--gm-accent)}
+  .gm-btn-danger:hover{background:var(--gm-accent);color:#fff}
   .gm-btn-block{display:flex;width:100%;justify-content:center}
 
-  /* Liste/tablo */
+  /* Liste */
   .gm-list{margin:0;padding:0;list-style:none}
-  .gm-list-item{padding:14px 18px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:.15s}
+  .gm-list-item{
+    padding:16px 22px;
+    border-bottom:1px solid var(--gm-border);
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    transition:.15s;
+  }
   .gm-list-item:last-child{border-bottom:0}
-  .gm-list-item:hover{background:#0d1117}
-  .gm-list-meta{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
-  .gm-list-name{font-size:13.5px;font-weight:600;color:#f0f6fc}
-  .gm-list-name code{background:transparent;font-size:13px;color:#79c0ff}
-  .gm-list-info{font-size:12px;color:#8b949e;display:flex;gap:14px;flex-wrap:wrap}
-  .gm-list-info span{display:inline-flex;gap:4px}
-  .gm-list-actions{display:flex;gap:6px;flex-shrink:0}
+  .gm-list-item:hover{background:var(--gm-bg-section)}
+  .gm-list-meta{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
+  .gm-list-name{font-size:14px;font-weight:700;color:var(--gm-primary)}
+  .gm-list-name code{background:var(--gm-bg-alt);font-size:13px;color:var(--gm-primary);padding:2px 8px;border-radius:0;font-family:ui-monospace,monospace}
+  .gm-list-info{font-size:12px;color:var(--gm-text-muted);display:flex;gap:16px;flex-wrap:wrap}
+  .gm-list-info span{display:inline-flex;gap:5px;align-items:center}
+  .gm-list-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
 
   /* Empty state */
-  .gm-empty{text-align:center;padding:40px 20px;color:#8b949e}
-  .gm-empty .icon{font-size:36px;margin-bottom:8px;opacity:.5}
+  .gm-empty{text-align:center;padding:48px 24px;color:var(--gm-text-muted)}
+  .gm-empty .icon{font-size:42px;margin-bottom:10px;opacity:.4}
   .gm-empty p{margin:0;font-size:13.5px}
 
   /* Form */
-  .gm-form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-  .gm-form-row label{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#8b949e}
+  .gm-form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+  .gm-form-row label{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gm-text-muted)}
   .gm-form-row input[type="text"],.gm-form-row input[type="password"],.gm-form-row input[type="file"]{
-    padding:9px 12px;font-size:13.5px;font-family:ui-monospace,monospace;
-    background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;outline:none;transition:.15s;
+    padding:11px 14px;font-size:13.5px;font-family:ui-monospace,monospace;
+    background:#fff;border:1px solid var(--gm-border);color:var(--gm-text);
+    outline:none;transition:.15s;
   }
-  .gm-form-row input:focus{border-color:#388bfd;box-shadow:0 0 0 3px rgba(56,139,253,.25)}
-  .gm-form-row .help{font-size:11.5px;color:#8b949e;margin-top:4px}
+  .gm-form-row input:focus{border-color:var(--gm-primary);box-shadow:0 0 0 3px rgba(30,74,158,.12)}
+  .gm-form-row input[readonly]{background:var(--gm-bg-alt);cursor:not-allowed;color:var(--gm-text-muted)}
+  .gm-form-row .help{font-size:11.5px;color:var(--gm-text-muted);margin-top:2px}
 
   /* Release notes */
-  .gm-release-notes{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px 20px;font-family:ui-monospace,monospace;font-size:12.5px;color:#c9d1d9;line-height:1.7;max-height:280px;overflow-y:auto;white-space:pre-wrap}
+  .gm-release-notes{
+    background:var(--gm-bg-alt);border:1px solid var(--gm-border);
+    padding:18px 22px;
+    font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;
+    color:var(--gm-text);line-height:1.75;
+    max-height:320px;overflow-y:auto;
+    white-space:pre-wrap;word-break:break-word;
+  }
 
-  /* Update banner */
-  .gm-update-banner{background:linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);color:#fff;padding:18px 22px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px;border:1px solid rgba(255,255,255,.1)}
-  .gm-update-banner h3{margin:0 0 4px;font-size:16px;font-weight:600;color:#fff}
-  .gm-update-banner p{margin:0;font-size:13.5px;color:rgba(255,255,255,.85);line-height:1.5}
-  .gm-update-banner .gm-btn-primary{background:#fff;color:#1f6feb;border-color:rgba(0,0,0,.1)}
-  .gm-update-banner .gm-btn-primary:hover{background:rgba(255,255,255,.92)}
+  /* Update banner — site paleti */
+  .gm-update-banner{
+    background:linear-gradient(135deg, var(--gm-accent) 0%, var(--gm-accent-dark) 100%);
+    color:#fff;
+    padding:22px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    margin-bottom:20px;
+    position:relative;overflow:hidden;
+  }
+  .gm-update-banner::before{
+    content:'';
+    position:absolute;
+    top:-30%;right:-10%;
+    width:50%;height:160%;
+    background:radial-gradient(ellipse at center, rgba(255,255,255,.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .gm-update-banner > *{position:relative;z-index:2}
+  .gm-update-banner h3{margin:0 0 6px;font-size:18px;font-weight:600;color:#fff;letter-spacing:-.2px}
+  .gm-update-banner p{margin:0;font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.55}
+  .gm-update-banner .gm-btn-primary{background:#fff;color:var(--gm-accent);border-color:rgba(0,0,0,.05)}
+  .gm-update-banner .gm-btn-primary:hover{background:rgba(255,255,255,.92);color:var(--gm-accent-dark);box-shadow:0 12px 24px rgba(0,0,0,.15)}
 
   /* Stats grid */
-  .gm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
-  .gm-stat{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px 16px}
-  .gm-stat .num{font-size:22px;font-weight:600;color:#f0f6fc;font-family:ui-monospace,monospace;letter-spacing:-.5px;line-height:1.2}
-  .gm-stat .lbl{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#8b949e;font-weight:600;margin-top:4px}
+  .gm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+  .gm-stat{
+    background:#fff;
+    border:1px solid var(--gm-border);
+    border-left:3px solid var(--gm-accent);
+    padding:16px 20px;
+  }
+  .gm-stat .num{
+    font-size:24px;font-weight:300;
+    color:var(--gm-primary);
+    font-family:ui-monospace,SFMono-Regular,monospace;
+    letter-spacing:-.5px;line-height:1.2;
+  }
+  .gm-stat .lbl{
+    font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--gm-text-muted);font-weight:700;margin-top:6px;
+  }
 
   /* Mobile */
   @media (max-width:768px){
-    .gm-shell{margin:-12px -12px 0}
-    .gm-head{padding:18px 16px}
-    .gm-tabs{padding:0 16px}
-    .gm-body{padding:18px 16px}
+    .gm-head{padding:20px 18px}
+    .gm-tabs{padding:0 18px}
+    .gm-body{padding:18px}
+    .gm-version-row{gap:14px}
+    .gm-vbox .val{font-size:22px}
+    .gm-arrow{display:none}
+    .gm-update-banner{padding:18px 20px}
+    .gm-list-item{flex-direction:column;align-items:flex-start;gap:12px}
+    .gm-list-actions{align-self:stretch;justify-content:flex-start}
   }
 </style>
 
@@ -584,12 +725,12 @@ function rel_time(int $ts): string {
         <div class="gm-arrow">→</div>
         <div class="gm-vbox">
           <label>GitHub Son Sürüm</label>
-          <div class="val" style="color:<?= $hasUpdate ? '#f8a337' : '#3fb950' ?>">v<?= h($latestVersion) ?></div>
+          <div class="val" style="color:<?= $hasUpdate ? '#f59e0b' : 'var(--gm-success)' ?>">v<?= h($latestVersion) ?></div>
         </div>
         <?php if ($latest && !empty($latest['published_at'])): ?>
         <div class="gm-vbox" style="margin-left:14px">
           <label>Yayın Tarihi</label>
-          <div class="val" style="font-size:14px;font-weight:400;color:#8b949e"><?= h(date('d.m.Y H:i', strtotime($latest['published_at']))) ?></div>
+          <div class="val" style="font-size:14px;font-weight:400;color:var(--gm-text-muted)"><?= h(date('d.m.Y H:i', strtotime($latest['published_at']))) ?></div>
         </div>
         <?php endif; ?>
       <?php endif; ?>
@@ -657,8 +798,8 @@ function rel_time(int $ts): string {
             <button type="submit" class="gm-btn gm-btn-default">🔍 Güncelleme Kontrol Et</button>
           </form>
           <?php if (!$githubRepo || !$githubToken): ?>
-          <p style="color:#f85149;margin-top:12px;font-size:13px">
-            ⚠ GitHub ayarları eksik. <a href="?tab=settings" style="color:#79c0ff">Ayarlar</a> sekmesinden tamamla.
+          <p style="color:var(--gm-accent);margin-top:12px;font-size:13px">
+            ⚠ GitHub ayarları eksik. <a href="?tab=settings" style="color:var(--gm-primary)">Ayarlar</a> sekmesinden tamamla.
           </p>
           <?php endif; ?>
         </div>
@@ -693,7 +834,7 @@ function rel_time(int $ts): string {
             <?php foreach ($versions as $v): ?>
             <li class="gm-list-item">
               <div class="gm-list-meta">
-                <div class="gm-list-name">v<?= h($v['version']) ?> <span style="color:#8b949e;font-weight:400;font-size:12px">— <?= h($v['source'] ?? '') ?></span></div>
+                <div class="gm-list-name">v<?= h($v['version']) ?> <span style="color:var(--gm-text-muted);font-weight:400;font-size:12px">— <?= h($v['source'] ?? '') ?></span></div>
                 <div class="gm-list-info">
                   <span>📅 <?= h(date('d.m.Y H:i', strtotime($v['created_at'] ?? 'now'))) ?></span>
                   <?php if (!empty($v['applied_by'])): ?>
@@ -702,7 +843,7 @@ function rel_time(int $ts): string {
                 </div>
               </div>
               <div class="gm-list-actions">
-                <span style="color:#8b949e;font-size:12px;font-family:ui-monospace,monospace">#<?= (int)$v['id'] ?></span>
+                <span style="color:var(--gm-text-muted);font-size:12px;font-family:ui-monospace,monospace">#<?= (int)$v['id'] ?></span>
               </div>
             </li>
             <?php endforeach; ?>
@@ -784,7 +925,7 @@ function rel_time(int $ts): string {
           <small>install/seed-images klasöründen uploads klasörüne kopyala</small>
         </div>
         <div class="gm-card-body">
-          <p>Sitedeki ürün/kategori/hizmet/slider görselleri eksikse, paketle gelen <code style="color:#79c0ff">install/seed-images/</code> klasöründeki dosyaları <code style="color:#79c0ff">uploads/</code>'a senkronize eder.</p>
+          <p>Sitedeki ürün/kategori/hizmet/slider görselleri eksikse, paketle gelen <code style="color:var(--gm-primary)">install/seed-images/</code> klasöründeki dosyaları <code style="color:var(--gm-primary)">uploads/</code>'a senkronize eder.</p>
           <form method="post" action="?action=resync_images" style="display:flex;gap:8px;flex-wrap:wrap">
             <?= csrf_field() ?>
             <button type="submit" class="gm-btn gm-btn-default">📋 Sadece Eksik Olanları Kopyala</button>
@@ -806,12 +947,12 @@ function rel_time(int $ts): string {
         <div class="gm-card-body">
           <div class="gm-form-row">
             <label>📦 Repository</label>
-            <input type="text" value="<?= h($githubRepo ?: '—') ?>" readonly style="background:#0d1117;cursor:not-allowed">
+            <input type="text" value="<?= h($githubRepo ?: '—') ?>" readonly style="background:var(--gm-bg-alt);cursor:not-allowed">
             <div class="help">Settings → System → GitHub Repo'dan değiştirilebilir</div>
           </div>
           <div class="gm-form-row">
             <label>🌿 Branch</label>
-            <input type="text" value="<?= h($githubBranch) ?>" readonly style="background:#0d1117;cursor:not-allowed">
+            <input type="text" value="<?= h($githubBranch) ?>" readonly style="background:var(--gm-bg-alt);cursor:not-allowed">
           </div>
           <div class="gm-form-row">
             <label>🔑 Token Durumu</label>
