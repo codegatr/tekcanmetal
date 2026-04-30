@@ -158,9 +158,15 @@ function fix_create_dirs(string $uploads): array {
 function fix_copy_seed_images(string $seedImg, string $uploads): array {
     $log = [];
     if (!is_dir($seedImg)) {
-        return ["  ❌ install/seed-images bulunamadı"];
+        $log[] = "  ❌ install/seed-images klasörü YOK!";
+        $log[] = "     → Beklenen yer: $seedImg";
+        $log[] = "     → Bu güncelleme zip'inde install/ klasörü tam gelmemiş olabilir.";
+        $log[] = "     → Çözüm: Güncelleme Merkezi'nden v1.0.28 manuel zip yükle";
+        return $log;
     }
-    $copied = 0; $skipped = 0; $errors = 0;
+    $copied = 0; $overwritten = 0; $errors = 0;
+    $errorList = [];
+
     $rii = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator($seedImg, RecursiveDirectoryIterator::SKIP_DOTS),
         RecursiveIteratorIterator::SELF_FIRST
@@ -169,24 +175,49 @@ function fix_copy_seed_images(string $seedImg, string $uploads): array {
         $rel = ltrim(substr($file->getPathname(), strlen($seedImg)), '/\\');
         if (str_ends_with($rel, '.gitkeep')) continue;
         $dst = $uploads . '/' . $rel;
+
         if ($file->isDir()) {
-            if (!is_dir($dst)) @mkdir($dst, 0755, true);
-        } else {
-            @mkdir(dirname($dst), 0755, true);
-            if (!file_exists($dst)) {
-                if (@copy($file->getPathname(), $dst)) {
-                    $copied++;
-                } else {
-                    $errors++;
+            if (!is_dir($dst)) {
+                if (!@mkdir($dst, 0755, true)) {
+                    $errorList[] = "Klasör oluşturulamadı: $dst";
                 }
+            }
+        } else {
+            // Hedef klasör yoksa oluştur
+            $targetDir = dirname($dst);
+            if (!is_dir($targetDir)) {
+                @mkdir($targetDir, 0755, true);
+            }
+
+            // FORCE OVERWRITE — eski dosya varsa sil
+            $isOverwrite = file_exists($dst);
+            if ($isOverwrite) {
+                @chmod($dst, 0644);
+                @unlink($dst);
+            }
+
+            // Kopyala
+            if (@copy($file->getPathname(), $dst)) {
+                @chmod($dst, 0644);
+                if ($isOverwrite) $overwritten++;
+                else $copied++;
             } else {
-                $skipped++;
+                $errors++;
+                $err = error_get_last();
+                $errorList[] = "$rel — copy başarısız" . ($err ? ": " . $err['message'] : '');
             }
         }
     }
+
     $log[] = "  ✅ $copied yeni görsel kopyalandı";
-    if ($skipped) $log[] = "  ↪  $skipped görsel zaten vardı";
-    if ($errors) $log[] = "  ❌ $errors görsel kopyalanamadı";
+    if ($overwritten) $log[] = "  ♻ $overwritten görsel yenilendi (overwrite)";
+    if ($errors) {
+        $log[] = "  ❌ $errors görsel kopyalanamadı:";
+        foreach (array_slice($errorList, 0, 10) as $e) {
+            $log[] = "     • $e";
+        }
+        if (count($errorList) > 10) $log[] = "     ... ve " . (count($errorList) - 10) . " daha";
+    }
     return $log;
 }
 
@@ -205,7 +236,7 @@ function fix_db_categories(): array {
     $log = []; $updated = 0;
     foreach ($map as $slug => $path) {
         try {
-            $stmt = db()->prepare("UPDATE tm_categories SET image=? WHERE slug=? AND (image IS NULL OR image='')");
+            $stmt = db()->prepare("UPDATE tm_categories SET image=? WHERE slug=?");
             $stmt->execute([$path, $slug]);
             if ($stmt->rowCount() > 0) {
                 $updated++;
@@ -250,7 +281,7 @@ function fix_db_products(): array {
     $log = []; $updated = 0;
     foreach ($map as $slug => $path) {
         try {
-            $stmt = db()->prepare("UPDATE tm_products SET image=? WHERE slug=? AND (image IS NULL OR image='')");
+            $stmt = db()->prepare("UPDATE tm_products SET image=? WHERE slug=?");
             $stmt->execute([$path, $slug]);
             if ($stmt->rowCount() > 0) { $updated++; }
         } catch (\Throwable $e) {}
@@ -268,7 +299,7 @@ function fix_db_services(): array {
     $log = []; $updated = 0;
     foreach ($map as $slug => $path) {
         try {
-            $stmt = db()->prepare("UPDATE tm_services SET image=? WHERE slug=? AND (image IS NULL OR image='')");
+            $stmt = db()->prepare("UPDATE tm_services SET image=? WHERE slug=?");
             $stmt->execute([$path, $slug]);
             if ($stmt->rowCount() > 0) { $updated++; }
         } catch (\Throwable $e) {}
@@ -287,7 +318,7 @@ function fix_db_sliders(): array {
     $updated = 0;
     foreach ($sliders as $sortOrder => $path) {
         try {
-            $stmt = db()->prepare("UPDATE tm_sliders SET image=? WHERE sort_order=? AND (image IS NULL OR image='')");
+            $stmt = db()->prepare("UPDATE tm_sliders SET image=? WHERE sort_order=?");
             $stmt->execute([$path, $sortOrder]);
             if ($stmt->rowCount() > 0) { $updated++; }
         } catch (\Throwable $e) {}
