@@ -13,9 +13,13 @@ $news     = all("SELECT * FROM tm_blog_posts WHERE is_active=1 AND published_at 
 $logoFile = settings('logo', 'assets/img/logo.png');
 
 // v1.0.72: LCP optimizasyonu — ilk slider görselini preload et (Largest Contentful Paint kısalır)
+// WebP varsa onu, yoksa orijinal'i preload et
 $preloadImages = [];
 if (!empty($sliders[0]['image'])) {
-    $preloadImages[] = img_url($sliders[0]['image']);
+    $firstImg = $sliders[0]['image'];
+    $webpVer = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $firstImg);
+    $hasWebp = ($webpVer !== $firstImg) && file_exists(__DIR__ . '/' . $webpVer);
+    $preloadImages[] = img_url($hasWebp ? $webpVer : $firstImg);
 }
 
 require __DIR__ . '/includes/header.php';
