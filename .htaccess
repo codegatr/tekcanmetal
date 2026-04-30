@@ -146,12 +146,18 @@ RedirectMatch 404 /\.htpasswd$
     # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
     # RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
 
-    # Hot-link: kendi domain ve boş referer + arama motorlarına izin
-    RewriteCond %{REQUEST_URI} ^/uploads/ [NC]
-    RewriteCond %{HTTP_REFERER} !^$
-    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?%{HTTP_HOST}(/|$) [NC]
-    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?(google|bing|yandex|facebook|twitter|linkedin|instagram|whatsapp)\. [NC]
-    RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,NC]
+    # Hot-link KORUMA: DEVRE DIŞI (v1.0.29)
+    # Daha önceki kural Cloudflare proxy + bazı tarayıcı senaryolarında
+    # legitimate istekleri 403 ile engelliyordu (uploads/products/*.jpg).
+    # Hot-link koruması artık Cloudflare WAF veya başka katmanda yapılmalı.
+    # Aşağıdaki satırlar yorumda — gerekirse ileride aktif edilir.
+    #
+    # RewriteCond %{REQUEST_URI} ^/uploads/ [NC]
+    # RewriteCond %{HTTP_REFERER} !^$
+    # RewriteCond %{HTTP_REFERER} !^https?://(www\.)?v2\.tekcanmetal\.com [NC]
+    # RewriteCond %{HTTP_REFERER} !^https?://(www\.)?tekcanmetal\.com [NC]
+    # RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?(google|bing|yandex|facebook|twitter|linkedin|instagram|whatsapp|t)\. [NC]
+    # RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,NC]
 
     # sitemap.xml -> sitemap.php
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
