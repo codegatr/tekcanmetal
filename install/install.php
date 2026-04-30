@@ -121,14 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $step === 2) {
                 ]);
             }
 
-            // 6) Team
-            $stmt = $pdo->prepare("INSERT INTO tm_team (full_name,position,bio,photo,email,phone,sort_order,is_active) VALUES (?,?,?,?,?,?,?,1)");
-            $i = 1;
-            foreach ($seed['team'] as $t) {
-                $stmt->execute([$t[0], $t[1], $t[2], $t[3], $t[4], $t[5], $i++]);
-            }
-
-            // 7) Sliders
+            // 6) Sliders
             $stmt = $pdo->prepare("INSERT INTO tm_sliders (title,subtitle,description,image,link_text,link_url,sort_order,is_active) VALUES (?,?,?,?,?,?,?,1)");
             $i = 1;
             foreach ($seed['sliders'] as $s) {

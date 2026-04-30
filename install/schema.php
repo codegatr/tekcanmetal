@@ -150,24 +150,7 @@ CREATE TABLE IF NOT EXISTS tm_services (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
--- 9. EKİP ÜYELERİ
--- =====================================================
-CREATE TABLE IF NOT EXISTS tm_team (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  full_name VARCHAR(150) NOT NULL,
-  position VARCHAR(150) NOT NULL,
-  bio TEXT NULL,
-  photo VARCHAR(255) NULL,
-  email VARCHAR(150) NULL,
-  phone VARCHAR(40) NULL,
-  linkedin VARCHAR(200) NULL,
-  sort_order INT DEFAULT 0,
-  is_active TINYINT(1) DEFAULT 1,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- =====================================================
--- 10. ÇÖZÜM ORTAKLARI / PARTNERLER
+-- 9. ÇÖZÜM ORTAKLARI / PARTNERLER
 -- =====================================================
 CREATE TABLE IF NOT EXISTS tm_partners (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,

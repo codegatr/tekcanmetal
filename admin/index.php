@@ -9,7 +9,6 @@ $stats = [
     'msg_unr'   => (int)val("SELECT COUNT(*) FROM tm_contact_messages WHERE is_read=0"),
     'mail_ord'  => (int)val("SELECT COUNT(*) FROM tm_mail_orders WHERE status='pending'"),
     'blogs'     => (int)val("SELECT COUNT(*) FROM tm_blog_posts WHERE is_active=1"),
-    'team'      => (int)val("SELECT COUNT(*) FROM tm_team WHERE is_active=1"),
     'partners'  => (int)val("SELECT COUNT(*) FROM tm_partners WHERE is_active=1"),
     'gallery'   => (int)val("SELECT COUNT(*) FROM tm_gallery_images"),
 ];
@@ -54,7 +53,6 @@ $lastLogs    = all("SELECT a.*, u.username FROM tm_activity_logs a LEFT JOIN tm_
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['msg_unr'] ?></div><div class="adm-stat-label">Okunmamış Mesaj</div></div>
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['mail_ord'] ?></div><div class="adm-stat-label">Bekleyen Mail Order</div></div>
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['blogs'] ?></div><div class="adm-stat-label">Blog Yazısı</div></div>
-  <div class="adm-stat"><div class="adm-stat-value"><?= $stats['team'] ?></div><div class="adm-stat-label">Ekip Üyesi</div></div>
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['partners'] ?></div><div class="adm-stat-label">Çözüm Ortağı</div></div>
   <div class="adm-stat"><div class="adm-stat-value"><?= $stats['gallery'] ?></div><div class="adm-stat-label">Galeri Görseli</div></div>
 </div>

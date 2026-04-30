@@ -39,3 +39,8 @@ UPDATE tm_settings SET setting_value = '#c8102e'  WHERE setting_key = 'theme_acc
 UPDATE tm_settings SET setting_value = 'assets/img/logo.png'    WHERE setting_key = 'logo';
 UPDATE tm_settings SET setting_value = 'assets/img/favicon.jpg' WHERE setting_key = 'favicon';
 
+
+-- =====================================================
+-- v1.0.27 — Ekip özelliği tamamen kaldırıldı
+-- =====================================================
+DROP TABLE IF EXISTS tm_team;

@@ -32,7 +32,6 @@ function get_table_counts(): array {
         'tm_products'         => 'Ürünler',
         'tm_product_images'   => 'Ürün Görselleri',
         'tm_services'         => 'Hizmetler',
-        'tm_team'             => 'Ekip',
         'tm_partners'         => 'Çözüm Ortakları',
         'tm_banks'            => 'Banka/IBAN',
         'tm_faq'              => 'SSS',
@@ -143,21 +142,7 @@ function reseed_empty_tables(): array
         $log[] = "  Hizmetler: korundu (zaten dolu)";
     }
 
-    /* 5) Team */
-    if ($isEmpty('tm_team') && isset($seed['team'])) {
-        $stmt = $pdo->prepare("INSERT INTO tm_team (full_name,position,bio,photo,email,phone,sort_order,is_active) VALUES (?,?,?,?,?,?,?,1)");
-        $i = 1; $cnt = 0;
-        foreach ($seed['team'] as $t) {
-            try { $stmt->execute([$t[0], $t[1], $t[2], $t[3], $t[4], $t[5], $i++]); $cnt++; }
-            catch (\Throwable $e) { $stats['errors']++; }
-        }
-        $log[] = "✓ Ekip: $cnt kayıt eklendi";
-        $stats['inserted'] += $cnt;
-    } else {
-        $log[] = "  Ekip: korundu";
-    }
-
-    /* 6) Sliders */
+    /* 5) Sliders */
     if ($isEmpty('tm_sliders') && isset($seed['sliders'])) {
         $stmt = $pdo->prepare("INSERT INTO tm_sliders (title,subtitle,description,image,link_text,link_url,sort_order,is_active) VALUES (?,?,?,?,?,?,?,1)");
         $i = 1; $cnt = 0;

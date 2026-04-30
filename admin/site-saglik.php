@@ -11,7 +11,7 @@
  *   6. tm_sliders.image NULL olanlara seed path yaz
  *   7. tm_banks logo path'i — uploads/wp-imported/ yoksa uploads/banks/ kullan
  *   8. tm_partners logo path'i — uploads/wp-imported/ yoksa uploads/partners/ kullan
- *   9. tm_team boşsa seed'den 3 kişi ekle
+
  *   10. WP-imported klasörü oluştur ve YYYY/MM dosyaları kopyala (banka/partner logoları için)
  *   11. OPcache reset
  *   12. LiteSpeed cache temizle (.htaccess sinyali)
@@ -53,7 +53,7 @@ function check_diagnostics(string $uploads, string $seedImg): array {
     $d = [];
 
     // 1. uploads alt klasörleri var mı?
-    foreach (['categories', 'products', 'sliders', 'services', 'banks', 'team', 'pages', 'partners'] as $sub) {
+    foreach (['categories', 'products', 'sliders', 'services', 'banks', 'pages', 'partners'] as $sub) {
         $d['uploads_dir_' . $sub] = [
             'label' => "uploads/$sub klasörü",
             'ok' => is_dir($uploads . '/' . $sub),
@@ -70,7 +70,7 @@ function check_diagnostics(string $uploads, string $seedImg): array {
 
     // 3. Kopyalama durumu
     if (is_dir($seedImg)) {
-        foreach (['categories', 'products', 'services', 'banks', 'team'] as $sub) {
+        foreach (['categories', 'products', 'services', 'banks'] as $sub) {
             $src = $seedImg . '/' . $sub;
             $dst = $uploads . '/' . $sub;
             if (is_dir($src)) {
@@ -139,7 +139,7 @@ function check_diagnostics(string $uploads, string $seedImg): array {
 
 function fix_create_dirs(string $uploads): array {
     $log = [];
-    $dirs = ['categories', 'products', 'sliders', 'services', 'banks', 'team', 'pages', 'partners', 'gallery'];
+    $dirs = ['categories', 'products', 'sliders', 'services', 'banks', 'pages', 'partners', 'gallery'];
     foreach ($dirs as $d) {
         $path = $uploads . '/' . $d;
         if (is_dir($path)) {
@@ -294,28 +294,6 @@ function fix_db_sliders(): array {
     }
     $log[] = "  ✅ $updated slider güncellendi";
     return $log;
-}
-
-function fix_db_team(): array {
-    try {
-        $count = (int)val("SELECT COUNT(*) FROM tm_team");
-        if ($count > 0) {
-            return ["  ↪ tm_team zaten dolu ($count kayıt)"];
-        }
-        $team = [
-            ['Murat Can',     'Kurucu',                    "Tekcan Metal'in kurucusu. Demir-çelik sektöründe 25+ yıllık tecrübe.", 'uploads/team/murat-can.jpg', '', ''],
-            ['Yunus Aksoy',   'Satış Temsilcisi',          "2007 Selçuk Üniversitesi mezunu. Satış-pazarlama alanında uzman; firmanın dijital dönüşümünü yönetmektedir.", null, 'satis@tekcanmetal.com', '0 554 835 0 226'],
-            ['İsmail Gökmen', 'Depo & Sevkiyat Sorumlusu', 'Stok yönetimi ve sevkiyat operasyonlarından sorumlu.', 'uploads/team/ismail-gokmen.jpg', '', ''],
-        ];
-        $i = 1;
-        foreach ($team as $t) {
-            q("INSERT INTO tm_team (full_name, position, bio, photo, email, phone, sort_order, is_active) VALUES (?,?,?,?,?,?,?,1)",
-              [$t[0], $t[1], $t[2], $t[3], $t[4], $t[5], $i++]);
-        }
-        return ["  ✅ 3 ekip üyesi eklendi"];
-    } catch (\Throwable $e) {
-        return ["  ❌ " . $e->getMessage()];
-    }
 }
 
 /**

@@ -91,7 +91,6 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
 
       <div class="adm-nav-section">
         <div class="adm-nav-title">Kurumsal</div>
-        <a href="<?= h(admin_url('team.php')) ?>"<?= nav_active('team.php', $current) ?>>👥 Ekip</a>
         <a href="<?= h(admin_url('partners.php')) ?>"<?= nav_active('partners.php', $current) ?>>🤝 Çözüm Ortakları</a>
         <a href="<?= h(admin_url('banks.php')) ?>"<?= nav_active('banks.php', $current) ?>>🏦 Bankalar / IBAN</a>
       </div>

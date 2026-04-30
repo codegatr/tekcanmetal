@@ -229,13 +229,6 @@ return [
     ],
 ],
 
-// ===== EKİP =====
-'team' => [
-    ['Murat Can',     'Kurucu',                  'Tekcan Metal’in kurucusu. Demir-çelik sektöründe 25+ yıllık tecrübe.', 'uploads/team/murat-can.jpg', '', ''],
-    ['Yunus Aksoy',   'Satış Temsilcisi',        '2007 Selçuk Üniversitesi mezunu. Satış-pazarlama alanında uzman; firmanın dijital dönüşümünü yönetmektedir.', null, 'satis@tekcanmetal.com', '0 554 835 0 226'],
-    ['İsmail Gökmen', 'Depo & Sevkiyat Sorumlusu', 'Stok yönetimi ve sevkiyat operasyonlarından sorumlu.', 'uploads/team/ismail-gokmen.jpg', '', ''],
-],
-
 // ===== SLIDER =====
 'sliders' => [
     [
@@ -310,6 +303,6 @@ return [
 ],
 
 // ===== SİSTEM SÜRÜMÜ =====
-'version' => '1.0.26',
+'version' => '1.0.27',
 
 ];
