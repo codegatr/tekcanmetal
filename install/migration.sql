@@ -44,3 +44,11 @@ UPDATE tm_settings SET setting_value = 'assets/img/favicon.jpg' WHERE setting_ke
 -- v1.0.27 — Ekip özelliği tamamen kaldırıldı
 -- =====================================================
 DROP TABLE IF EXISTS tm_team;
+
+-- =====================================================
+-- v1.0.31 — Petek Kiriş ürününe kategori görseli ata
+-- =====================================================
+UPDATE tm_products
+   SET image = 'uploads/categories/petek-kiris.jpg'
+ WHERE slug = 'petek-kiris'
+   AND (image IS NULL OR image = '');

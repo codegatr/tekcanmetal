@@ -271,7 +271,7 @@ function fix_db_products(): array {
         'kare-demiri' => 'uploads/products/kare-demiri.png',
         'patent-dirsek' => 'uploads/products/patent-dirsek.jpg',
         'norm-flans' => 'uploads/products/norm-flans.jpg',
-        'petek-kirisi' => 'uploads/products/petek-kirisi.jpg',
+        'petek-kiris' => 'uploads/categories/petek-kiris.jpg',
         'cati-paneli' => 'uploads/products/cati-paneli.png',
         'cephe-paneli' => 'uploads/products/cephe-paneli.png',
         'nervurlu-demir' => 'uploads/products/nervurlu-demir.jpg',
