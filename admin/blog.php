@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     ];
     $data['cover_image'] = adm_handle_image_upload('cover_image', 'uploads/blog', $_POST['existing_cover'] ?? null);
 
-    $newId = adm_save('tm_blog_posts', $data, $editId ?: null);
+    $newId = adm_save('tm_blog_posts', i18n_post_merge($data, ['title','meta_title','excerpt','content','meta_desc']), $editId ?: null);
     log_activity($editId ? 'update' : 'create', 'blog', $newId, "Blog: $title");
     adm_back_with('success', 'Blog yazısı kaydedildi.', 'admin/blog.php');
 }
@@ -59,7 +59,7 @@ if (in_array($action, ['edit','new'], true)) {
       <div class="adm-panel">
         <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Blog Yazısı Düzenle' : 'Yeni Blog Yazısı' ?></h2></div>
         <div class="adm-panel-body">
-          <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required></div>
+          <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required><?= i18n_inputs($row, 'title') ?></div>
           <div class="row-2">
             <div class="row">
               <label>Kategori</label>
@@ -72,10 +72,11 @@ if (in_array($action, ['edit','new'], true)) {
             </div>
             <div class="row"><label>Slug</label><input type="text" name="slug" value="<?= h($row['slug'] ?? '') ?>" placeholder="otomatik üretilir"></div>
           </div>
-          <div class="row"><label>Özet</label><textarea name="excerpt" rows="2" maxlength="500"><?= h($row['excerpt'] ?? '') ?></textarea></div>
+          <div class="row"><label>Özet</label><textarea name="excerpt" rows="2" maxlength="500"><?= h($row['excerpt'] ?? '') ?></textarea><?= i18n_inputs($row, 'excerpt', true, 2) ?></div>
           <div class="row">
             <label>İçerik</label>
             <textarea name="content" rows="20" id="postContent"><?= h($row['content'] ?? '') ?></textarea>
+            <?= i18n_inputs($row, 'content', true, 12) ?>
           </div>
         </div>
       </div>
@@ -108,8 +109,8 @@ if (in_array($action, ['edit','new'], true)) {
       <div class="adm-panel">
         <div class="adm-panel-head"><h2>SEO</h2></div>
         <div class="adm-panel-body">
-          <div class="row"><label>Meta Başlık</label><input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>"></div>
-          <div class="row"><label>Meta Açıklama</label><textarea name="meta_desc" rows="3" maxlength="300"><?= h($row['meta_desc'] ?? '') ?></textarea></div>
+          <div class="row"><label>Meta Başlık</label><input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>"><?= i18n_inputs($row, 'meta_title') ?></div>
+          <div class="row"><label>Meta Açıklama</label><textarea name="meta_desc" rows="3" maxlength="300"><?= h($row['meta_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'meta_desc', true, 3) ?></div>
         </div>
       </div>
     </div>
@@ -127,6 +128,7 @@ ClassicEditor.create(document.getElementById('postContent'), {
   toolbar: ['heading','|','bold','italic','link','bulletedList','numberedList','|','blockQuote','insertTable','|','undo','redo']
 }).catch(e=>console.error(e));
 </script>
+<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 $rows = all("SELECT p.*, c.name AS cat_name FROM tm_blog_posts p LEFT JOIN tm_blog_categories c ON c.id=p.category_id ORDER BY p.published_at DESC, p.id DESC");
