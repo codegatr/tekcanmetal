@@ -12490,3 +12490,69 @@ UPDATE tm_blog_posts SET
     meta_title_ru = 'Художественная ковка: производство, применения и сырьё — Tekcan Metal',
     meta_desc_ru  = 'Методы производства художественной ковки (кованое железо), применения (садовые ворота, перила балконов, перила лестниц), поставка сырья (полосовое железо, круглое железо). Tekcan Metal штаб-квартира в Конье — 20+ лет опыта.'
 WHERE slug = 'ferforje-nedir';
+
+-- =====================================================
+-- v1.0.84 — Slider 4, 5, 6 i18n çevirileri
+-- (sort_order 4-5-6 — daha önce çevrilmemişti)
+-- =====================================================
+
+UPDATE tm_sliders SET
+  title_en = 'Where Steel Takes Shape',
+  title_ar = 'حيث يتشكل الفولاذ',
+  title_ru = 'Где металл обретает форму',
+  subtitle_en = 'Laser & Oxygen Cutting',
+  subtitle_ar = 'القطع بالليزر والأوكسجين',
+  subtitle_ru = 'Лазерная и газокислородная резка',
+  description_en = 'Project-specific cutting, plate cutting and preparation services in our workshop. Same-day production commitment.',
+  description_ar = 'خدمات القطع وفتح الألواح والتحضير الخاصة بمشروعك في ورشتنا. التزام الإنتاج في نفس اليوم.',
+  description_ru = 'Услуги резки и подготовки под проект в нашем цеху. Производство в день заказа.',
+  link_text_en = 'Our Services',
+  link_text_ar = 'خدماتنا',
+  link_text_ru = 'Наши услуги'
+WHERE title = 'Demirin Şekillendiği Yer';
+
+UPDATE tm_sliders SET
+  title_en = 'Precision in Laser Cutting',
+  title_ar = 'الدقة في القطع بالليزر',
+  title_ru = 'Точность лазерной резки',
+  subtitle_en = 'We Work with Micron Tolerance',
+  subtitle_ar = 'نعمل بدقة الميكرون',
+  subtitle_ru = 'Мы работаем с микронной точностью',
+  description_en = 'With our CNC controlled laser cutting machines, we provide precision cutting on every type of sheet metal from 0.5 mm to 25 mm.',
+  description_ar = 'بفضل ماكينات القطع بالليزر التي تعمل بالتحكم العددي CNC، نقدم القطع الدقيق على جميع أنواع الألواح المعدنية من 0.5 مم إلى 25 مم.',
+  description_ru = 'Наши лазерные станки с ЧПУ обеспечивают точную резку листового металла от 0,5 мм до 25 мм.',
+  link_text_en = 'Laser Cutting Details',
+  link_text_ar = 'تفاصيل القطع بالليزر',
+  link_text_ru = 'Подробнее о лазерной резке'
+WHERE title = 'Lazer Kesimde Hassasiyet';
+
+UPDATE tm_sliders SET
+  title_en = 'Shipping Across Turkey',
+  title_ar = 'الشحن في جميع أنحاء تركيا',
+  title_ru = 'Доставка по всей Турции',
+  subtitle_en = '81 Cities, 7/24 Service',
+  subtitle_ar = 'الـ81 ولاية، خدمة 7/24',
+  subtitle_ru = '81 регион, обслуживание 24/7',
+  description_en = 'Timely, complete delivery from our Konya-based warehouse to every corner of Turkey via our contracted transportation partners.',
+  description_ar = 'تسليم في الوقت المحدد وكامل من مستودعنا الرئيسي في قونية إلى كل ركن من أركان تركيا عبر شركاء النقل المتعاقدين معنا.',
+  description_ru = 'Своевременная доставка из нашего склада в Конья во все уголки Турции через партнёров-перевозчиков.',
+  link_text_en = 'Contact Us',
+  link_text_ar = 'تواصل معنا',
+  link_text_ru = 'Свяжитесь с нами'
+WHERE title = 'Türkiye Geneline Sevkiyat';
+
+
+-- =====================================================
+-- v1.0.84 — Eksik UI çeviri anahtarları
+-- Footer aria-label'ları (telefon erişilebilirliği için)
+-- =====================================================
+INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
+  ('footer.aria_landline', 'tr', 'Sabit hat:',  'footer'),
+  ('footer.aria_landline', 'en', 'Landline:',   'footer'),
+  ('footer.aria_landline', 'ar', 'الخط الأرضي:','footer'),
+  ('footer.aria_landline', 'ru', 'Городской:',  'footer'),
+  ('footer.aria_mobile',   'tr', 'Cep telefonu:', 'footer'),
+  ('footer.aria_mobile',   'en', 'Mobile:',       'footer'),
+  ('footer.aria_mobile',   'ar', 'الجوال:',       'footer'),
+  ('footer.aria_mobile',   'ru', 'Мобильный:',    'footer');
+

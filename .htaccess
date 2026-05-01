@@ -66,6 +66,21 @@ RedirectMatch 404 /\.htaccess$
 RedirectMatch 404 /\.htpasswd$
 
 # =====================================================
+# www → non-www 301 redirect (kanonik URL)
+# Google Search Console "www.tekcanmetal.com/*" sorununu çözer
+# =====================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^www\.tekcanmetal\.com$ [NC]
+    RewriteRule ^(.*)$ https://tekcanmetal.com/$1 [L,R=301]
+
+    # HTTP → HTTPS yönlendirme (Cloudflare arkasında zaten otomatik ama emniyet için)
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+</IfModule>
+
+# =====================================================
 # Güvenlik başlıkları
 # =====================================================
 <IfModule mod_headers.c>

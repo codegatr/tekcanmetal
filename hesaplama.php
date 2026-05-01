@@ -1509,6 +1509,79 @@ const PRODUCTS = {
       const unit = (area*L*rho*1.02)/1000;
       return {unit, qty:q, kgPerM:(area*100*rho*1.02)/1000, descr:`Ø${v.nerv_d} nervürlü × ${v.nerv_l} mm`};
     }
+  },
+
+  'genisletilmis': {
+    name: 'Genişletilmiş Sac (ÖVL)', short: 'Genişletilmiş',
+    icon: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 16 L14 12 L20 16 L14 20 Z M20 16 L26 12 L32 16 L26 20 Z M32 16 L38 12 L44 16 L38 20 Z M14 24 L20 20 L26 24 L20 28 Z M26 24 L32 20 L38 24 L32 28 Z M8 32 L14 28 L20 32 L14 36 Z M20 32 L26 28 L32 32 L26 36 Z M32 32 L38 28 L44 32 L38 36 Z"/></svg>`,
+    formula: 'düz_sac_ağırlığı × (1 − boşluk_oranı/100)',
+    formulaText: 'W (kg) = (kalınlık × en × boy × ρ) / 1.000.000 × (1 − boşluk%/100)',
+    fields: [
+      {id:'gen_mesh', label:'Göz Aralığı (LWD × SWD)', type:'select', value:'62×20|70', options:[
+        {label:'Standart Göz Aralıkları (yaklaşık boşluk oranlarıyla)', items:[
+          ['22×10|70','22×10 mm — yaklaşık %70 boşluk (ince fitre, akustik)'],
+          ['30×12|72','30×12 mm — yaklaşık %72 boşluk (filtre, dekoratif)'],
+          ['43×13|75','43×13 mm — yaklaşık %75 boşluk (orta dekoratif/filtre)'],
+          ['62×20|70','62×20 mm — yaklaşık %70 boşluk (en yaygın, cephe)'],
+          ['76×24|65','76×24 mm — yaklaşık %65 boşluk (yürüme yolu)'],
+          ['100×40|60','100×40 mm — yaklaşık %60 boşluk (ağır sanayi)'],
+          ['125×50|55','125×50 mm — yaklaşık %55 boşluk (büyük göz)'],
+          ['custom|0','Özel — Boşluk Oranını manuel gir']
+        ]}
+      ]},
+      {id:'gen_open_pct', label:'Boşluk Oranı (özel için)', unit:'%', value:0, step:1, min:0, max:90},
+      {id:'gen_t', label:'Ham Sac Kalınlığı', unit:'mm', value:2, step:0.1},
+      {id:'gen_w', label:'En', unit:'mm', value:1000, step:1},
+      {id:'gen_l', label:'Boy', unit:'mm', value:2000, step:1},
+      {id:'gen_q', label:'Adet', unit:'ad', value:1, step:1, min:1}
+    ],
+    presets: [
+      ['2 mm · 1000×2000', {gen_t:2, gen_w:1000, gen_l:2000}],
+      ['3 mm · 1250×2500', {gen_t:3, gen_w:1250, gen_l:2500}],
+      ['4 mm · 1500×3000', {gen_t:4, gen_w:1500, gen_l:3000}]
+    ],
+    tip: '⚠ Genişletilmiş sac (ÖVL/expanded metal) ağırlığı, ham sacın boşluk oranı kadar azaltılmasıyla hesaplanır. Standart göz aralıklarının boşluk oranları yaklaşıktır — kataloğa göre değişir. Tam doğru hesap için "Özel" seçip Boşluk Oranı (%) alanına gerçek değeri girin. Kaynak: plmesh, dkpsac.com.tr.',
+    diagram: (v) => {
+      const meshLabel = (v.gen_mesh||'').split('|')[0] || '62×20';
+      // 3x2 ızgara genişletilmiş sac diyagramı (paralelogram/diamond pattern)
+      const diamonds = [];
+      for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 5; col++) {
+          const cx = 80 + col*40;
+          const cy = 70 + row*30;
+          const offX = (row % 2) * 20; // şahmati offset
+          diamonds.push(`<polygon points="${cx+offX-15},${cy} ${cx+offX},${cy-12} ${cx+offX+15},${cy} ${cx+offX},${cy+12}" fill="#bcc7d6" stroke="#1e4a9e" stroke-width="1"/>`);
+        }
+      }
+      return `
+      <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="50" width="200" height="120" fill="#f0f3f8" stroke="#1e4a9e" stroke-width="1.5"/>
+        ${diamonds.join('')}
+        <line x1="60" y1="185" x2="260" y2="185" stroke="#c8102e" stroke-width="1"/>
+        <line x1="60" y1="180" x2="60" y2="190" stroke="#c8102e" stroke-width="1.5"/>
+        <line x1="260" y1="180" x2="260" y2="190" stroke="#c8102e" stroke-width="1.5"/>
+        <text x="160" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#c8102e" font-weight="700">${v.gen_w || 0} × ${v.gen_l || 0} mm</text>
+        <text x="160" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1e4a9e" font-weight="700">Göz: ${meshLabel} mm · Kalınlık: ${v.gen_t || 0} mm</text>
+      </svg>`;
+    },
+    calc: (v, rho) => {
+      const sel = (v.gen_mesh||'62×20|70').split('|');
+      const meshLabel = sel[0];
+      const presetOpen = parseFloat(sel[1]) || 0;
+      const customOpen = parseFloat(v.gen_open_pct) || 0;
+      // Eğer "Özel" seçildiyse (presetOpen=0) veya kullanıcı manual değer girdiyse: customOpen kullan
+      // Aksi halde preset kullan
+      const openPct = (presetOpen === 0 || customOpen > 0) ? customOpen : presetOpen;
+      const t = (v.gen_t||0)/10, w = (v.gen_w||0)/10, l = (v.gen_l||0)/10, q = v.gen_q||1;
+      const flatWeight = (t*w*l*rho)/1000;
+      const unit = flatWeight * (1 - Math.min(openPct, 90)/100);
+      return {
+        unit,
+        qty:q,
+        kgPerM:0,
+        descr:`Göz ${meshLabel} mm · ${v.gen_t}×${v.gen_w}×${v.gen_l} mm · Boşluk %${openPct.toFixed(1)} · Düz ağırlığı: ${flatWeight.toFixed(2)} kg`
+      };
+    }
   }
 };
 
