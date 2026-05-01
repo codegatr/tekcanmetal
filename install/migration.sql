@@ -12623,3 +12623,70 @@ UPDATE tm_seo_iller SET
     cargo_info_ru = 'Бурса: доставка 2-3 рабочих дня. Прямой маршрут в ОСЗ Нилюфер-Инегёль.'
 WHERE slug = 'bursa';
 
+
+-- =====================================================
+-- v1.0.87 — tm_seo_iller i18n PART 2/5 (5 Anadolu ili)
+-- gaziantep, kayseri, adana, mersin, eskisehir
+-- 5 il × 9 alan = 45 alan
+-- =====================================================
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Southeast Anatolia industrial capital, food and textile manufacturing',
+    industry_focus_ar = 'العاصمة الصناعية لجنوب شرق الأناضول، تصنيع الأغذية والمنسوجات',
+    industry_focus_ru = 'Промышленная столица Юго-Восточной Анатолии, производство продуктов и текстиля',
+    intro_text_en = 'Gaziantep is the industrial capital of Southeast Anatolia. Through 5th OIZ, food machinery, textile manufacturing, and Iraq/Syria export-oriented operations, we provide iron-steel supply to contractors and manufacturers in Gaziantep.',
+    intro_text_ar = 'غازي عنتاب هي العاصمة الصناعية لجنوب شرق الأناضول. من خلال المنطقة الصناعية الخامسة وآلات الأغذية والمنسوجات والعمليات الموجهة للتصدير إلى العراق/سوريا، نوفر توريد الحديد والصلب للمقاولين والمصنعين في غازي عنتاب.',
+    intro_text_ru = 'Газиантеп — промышленная столица Юго-Восточной Анатолии. Через 5-й ОСЗ, пищевое оборудование, текстиль и операции с экспортом в Ирак/Сирию мы поставляем металлопродукцию подрядчикам и производителям Газиантепа.',
+    cargo_info_en = 'Gaziantep: 3-4 business days delivery. Habur transit shipments combined.',
+    cargo_info_ar = 'غازي عنتاب: التسليم خلال 3-4 أيام عمل. شحنات عبور خابور مجمعة.',
+    cargo_info_ru = 'Газиантеп: доставка 3-4 рабочих дня. Транзитные отправки Хабур комбинируются.'
+WHERE slug = 'gaziantep';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Furniture industry capital, Anatolian industrial center',
+    industry_focus_ar = 'عاصمة صناعة الأثاث، المركز الصناعي للأناضول',
+    industry_focus_ru = 'Столица мебельной промышленности, промышленный центр Анатолии',
+    intro_text_en = 'Kayseri is Turkey''s furniture industry capital and Central Anatolia''s largest OIZ. We provide DKP sheet, galvanized sheet and metal substrate supply to furniture manufacturers, white goods sub-industry and OEM operations.',
+    intro_text_ar = 'قيصري هي عاصمة صناعة الأثاث في تركيا وأكبر منطقة صناعية في وسط الأناضول. نوفر توريد ألواح DKP والألواح المجلفنة والركائز المعدنية لمصنعي الأثاث وصناعة الأجهزة المنزلية الفرعية وعمليات OEM.',
+    intro_text_ru = 'Кайсери — мебельная столица Турции и крупнейшая ОСЗ Центральной Анатолии. Поставляем DKP-лист, оцинкованный лист и металлоподложку производителям мебели, сегменту бытовой техники и OEM.',
+    cargo_info_en = 'Kayseri: 1-2 business days delivery. Direct route along the Konya-Kayseri corridor.',
+    cargo_info_ar = 'قيصري: التسليم خلال 1-2 يوم عمل. خط مباشر عبر ممر قونية-قيصري.',
+    cargo_info_ru = 'Кайсери: доставка 1-2 рабочих дня. Прямой маршрут по коридору Конья-Кайсери.'
+WHERE slug = 'kayseri';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Çukurova industrial center, agricultural machinery and food processing',
+    industry_focus_ar = 'مركز تشوكوروفا الصناعي، الآلات الزراعية ومعالجة الأغذية',
+    industry_focus_ru = 'Промышленный центр Чукурова, сельхозтехника и пищепереработка',
+    intro_text_en = 'Adana is the industrial center of the Çukurova Region. Through agricultural machinery manufacturers, food processing facilities and Mersin Port logistics, we deliver steel products to OIZs in Adana.',
+    intro_text_ar = 'أضنة هي المركز الصناعي لمنطقة تشوكوروفا. من خلال مصنعي الآلات الزراعية ومنشآت معالجة الأغذية والخدمات اللوجستية لميناء مرسين، نقدم منتجات الصلب للمناطق الصناعية في أضنة.',
+    intro_text_ru = 'Адана — промышленный центр Чукуровы. Через производителей сельхозтехники, пищепереработку и логистику порта Мерсин мы поставляем металлопродукцию в ОСЗ Аданы.',
+    cargo_info_en = 'Adana: 3-4 business days delivery. Mersin Port-OIZ direct route.',
+    cargo_info_ar = 'أضنة: التسليم خلال 3-4 أيام عمل. ميناء مرسين-المنطقة الصناعية، خط مباشر.',
+    cargo_info_ru = 'Адана: доставка 3-4 рабочих дня. Прямой маршрут порт Мерсин-ОСЗ.'
+WHERE slug = 'adana';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Largest port and free zone, logistics base',
+    industry_focus_ar = 'أكبر ميناء ومنطقة حرة، قاعدة لوجستية',
+    industry_focus_ru = 'Крупнейший порт и свободная зона, логистическая база',
+    intro_text_en = 'Mersin is one of Turkey''s largest ports and a logistics center. Mersin Free Zone, container shipping and Çukurova region industrial customers are our priority. We provide steel products to manufacturers exporting through Mersin.',
+    intro_text_ar = 'مرسين هي إحدى أكبر موانئ تركيا ومركز لوجستي. منطقة مرسين الحرة والشحن بالحاويات والعملاء الصناعيون في منطقة تشوكوروفا أولوياتنا. نقدم منتجات الصلب للمصنعين الذين يصدرون عبر مرسين.',
+    intro_text_ru = 'Мерсин — один из крупнейших портов Турции и логистический центр. Свободная зона Мерсин, контейнерные перевозки и промышленные клиенты Чукуровы — наши приоритеты. Поставляем металлопродукцию производителям, экспортирующим через Мерсин.',
+    cargo_info_en = 'Mersin: 3-4 business days delivery, port and OIZ direct shipments.',
+    cargo_info_ar = 'مرسين: التسليم خلال 3-4 أيام عمل، شحن مباشر للميناء والمنطقة الصناعية.',
+    cargo_info_ru = 'Мерсин: доставка 3-4 рабочих дня, прямые поставки в порт и ОСЗ.'
+WHERE slug = 'mersin';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Aviation, defense industry and locomotive manufacturing',
+    industry_focus_ar = 'صناعة الطيران والدفاع وتصنيع القاطرات',
+    industry_focus_ru = 'Авиация, оборонная промышленность и локомотивостроение',
+    intro_text_en = 'Eskişehir is the heart of Turkey''s aviation and defense industry. Through TUSAŞ, TÜLOMSAŞ, white goods sub-industry and OEM manufacturers, we provide stainless steel, special steel sheet and profile supply.',
+    intro_text_ar = 'إسكي شهير هي قلب صناعة الطيران والدفاع التركية. من خلال توساش وتولومساش وصناعة الأجهزة المنزلية الفرعية ومصنعي OEM، نوفر توريد الفولاذ المقاوم للصدأ وألواح ومقاطع الصلب الخاص.',
+    intro_text_ru = 'Эскишехир — сердце авиационной и оборонной промышленности Турции. Через TUSAŞ, TÜLOMSAŞ, бытовую технику и OEM-производителей мы поставляем нержавейку, спецсталь и профили.',
+    cargo_info_en = 'Eskişehir: 2-3 business days delivery. Direct Konya-Eskişehir route.',
+    cargo_info_ar = 'إسكي شهير: التسليم خلال 2-3 أيام عمل. خط مباشر قونية-إسكي شهير.',
+    cargo_info_ru = 'Эскишехир: доставка 2-3 рабочих дня. Прямой маршрут Конья-Эскишехир.'
+WHERE slug = 'eskisehir';
+
