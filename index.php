@@ -1200,22 +1200,7 @@ require __DIR__ . '/includes/header.php';
 
 <script>
 (function(){
-    var POPUP_DELAY = 5000;        // 5 saniye sonra göster
     var POPUP_DURATION = 8000;     // 8 saniye gösterdikten sonra otomatik kaybol
-    var DISMISS_KEY = 'fl_popup_dismissed';
-    var SESSION_KEY = 'fl_popup_shown_session';
-
-    // Eğer kullanıcı bu oturumda popup'ı kapattıysa veya zaten gördüyse — gösterme
-    try {
-        if (sessionStorage.getItem(SESSION_KEY) === '1') return;
-        if (localStorage.getItem(DISMISS_KEY) === '1') {
-            // 24 saat geçtiyse sıfırla
-            var dismissedAt = parseInt(localStorage.getItem(DISMISS_KEY + '_at') || '0', 10);
-            if (Date.now() - dismissedAt < 24 * 60 * 60 * 1000) return;
-            localStorage.removeItem(DISMISS_KEY);
-            localStorage.removeItem(DISMISS_KEY + '_at');
-        }
-    } catch(e) {}
 
     var popup = document.getElementById('fl-popup');
     if (!popup) return;
@@ -1225,7 +1210,6 @@ require __DIR__ . '/includes/header.php';
     function showPopup() {
         popup.classList.remove('fl-popup-hide');
         popup.classList.add('fl-popup-show');
-        try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
         // 8 sn sonra otomatik kaybolma
         hideTimer = setTimeout(hidePopup, POPUP_DURATION);
     }
@@ -1238,14 +1222,14 @@ require __DIR__ . '/includes/header.php';
 
     window.closeFlPopup = function() {
         hidePopup();
-        try {
-            localStorage.setItem(DISMISS_KEY, '1');
-            localStorage.setItem(DISMISS_KEY + '_at', Date.now().toString());
-        } catch(e) {}
     };
 
-    // 5 sn sonra popup'ı göster
-    setTimeout(showPopup, POPUP_DELAY);
+    // Sayfa açılır açılmaz popup göster (DOM hazır olur olmaz, ek delay yok)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', showPopup);
+    } else {
+        showPopup();
+    }
 })();
 </script>
 
