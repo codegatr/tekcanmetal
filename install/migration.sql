@@ -12556,3 +12556,70 @@ INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
   ('footer.aria_mobile',   'ar', 'الجوال:',       'footer'),
   ('footer.aria_mobile',   'ru', 'Мобильный:',    'footer');
 
+
+-- =====================================================
+-- v1.0.86 — tm_seo_iller i18n PART 1 (5 büyük şehir)
+-- istanbul, ankara, izmir, konya, bursa
+-- 5 il × 9 alan (3 alan × 3 dil) = 45 alan
+-- =====================================================
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Turkey''s economic capital, logistics and construction hub',
+    industry_focus_ar = 'العاصمة الاقتصادية لتركيا، مركز الخدمات اللوجستية والبناء',
+    industry_focus_ru = 'Экономическая столица Турции, центр логистики и строительства',
+    intro_text_en = 'Istanbul is Turkey''s largest construction and industrial market. As Tekcan Metal, we supply iron-steel products to contractors, steel construction firms, and OEM manufacturers in Istanbul. We provide regular delivery to Hadımköy, İkitelli, Tuzla and Gebze industrial zones.',
+    intro_text_ar = 'إسطنبول هي أكبر سوق للبناء والصناعة في تركيا. نحن في تكجان للمعادن نوفر توريد منتجات الحديد والصلب للمقاولين وشركات الإنشاءات الفولاذية ومصنعي OEM في إسطنبول. نقدم تسليماً منتظماً إلى مناطق هاديمكوي وإيكيتيلي وتوزلا وجبزة الصناعية.',
+    intro_text_ru = 'Стамбул — крупнейший строительный и промышленный рынок Турции. Tekcan Metal поставляет металлопродукцию подрядчикам, металлоконструкторам и OEM-производителям в Стамбуле. Регулярные поставки в промзоны Хадымкёй, Икителли, Тузла и Гебзе.',
+    cargo_info_en = 'Istanbul: 2-3 business days delivery, free shipping included on orders over 30 tons.',
+    cargo_info_ar = 'إسطنبول: التسليم خلال 2-3 أيام عمل، الشحن مجاني للطلبات فوق 30 طن.',
+    cargo_info_ru = 'Стамбул: доставка 2-3 рабочих дня, бесплатная доставка при заказе свыше 30 тонн.'
+WHERE slug = 'istanbul';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Capital city, machine manufacturing hub with OSTİM and İvedik Industrial Zones',
+    industry_focus_ar = 'العاصمة، مركز تصنيع الآلات بمناطق OSTİM وİvedik الصناعية',
+    industry_focus_ru = 'Столица, центр машиностроения с промзонами OSTİM и İvedik',
+    intro_text_en = 'Ankara, primarily through OSTİM and İvedik Organized Industrial Zones, hosts one of Turkey''s largest machine manufacturing and OEM clusters. We provide steel sheet, tube, profile and special steel supply to manufacturers in Ankara.',
+    intro_text_ar = 'أنقرة، خاصة من خلال مناطق OSTİM وİvedik الصناعية المنظمة، تستضيف واحدة من أكبر تجمعات تصنيع الآلات وOEM في تركيا. نوفر توريد الألواح والأنابيب والمقاطع والصلب الخاص للمصنعين في أنقرة.',
+    intro_text_ru = 'Анкара, прежде всего через ОСЗ OSTİM и İvedik, — один из крупнейших машиностроительных и OEM-кластеров Турции. Поставляем листовую сталь, трубы, профили и спецсталь производителям в Анкаре.',
+    cargo_info_en = 'Ankara: 1-2 business days delivery. Direct Konya-Ankara shipping route.',
+    cargo_info_ar = 'أنقرة: التسليم خلال 1-2 يوم عمل. خط شحن مباشر قونية-أنقرة.',
+    cargo_info_ru = 'Анкара: доставка 1-2 рабочих дня. Прямой маршрут Конья-Анкара.'
+WHERE slug = 'ankara';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Port city, export and shipbuilding industrial zones',
+    industry_focus_ar = 'مدينة الموانئ، مناطق التصدير وصناعة بناء السفن',
+    industry_focus_ru = 'Портовый город, экспортные и судостроительные промзоны',
+    intro_text_en = 'Izmir is the industrial and export hub of the Aegean Region. Aliağa iron-steel production facilities, Pınarbaşı, Kemalpaşa and Torbalı OIZs are the most important steel-consuming centers. We provide iron-steel supply to contractors and OEM manufacturers in Izmir.',
+    intro_text_ar = 'إزمير هي المركز الصناعي والتصديري لمنطقة بحر إيجة. منشآت إنتاج الحديد والصلب في عليأغا، ومناطق بينارباشي وكمالباشا وتورباليه الصناعية هي أهم مراكز استهلاك الصلب. نوفر توريد الحديد والصلب للمقاولين ومصنعي OEM في إزمير.',
+    intro_text_ru = 'Измир — промышленный и экспортный центр Эгейского региона. Металлургические производства Алиаги, ОСЗ Пынарбаши, Кемальпаша и Торбалы — крупнейшие потребители стали. Поставляем металлопродукцию подрядчикам и OEM-производителям в Измире.',
+    cargo_info_en = 'Izmir: 2-3 business days delivery, direct Aliağa-Bornova-Çiğli routing.',
+    cargo_info_ar = 'إزمير: التسليم خلال 2-3 أيام عمل، توجيه مباشر عليأغا-بورنوفا-جيغلي.',
+    cargo_info_ru = 'Измир: доставка 2-3 рабочих дня, прямой маршрут Алиага-Борнова-Чигли.'
+WHERE slug = 'izmir';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Tekcan Metal''s home city, Central Anatolia industrial center',
+    industry_focus_ar = 'المدينة الأم لتكجان للمعادن، المركز الصناعي لوسط الأناضول',
+    industry_focus_ru = 'Родной город Tekcan Metal, промышленный центр Центральной Анатолии',
+    intro_text_en = 'Konya is Tekcan Metal''s home city. Konya Organized Industrial Zone, Selçuklu, Karatay industrial zones, agricultural machinery, automotive sub-industry and OEM manufacturers form the backbone of our customer base. We provide same-day delivery in Konya city center.',
+    intro_text_ar = 'قونية هي المدينة الأم لتكجان للمعادن. منطقة قونية الصناعية المنظمة ومناطق سلجوقلو وكاراتاي الصناعية، ومصنعو الآلات الزراعية وصناعة السيارات الفرعية وOEM يشكلون العمود الفقري لقاعدة عملائنا. نقدم التسليم في نفس اليوم في وسط مدينة قونية.',
+    intro_text_ru = 'Конья — родной город Tekcan Metal. ОСЗ Конья, промзоны Сельчуклу и Каратай, производители сельхозтехники, автокомпонентов и OEM — основа нашей клиентской базы. В центре Коньи — доставка в день заказа.',
+    cargo_info_en = 'Konya center: same-day delivery. Konya-Karaman-Aksaray-Niğde routes daily.',
+    cargo_info_ar = 'وسط قونية: التسليم في نفس اليوم. خطوط قونية-كرامان-أكساراي-نيدة يومياً.',
+    cargo_info_ru = 'Центр Коньи: доставка в день заказа. Маршруты Конья-Караман-Аксарай-Нигде ежедневно.'
+WHERE slug = 'konya';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Automotive industry capital, white goods manufacturing center',
+    industry_focus_ar = 'عاصمة صناعة السيارات، مركز تصنيع الأجهزة المنزلية',
+    industry_focus_ru = 'Столица автомобильной промышленности, центр производства бытовой техники',
+    intro_text_en = 'Bursa is Turkey''s automotive industry capital. We supply DKP sheet, galvanized steel, profile and stainless steel to automotive sub-industry, white goods, and textile machinery manufacturers in Tofaş, Renault, Bosch, Beyçelik factories.',
+    intro_text_ar = 'بورصة هي عاصمة صناعة السيارات في تركيا. نقدم توريد الألواح DKP والصلب المجلفن والمقاطع والفولاذ المقاوم للصدأ لصناعة السيارات الفرعية والأجهزة المنزلية ومصنعي ماكينات النسيج في مصانع توفاش ورينو وبوش وبيتشيليك.',
+    intro_text_ru = 'Бурса — автомобильная столица Турции. Поставляем DKP-лист, оцинкованную сталь, профили и нержавейку для автокомпонентов, бытовой техники и текстильного машиностроения (Tofaş, Renault, Bosch, Beyçelik).',
+    cargo_info_en = 'Bursa: 2-3 business days delivery. Direct route to Nilüfer-İnegöl OIZs.',
+    cargo_info_ar = 'بورصة: التسليم خلال 2-3 أيام عمل. خط مباشر إلى مناطق نيلوفر وإنغول الصناعية.',
+    cargo_info_ru = 'Бурса: доставка 2-3 рабочих дня. Прямой маршрут в ОСЗ Нилюфер-Инегёль.'
+WHERE slug = 'bursa';
+
