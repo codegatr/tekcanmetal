@@ -12757,3 +12757,70 @@ UPDATE tm_seo_iller SET
     cargo_info_ru = 'Балыкесир: доставка 3-4 рабочих дня. Поставки в порт Бандырма.'
 WHERE slug = 'balikesir';
 
+
+-- =====================================================
+-- v1.0.89 — tm_seo_iller i18n PART 4/5 (5 Karadeniz/Doğu/GAP)
+-- hatay, diyarbakir, samsun, trabzon, afyonkarahisar
+-- 5 il × 9 alan = 45 alan
+-- =====================================================
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'İskenderun iron-steel center, port and post-earthquake reconstruction',
+    industry_focus_ar = 'مركز الحديد والصلب في إسكندرون، الميناء وإعادة الإعمار بعد الزلزال',
+    industry_focus_ru = 'Чёрнометаллургический центр Искендерун, порт и восстановление после землетрясения',
+    intro_text_en = 'Hatay, with İskenderun and Erdemir Group facilities, is the heart of Turkey''s iron-steel industry. After the 2023 earthquakes, large-scale reconstruction processes are ongoing. We provide construction steel, structural steel and roofing material supply.',
+    intro_text_ar = 'هاتاي، مع منشآت إسكندرون ومجموعة إردمير، هي قلب صناعة الحديد والصلب في تركيا. بعد زلازل 2023، تستمر عمليات إعادة الإعمار واسعة النطاق. نوفر توريد حديد البناء والصلب الهيكلي ومواد التسقيف.',
+    intro_text_ru = 'Хатай с İskenderun и группой Erdemir — сердце чёрной металлургии Турции. После землетрясения 2023 года идёт масштабное восстановление. Поставляем арматуру, строительную сталь и кровельные материалы.',
+    cargo_info_en = 'Hatay: 4-5 business days delivery. Earthquake region — flexible delivery.',
+    cargo_info_ar = 'هاتاي: التسليم خلال 4-5 أيام عمل. منطقة الزلزال — تسليم مرن.',
+    cargo_info_ru = 'Хатай: доставка 4-5 рабочих дней. Зона землетрясения — гибкая доставка.'
+WHERE slug = 'hatay';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Southeast Anatolia construction sector, GAP region center',
+    industry_focus_ar = 'قطاع البناء في جنوب شرق الأناضول، مركز منطقة GAP',
+    industry_focus_ru = 'Строительный сектор Юго-Восточной Анатолии, центр региона GAP',
+    intro_text_en = 'Diyarbakır is one of the largest construction markets in Southeast Anatolia. Through GAP region investments and post-earthquake reconstruction, we provide structural steel, profile and roofing material supply.',
+    intro_text_ar = 'ديار بكر هي إحدى أكبر أسواق البناء في جنوب شرق الأناضول. من خلال استثمارات منطقة GAP وإعادة الإعمار بعد الزلزال، نوفر توريد الحديد الهيكلي والمقاطع ومواد التسقيف.',
+    intro_text_ru = 'Диярбакыр — один из крупнейших строительных рынков Юго-Восточной Анатолии. Через инвестиции в регион GAP и восстановление после землетрясения мы поставляем строительную сталь, профили и кровельные материалы.',
+    cargo_info_en = 'Diyarbakır: 5-6 business days delivery. Eastern region routing.',
+    cargo_info_ar = 'ديار بكر: التسليم خلال 5-6 أيام عمل. توجيه المنطقة الشرقية.',
+    cargo_info_ru = 'Диярбакыр: доставка 5-6 рабочих дней. Маршрутизация восточного региона.'
+WHERE slug = 'diyarbakir';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Black Sea logistics, port and food industry',
+    industry_focus_ar = 'الخدمات اللوجستية للبحر الأسود، الميناء وصناعة الأغذية',
+    industry_focus_ru = 'Черноморская логистика, порт и пищевая промышленность',
+    intro_text_en = 'Samsun is the largest port and industrial center of the Black Sea region. We provide steel products to construction, food machinery and agricultural sub-industry manufacturers in Samsun.',
+    intro_text_ar = 'سامسون هي أكبر ميناء ومركز صناعي في منطقة البحر الأسود. نقدم منتجات الصلب لصناعة البناء وآلات الأغذية والصناعة الزراعية الفرعية في سامسون.',
+    intro_text_ru = 'Самсун — крупнейший порт и промышленный центр Черноморского региона. Поставляем металлопродукцию строительным, пищемашиностроительным и сельхозкомпонентным производителям Самсуна.',
+    cargo_info_en = 'Samsun: 4-5 business days delivery. Black Sea coastal route.',
+    cargo_info_ar = 'سامسون: التسليم خلال 4-5 أيام عمل. خط ساحل البحر الأسود.',
+    cargo_info_ru = 'Самсун: доставка 4-5 рабочих дней. Черноморский прибрежный маршрут.'
+WHERE slug = 'samsun';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Eastern Black Sea construction sector and tea industry',
+    industry_focus_ar = 'قطاع البناء في شرق البحر الأسود وصناعة الشاي',
+    industry_focus_ru = 'Строительный сектор Восточного Причерноморья и чайная промышленность',
+    intro_text_en = 'Trabzon is the largest construction market of the Eastern Black Sea region. Through residential, hotel and tea facility projects, we provide structural steel, profile and roofing material supply.',
+    intro_text_ar = 'طرابزون هي أكبر سوق بناء في منطقة شرق البحر الأسود. من خلال مشاريع السكن والفنادق ومنشآت الشاي، نوفر توريد الحديد الهيكلي والمقاطع ومواد التسقيف.',
+    intro_text_ru = 'Трабзон — крупнейший строительный рынок Восточного Причерноморья. Через проекты жилья, отелей и чайных производств мы поставляем строительную сталь, профили и кровельные материалы.',
+    cargo_info_en = 'Trabzon: 5-6 business days delivery. Black Sea coastal route.',
+    cargo_info_ar = 'طرابزون: التسليم خلال 5-6 أيام عمل. خط ساحل البحر الأسود.',
+    cargo_info_ru = 'Трабзон: доставка 5-6 рабочих дней. Черноморский прибрежный маршрут.'
+WHERE slug = 'trabzon';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Marble industry, food and thermal facilities',
+    industry_focus_ar = 'صناعة الرخام، الأغذية والمنشآت الحرارية',
+    industry_focus_ru = 'Мраморная промышленность, пищевая отрасль и термальные объекты',
+    intro_text_en = 'Afyonkarahisar is the heart of Turkey''s marble industry. Through marble factories, food production and thermal hotel construction, we deliver steel products.',
+    intro_text_ar = 'أفيون قره حصار هي قلب صناعة الرخام في تركيا. من خلال مصانع الرخام وإنتاج الأغذية وبناء الفنادق الحرارية، نقدم منتجات الصلب.',
+    intro_text_ru = 'Афьонкарахисар — сердце мраморной промышленности Турции. Через мраморные заводы, пищепроизводство и строительство термальных отелей мы поставляем металлопродукцию.',
+    cargo_info_en = 'Afyonkarahisar: 2-3 business days delivery. Konya-Afyon route.',
+    cargo_info_ar = 'أفيون قره حصار: التسليم خلال 2-3 أيام عمل. خط قونية-أفيون.',
+    cargo_info_ru = 'Афьонкарахисар: доставка 2-3 рабочих дня. Маршрут Конья-Афьон.'
+WHERE slug = 'afyonkarahisar';
+
