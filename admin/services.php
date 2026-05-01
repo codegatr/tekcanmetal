@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         'is_active'   => isset($_POST['is_active']) ? 1 : 0,
     ];
     $data['image'] = adm_handle_image_upload('image', 'uploads/services', $_POST['existing_image'] ?? null);
+    $data = i18n_post_merge($data, ['title', 'short_desc', 'description']);
     $newId = adm_save('tm_services', $data, $editId ?: null);
     log_activity($editId ? 'update' : 'create', 'service', $newId, "Hizmet: $title");
     adm_back_with('success', 'Hizmet kaydedildi.', 'admin/services.php');
@@ -67,15 +68,15 @@ if (in_array($action, ['edit','new'], true)) {
     <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Hizmet Düzenle' : 'Yeni Hizmet' ?></h2></div>
     <div class="adm-panel-body">
       <div class="row-2">
-        <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required></div>
+        <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required><?= i18n_inputs($row, 'title') ?></div>
         <div class="row"><label>Slug</label><input type="text" name="slug" value="<?= h($row['slug'] ?? '') ?>" placeholder="otomatik üretilir"></div>
       </div>
       <div class="row-2">
         <div class="row"><label>İkon (emoji veya SVG sınıfı)</label><input type="text" name="icon" value="<?= h($row['icon'] ?? '') ?>" placeholder="örn: ⚙️ veya bir karakter"></div>
         <div class="row"><label>Sıra</label><input type="number" name="sort_order" value="<?= (int)($row['sort_order'] ?? 0) ?>"></div>
       </div>
-      <div class="row"><label>Kısa Açıklama</label><textarea name="short_desc" rows="2" maxlength="400"><?= h($row['short_desc'] ?? '') ?></textarea></div>
-      <div class="row"><label>Detaylı Açıklama</label><textarea name="description" rows="8"><?= h($row['description'] ?? '') ?></textarea></div>
+      <div class="row"><label>Kısa Açıklama</label><textarea name="short_desc" rows="2" maxlength="400"><?= h($row['short_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'short_desc', true, 2) ?></div>
+      <div class="row"><label>Detaylı Açıklama</label><textarea name="description" rows="8"><?= h($row['description'] ?? '') ?></textarea><?= i18n_inputs($row, 'description', true, 6) ?></div>
       <div class="row">
         <label>Özellikler / Avantajlar (her satıra bir madde)</label>
         <textarea name="features_raw" rows="6" placeholder="Hassas ölçü tolerans&#10;CNC kontrollü kesim&#10;En geniş kalınlık aralığı"><?= h($featTxt) ?></textarea>
@@ -97,6 +98,7 @@ if (in_array($action, ['edit','new'], true)) {
     <button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button>
   </div>
 </form>
+<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 $rows = all("SELECT * FROM tm_services ORDER BY sort_order, id");

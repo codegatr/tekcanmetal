@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     ];
     $data['hero_image'] = adm_handle_image_upload('hero_image', 'uploads/pages', $_POST['existing_hero'] ?? null);
 
+    $data = i18n_post_merge($data, ['title', 'subtitle', 'meta_title', 'content', 'meta_desc']);
+
     $newId = adm_save('tm_pages', $data, $editId ?: null);
     log_activity($editId ? 'update' : 'create', 'page', $newId, "Sayfa: $title");
     adm_back_with('success', 'Sayfa kaydedildi.', 'admin/pages.php');
@@ -47,12 +49,12 @@ if (in_array($action, ['edit','new'], true)) {
       <div class="adm-panel">
         <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Sayfa Düzenle' : 'Yeni Sayfa' ?></h2></div>
         <div class="adm-panel-body">
-          <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required></div>
-          <div class="row"><label>Alt Başlık</label><input type="text" name="subtitle" value="<?= h($row['subtitle'] ?? '') ?>"></div>
+          <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required><?= i18n_inputs($row, 'title') ?></div>
+          <div class="row"><label>Alt Başlık</label><input type="text" name="subtitle" value="<?= h($row['subtitle'] ?? '') ?>"><?= i18n_inputs($row, 'subtitle') ?></div>
           <div class="row"><label>Slug</label><input type="text" name="slug" value="<?= h($row['slug'] ?? '') ?>" placeholder="örn: kvkk, hakkimizda, cerez"></div>
           <div class="row">
             <label>İçerik (HTML kabul edilir)</label>
-            <textarea name="content" rows="22" id="pageContent"><?= h($row['content'] ?? '') ?></textarea>
+            <textarea name="content" rows="22" id="pageContent"><?= h($row['content'] ?? '') ?></textarea><?= i18n_inputs($row, 'content', true, 12) ?>
           </div>
         </div>
       </div>
@@ -68,8 +70,8 @@ if (in_array($action, ['edit','new'], true)) {
       <div class="adm-panel">
         <div class="adm-panel-head"><h2>SEO</h2></div>
         <div class="adm-panel-body">
-          <div class="row"><label>Meta Başlık</label><input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>"></div>
-          <div class="row"><label>Meta Açıklama</label><textarea name="meta_desc" rows="3" maxlength="300"><?= h($row['meta_desc'] ?? '') ?></textarea></div>
+          <div class="row"><label>Meta Başlık</label><input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>"><?= i18n_inputs($row, 'meta_title') ?></div>
+          <div class="row"><label>Meta Açıklama</label><textarea name="meta_desc" rows="3" maxlength="300"><?= h($row['meta_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'meta_desc', true, 2) ?></div>
         </div>
       </div>
       <div class="adm-panel">
@@ -97,6 +99,7 @@ ClassicEditor.create(document.getElementById('pageContent'), {
   toolbar: ['heading','|','bold','italic','link','bulletedList','numberedList','|','blockQuote','insertTable','|','undo','redo']
 }).catch(e=>console.error(e));
 </script>
+<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 $rows = all("SELECT * FROM tm_pages ORDER BY sort_order, id");
