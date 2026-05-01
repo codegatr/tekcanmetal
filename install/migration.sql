@@ -13081,7 +13081,7 @@ VALUES
 
 
 -- v1.0.99 — Fiyat Listeleri menü string'leri (header/footer)
-INSERT INTO tm_translations (translation_key, lang, translation_value, context) VALUES
+INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
     ('header.menu.price_lists', 'tr', 'Fiyat Listeleri',         'header'),
     ('header.menu.price_lists', 'en', 'Price Lists',             'header'),
     ('header.menu.price_lists', 'ar', 'قوائم الأسعار',           'header'),
@@ -13090,11 +13090,11 @@ INSERT INTO tm_translations (translation_key, lang, translation_value, context) 
     ('footer.price_lists',      'en', 'Manufacturer Price Lists','footer'),
     ('footer.price_lists',      'ar', 'قوائم أسعار المصانع',    'footer'),
     ('footer.price_lists',      'ru', 'Прайс-листы заводов',     'footer')
-ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
+ON DUPLICATE KEY UPDATE value = VALUES(value);
 
 
 -- v1.0.100 — Anasayfa Fiyat Listesi Popup string'leri (4 dil)
-INSERT INTO tm_translations (translation_key, lang, translation_value, context) VALUES
+INSERT IGNORE INTO tm_translations (`key`, lang, value, context) VALUES
     ('popup.price_lists.title', 'tr', 'Güncel Fabrika Fiyatları',                                       'index'),
     ('popup.price_lists.title', 'en', 'Up-to-Date Manufacturer Prices',                                  'index'),
     ('popup.price_lists.title', 'ar', 'أسعار المصنعين المحدثة',                                         'index'),
@@ -13107,7 +13107,7 @@ INSERT INTO tm_translations (translation_key, lang, translation_value, context) 
     ('popup.price_lists.cta', 'en', 'Price List Directory →',          'index'),
     ('popup.price_lists.cta', 'ar', 'دليل قوائم الأسعار ←',          'index'),
     ('popup.price_lists.cta', 'ru', 'Справочник прайс-листов →',       'index')
-ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
+ON DUPLICATE KEY UPDATE value = VALUES(value);
 
 
 -- =====================================================
