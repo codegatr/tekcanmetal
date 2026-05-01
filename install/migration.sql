@@ -13423,3 +13423,22 @@ WHERE brand_slug = 'diler';
 
 DELETE FROM tm_price_lists WHERE brand_slug = 'konya-boru';
 
+
+-- =====================================================
+-- v1.0.108 — Konya Boru Profil için AGRESİF DELETE
+-- Yunus: 'Hala duruyor ama yok olmamış.'
+-- 
+-- Olası nedenler:
+--   - Slug farklı: 'konya-boru-profil', 'konyaboru' vb.
+--   - Brand name farklı: 'Konya Boru', 'Konya Boru Profil A.Ş.' vb.
+--   - Önceki DELETE çalışmadı veya farklı kayıt
+-- 
+-- Çözüm: Hem slug hem brand_name LIKE pattern ile sil
+-- Bu idempotent — kayıt yoksa zaten 0 satır etkiler
+-- =====================================================
+
+DELETE FROM tm_price_lists
+WHERE brand_slug IN ('konya-boru', 'konya-boru-profil', 'konyaboru', 'konya')
+   OR brand_name LIKE 'Konya Boru%'
+   OR brand_name LIKE '%Konya Boru%';
+
