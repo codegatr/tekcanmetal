@@ -12824,3 +12824,70 @@ UPDATE tm_seo_iller SET
     cargo_info_ru = 'Афьонкарахисар: доставка 2-3 рабочих дня. Маршрут Конья-Афьон.'
 WHERE slug = 'afyonkarahisar';
 
+
+-- =====================================================
+-- v1.0.90 — tm_seo_iller i18n PART 5/5 (Konya bölgesi + Antalya)
+-- konya-ereglisi, aksaray, karaman, nigde, antalya
+-- 5 il × 9 alan = 45 alan — TÜM 25 İL TAMAMLANDI
+-- =====================================================
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Largest district of Konya, agricultural industry center',
+    industry_focus_ar = 'أكبر منطقة في قونية، مركز الصناعة الزراعية',
+    industry_focus_ru = 'Крупнейший район Коньи, центр сельскохозяйственной промышленности',
+    intro_text_en = 'Ereğli (Konya), the largest district of Konya province, is an important center for agricultural industry, food processing and metal manufacturing. As a Konya-based company, we provide same-day delivery to Ereğli.',
+    intro_text_ar = 'إريلي (قونية)، أكبر منطقة في محافظة قونية، هي مركز مهم للصناعة الزراعية ومعالجة الأغذية وتصنيع المعادن. كشركة مقرها قونية، نقدم التسليم في نفس اليوم إلى إريلي.',
+    intro_text_ru = 'Эрегли (Конья) — крупнейший район провинции Конья, важный центр сельхозпрома, пищепереработки и металлообработки. Как компания из Коньи, обеспечиваем доставку в день заказа.',
+    cargo_info_en = 'Ereğli/Konya: same-day delivery. Multiple shipments daily.',
+    cargo_info_ar = 'إريلي/قونية: التسليم في نفس اليوم. شحنات متعددة يومياً.',
+    cargo_info_ru = 'Эрегли/Конья: доставка в день заказа. Несколько отправок ежедневно.'
+WHERE slug = 'konya-ereglisi';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Mercedes-Benz truck factory and OIZ',
+    industry_focus_ar = 'مصنع شاحنات مرسيدس بنز والمنطقة الصناعية',
+    industry_focus_ru = 'Завод грузовиков Mercedes-Benz и ОСЗ',
+    intro_text_en = 'Aksaray, with Mercedes-Benz Truck Factory and OIZ, is an important sub-industry center in Central Anatolia. We provide DKP sheet, galvanized sheet and structural steel supply.',
+    intro_text_ar = 'أكساراي، بمصنع شاحنات مرسيدس بنز والمنطقة الصناعية، هي مركز مهم للصناعة الفرعية في وسط الأناضول. نوفر توريد ألواح DKP والألواح المجلفنة والحديد الهيكلي.',
+    intro_text_ru = 'Аксарай с заводом грузовиков Mercedes-Benz и ОСЗ — важный субпромышленный центр Центральной Анатолии. Поставляем DKP-лист, оцинкованный лист и строительную сталь.',
+    cargo_info_en = 'Aksaray: 1-2 business days delivery. Konya direct route.',
+    cargo_info_ar = 'أكساراي: التسليم خلال 1-2 يوم عمل. خط مباشر قونية.',
+    cargo_info_ru = 'Аксарай: доставка 1-2 рабочих дня. Прямой маршрут Конья.'
+WHERE slug = 'aksaray';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Food industry, biscuit and confectionery manufacturing',
+    industry_focus_ar = 'صناعة الأغذية، تصنيع البسكويت والحلويات',
+    industry_focus_ru = 'Пищевая промышленность, производство печенья и кондитерских изделий',
+    intro_text_en = 'Karaman is one of Turkey''s largest centers for biscuit and confectionery manufacturing (Eti, Şölen, Bifa). We provide food machinery sub-industry steel supply.',
+    intro_text_ar = 'كرامان هي إحدى أكبر مراكز تصنيع البسكويت والحلويات في تركيا (إتي، شولن، بيفا). نوفر توريد الصلب لصناعة الآلات الغذائية الفرعية.',
+    intro_text_ru = 'Караман — один из крупнейших центров производства печенья и кондитерских изделий Турции (Eti, Şölen, Bifa). Поставляем сталь для пищемашиностроения.',
+    cargo_info_en = 'Karaman: 1 business day delivery. Direct Konya route.',
+    cargo_info_ar = 'كرامان: التسليم خلال يوم عمل واحد. خط مباشر قونية.',
+    cargo_info_ru = 'Караман: доставка 1 рабочий день. Прямой маршрут Конья.'
+WHERE slug = 'karaman';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Mining and stone processing industry',
+    industry_focus_ar = 'التعدين وصناعة معالجة الأحجار',
+    industry_focus_ru = 'Горнодобывающая промышленность и камнеобработка',
+    intro_text_en = 'Niğde, with mining and stone processing industry, is an important center in Central Anatolia. We provide structural steel and tube supply for mining and construction operations.',
+    intro_text_ar = 'نيدة، مع صناعة التعدين ومعالجة الأحجار، هي مركز مهم في وسط الأناضول. نوفر توريد الحديد الهيكلي والأنابيب لعمليات التعدين والبناء.',
+    intro_text_ru = 'Нигде с горнодобывающей и камнеобрабатывающей промышленностью — важный центр Центральной Анатолии. Поставляем строительную сталь и трубы для горнодобычи и строительства.',
+    cargo_info_en = 'Niğde: 1-2 business days delivery. Konya-Niğde route.',
+    cargo_info_ar = 'نيدة: التسليم خلال 1-2 يوم عمل. خط قونية-نيدة.',
+    cargo_info_ru = 'Нигде: доставка 1-2 рабочих дня. Маршрут Конья-Нигде.'
+WHERE slug = 'nigde';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Tourism, construction and greenhouse manufacturing hub',
+    industry_focus_ar = 'السياحة والبناء ومركز تصنيع البيوت المحمية',
+    industry_focus_ru = 'Туризм, строительство и центр тепличного производства',
+    intro_text_en = 'Antalya is Turkey''s largest market for greenhouse construction and hotel/tourism construction projects. We supply galvanized profile, trapezoidal sheet and steel construction materials to OIZs in Antalya.',
+    intro_text_ar = 'أنطاليا هي أكبر سوق في تركيا لبناء البيوت المحمية ومشاريع بناء الفنادق/السياحة. نوفر المقاطع المجلفنة والألواح شبه المنحرفة ومواد البناء الفولاذية للمناطق الصناعية في أنطاليا.',
+    intro_text_ru = 'Анталья — крупнейший рынок Турции по тепличному строительству и отельно-туристическим проектам. Поставляем оцинкованные профили, трапецеидальный лист и металлоконструкции в ОСЗ Антальи.',
+    cargo_info_en = 'Antalya: 3-4 business days delivery. Manavgat, Alanya, Serik routes weekly.',
+    cargo_info_ar = 'أنطاليا: التسليم خلال 3-4 أيام عمل. خطوط مانافجات وألانيا وسريك أسبوعياً.',
+    cargo_info_ru = 'Анталья: доставка 3-4 рабочих дня. Маршруты Манавгат, Аланья, Серик еженедельно.'
+WHERE slug = 'antalya';
+
