@@ -81,6 +81,41 @@ RedirectMatch 404 /\.htpasswd$
 </IfModule>
 
 # =====================================================
+# Eski WordPress URL'leri → Yeni Sayfalar (301 Redirect)
+# Search Console "Bulunamadı (404)" raporundaki 34 URL için
+# =====================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Eski tag URL'leri → Yeni kategori sayfalarına
+    # /tag/120-kosebent, /tag/25-kosebent, /tag/40-kosebent vb.
+    RewriteRule ^tag/[0-9]+-kosebent/?$ /kategori.php?slug=profil-urunleri [L,R=301]
+    RewriteRule ^tag/kosebent/?$ /kategori.php?slug=profil-urunleri [L,R=301]
+    RewriteRule ^tag/(boyali-)?profil/?$ /kategori.php?slug=profil-urunleri [L,R=301]
+
+    # Sac varyantları
+    RewriteRule ^tag/baskili-sac/?$ /kategori.php?slug=ozel-urunler [L,R=301]
+    RewriteRule ^tag/(boyali-)?trapez/?$ /kategori.php?slug=cati-cephe [L,R=301]
+    RewriteRule ^tag/(.*-)?sac/?$ /kategori.php?slug=sac-urunleri [L,R=301]
+
+    # Ürün sayfaları
+    RewriteRule ^celik-hasir/?$ /kategori.php?slug=insaat-demiri [L,R=301]
+    RewriteRule ^norm-flans/?$ /kategori.php?slug=ozel-urunler [L,R=301]
+    RewriteRule ^3-hadveli-solar-cati-paneli/?$ /kategori.php?slug=cati-cephe [L,R=301]
+    RewriteRule ^osb-levha-satisi.*$ /urunler.php [L,R=301]
+
+    # Tüm /tag/* (yukarıdaki spesifiklerden sonra) → ürünler genel sayfası
+    RewriteRule ^tag/.*$ /urunler.php [L,R=301]
+
+    # Tüm /category/* → ürünler genel
+    RewriteRule ^category/.*$ /urunler.php [L,R=301]
+
+    # /?p=NUMBER (eski WP permalink) → ana sayfa
+    RewriteCond %{QUERY_STRING} ^p=[0-9]+$
+    RewriteRule ^$ /? [L,R=301]
+</IfModule>
+
+# =====================================================
 # Güvenlik başlıkları
 # =====================================================
 <IfModule mod_headers.c>
