@@ -13397,3 +13397,19 @@ VALUES
      'Konya BÜSAN Organize Sanayi merkezli çelik çekme boru üreticisi. ST 37, ST 44, ST 52 kalitelerde sıcak/soğuk çekim. 2010''dan beri faaliyet.',
      'https://www.konyaboru.com/', 'web', '2026-04-30', 25);
 
+
+-- =====================================================
+-- v1.0.106 — Diler URL düzeltme (404 → 200 dilergrup.com)
+-- 
+-- Yunus tekrar bildirdi: hâlâ kırık linkler var.
+-- Tüm 29 URL test edildi — sadece Diler 404 dönüyordu.
+-- Bimel'de Diler özel sayfası yok, Diler'in kendi sitesi 503.
+-- Diler Grup resmi sitesi (dilergrup.com) 200 OK çalışıyor.
+-- =====================================================
+
+UPDATE tm_price_lists SET
+    list_url = 'https://www.dilergrup.com',
+    description = 'İnşaat demiri, hasır, profil. İhracat odaklı üretici. Diler Grup resmi kurumsal sitesi.',
+    last_updated = '2026-05-01'
+WHERE brand_slug = 'diler';
+
