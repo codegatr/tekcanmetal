@@ -13413,3 +13413,13 @@ UPDATE tm_price_lists SET
     last_updated = '2026-05-01'
 WHERE brand_slug = 'diler';
 
+
+-- =====================================================
+-- v1.0.107 — Konya Boru Profil kaydını kaldır
+-- Yunus: 'Konya Boru Profil kaldır.' :D
+-- (Aynı bölgede aynı işi yapan rakip — listeye ekleyince
+-- müşteri Tekcan yerine onlara gidebilir)
+-- =====================================================
+
+DELETE FROM tm_price_lists WHERE brand_slug = 'konya-boru';
+
