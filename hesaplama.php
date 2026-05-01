@@ -1582,6 +1582,146 @@ const PRODUCTS = {
         descr:`Göz ${meshLabel} mm · ${v.gen_t}×${v.gen_w}×${v.gen_l} mm · Boşluk %${openPct.toFixed(1)} · Düz ağırlığı: ${flatWeight.toFixed(2)} kg`
       };
     }
+  },
+
+  'delikli': {
+    name: 'Delikli Sac (Perfore)', short: 'Delikli',
+    icon: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="6" y="8" width="36" height="32" rx="1"/><circle cx="14" cy="16" r="2.2"/><circle cx="24" cy="16" r="2.2"/><circle cx="34" cy="16" r="2.2"/><circle cx="19" cy="24" r="2.2"/><circle cx="29" cy="24" r="2.2"/><circle cx="14" cy="32" r="2.2"/><circle cx="24" cy="32" r="2.2"/><circle cx="34" cy="32" r="2.2"/></svg>`,
+    formula: 'düz_sac × (1 − açıklık%/100); açıklık% = K × (d/p)²',
+    formulaText: 'W (kg) = (kalınlık × en × boy × ρ) / 1.000.000 × (1 − açıklık%/100)',
+    fields: [
+      {id:'del_pattern', label:'Delik Tipi ve Diziliş', type:'select', value:'round60|90.7', options:[
+        {label:'Yuvarlak Delikler (en yaygın)', items:[
+          ['round60|90.7','Yuvarlak — 60° şahmati (RV) — en yaygın'],
+          ['round90|78.5','Yuvarlak — 90° kare dizilim (RU)']
+        ]},
+        {label:'Kare ve Slot Delikler', items:[
+          ['square90|100','Kare delik — 90° kare dizilim'],
+          ['square60|115.5','Kare delik — 60° şahmati'],
+          ['slot|0','Slot/Yarık — açıklık manuel']
+        ]},
+        {label:'Standart Yuvarlak Preset Kombinasyonlar', items:[
+          ['preset_5_8|35.4','Ø5 / p8 mm — %35,4 (filtre, dekoratif)'],
+          ['preset_8_12|40.3','Ø8 / p12 mm — %40,3 (HVAC, endüstri)'],
+          ['preset_10_15|40.3','Ø10 / p15 mm — %40,3 (havalandırma)'],
+          ['preset_15_22|42.1','Ø15 / p22 mm — %42,1 (cephe, eleme)'],
+          ['preset_20_28|46.2','Ø20 / p28 mm — %46,2 (estetik panel)']
+        ]},
+        {label:'Manuel Giriş', items:[
+          ['custom|0','Özel — Açıklık Oranı manuel gir']
+        ]}
+      ]},
+      {id:'del_d', label:'Delik Ölçüsü (Ø çap veya kenar)', unit:'mm', value:8, step:0.1},
+      {id:'del_p', label:'Pitch (delik merkezleri arası)', unit:'mm', value:12, step:0.1},
+      {id:'del_open_pct', label:'Açıklık Oranı (preset/özel için)', unit:'%', value:0, step:1, min:0, max:90},
+      {id:'del_t', label:'Sac Kalınlığı', unit:'mm', value:2, step:0.1},
+      {id:'del_w', label:'En', unit:'mm', value:1000, step:1},
+      {id:'del_l', label:'Boy', unit:'mm', value:2000, step:1},
+      {id:'del_q', label:'Adet', unit:'ad', value:1, step:1, min:1}
+    ],
+    presets: [
+      ['Ø5/p8 · 1×2 m', {del_pattern:'round60|90.7', del_d:5, del_p:8, del_t:1.5, del_w:1000, del_l:2000}],
+      ['Ø8/p12 · 1×2 m', {del_pattern:'round60|90.7', del_d:8, del_p:12, del_t:2, del_w:1000, del_l:2000}],
+      ['Ø10/p15 · 1.25×2.5 m', {del_pattern:'round60|90.7', del_d:10, del_p:15, del_t:3, del_w:1250, del_l:2500}]
+    ],
+    tip: '⚠ Endüstri formülü: Yuvarlak delik 60° şahmati için Açıklık% = 90,7 × (d/p)², 90° kare için 78,5 × (d/p)², kare delik için 100 × (s/p)². Slot/yarık veya özel patterns için "Açıklık Oranı"nı manuel girin (preset_* seçenekleri sabit yüzde kullanır). Kaynak: LPS Lamiere Perforate, Hendrick Corp endüstri standartları.',
+    diagram: (v) => {
+      const sel = (v.del_pattern || 'round60|90.7').split('|');
+      const pattern = sel[0];
+      const d = parseFloat(v.del_d) || 8;
+      const p = parseFloat(v.del_p) || 12;
+      // Diyagram için scale: pitch'e göre normalize et — 6×4 ızgara
+      const scale = Math.max(20, Math.min(40, 240/p));
+      const dotR = Math.max(2, (d/p) * scale * 0.5);
+      const stepX = scale;
+      const stepY = scale * 0.866; // 60° için
+      const isSquarePattern = pattern.startsWith('square');
+      const isStaggered60 = pattern.endsWith('60');
+      const isSquareHole = pattern.startsWith('square');
+      const dots = [];
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 7; col++) {
+          const cx = 70 + col*stepX + (isStaggered60 && row%2 ? stepX/2 : 0);
+          const cy = 60 + row*(isStaggered60 ? stepY : stepX);
+          if (cx > 280 || cy > 175) continue;
+          if (isSquareHole) {
+            dots.push(`<rect x="${cx-dotR}" y="${cy-dotR}" width="${dotR*2}" height="${dotR*2}" fill="#143672" stroke="#0c1e44" stroke-width="0.5"/>`);
+          } else {
+            dots.push(`<circle cx="${cx}" cy="${cy}" r="${dotR}" fill="#143672" stroke="#0c1e44" stroke-width="0.5"/>`);
+          }
+        }
+      }
+      const patternName = pattern.startsWith('preset')
+        ? sel[0].replace('preset_','Ø').replace('_','/p') + ' mm'
+        : (pattern === 'round60' ? 'Yuvarlak 60° şahmati'
+          : pattern === 'round90' ? 'Yuvarlak 90° kare'
+          : pattern === 'square90' ? 'Kare 90°'
+          : pattern === 'square60' ? 'Kare 60° şahmati'
+          : pattern === 'slot' ? 'Slot/Yarık'
+          : 'Özel');
+      return `
+      <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="50" width="200" height="130" fill="#fafaf7" stroke="#1e4a9e" stroke-width="1.5"/>
+        ${dots.join('')}
+        <line x1="60" y1="195" x2="260" y2="195" stroke="#c8102e" stroke-width="1"/>
+        <line x1="60" y1="190" x2="60" y2="200" stroke="#c8102e" stroke-width="1.5"/>
+        <line x1="260" y1="190" x2="260" y2="200" stroke="#c8102e" stroke-width="1.5"/>
+        <text x="160" y="210" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#c8102e" font-weight="700">${v.del_w || 0} × ${v.del_l || 0} mm</text>
+        <text x="160" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1e4a9e" font-weight="700">${patternName} · Ø${d}/p${p} · t=${v.del_t||0} mm</text>
+      </svg>`;
+    },
+    calc: (v, rho) => {
+      const sel = (v.del_pattern||'round60|90.7').split('|');
+      const patternKey = sel[0];
+      const presetOpen = parseFloat(sel[1]) || 0;
+      const customOpen = parseFloat(v.del_open_pct) || 0;
+      const d = parseFloat(v.del_d) || 0;
+      const p = parseFloat(v.del_p) || 0;
+
+      let openPct = 0;
+      let calcSource = '';
+
+      if (patternKey.startsWith('preset_')) {
+        // Preset değer kullan
+        openPct = presetOpen;
+        calcSource = 'preset';
+      } else if (patternKey === 'custom' || patternKey === 'slot') {
+        // Manuel açıklık girişi
+        openPct = customOpen;
+        calcSource = 'manuel';
+      } else if (customOpen > 0) {
+        // Pattern seçilmiş ama kullanıcı manuel override etmiş
+        openPct = customOpen;
+        calcSource = 'manuel-override';
+      } else if (d > 0 && p > 0 && presetOpen > 0) {
+        // d/p formülü: %OA = K × (d/p)²
+        openPct = presetOpen * Math.pow(d/p, 2);
+        calcSource = 'formül';
+      } else {
+        openPct = 0;
+      }
+
+      openPct = Math.min(Math.max(openPct, 0), 90); // güvenlik [0..90]
+
+      const t = (v.del_t||0)/10, w = (v.del_w||0)/10, l = (v.del_l||0)/10, q = v.del_q||1;
+      const flatWeight = (t*w*l*rho)/1000;
+      const unit = flatWeight * (1 - openPct/100);
+
+      const patternName = patternKey === 'round60' ? 'Yuvarlak 60° şahmati'
+        : patternKey === 'round90' ? 'Yuvarlak 90° kare'
+        : patternKey === 'square90' ? 'Kare 90°'
+        : patternKey === 'square60' ? 'Kare 60° şahmati'
+        : patternKey === 'slot' ? 'Slot/Yarık'
+        : patternKey.startsWith('preset_') ? patternKey.replace('preset_','Ø').replace('_','/p')+' mm'
+        : 'Özel';
+
+      return {
+        unit,
+        qty:q,
+        kgPerM:0,
+        descr:`${patternName} · Ø${d}/p${p} mm · ${v.del_t}×${v.del_w}×${v.del_l} mm · Açıklık %${openPct.toFixed(1)} (${calcSource}) · Düz ağırlığı: ${flatWeight.toFixed(2)} kg`
+      };
+    }
   }
 };
 
