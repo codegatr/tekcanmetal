@@ -13049,9 +13049,9 @@ VALUES
      'Çelik boru ve profil. Karadeniz Ereğli ve Bursa fabrikaları.',
      'https://www.erbosan.com.tr', 'web', 18),
 
-    ('Çayboru', 'cayboru', 'boru', 'İstanbul', 'Marmara',
-     'Çelik boru, profil, galvanizli boru üreticisi.',
-     'https://www.cayboru.com.tr', 'web', 19),
+    ('Çayırova Boru', 'cayirova-boru', 'boru', 'Kocaeli', 'Marmara',
+     'Çayırova Boru Sanayi ve Ticaret A.Ş. Su, doğalgaz, yangın, kazan boruları. API/TS EN sertifikalı.',
+     'https://www.cayirovaboru.com/', 'web', 19),
 
     ('Mesa Boru', 'mesa-boru', 'boru', 'Eskişehir', 'İç Anadolu',
      'Çelik boru, profil. Eskişehir bölgesi.',
@@ -13234,7 +13234,7 @@ WHERE brand_slug = 'erbosan';
 UPDATE tm_price_lists SET
     description = 'Çelik boru, profil, galvanizli boru üreticisi. Resmi sitesi üzerinden bayi bilgisi.',
     last_updated = '2026-03-15'
-WHERE brand_slug = 'cayboru';
+WHERE brand_slug = 'cayboru' AND 1=0; -- v1.0.99 INSERT zaten cayirova-boru olarak düzeltildi
 
 UPDATE tm_price_lists SET
     description = 'Çelik boru, profil. Eskişehir bölgesi. Resmi sitesi üzerinden iletişim.',
@@ -13353,7 +13353,7 @@ UPDATE tm_price_lists SET
     description = 'Çayırova Boru Sanayi ve Ticaret A.Ş. Su, doğalgaz, yangın, kazan boruları. Kocaeli merkezli, API/TS EN sertifikalı.',
     city = 'Kocaeli',
     region = 'Marmara'
-WHERE brand_slug = 'cayboru';
+WHERE brand_slug = 'cayboru' AND 1=0; -- v1.0.99 INSERT zaten cayirova-boru olarak düzeltildi
 
 -- Diler 503: bayi takip sitesi üzerinden
 UPDATE tm_price_lists SET
@@ -13440,5 +13440,29 @@ DELETE FROM tm_price_lists WHERE brand_slug = 'konya-boru';
 DELETE FROM tm_price_lists
 WHERE brand_slug IN ('konya-boru', 'konya-boru-profil', 'konyaboru', 'konya')
    OR brand_name LIKE 'Konya Boru%'
+   OR brand_name LIKE '%Konya Boru%';
+
+
+-- =====================================================
+-- v1.0.109 — Çayırova Boru Duplicate Fix + Production Temizlik
+-- 
+-- Yunus migration hatası: 'Duplicate entry cayirova-...'
+-- 
+-- NEDEN:
+--   - v1.0.99 INSERT IGNORE her seferinde 'cayboru' slug'ı geri ekliyordu
+--   - v1.0.105 UPDATE 'cayboru' → 'cayirova-boru' rename yapıyordu
+--   - cayirova-boru zaten varsa UNIQUE KEY çakışması
+-- 
+-- ÇÖZÜM (bu sürümde):
+--   1. v1.0.99 INSERT'i SED ile düzeltildi: direkt 'cayirova-boru' ekliyor
+--   2. v1.0.105 UPDATE'leri 'WHERE 1=0' ile no-op yapıldı
+--   3. Bu sürümde: production'da kalmış 'cayboru' kaydını sil
+-- =====================================================
+
+DELETE FROM tm_price_lists WHERE brand_slug = 'cayboru';
+
+-- Konya Boru için de aynı temizleme (ekstra güvenlik)
+DELETE FROM tm_price_lists
+WHERE brand_slug LIKE 'konya%boru%'
    OR brand_name LIKE '%Konya Boru%';
 
