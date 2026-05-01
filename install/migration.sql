@@ -12891,3 +12891,50 @@ UPDATE tm_seo_iller SET
     cargo_info_ru = 'Анталья: доставка 3-4 рабочих дня. Маршруты Манавгат, Аланья, Серик еженедельно.'
 WHERE slug = 'antalya';
 
+
+-- =====================================================
+-- v1.0.92 — tm_seo_ulkeler i18n (4 ihracat ülkesi)
+-- irak, suriye, azerbaycan, turkmenistan
+-- 4 ülke × 6 alan (intro_text + cargo_info × 3 dil) = 24 alan
+-- 
+-- ÖNEMLİ: Hedef-yerel dil önceliği:
+--   - Irak/Suriye için AR doğrudan müşteri dilinde
+--   - Azerbaycan/Türkmenistan için RU doğrudan müşteri dilinde
+-- =====================================================
+
+UPDATE tm_seo_ulkeler SET
+    intro_text_en = 'Iraq is one of Turkey''s largest export partners. Through the Habur Border Gate, we supply structural steel and steel products to Erbil, Sulaymaniyah, Baghdad, Mosul and Basra. We work with contractors in the Kurdistan Regional Government (Erbil) area.',
+    intro_text_ar = 'العراق من أكبر شركاء التصدير لتركيا. نقدم توريد الصلب الهيكلي ومنتجات الحديد والصلب إلى أربيل والسليمانية وبغداد والموصل والبصرة عبر معبر خابور الحدودي. نعمل مع مقاولين في إقليم كردستان (أربيل).',
+    intro_text_ru = 'Ирак — один из крупнейших партнёров Турции по экспорту. Через пограничный пункт Хабур мы поставляем строительную сталь и металлопродукцию в Эрбиль, Сулейманию, Багдад, Мосул и Басру. Работаем с подрядчиками в Иракском Курдистане (Эрбиль).',
+    cargo_info_en = 'Iraq: 7-10 business days delivery (Habur border + inland distribution). Customs document support included.',
+    cargo_info_ar = 'العراق: التسليم خلال 7-10 أيام عمل (معبر خابور + التوزيع الداخلي). يشمل دعم الوثائق الجمركية.',
+    cargo_info_ru = 'Ирак: доставка 7-10 рабочих дней (граница Хабур + внутреннее распределение). Включая таможенное сопровождение.'
+WHERE slug = 'irak';
+
+UPDATE tm_seo_ulkeler SET
+    intro_text_en = 'Syria, particularly its northern regions (Aleppo, Idlib), is critical for reconstruction processes. Through Cilvegözü and Bab al-Hawa border gates, we provide construction steel and roofing material supply.',
+    intro_text_ar = 'سوريا، خاصة مناطقها الشمالية (حلب، إدلب)، مهمة لعمليات إعادة الإعمار. نقدم توريد حديد البناء ومواد التسقيف عبر معبري جلوة كابو وباب الهوى الحدوديين.',
+    intro_text_ru = 'Сирия, особенно северные районы (Алеппо, Идлиб), критически важна для процесса восстановления. Через пункты Джильвегёзу и Баб-эль-Хава мы поставляем строительную сталь и кровельные материалы.',
+    cargo_info_en = 'Syria: 7-14 business days delivery (depending on border crossing time). Official documents and invoicing handled.',
+    cargo_info_ar = 'سوريا: التسليم خلال 7-14 يوم عمل (حسب مدة العبور الحدودي). يشمل المستندات الرسمية والفوترة.',
+    cargo_info_ru = 'Сирия: доставка 7-14 рабочих дней (зависит от времени прохождения границы). Официальные документы и счета оформляются.'
+WHERE slug = 'suriye';
+
+UPDATE tm_seo_ulkeler SET
+    intro_text_en = 'Azerbaijan is Turkey''s brother nation and strategic trade partner. Demand for steel products continues to grow in major cities such as Baku, Ganja, Sumgayit and Mingachevir. We deliver via Turkey-Georgia-Azerbaijan land route or Caspian seaway.',
+    intro_text_ar = 'أذربيجان دولة شقيقة لتركيا وشريك تجاري استراتيجي. يستمر الطلب على منتجات الصلب في النمو في المدن الكبرى مثل باكو وكنجة وسومقاييت ومينقاتشيفير. نقوم بالتسليم عبر الطريق البري تركيا-جورجيا-أذربيجان أو طريق بحر قزوين.',
+    intro_text_ru = 'Азербайджан — братская страна Турции и стратегический торговый партнёр. Спрос на металлопродукцию растёт в крупных городах: Баку, Гянджа, Сумгаит, Мингячевир. Доставка через сухопутный маршрут Турция-Грузия-Азербайджан или Каспийское море.',
+    cargo_info_en = 'Azerbaijan: 10-14 business days delivery (Turkey-Georgia-Azerbaijan land route). Customs and bilingual invoicing support.',
+    cargo_info_ar = 'أذربيجان: التسليم خلال 10-14 يوم عمل (الطريق البري تركيا-جورجيا-أذربيجان). دعم الجمارك والفوترة ثنائية اللغة.',
+    cargo_info_ru = 'Азербайджан: доставка 10-14 рабочих дней (сухопутный маршрут Турция-Грузия-Азербайджан). Таможня и двуязычные счета.'
+WHERE slug = 'azerbaycan';
+
+UPDATE tm_seo_ulkeler SET
+    intro_text_en = 'Turkmenistan, with Ashgabat at the forefront, has growing demand for iron-steel products as part of major infrastructure projects. We provide structural steel and roofing material supply for industrial zones such as Türkmenbaşy, Mary and Daşoguz.',
+    intro_text_ar = 'تركمانستان، وعلى رأسها عشق آباد، لديها طلب متزايد على منتجات الحديد والصلب ضمن مشاريع البنية التحتية الكبرى. نقدم توريد الحديد الهيكلي ومواد التسقيف للمناطق الصناعية مثل تركمن باشي وماري وداش أوغوز.',
+    intro_text_ru = 'Туркменистан, с Ашхабадом во главе, имеет растущий спрос на металлопродукцию в рамках крупных инфраструктурных проектов. Мы поставляем строительную сталь и кровельные материалы в промышленные зоны Туркменбаши, Мары и Дашогуз.',
+    cargo_info_en = 'Turkmenistan: 14-21 business days delivery. Multiple transit and customs procedures.',
+    cargo_info_ar = 'تركمانستان: التسليم خلال 14-21 يوم عمل. عمليات عبور وإجراءات جمركية متعددة.',
+    cargo_info_ru = 'Туркменистан: доставка 14-21 рабочих дней. Множественный транзит и таможенные процедуры.'
+WHERE slug = 'turkmenistan';
+
