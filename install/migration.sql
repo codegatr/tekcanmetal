@@ -13294,3 +13294,106 @@ VALUES
      'Borusan, Yücel ve diğer markaların kutu profil fiyat listeleri. Et kalınlığı bazında detaylı liste.',
      'https://www.bilginmetal.com.tr/tr/profil-fiyat-listesi/', 'web', '2026-04-10', 0, 30);
 
+
+-- =====================================================
+-- v1.0.105 — Fiyat Listeleri URL DOĞRULAMA + DÜZELTME
+-- 
+-- Yunus tespiti: 'Çoğu fiyat listesi firmaları yanlış,
+-- linkleri kontrol etmeden eklemişsin. Açılmıyor çoğu.'
+-- 
+-- Tüm 26 URL curl ile test edildi:
+--   17 ✓ Çalışıyor
+--   1 ⚠ Auth challenge (Borçelik 403 - alternatif eklendi)
+--   8 ✗ Hatalı/Erişilemiyor
+-- 
+-- Bu sürümde:
+--   - Yanlış slug DÜZELTİLDİ (cayboru → cayirova-boru)
+--   - Doğru URL'lere UPDATE
+--   - Erişilemez kayıtlar SİLİNDİ
+--   - 5 YENİ doğrulanmış üretici eklendi
+-- =====================================================
+
+-- ======== DÜZELTMELER ========
+
+-- POSCO Assan: .com → .com.tr
+UPDATE tm_price_lists SET
+    list_url = 'https://www.poscoassan.com.tr',
+    description = 'Soğuk haddeli + galvanizli yassı çelik. Otomotiv tedarikçisi. Resmi Türkiye sitesi.'
+WHERE brand_slug = 'posco-assan';
+
+-- Tezcan Galvaniz: .com → .com.tr
+UPDATE tm_price_lists SET
+    list_url = 'https://www.tezcangalvaniz.com.tr',
+    description = 'Galvanizli ve boyalı sac üretici. Özellikle çatı/cephe. Resmi sitesi.'
+WHERE brand_slug = 'tezcan-galvaniz';
+
+-- Tosyalı Holding: bayi/ürün sayfası
+UPDATE tm_price_lists SET
+    list_url = 'https://www.tosyaliholding.com.tr',
+    description = 'Tosçelik Profil ve Sac, Tosyalı İskenderun grubu. Holding kurumsal sitesi üzerinden iletişim.'
+WHERE brand_slug = 'tosyali';
+
+-- Tosçelik Profil ve Sac: Tosyalı Toyo grubu (aynı holding)
+UPDATE tm_price_lists SET
+    list_url = 'https://www.tosyalitoyo.com.tr',
+    description = 'Soğuk şekillendirilmiş profil, kapalı kutu profil, sac. Tosyalı Toyo grubu (Tosyalı Holding).'
+WHERE brand_slug = 'toscelik-profil';
+
+-- Borçelik: 403 challenge alıyor — Bilgin Metal üzerinden alternatif
+UPDATE tm_price_lists SET
+    list_url = 'https://www.bilginmetal.com.tr/tr/borcelik-fiyat-listesi/',
+    description = 'Soğuk haddelenmiş yassı çelik, galvanizli sac. Borusan grubu. Bilgin Metal üzerinden güncel iskontolu fiyat listesi.'
+WHERE brand_slug = 'borcelik';
+
+-- ÇAYBORU SLUG DÜZELTME: aslında 'Çayırova Boru'ydu, slug yanlış yazılmıştı
+UPDATE tm_price_lists SET
+    brand_name = 'Çayırova Boru',
+    brand_slug = 'cayirova-boru',
+    list_url = 'https://www.cayirovaboru.com/',
+    description = 'Çayırova Boru Sanayi ve Ticaret A.Ş. Su, doğalgaz, yangın, kazan boruları. Kocaeli merkezli, API/TS EN sertifikalı.',
+    city = 'Kocaeli',
+    region = 'Marmara'
+WHERE brand_slug = 'cayboru';
+
+-- Diler 503: bayi takip sitesi üzerinden
+UPDATE tm_price_lists SET
+    list_url = 'https://www.bimelmetal.com/diler_hurda_fiyatlari.html',
+    description = 'İnşaat demiri, hasır, profil. İhracat odaklı üretici. Bimel Metal üzerinden güncel hurda alım fiyatları.',
+    last_updated = '2026-04-30'
+WHERE brand_slug = 'diler';
+
+-- ======== ERİŞİLEMEYEN KAYITLARI SİL ========
+-- Kale Boru: kapanmış/erişilemiyor
+DELETE FROM tm_price_lists WHERE brand_slug = 'kale-boru';
+-- Mesa Boru: kapanmış/erişilemiyor
+DELETE FROM tm_price_lists WHERE brand_slug = 'mesa-boru';
+
+-- ======== 5 YENİ DOĞRULANMIŞ ÜRETİCİ EKLENDİ ========
+INSERT IGNORE INTO tm_price_lists
+    (brand_name, brand_slug, category, city, region, description, list_url, list_type, last_updated, sort_order)
+VALUES
+    -- NOKSEL: Türkiye'nin en büyük çelik boru üreticilerinden, Avrupa+Ortadoğu lideri
+    ('NOKSEL Çelik Boru', 'noksel', 'boru', 'Ankara', 'İç Anadolu',
+     'Türkiye''nin lider çelik boru üreticisi. Spiral kaynaklı + HFI kaynaklı çelik boru, solar profil. Avrupa ve Orta Doğu''ya ihracat.',
+     'https://www.noksel.com/', 'web', '2026-04-30', 21),
+
+    -- Erciyas Çelik Boru: Spiral HSAW dünya devleri arasında
+    ('Erciyas Çelik Boru', 'erciyas-boru', 'boru', 'Sivas', 'İç Anadolu',
+     'Spiral HSAW yöntemiyle doğalgaz/petrol/su boru hatları. 273mm-4064mm çap aralığı. TANAP ve global enerji projelerinde tercih edilen.',
+     'https://erciyas.com/erciyas-celik-boru/', 'web', '2026-04-30', 22),
+
+    -- Aydın Boru: Çelik çekme boru lideri (45+ yıl)
+    ('Aydın Boru', 'aydin-boru', 'boru', 'İstanbul', 'Marmara',
+     'Çelik çekme (dikişsiz) boru lideri. 70''lerden beri faaliyet. Mekanik tesisat, kazan, petrol/gaz, hidrolik ünite boruları. ASTM/ASME/API standartları.',
+     'https://www.aydinboru.com/', 'web', '2026-04-30', 23),
+
+    -- Hatboru: 55 yıl tecrübe
+    ('Hatboru', 'hatboru', 'boru', 'Hatay', 'Akdeniz',
+     '55 yılı aşkın tecrübeli çelik + PVC boru üreticisi. Türkiye + Romanya yatırımları. Su, gaz, doğalgaz, basınçlı borular.',
+     'https://www.hatboru.com/', 'web', '2026-04-30', 24),
+
+    -- Konya Boru Profil: Yunus'un bölgesi (Konya BÜSAN)
+    ('Konya Boru Profil', 'konya-boru', 'boru', 'Konya', 'İç Anadolu',
+     'Konya BÜSAN Organize Sanayi merkezli çelik çekme boru üreticisi. ST 37, ST 44, ST 52 kalitelerde sıcak/soğuk çekim. 2010''dan beri faaliyet.',
+     'https://www.konyaboru.com/', 'web', '2026-04-30', 25);
+
