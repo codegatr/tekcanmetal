@@ -12938,3 +12938,157 @@ UPDATE tm_seo_ulkeler SET
     cargo_info_ru = 'Туркменистан: доставка 14-21 рабочих дней. Множественный транзит и таможенные процедуры.'
 WHERE slug = 'turkmenistan';
 
+
+-- =====================================================
+-- v1.0.99 — Fabrika Fiyat Listeleri Rehberi
+-- Türkiye'nin demir-çelik üreticilerinin güncel fiyat
+-- listelerine yönlendiren hub sayfası için
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS tm_price_lists (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    brand_name VARCHAR(150) NOT NULL,
+    brand_slug VARCHAR(150) NOT NULL,
+    brand_logo VARCHAR(255) NULL,
+    category VARCHAR(80) NOT NULL,
+    city VARCHAR(80) NULL,
+    region VARCHAR(80) NULL,
+    description TEXT NULL,
+    list_url VARCHAR(500) NOT NULL,
+    list_type ENUM('pdf','web','login','request') DEFAULT 'web',
+    last_updated DATE NULL,
+    is_featured TINYINT(1) DEFAULT 0,
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uniq_brand_slug (brand_slug),
+    INDEX idx_category (category),
+    INDEX idx_active_featured (is_active, is_featured),
+    INDEX idx_active_sort (is_active, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 25 büyük demir-çelik üreticisi seed verisi
+INSERT IGNORE INTO tm_price_lists
+    (brand_name, brand_slug, category, city, region, description, list_url, list_type, sort_order)
+VALUES
+    -- ENTEGRE ÇELİK ÜRETİCİLERİ
+    ('Erdemir', 'erdemir', 'celik', 'Ereğli', 'Karadeniz',
+     'Türkiye''nin en büyük entegre çelik üreticisi. Yassı çelik ürünleri (HRP, CRP, galvanizli sac).',
+     'https://www.erdemir.com.tr', 'web', 1),
+
+    ('Kardemir', 'kardemir', 'celik', 'Karabük', 'Karadeniz',
+     'Karabük Demir Çelik. Uzun ürünler (kütük, ray, profil), inşaat demiri ana üreticisi.',
+     'https://www.kardemir.com', 'web', 2),
+
+    ('İsdemir', 'isdemir', 'celik', 'İskenderun', 'Akdeniz',
+     'İskenderun Demir Çelik. Yassı çelik (HRP, CRP), entegre üretici.',
+     'https://www.isdemir.com.tr', 'web', 3),
+
+    -- ELEKTRİK ARK OCAKLI ÜRETİCİLER
+    ('Çolakoğlu Metalurji', 'colakoglu', 'celik', 'Dilovası', 'Marmara',
+     'Hadde, kütük, profil, hasır demiri. Marmara bölgesinin önemli üreticisi.',
+     'https://www.colakoglu.com.tr', 'web', 4),
+
+    ('İçdaş Çelik Enerji', 'icdas', 'celik', 'Biga', 'Marmara',
+     'Çelik üretimi + enerji. Yassı ve uzun çelik ürünleri.',
+     'https://www.icdas.com.tr', 'web', 5),
+
+    ('MMK Atakaş Metalurji', 'mmk-atakas', 'celik', 'İskenderun', 'Akdeniz',
+     'Rusya merkezli MMK''nın Türkiye yatırımı. Yassı çelik, sac.',
+     'https://www.mmkmetalurji.com', 'web', 6),
+
+    ('Tosyalı Holding', 'tosyali', 'celik', 'Osmaniye', 'Akdeniz',
+     'Tosçelik Profil ve Sac, Tosyalı İskenderun. Geniş ürün yelpazesi.',
+     'https://www.tosyali.com.tr', 'web', 7),
+
+    ('Habaş', 'habas', 'celik', 'Aliağa', 'Ege',
+     'Çelik + sınai gazlar. İnşaat demiri, profil, kütük.',
+     'https://www.habas.com.tr', 'web', 8),
+
+    ('Diler Demir Çelik', 'diler', 'celik', 'Aliağa', 'Ege',
+     'İnşaat demiri, hasır, profil. İhracat odaklı üretici.',
+     'https://www.diler.com.tr', 'web', 9),
+
+    ('Ekinciler Demir Çelik', 'ekinciler', 'celik', 'İskenderun', 'Akdeniz',
+     'Uzun ürünler. İnşaat demiri ve kütük üreticisi.',
+     'https://www.ekinciler.com', 'web', 10),
+
+    ('Kaptan Demir Çelik', 'kaptan', 'celik', 'İzmit', 'Marmara',
+     'İzmit bölgesi uzun ürünler üreticisi.',
+     'https://www.kaptandemir.com.tr', 'web', 11),
+
+    -- SAC / LEVHA ÜRETİCİLERİ
+    ('Borçelik', 'borcelik', 'sac', 'Gemlik', 'Marmara',
+     'Soğuk haddelenmiş yassı çelik, galvanizli sac. Borusan grubu.',
+     'https://www.borcelik.com', 'web', 12),
+
+    ('POSCO Assan TST', 'posco-assan', 'sac', 'Kocaeli', 'Marmara',
+     'Soğuk haddeli + galvanizli yassı çelik. Otomotiv tedarikçisi.',
+     'https://www.poscoassan.com', 'web', 13),
+
+    ('Tezcan Galvaniz', 'tezcan-galvaniz', 'sac', 'Bursa', 'Marmara',
+     'Galvanizli ve boyalı sac üretici. Özellikle çatı/cephe.',
+     'https://www.tezcangalvaniz.com', 'web', 14),
+
+    ('Tatmetal', 'tatmetal', 'sac', 'İstanbul', 'Marmara',
+     'Çelik servis merkezi. Kesim, hadde, soğuk şekillendirme.',
+     'https://www.tatmetal.com.tr', 'web', 15),
+
+    -- BORU ÜRETİCİLERİ
+    ('Yücel Boru', 'yucel-boru', 'boru', 'Gebze', 'Marmara',
+     '50+ yıl tecrübe. Genel maksat, su, gaz, profil boru. Tekcan Metal''in tedarikçisi.',
+     'https://www.yucelboru.com.tr', 'web', 16),
+
+    ('Borusan Boru', 'borusan-boru', 'boru', 'Gemlik', 'Marmara',
+     'Türkiye''nin en büyük boru üreticilerinden. Çelik boru, profil.',
+     'https://www.borusanboru.com', 'web', 17),
+
+    ('Erbosan', 'erbosan', 'boru', 'Bursa', 'Marmara',
+     'Çelik boru ve profil. Karadeniz Ereğli ve Bursa fabrikaları.',
+     'https://www.erbosan.com.tr', 'web', 18),
+
+    ('Çayboru', 'cayboru', 'boru', 'İstanbul', 'Marmara',
+     'Çelik boru, profil, galvanizli boru üreticisi.',
+     'https://www.cayboru.com.tr', 'web', 19),
+
+    ('Mesa Boru', 'mesa-boru', 'boru', 'Eskişehir', 'İç Anadolu',
+     'Çelik boru, profil. Eskişehir bölgesi.',
+     'http://www.mesa-boru.com.tr', 'web', 20),
+
+    ('Kale Boru', 'kale-boru', 'boru', 'Konya', 'İç Anadolu',
+     'Konya bölgesi çelik boru üreticisi. Tekcan ile aynı bölge.',
+     'https://www.kaleboru.com', 'web', 21),
+
+    -- PROFİL ÜRETİCİLERİ
+    ('Borusan Mannesmann', 'borusan-mannesmann', 'profil', 'Gemlik', 'Marmara',
+     'Çelik profil, dikişsiz boru. Otomotiv ve enerji sektörü.',
+     'https://www.borusanmannesmann.com', 'web', 22),
+
+    ('Tosçelik Profil ve Sac', 'toscelik-profil', 'profil', 'Osmaniye', 'Akdeniz',
+     'Soğuk şekillendirilmiş profil, kapalı kutu profil.',
+     'https://www.toscelikprofilsac.com', 'web', 23),
+
+    -- PASLANMAZ
+    ('Çemtaş Çelik', 'cemtas', 'paslanmaz', 'Bursa', 'Marmara',
+     'Paslanmaz çelik üreticisi. Gıda, sağlık, kimya sektörleri.',
+     'https://www.cemtas.com.tr', 'web', 24),
+
+    ('Asil Çelik', 'asil-celik', 'paslanmaz', 'Bursa', 'Marmara',
+     'Özel çelik, yapı çeliği, paslanmaz. Otomotiv tedarikçisi.',
+     'https://www.asilcelik.com.tr', 'web', 25);
+
+
+-- v1.0.99 — Fiyat Listeleri menü string'leri (header/footer)
+INSERT INTO tm_translations (translation_key, lang, translation_value, context) VALUES
+    ('header.menu.price_lists', 'tr', 'Fiyat Listeleri',         'header'),
+    ('header.menu.price_lists', 'en', 'Price Lists',             'header'),
+    ('header.menu.price_lists', 'ar', 'قوائم الأسعار',           'header'),
+    ('header.menu.price_lists', 'ru', 'Прайс-листы',             'header'),
+    ('footer.price_lists',      'tr', 'Fabrika Fiyat Listeleri', 'footer'),
+    ('footer.price_lists',      'en', 'Manufacturer Price Lists','footer'),
+    ('footer.price_lists',      'ar', 'قوائم أسعار المصانع',    'footer'),
+    ('footer.price_lists',      'ru', 'Прайс-листы заводов',     'footer')
+ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
+

@@ -72,6 +72,7 @@
           <li><a href="<?= h(url_lang('urunler.php')) ?>"><?= h(t('footer.products', 'Tüm Ürünler')) ?></a></li>
           <li><a href="<?= h(url_lang('hizmetler.php')) ?>"><?= h(t('header.menu.services', 'Hizmetlerimiz')) ?></a></li>
           <li><a href="<?= h(url_lang('hesaplama.php')) ?>"><?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a></li>
+          <li><a href="<?= h(url_lang('fiyat-listeleri.php')) ?>"><?= h(t('footer.price_lists', 'Fabrika Fiyat Listeleri')) ?></a></li>
           <li><a href="<?= h(url_lang('galeri.php')) ?>"><?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a></li>
           <li><a href="<?= h(url_lang('blog.php')) ?>"><?= h(t('header.menu.news', 'Haberler & Basın')) ?></a></li>
           <li><a href="<?= h(url_lang('iletisim.php')) ?>"><?= h(t('header.menu.contact', 'İletişim')) ?></a></li>

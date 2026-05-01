@@ -391,6 +391,9 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
         <li class="<?= $current==='hesaplama'?'active':'' ?>">
           <a href="<?= h(url_lang('hesaplama.php')) ?>"><?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a>
         </li>
+        <li class="<?= $current==='fiyat-listeleri'?'active':'' ?>">
+          <a href="<?= h(url_lang('fiyat-listeleri.php')) ?>"><?= h(t('header.menu.price_lists', 'Fiyat Listeleri')) ?></a>
+        </li>
       </ul>
 
       <!-- Merkez Logo -->
