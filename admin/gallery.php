@@ -28,8 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
             'sort_order'   => (int)($_POST['sort_order'] ?? 0),
             'is_active'    => isset($_POST['is_active']) ? 1 : 0,
         ];
-        // i18n çevirileri ekle (title_en/ar/ru, description_en/ar/ru)
-        $data = i18n_post_merge($data, ['title', 'description']);
         $newId = adm_save('tm_gallery_albums', $data, $editId ?: null);
         log_activity($editId ? 'update' : 'create', 'gallery_album', $newId);
         adm_back_with('success', 'Albüm kaydedildi.', 'admin/gallery.php');
@@ -114,9 +112,7 @@ if (in_array($action, ['edit', 'new'], true)) {
                     <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required></div>
                     <div class="row"><label>Slug (boş bırak otomatik)</label><input type="text" name="slug" value="<?= h($row['slug'] ?? '') ?>"></div>
                 </div>
-                <?= i18n_inputs($row, 'title') ?>
                 <div class="row"><label>Açıklama</label><textarea name="description" rows="3"><?= h($row['description'] ?? '') ?></textarea></div>
-                <?= i18n_inputs($row, 'description', true, 3) ?>
                 <div class="row-2">
                     <div class="row">
                         <label>Kapak Görseli</label>
@@ -136,7 +132,6 @@ if (in_array($action, ['edit', 'new'], true)) {
             <button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button>
         </div>
     </form>
-    <?= i18n_tabs_js() ?>
     <?php require __DIR__ . '/_footer.php'; exit;
 }
 

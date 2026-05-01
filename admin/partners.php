@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         'is_active'   => isset($_POST['is_active']) ? 1 : 0,
     ];
     $data['logo'] = adm_handle_image_upload('logo', 'uploads/partners', $_POST['existing_logo'] ?? null);
-    $data = i18n_post_merge($data, ['name', 'description']);
     $newId = adm_save('tm_partners', $data, $editId ?: null);
     log_activity($editId ? 'update' : 'create', 'partner', $newId, "Partner: $name");
     adm_back_with('success', 'Çözüm ortağı kaydedildi.', 'admin/partners.php');
@@ -47,10 +46,10 @@ if (in_array($action, ['edit','new'], true)) {
     <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Çözüm Ortağı Düzenle' : 'Yeni Çözüm Ortağı' ?></h2></div>
     <div class="adm-panel-body">
       <div class="row-2">
-        <div class="row"><label>Firma Adı *</label><input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required><?= i18n_inputs($row, 'name') ?></div>
+        <div class="row"><label>Firma Adı *</label><input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required></div>
         <div class="row"><label>Website</label><input type="text" name="website" value="<?= h($row['website'] ?? '') ?>" placeholder="https://"></div>
       </div>
-      <div class="row"><label>Kısa Açıklama</label><textarea name="description" rows="2" maxlength="400"><?= h($row['description'] ?? '') ?></textarea><?= i18n_inputs($row, 'description', true, 3) ?></div>
+      <div class="row"><label>Kısa Açıklama</label><textarea name="description" rows="2" maxlength="400"><?= h($row['description'] ?? '') ?></textarea></div>
       <div class="row"><label>Sıra</label><input type="number" name="sort_order" value="<?= (int)($row['sort_order'] ?? 0) ?>" style="max-width:120px"></div>
       <div class="row">
         <label>Logo</label>
@@ -69,7 +68,6 @@ if (in_array($action, ['edit','new'], true)) {
     <button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button>
   </div>
 </form>
-<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 $rows = all("SELECT * FROM tm_partners ORDER BY sort_order, id");

@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     $data['image'] = adm_handle_image_upload('image', 'uploads/categories', $_POST['existing_image'] ?? null);
 
     try {
-        $data = i18n_post_merge($data, ['name', 'meta_title', 'short_desc', 'description', 'meta_desc']);
         $newId = adm_save('tm_categories', $data, $editId ?: null);
         log_activity($editId ? 'update' : 'create', 'category', $newId, "Kategori: $name");
         adm_back_with('success', 'Kategori başarıyla kaydedildi.', 'admin/categories.php');
@@ -136,7 +135,7 @@ if (in_array($action, ['edit','new'], true)) {
 
           <div class="row">
             <label>Kategori Adı <span style="color:#dc2626">*</span></label>
-            <input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required placeholder="Örn: Sac Ürünleri"><?= i18n_inputs($row, 'name') ?>
+            <input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required placeholder="Örn: Sac Ürünleri">
             <div class="cat-form-tip">Müşterinin gördüğü kategori başlığı</div>
           </div>
 
@@ -161,13 +160,13 @@ if (in_array($action, ['edit','new'], true)) {
 
           <div class="row">
             <label>Kısa Açıklama</label>
-            <textarea name="short_desc" rows="2" maxlength="300" placeholder="Kategori kart görünümünde çıkacak kısa metin (max 300 karakter)"><?= h($row['short_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'short_desc', true, 2) ?>
+            <textarea name="short_desc" rows="2" maxlength="300" placeholder="Kategori kart görünümünde çıkacak kısa metin (max 300 karakter)"><?= h($row['short_desc'] ?? '') ?></textarea>
             <div class="cat-charcounter" id="shortDescCount">0 / 300</div>
           </div>
 
           <div class="row">
             <label>Detaylı Açıklama</label>
-            <textarea name="description" rows="6" placeholder="Kategori detay sayfasında çıkacak uzun metin (HTML kullanabilirsiniz)"><?= h($row['description'] ?? '') ?></textarea><?= i18n_inputs($row, 'description', true, 6) ?>
+            <textarea name="description" rows="6" placeholder="Kategori detay sayfasında çıkacak uzun metin (HTML kullanabilirsiniz)"><?= h($row['description'] ?? '') ?></textarea>
             <div class="cat-form-tip">İsterseniz HTML kullanabilirsiniz. Örn: <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;strong&gt;</code></div>
           </div>
 
@@ -182,12 +181,12 @@ if (in_array($action, ['edit','new'], true)) {
         <div class="adm-panel-body">
           <div class="row">
             <label>SEO Meta Başlık</label>
-            <input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>" maxlength="200" placeholder="Boş bırakırsanız kategori adı kullanılır"><?= i18n_inputs($row, 'meta_title') ?>
+            <input type="text" name="meta_title" value="<?= h($row['meta_title'] ?? '') ?>" maxlength="200" placeholder="Boş bırakırsanız kategori adı kullanılır">
             <div class="cat-form-tip">Tarayıcı sekmesinde ve Google sonuçlarında görünür</div>
           </div>
           <div class="row">
             <label>SEO Meta Açıklama</label>
-            <textarea name="meta_desc" rows="3" maxlength="300" placeholder="Google arama sonuçlarında görünecek açıklama (155-160 karakter ideal)"><?= h($row['meta_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'meta_desc', true, 2) ?>
+            <textarea name="meta_desc" rows="3" maxlength="300" placeholder="Google arama sonuçlarında görünecek açıklama (155-160 karakter ideal)"><?= h($row['meta_desc'] ?? '') ?></textarea>
             <div class="cat-charcounter" id="metaDescCount">0 / 300</div>
           </div>
         </div>
@@ -297,7 +296,6 @@ if (nameInput && slugInput && slugPreview) {
 }
 </script>
 
-<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 // ═══════════════════════════════════════════════════

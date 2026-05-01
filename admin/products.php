@@ -50,8 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     ];
     $data['image'] = adm_handle_image_upload('image', 'uploads/products', $_POST['existing_image'] ?? null);
 
-    $data = i18n_post_merge($data, ['name', 'short_desc', 'description']);
-
     $newId = adm_save('tm_products', $data, $editId ?: null);
 
     // Galeri görselleri (çoklu yükleme)
@@ -121,7 +119,7 @@ if (in_array($action, ['edit','new'], true)) {
       <div class="adm-panel">
         <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Ürün Düzenle' : 'Yeni Ürün' ?></h2></div>
         <div class="adm-panel-body">
-          <div class="row"><label>Ürün Adı *</label><input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required><?= i18n_inputs($row, 'name') ?></div>
+          <div class="row"><label>Ürün Adı *</label><input type="text" name="name" value="<?= h($row['name'] ?? '') ?>" required></div>
           <div class="row-2">
             <div class="row">
               <label>Kategori *</label>
@@ -134,8 +132,8 @@ if (in_array($action, ['edit','new'], true)) {
             </div>
             <div class="row"><label>Slug</label><input type="text" name="slug" value="<?= h($row['slug'] ?? '') ?>" placeholder="otomatik üretilir"></div>
           </div>
-          <div class="row"><label>Kısa Açıklama</label><textarea name="short_desc" rows="2" maxlength="400"><?= h($row['short_desc'] ?? '') ?></textarea><?= i18n_inputs($row, 'short_desc', true, 2) ?></div>
-          <div class="row"><label>Detaylı Açıklama</label><textarea name="description" rows="8"><?= h($row['description'] ?? '') ?></textarea><?= i18n_inputs($row, 'description', true, 8) ?></div>
+          <div class="row"><label>Kısa Açıklama</label><textarea name="short_desc" rows="2" maxlength="400"><?= h($row['short_desc'] ?? '') ?></textarea></div>
+          <div class="row"><label>Detaylı Açıklama</label><textarea name="description" rows="8"><?= h($row['description'] ?? '') ?></textarea></div>
           <div class="row">
             <label>Teknik Özellikler (her satıra <code>anahtar: değer</code>)</label>
             <textarea name="specs_raw" rows="6" placeholder="Standart: TS EN 10025-2&#10;Kalite: S235JR&#10;Kalınlık: 2-30 mm"><?= h($specsTxt) ?></textarea>
@@ -192,7 +190,6 @@ if (in_array($action, ['edit','new'], true)) {
     <button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button>
   </div>
 </form>
-<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 // Liste

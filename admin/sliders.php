@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
     if (!$img && !$editId) adm_back_with('error', 'Görsel zorunlu.', 'admin/sliders.php');
     if ($img) $data['image'] = $img;
 
-    $data = i18n_post_merge($data, ['title','subtitle','description','link_text']);
     $newId = adm_save('tm_sliders', $data, $editId ?: null);
     log_activity($editId ? 'update' : 'create', 'slider', $newId, "Slider: $title");
     adm_back_with('success', 'Slider kaydedildi.', 'admin/sliders.php');
@@ -46,11 +45,11 @@ if (in_array($action, ['edit','new'], true)) {
   <div class="adm-panel">
     <div class="adm-panel-head"><h2><?= $action === 'edit' ? 'Slider Düzenle' : 'Yeni Slider' ?></h2></div>
     <div class="adm-panel-body">
-      <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required><?= i18n_inputs($row, 'title') ?></div>
-      <div class="row"><label>Alt Başlık</label><input type="text" name="subtitle" value="<?= h($row['subtitle'] ?? '') ?>"><?= i18n_inputs($row, 'subtitle') ?></div>
-      <div class="row"><label>Açıklama</label><textarea name="description" rows="3"><?= h($row['description'] ?? '') ?></textarea><?= i18n_inputs($row, 'description', true, 3) ?></div>
+      <div class="row"><label>Başlık *</label><input type="text" name="title" value="<?= h($row['title'] ?? '') ?>" required></div>
+      <div class="row"><label>Alt Başlık</label><input type="text" name="subtitle" value="<?= h($row['subtitle'] ?? '') ?>"></div>
+      <div class="row"><label>Açıklama</label><textarea name="description" rows="3"><?= h($row['description'] ?? '') ?></textarea></div>
       <div class="row-2">
-        <div class="row"><label>Buton Metni</label><input type="text" name="link_text" value="<?= h($row['link_text'] ?? '') ?>" placeholder="örn: Detayları Gör"><?= i18n_inputs($row, 'link_text') ?></div>
+        <div class="row"><label>Buton Metni</label><input type="text" name="link_text" value="<?= h($row['link_text'] ?? '') ?>" placeholder="örn: Detayları Gör"></div>
         <div class="row"><label>Buton URL</label><input type="text" name="link_url" value="<?= h($row['link_url'] ?? '') ?>" placeholder="örn: urunler.php"></div>
       </div>
       <div class="row"><label>Sıra</label><input type="number" name="sort_order" value="<?= (int)($row['sort_order'] ?? 0) ?>" style="max-width:120px"></div>
@@ -71,7 +70,6 @@ if (in_array($action, ['edit','new'], true)) {
     <button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button>
   </div>
 </form>
-<?= i18n_tabs_js() ?>
 <?php require __DIR__ . '/_footer.php'; exit; }
 
 $rows = all("SELECT * FROM tm_sliders ORDER BY sort_order, id");
