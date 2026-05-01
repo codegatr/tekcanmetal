@@ -12690,3 +12690,70 @@ UPDATE tm_seo_iller SET
     cargo_info_ru = 'Эскишехир: доставка 2-3 рабочих дня. Прямой маршрут Конья-Эскишехир.'
 WHERE slug = 'eskisehir';
 
+
+-- =====================================================
+-- v1.0.88 — tm_seo_iller i18n PART 3/5 (5 Marmara/Ege ili)
+-- kocaeli, sakarya, manisa, tekirdag, balikesir
+-- 5 il × 9 alan = 45 alan
+-- =====================================================
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Heavy industry, petrochemical and automotive production hub',
+    industry_focus_ar = 'الصناعة الثقيلة، مركز الإنتاج البتروكيماوي وصناعة السيارات',
+    industry_focus_ru = 'Тяжёлая промышленность, нефтехимия и автопроизводство',
+    intro_text_en = 'Kocaeli, with Gebze, Dilovası, and Çayırova OIZs, hosts Turkey''s largest heavy industry, petrochemical and automotive production cluster. We provide structural steel, sheet, profile and special steel supply to manufacturers in Kocaeli.',
+    intro_text_ar = 'كوجالي، بمناطق جبزة وديلوفاسي وتشاييروفا الصناعية، تستضيف أكبر مجموعة صناعة ثقيلة وبتروكيماوية وسيارات في تركيا. نوفر توريد الصلب الهيكلي والألواح والمقاطع والفولاذ الخاص للمصنعين في كوجالي.',
+    intro_text_ru = 'Коджаэли с ОСЗ Гебзе, Диловасы и Чайырова — крупнейший кластер тяжёлой промышленности, нефтехимии и автопроизводства Турции. Поставляем строительную сталь, лист, профили и спецсталь.',
+    cargo_info_en = 'Kocaeli: 2-3 business days delivery. Combined with Istanbul shipments.',
+    cargo_info_ar = 'كوجالي: التسليم خلال 2-3 أيام عمل. تتم الشحنات بالاشتراك مع شحنات إسطنبول.',
+    cargo_info_ru = 'Коджаэли: доставка 2-3 рабочих дня. Объединяется со стамбульскими поставками.'
+WHERE slug = 'kocaeli';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Automotive sub-industry, Toyota and Otokar production base',
+    industry_focus_ar = 'صناعة السيارات الفرعية، قاعدة إنتاج تويوتا وأوتوكار',
+    industry_focus_ru = 'Автокомпоненты, производственная база Toyota и Otokar',
+    intro_text_en = 'Sakarya, with Toyota Adapazarı and Otokar facilities, hosts an important automotive industry cluster. We provide DKP sheet, galvanized sheet and special steel supply to automotive sub-industry manufacturers in Sakarya.',
+    intro_text_ar = 'سكاريا، مع منشآت تويوتا أداباتساري وأوتوكار، تستضيف مجموعة مهمة لصناعة السيارات. نوفر توريد ألواح DKP والألواح المجلفنة والصلب الخاص لمصنعي صناعة السيارات الفرعية في سكاريا.',
+    intro_text_ru = 'Сакарья с заводами Toyota Adapazarı и Otokar — важный автопромышленный кластер. Поставляем DKP-лист, оцинкованный лист и спецсталь автокомпонентным производителям Сакарьи.',
+    cargo_info_en = 'Sakarya: 2-3 business days delivery. Combined with Kocaeli routing.',
+    cargo_info_ar = 'سكاريا: التسليم خلال 2-3 أيام عمل. تتم الشحنات بالاشتراك مع كوجالي.',
+    cargo_info_ru = 'Сакарья: доставка 2-3 рабочих дня. Объединяется с маршрутом Коджаэли.'
+WHERE slug = 'sakarya';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'White goods manufacturing center, Vestel and Bosch',
+    industry_focus_ar = 'مركز تصنيع الأجهزة المنزلية، فيستيل وبوش',
+    industry_focus_ru = 'Центр производства бытовой техники, Vestel и Bosch',
+    intro_text_en = 'Manisa is one of Turkey''s largest white goods manufacturing centers. Through Vestel City, Bosch, Bakioğlu and Ege Endüstri factories, we provide DKP sheet, galvanized sheet and special steel supply.',
+    intro_text_ar = 'مانيسا هي إحدى أكبر مراكز تصنيع الأجهزة المنزلية في تركيا. من خلال مصانع فيستيل سيتي وبوش وباكي أوغلو وإيجه إندوستري، نوفر توريد ألواح DKP والألواح المجلفنة والصلب الخاص.',
+    intro_text_ru = 'Маниса — один из крупнейших центров производства бытовой техники Турции. Через Vestel City, Bosch, Bakioğlu, Ege Endüstri мы поставляем DKP-лист, оцинкованный лист и спецсталь.',
+    cargo_info_en = 'Manisa: 3-4 business days delivery. Combined with İzmir routing.',
+    cargo_info_ar = 'مانيسا: التسليم خلال 3-4 أيام عمل. تتم الشحنات بالاشتراك مع إزمير.',
+    cargo_info_ru = 'Маниса: доставка 3-4 рабочих дня. Объединяется с маршрутом Измира.'
+WHERE slug = 'manisa';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Çorlu-Çerkezköy textile and machine industry',
+    industry_focus_ar = 'صناعة المنسوجات والآلات في تشورلو-تشركز كوي',
+    industry_focus_ru = 'Текстильная и машиностроительная промышленность Чорлу-Черкезкёй',
+    intro_text_en = 'Tekirdağ, with Çorlu and Çerkezköy OIZs, is one of the most important production centers of the Marmara region''s textile and machinery industry. We provide steel products to manufacturers in OIZs.',
+    intro_text_ar = 'تكيرداغ، بمناطق تشورلو وتشركز كوي الصناعية، هي إحدى أهم مراكز الإنتاج في صناعة المنسوجات والآلات لمنطقة مرمرة. نقدم منتجات الصلب للمصنعين في المناطق الصناعية.',
+    intro_text_ru = 'Текирдаг с ОСЗ Чорлу и Черкезкёй — один из ключевых производственных центров текстильной и машиностроительной промышленности Мраморноморья. Поставляем металлопродукцию производителям в ОСЗ.',
+    cargo_info_en = 'Tekirdağ: 3-4 business days delivery. Çorlu-Çerkezköy direct route.',
+    cargo_info_ar = 'تكيرداغ: التسليم خلال 3-4 أيام عمل. خط مباشر تشورلو-تشركز كوي.',
+    cargo_info_ru = 'Текирдаг: доставка 3-4 рабочих дня. Прямой маршрут Чорлу-Черкезкёй.'
+WHERE slug = 'tekirdag';
+
+UPDATE tm_seo_iller SET
+    industry_focus_en = 'Bandırma fertilizer industry, agricultural machinery production',
+    industry_focus_ar = 'صناعة الأسمدة في بنديرما، إنتاج الآلات الزراعية',
+    industry_focus_ru = 'Удобренческая промышленность Бандырмы, производство сельхозтехники',
+    intro_text_en = 'Balıkesir is an important production center for the Marmara region with Bandırma OIZ, fertilizer industry and agricultural machinery manufacturers. We deliver structural steel and tube supply.',
+    intro_text_ar = 'باليكسير هي مركز إنتاج مهم لمنطقة مرمرة مع منطقة بنديرما الصناعية وصناعة الأسمدة ومصنعي الآلات الزراعية. نقدم توريد الحديد الهيكلي والأنابيب.',
+    intro_text_ru = 'Балыкесир — важный производственный центр Мраморноморья с ОСЗ Бандырма, удобренческой отраслью и сельхозмашиностроением. Поставляем строительную сталь и трубы.',
+    cargo_info_en = 'Balıkesir: 3-4 business days delivery. Bandırma port shipments.',
+    cargo_info_ar = 'باليكسير: التسليم خلال 3-4 أيام عمل. شحنات ميناء بنديرما.',
+    cargo_info_ru = 'Балыкесир: доставка 3-4 рабочих дня. Поставки в порт Бандырма.'
+WHERE slug = 'balikesir';
+
