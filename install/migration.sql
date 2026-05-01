@@ -13092,3 +13092,20 @@ INSERT INTO tm_translations (translation_key, lang, translation_value, context) 
     ('footer.price_lists',      'ru', 'Прайс-листы заводов',     'footer')
 ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
 
+
+-- v1.0.100 — Anasayfa Fiyat Listesi Popup string'leri (4 dil)
+INSERT INTO tm_translations (translation_key, lang, translation_value, context) VALUES
+    ('popup.price_lists.title', 'tr', 'Güncel Fabrika Fiyatları',                                       'index'),
+    ('popup.price_lists.title', 'en', 'Up-to-Date Manufacturer Prices',                                  'index'),
+    ('popup.price_lists.title', 'ar', 'أسعار المصنعين المحدثة',                                         'index'),
+    ('popup.price_lists.title', 'ru', 'Актуальные цены заводов',                                         'index'),
+    ('popup.price_lists.desc', 'tr', 'Erdemir, Borusan, Yücel Boru ve 22 fabrika daha — tek tıkla fiyat listesi.', 'index'),
+    ('popup.price_lists.desc', 'en', 'Erdemir, Borusan, Yücel Boru and 22 more manufacturers — price lists in one click.', 'index'),
+    ('popup.price_lists.desc', 'ar', 'إردمير، بوروسان، يوجل بورو و22 مصنعاً آخر — قوائم الأسعار بنقرة واحدة.',     'index'),
+    ('popup.price_lists.desc', 'ru', 'Эрдемир, Борусан, Юджель Бору и ещё 22 завода — прайс-листы в один клик.',  'index'),
+    ('popup.price_lists.cta', 'tr', 'Fiyat Listesi Rehberi →',         'index'),
+    ('popup.price_lists.cta', 'en', 'Price List Directory →',          'index'),
+    ('popup.price_lists.cta', 'ar', 'دليل قوائم الأسعار ←',          'index'),
+    ('popup.price_lists.cta', 'ru', 'Справочник прайс-листов →',       'index')
+ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
+

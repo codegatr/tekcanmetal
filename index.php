@@ -1050,4 +1050,203 @@ require __DIR__ . '/includes/header.php';
 
 </div>
 
+<!-- ============================================================
+     SAĞ ALT FİYAT LİSTELERİ POP-UP (5sn sonra çıkar, dismissable)
+     ============================================================ -->
+<div id="fl-popup" class="fl-popup" role="dialog" aria-label="Fabrika Fiyat Listeleri">
+  <button type="button" class="fl-popup-close" onclick="closeFlPopup()" aria-label="Kapat">×</button>
+  <a href="<?= h(url_lang('fiyat-listeleri.php')) ?>" class="fl-popup-link">
+    <div class="fl-popup-inner">
+      <div class="fl-popup-icon">📋</div>
+      <div class="fl-popup-text">
+        <div class="fl-popup-title"><?= h(t('popup.price_lists.title', 'Güncel Fabrika Fiyatları')) ?></div>
+        <div class="fl-popup-desc"><?= h(t('popup.price_lists.desc', 'Erdemir, Borusan, Yücel Boru ve 22 fabrika daha — tek tıkla fiyat listesi.')) ?></div>
+        <div class="fl-popup-cta"><?= h(t('popup.price_lists.cta', 'Fiyat Listesi Rehberi →')) ?></div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+.fl-popup {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    max-width: 360px;
+    background: linear-gradient(135deg, #050d24 0%, #0c1e44 50%, #143672 100%);
+    color: white;
+    border-radius: 14px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,168,107,0.3);
+    border-top: 3px solid #c9a86b;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.fl-popup.fl-popup-show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+.fl-popup.fl-popup-hide {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+}
+.fl-popup-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    padding: 18px 20px 18px 18px;
+}
+.fl-popup-link:hover { color: inherit; text-decoration: none; }
+.fl-popup-inner {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+.fl-popup-icon {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+    background: rgba(201,168,107,0.15);
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(201,168,107,0.3);
+}
+.fl-popup-text { flex: 1; min-width: 0; padding-right: 8px; }
+.fl-popup-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #e0c48a;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+.fl-popup-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+.fl-popup-cta {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.15s;
+}
+.fl-popup-link:hover .fl-popup-cta {
+    color: #e0c48a;
+    border-bottom-color: #e0c48a;
+}
+.fl-popup-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: rgba(255,255,255,0.7);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    z-index: 2;
+}
+.fl-popup-close:hover {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+.fl-popup::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #e0c48a 50%, transparent 100%);
+    animation: flShimmer 2s ease-in-out infinite;
+}
+@keyframes flShimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+@media (max-width: 480px) {
+    .fl-popup {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+    }
+}
+</style>
+
+<script>
+(function(){
+    var POPUP_DELAY = 5000;        // 5 saniye sonra göster
+    var POPUP_DURATION = 8000;     // 8 saniye gösterdikten sonra otomatik kaybol
+    var DISMISS_KEY = 'fl_popup_dismissed';
+    var SESSION_KEY = 'fl_popup_shown_session';
+
+    // Eğer kullanıcı bu oturumda popup'ı kapattıysa veya zaten gördüyse — gösterme
+    try {
+        if (sessionStorage.getItem(SESSION_KEY) === '1') return;
+        if (localStorage.getItem(DISMISS_KEY) === '1') {
+            // 24 saat geçtiyse sıfırla
+            var dismissedAt = parseInt(localStorage.getItem(DISMISS_KEY + '_at') || '0', 10);
+            if (Date.now() - dismissedAt < 24 * 60 * 60 * 1000) return;
+            localStorage.removeItem(DISMISS_KEY);
+            localStorage.removeItem(DISMISS_KEY + '_at');
+        }
+    } catch(e) {}
+
+    var popup = document.getElementById('fl-popup');
+    if (!popup) return;
+
+    var hideTimer;
+
+    function showPopup() {
+        popup.classList.remove('fl-popup-hide');
+        popup.classList.add('fl-popup-show');
+        try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+        // 8 sn sonra otomatik kaybolma
+        hideTimer = setTimeout(hidePopup, POPUP_DURATION);
+    }
+
+    function hidePopup() {
+        clearTimeout(hideTimer);
+        popup.classList.remove('fl-popup-show');
+        popup.classList.add('fl-popup-hide');
+    }
+
+    window.closeFlPopup = function() {
+        hidePopup();
+        try {
+            localStorage.setItem(DISMISS_KEY, '1');
+            localStorage.setItem(DISMISS_KEY + '_at', Date.now().toString());
+        } catch(e) {}
+    };
+
+    // 5 sn sonra popup'ı göster
+    setTimeout(showPopup, POPUP_DELAY);
+})();
+</script>
+
 <?php require __DIR__ . '/includes/footer.php'; ?>
