@@ -87,6 +87,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         <a href="<?= h(admin_url('categories.php')) ?>"<?= nav_active('categories.php', $current) ?>>🗂 Kategoriler</a>
         <a href="<?= h(admin_url('products.php')) ?>"<?= nav_active('products.php', $current) ?>>📦 Ürünler</a>
         <a href="<?= h(admin_url('services.php')) ?>"<?= nav_active('services.php', $current) ?>>🛠 Hizmetler</a>
+        <a href="<?= h(admin_url('price-lists.php')) ?>"<?= nav_active('price-lists.php', $current) ?>>📋 Fiyat Listeleri</a>
       </div>
 
       <div class="adm-nav-section">
