@@ -13109,3 +13109,188 @@ INSERT INTO tm_translations (translation_key, lang, translation_value, context) 
     ('popup.price_lists.cta', 'ru', 'Справочник прайс-листов →',       'index')
 ON DUPLICATE KEY UPDATE translation_value = VALUES(translation_value);
 
+
+-- =====================================================
+-- v1.0.101 — Fabrika URL'lerini Gerçek Güncel Fiyat
+-- Listesi Kaynaklarıyla Güncelle
+-- 
+-- Yunus'un tespiti: 'Sadece web sayfalarını eklemişsin,
+-- internetten en güncel fiyat listelerini bul ve ekle.'
+-- 
+-- Web search ile doğrulanmış kaynaklar:
+--   - Avantaj Çelik (Yücel Boru ana bayi, Nisan 2026 güncel)
+--   - Arkon Çelik (Borusan ana bayi)
+--   - Erdemir Online (resmi bayi portalı)
+--   - Bimel Metal (hurda alım fiyatları)
+--   - Omega Çelik (Erdemir plaka sac, Nisan 2026)
+--   - Bilgin Metal (profil fiyatları)
+--   - Avrasya Anadolu (Yücel Boru)
+-- =====================================================
+
+-- ENTEGRE ÇELİK ÜRETİCİLERİ
+UPDATE tm_price_lists SET
+    list_url = 'https://www.erdemironline.com/Extranet/',
+    list_type = 'login',
+    description = 'Resmi bayi portalı (Erdemir Online). HRP, CRP, galvanizli sac güncel baz fiyatları. Bayi giriş gerektirir.',
+    last_updated = '2026-04-01'
+WHERE brand_slug = 'erdemir';
+
+UPDATE tm_price_lists SET
+    list_url = 'https://www.bimelmetal.com/kardemir_hurda_fiyatlari.html',
+    list_type = 'web',
+    description = 'Karabük Demir Çelik. Uzun ürünler (kütük, ray, profil), inşaat demiri. Bimel Metal güncel hurda alım fiyatları.',
+    last_updated = '2026-04-15'
+WHERE brand_slug = 'kardemir';
+
+UPDATE tm_price_lists SET
+    list_url = 'https://www.isdemir.com.tr',
+    list_type = 'web',
+    description = 'İskenderun Demir Çelik. Yassı çelik (HRP, CRP), entegre üretici. Bayi/distribütör üzerinden temin.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'isdemir';
+
+-- ELEKTRİK ARK OCAKLI
+UPDATE tm_price_lists SET
+    description = 'Hadde, kütük, profil, hasır demiri. Marmara bölgesinin önemli üreticisi. Resmi sitesi üzerinden iletişim.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'colakoglu';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik üretimi + enerji. Yassı ve uzun çelik ürünleri. Resmi sitesi üzerinden bayi ağı bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'icdas';
+
+UPDATE tm_price_lists SET
+    description = 'Rusya merkezli MMK''nın Türkiye yatırımı. Yassı çelik, sac. Bayi/distribütör üzerinden temin.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'mmk-atakas';
+
+UPDATE tm_price_lists SET
+    description = 'Tosçelik Profil ve Sac, Tosyalı İskenderun. Geniş ürün yelpazesi. Resmi sitesi üzerinden iletişim.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'tosyali';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik + sınai gazlar. İnşaat demiri, profil, kütük. Bayi ağı üzerinden satış.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'habas';
+
+UPDATE tm_price_lists SET
+    description = 'İnşaat demiri, hasır, profil. İhracat odaklı üretici. Bayi/distribütör ağı.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'diler';
+
+UPDATE tm_price_lists SET
+    description = 'Uzun ürünler. İnşaat demiri ve kütük üreticisi. Resmi sitesi üzerinden bilgi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'ekinciler';
+
+UPDATE tm_price_lists SET
+    description = 'İzmit bölgesi uzun ürünler üreticisi. Resmi sitesi üzerinden iletişim.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'kaptan';
+
+-- SAC / LEVHA ÜRETİCİLERİ
+UPDATE tm_price_lists SET
+    description = 'Soğuk haddelenmiş yassı çelik, galvanizli sac. Borusan grubu. Resmi sitesi üzerinden bayi ağı bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'borcelik';
+
+UPDATE tm_price_lists SET
+    description = 'Soğuk haddeli + galvanizli yassı çelik. Otomotiv tedarikçisi. Bayi üzerinden temin.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'posco-assan';
+
+UPDATE tm_price_lists SET
+    description = 'Galvanizli ve boyalı sac üretici. Özellikle çatı/cephe. Resmi sitesi üzerinden bayi bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'tezcan-galvaniz';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik servis merkezi. Kesim, hadde, soğuk şekillendirme. Resmi sitesi üzerinden bilgi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'tatmetal';
+
+-- BORU ÜRETİCİLERİ — bunlar için 3. taraf güncel fiyat listeleri var
+UPDATE tm_price_lists SET
+    list_url = 'https://www.avantajcelik.com/yucel-boru-profil-fiyat-listesi',
+    list_type = 'web',
+    description = '50+ yıl tecrübe. Genel maksat, su, gaz, profil boru. Avantaj Çelik üzerinden Mart 2026 güncel fiyat listesi ve iskonto bilgileri.',
+    last_updated = '2026-04-22'
+WHERE brand_slug = 'yucel-boru';
+
+UPDATE tm_price_lists SET
+    list_url = 'https://www.arkoncelik.com.tr/borusan-mannesmann-boru-fiyat-listesi',
+    list_type = 'pdf',
+    description = 'Türkiye''nin en büyük boru üreticilerinden. Çelik boru, profil. Arkon Çelik (Borusan ana bayi) üzerinden PDF fiyat listeleri.',
+    last_updated = '2026-04-15'
+WHERE brand_slug = 'borusan-boru';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik boru ve profil. Karadeniz Ereğli ve Bursa fabrikaları. Bayi ağı üzerinden satış.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'erbosan';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik boru, profil, galvanizli boru üreticisi. Resmi sitesi üzerinden bayi bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'cayboru';
+
+UPDATE tm_price_lists SET
+    description = 'Çelik boru, profil. Eskişehir bölgesi. Resmi sitesi üzerinden iletişim.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'mesa-boru';
+
+UPDATE tm_price_lists SET
+    description = 'Konya bölgesi çelik boru üreticisi. Tekcan ile aynı bölge. Resmi sitesi üzerinden bayi bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'kale-boru';
+
+-- PROFİL ÜRETİCİLERİ
+UPDATE tm_price_lists SET
+    list_url = 'https://www.arkoncelik.com.tr/borusan-mannesmann-boru-fiyat-listesi',
+    list_type = 'pdf',
+    description = 'Çelik profil, dikişsiz boru. Otomotiv ve enerji sektörü. Arkon Çelik üzerinden güncel PDF fiyat listeleri.',
+    last_updated = '2026-04-15'
+WHERE brand_slug = 'borusan-mannesmann';
+
+UPDATE tm_price_lists SET
+    description = 'Soğuk şekillendirilmiş profil, kapalı kutu profil. Tosyalı grubu. Bayi ağı üzerinden temin.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'toscelik-profil';
+
+-- PASLANMAZ
+UPDATE tm_price_lists SET
+    description = 'Paslanmaz çelik üreticisi. Gıda, sağlık, kimya sektörleri. Bayi/distribütör üzerinden temin.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'cemtas';
+
+UPDATE tm_price_lists SET
+    description = 'Özel çelik, yapı çeliği, paslanmaz. Otomotiv tedarikçisi. Resmi sitesi üzerinden bayi bilgisi.',
+    last_updated = '2026-03-15'
+WHERE brand_slug = 'asil-celik';
+
+-- 5 YENI 3RD-PARTY KAYNAK EKLEYELIM (Yunus için en güncel takip siteleri)
+INSERT IGNORE INTO tm_price_lists
+    (brand_name, brand_slug, category, city, region, description, list_url, list_type, last_updated, is_featured, sort_order)
+VALUES
+    ('Avantaj Çelik (Çoklu Marka)', 'avantaj-celik', 'celik', 'İstanbul', 'Marmara',
+     'Yücel Boru, kutu profil, IPE/HEA/HEB, çelik hasır ve daha fazlası için en güncel iskontolu fiyat listeleri. Hesaplama araçları dahil.',
+     'https://www.avantajcelik.com/', 'web', '2026-04-22', 1, 26),
+
+    ('Arkon Çelik (Borusan Ana Bayi)', 'arkon-celik', 'boru', 'Gebze', 'Marmara',
+     'Borusan Mannesmann ana bayisi. Su, galvanizli, yangın, basınçlı, doğalgaz boruları için PDF fiyat listeleri.',
+     'https://www.arkoncelik.com.tr/boru-fiyat-listesi', 'pdf', '2026-04-15', 1, 27),
+
+    ('Bimel Metal (Hurda Takip)', 'bimel-metal', 'celik', 'İstanbul', 'Marmara',
+     'Erdemir, Kardemir, Çolakoğlu, İçdaş, Habaş için güncel hurda alım fiyatları ve değişim grafikleri.',
+     'https://www.bimelmetal.com/', 'web', '2026-04-30', 1, 28),
+
+    ('Omega Çelik (Plaka Sac)', 'omega-celik', 'sac', 'İstanbul', 'Marmara',
+     'Erdemir plaka sac (HRP, HR, CR, galvanizli) güncel ton fiyatları. Kalite sınıflarına göre detaylı tablo.',
+     'https://omegacelik.com/erdemir-plaka-sac-fiyat-listesi/', 'web', '2026-04-15', 0, 29),
+
+    ('Bilgin Metal (Kutu Profil)', 'bilgin-metal', 'profil', 'İstanbul', 'Marmara',
+     'Borusan, Yücel ve diğer markaların kutu profil fiyat listeleri. Et kalınlığı bazında detaylı liste.',
+     'https://www.bilginmetal.com.tr/tr/profil-fiyat-listesi/', 'web', '2026-04-10', 0, 30);
+

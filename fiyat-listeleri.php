@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/includes/db.php';
 
-$brands = all("SELECT * FROM tm_price_lists WHERE is_active=1 ORDER BY sort_order, brand_name");
+$brands = all("SELECT * FROM tm_price_lists WHERE is_active=1 ORDER BY is_featured DESC, sort_order, brand_name");
 
 // Kategori sayıları
 $catCounts = [];
@@ -498,12 +498,25 @@ require __DIR__ . '/includes/header.php';
                 <div class="fl-card-footer">
                     <span class="fl-card-city">
                         <?= !empty($b['city']) ? '📍 ' . htmlspecialchars($b['city']) : '' ?>
+                        <?php if (!empty($b['last_updated'])): ?>
+                            <span style="margin-left:8px;color:#9ca3af;font-size:11px">
+                                · <?= date('d.m.Y', strtotime($b['last_updated'])) ?>
+                            </span>
+                        <?php endif; ?>
                     </span>
                     <a href="<?= htmlspecialchars($b['list_url']) ?>"
                        target="_blank"
                        rel="nofollow noopener external"
                        class="fl-cta">
-                        Fiyat Listesi
+                        <?php
+                            $typeLabels = [
+                                'pdf'     => '📄 PDF',
+                                'login'   => '🔐 Bayi Portal',
+                                'request' => '📩 Talep',
+                                'web'     => 'Fiyat Listesi'
+                            ];
+                            echo $typeLabels[$b['list_type']] ?? 'Fiyat Listesi';
+                        ?>
                         <span class="fl-cta-arrow">→</span>
                     </a>
                 </div>
