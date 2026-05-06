@@ -53,8 +53,6 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 .lp-page{
   --navy:#050d24;--navy-2:#0c1e44;--navy-3:#143672;
   --gold:#c9a86b;--gold-light:#e0c48a;--gold-dark:#a88a4a;

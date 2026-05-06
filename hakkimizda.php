@@ -40,9 +40,6 @@ require __DIR__ . '/includes/header.php';
    HAKKIMIZDA — EDITORIAL INDUSTRIAL HERITAGE
    Sayfa-özel stil — global style.css'e dokunmaz
    ═══════════════════════════════════════════════════════════════════ */
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 .about-page{
   --kral-navy:#050d24;
   --kral-navy-2:#0c1e44;

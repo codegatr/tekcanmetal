@@ -7,8 +7,6 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 .hz-page{
   --navy:#050d24;
   --navy-2:#0c1e44;

@@ -100,8 +100,6 @@ require __DIR__ . '/includes/header.php';
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
-
 .hes-page{
   --hp-bg:#f5f7fa;
   --hp-surface:#ffffff;

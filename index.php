@@ -18,10 +18,18 @@ require __DIR__ . '/includes/header.php';
 <!-- HERO — Limak'ın 50 logosu sahnesi gibi: koyu lacivert + ortada parlayan logo -->
 <section class="hero-cinema" id="heroCinema">
   <?php if ($sliders): ?>
-    <?php foreach ($sliders as $idx => $sl): ?>
-      <div class="cinema-slide<?= $idx === 0 ? ' active' : '' ?>"
-           style="background-image: linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('<?= h(img_url($sl['image'])) ?>');">
+    <?php foreach ($sliders as $idx => $sl):
+        $imgUrl = h(img_url($sl['image']));
+        // İlk slide: hemen background-image (LCP elementi).
+        // Diğer slide'lar: data-bg attribute, JS ile gerektiğinde yüklenir (mobile bandwidth tasarrufu).
+    ?>
+      <?php if ($idx === 0): ?>
+      <div class="cinema-slide active"
+           style="background-image: linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('<?= $imgUrl ?>');">
       </div>
+      <?php else: ?>
+      <div class="cinema-slide" data-bg="<?= $imgUrl ?>"></div>
+      <?php endif; ?>
     <?php endforeach; ?>
   <?php else: ?>
     <div class="cinema-slide active"></div>
@@ -85,8 +93,20 @@ require __DIR__ . '/includes/header.php';
   const total  = slides.length;
   if (total < 2) return;
   let idx = 0, timer = null;
+
+  // LAZY BG LOAD — Mobile performans için: data-bg'li slide'lar lazy yüklenir
+  function ensureBg(slide) {
+    const bg = slide.getAttribute('data-bg');
+    if (!bg) return;  // zaten yüklü veya ilk slide
+    slide.style.backgroundImage = "linear-gradient(135deg, rgba(5,13,36,.78) 0%, rgba(12,30,68,.62) 50%, rgba(20,54,114,.78) 100%), url('" + bg + "')";
+    slide.removeAttribute('data-bg');
+  }
+
   function go(n){
     idx = (n + total) % total;
+    // Aktif slide ve sonrasını önceden yükle (smooth UX)
+    ensureBg(slides[idx]);
+    ensureBg(slides[(idx + 1) % total]);
     slides.forEach((s,i) => s.classList.toggle('active', i === idx));
     texts.forEach((s,i) => s.classList.toggle('active', i === idx));
     dots.forEach((d,i) => d.classList.toggle('active', i === idx));
@@ -99,13 +119,17 @@ require __DIR__ . '/includes/header.php';
   document.getElementById('cinemaNext')?.addEventListener('click', () => { next(); start(); });
   dots.forEach(d => d.addEventListener('click', e => { go(+e.currentTarget.dataset.index); start(); }));
   let xStart = null;
-  root.addEventListener('touchstart', e => xStart = e.touches[0].clientX);
+  root.addEventListener('touchstart', e => xStart = e.touches[0].clientX, { passive: true });
   root.addEventListener('touchend', e => {
     if (xStart === null) return;
     const dx = e.changedTouches[0].clientX - xStart;
     if (Math.abs(dx) > 50) { dx > 0 ? prev() : next(); start(); }
     xStart = null;
   });
+
+  // İlk yükleme: 2. slide'ı 2 saniye sonra preload (smooth ilk geçiş için)
+  // Bu LCP'yi etkilemez çünkü idle vakitte oluyor
+  setTimeout(() => { if (slides[1]) ensureBg(slides[1]); }, 2000);
   start();
 })();
 </script>
@@ -116,7 +140,7 @@ require __DIR__ . '/includes/header.php';
      ═══════════════════════════════════════════════ -->
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+/* Cormorant Garamond ve Inter header'da preload ediliyor (v1.0.115) */
 
 .hp-page{
   --navy:#050d24;

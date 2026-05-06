@@ -106,9 +106,11 @@ foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Google Fonts: render-blocking olmayan async yükleme (PageSpeed best practice) -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<!-- Google Fonts: tek HTTP request'te 4 font ailesi (render-blocking değil, async yükleme) -->
+<!-- Inter (UI) + Cormorant Garamond (başlıklar) + JetBrains Mono (kod/teknik) + Playfair Display (blog) -->
+<?php $googleFontsUrl = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap'; ?>
+<link rel="preload" as="style" href="<?= h($googleFontsUrl) ?>" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="<?= h($googleFontsUrl) ?>" rel="stylesheet"></noscript>
 
 <!-- Critical CSS -->
 <link rel="stylesheet" href="<?= h(url('assets/css/style.css')) ?>?v=<?= h(TM_VERSION) ?>">

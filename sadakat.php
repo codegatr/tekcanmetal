@@ -40,8 +40,6 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 .sad-page{
   --gold:#c9a86b;
   --gold-light:#e0c48a;
