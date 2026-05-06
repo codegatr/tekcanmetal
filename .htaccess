@@ -258,7 +258,17 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^wp-admin(/.*)?$                - [G,L]
     RewriteRule ^wp-content(/.*)?$              - [G,L]
     RewriteRule ^wp-includes(/.*)?$             - [G,L]
+
+    # WordPress RSS feed'leri (28 URL Search Console'da raporlandı):
+    # /feed/, /tag/X/feed/, /urun-gruplarimiz/X/feed/, /comments/feed/ vb.
+    # Hepsi içerik kategorisine veya anasayfaya 301 redirect
+    RewriteRule ^tag/[^/]*/feed/?$              /urunler.php [R=301,L]
+    RewriteRule ^urun-gruplarimiz/[^/]*/feed/?$ /urunler.php [R=301,L]
+    RewriteRule ^category/[^/]*/feed/?$         /urunler.php [R=301,L]
+    RewriteRule ^[^/]+/feed/?$                  / [R=301,L]
     RewriteRule ^feed/?$                        / [R=301,L]
+    RewriteRule ^comments/feed/?$               / [R=301,L]
+
     RewriteRule ^?p=([0-9]+)$                   / [R=301,L]
 
     # ═══════════════════════════════════════════════════
