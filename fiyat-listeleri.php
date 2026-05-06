@@ -584,32 +584,38 @@ require __DIR__ . '/includes/header.php';
 </script>
 
 <!-- Structured data: ItemList for SEO -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Demir Çelik Fabrikaları Fiyat Listeleri",
-    "description": "<?= addslashes($metaDesc) ?>",
-    "numberOfItems": <?= count($brands) ?>,
-    "itemListElement": [
-        <?php foreach ($brands as $i => $b): ?>
-        {
-            "@type": "ListItem",
-            "position": <?= $i + 1 ?>,
-            "item": {
-                "@type": "Organization",
-                "name": "<?= addslashes($b['brand_name']) ?>",
-                "url": "<?= addslashes($b['list_url']) ?>"<?php if (!empty($b['city'])): ?>,
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "<?= addslashes($b['city']) ?>",
-                    "addressCountry": "TR"
-                }<?php endif; ?>
-            }
-        }<?= $i < count($brands) - 1 ? ',' : '' ?>
-        <?php endforeach; ?>
-    ]
+<?php
+$structuredData = [
+    '@context' => 'https://schema.org',
+    '@type' => 'ItemList',
+    'name' => 'Demir Çelik Fabrikaları Fiyat Listeleri',
+    'description' => $metaDesc,
+    'numberOfItems' => count($brands),
+    'itemListElement' => []
+];
+
+foreach ($brands as $i => $b) {
+    $item = [
+        '@type' => 'Organization',
+        'name' => $b['brand_name'],
+        'url'  => $b['list_url'],
+    ];
+    if (!empty($b['city'])) {
+        $item['address'] = [
+            '@type' => 'PostalAddress',
+            'addressLocality' => $b['city'],
+            'addressCountry'  => 'TR',
+        ];
+    }
+    $structuredData['itemListElement'][] = [
+        '@type'    => 'ListItem',
+        'position' => $i + 1,
+        'item'     => $item,
+    ];
 }
+?>
+<script type="application/ld+json">
+<?= json_encode($structuredData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
 </script>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
