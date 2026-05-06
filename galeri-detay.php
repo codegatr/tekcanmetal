@@ -50,7 +50,7 @@ require __DIR__ . '/includes/header.php';
   <button class="lb-prev" aria-label="Önceki">‹</button>
   <button class="lb-next" aria-label="Sonraki">›</button>
   <div class="lb-frame">
-    <img id="lbImg" src="" alt="">
+    <img id="lbImg" src="" alt="" loading="lazy">
     <div id="lbCap" class="lb-cap"></div>
   </div>
 </div>

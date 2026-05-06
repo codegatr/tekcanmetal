@@ -478,7 +478,7 @@ require __DIR__ . '/includes/header.php';
                 <div class="fl-card-head">
                     <div class="fl-logo">
                         <?php if (!empty($b['brand_logo'])): ?>
-                            <img src="<?= htmlspecialchars($b['brand_logo']) ?>" alt="<?= htmlspecialchars($b['brand_name']) ?>">
+                            <img src="<?= htmlspecialchars($b['brand_logo']) ?>" alt="<?= htmlspecialchars($b['brand_name']) ?>" loading="lazy" width="56" height="56">
                         <?php else: ?>
                             <?= htmlspecialchars($initials) ?>
                         <?php endif; ?>

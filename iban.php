@@ -23,7 +23,7 @@ require __DIR__ . '/includes/header.php';
       <div class="iban-card">
         <div class="iban-head">
           <?php if (!empty($b['logo'])): ?>
-            <img src="<?= h(img_url($b['logo'])) ?>" alt="<?= h($b['bank_name']) ?>" class="iban-logo">
+            <img src="<?= h(img_url($b['logo'])) ?>" alt="<?= h($b['bank_name']) ?>" class="iban-logo" loading="lazy">
           <?php else: ?>
             <div class="iban-bank-name"><?= h($b['bank_name']) ?></div>
           <?php endif; ?>

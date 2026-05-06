@@ -489,7 +489,7 @@ function tr_date_long($date) {
       <div class="nyt-lead-grid">
         <a href="<?= h(url('blog-detay.php?slug=' . urlencode($leadPost['slug']))) ?>" class="nyt-lead-img-link">
           <?php if (!empty($leadPost['cover_image'])): ?>
-            <img src="<?= h(img_url($leadPost['cover_image'])) ?>" alt="<?= h($leadPost['title']) ?>">
+            <img src="<?= h(img_url($leadPost['cover_image'])) ?>" alt="<?= h($leadPost['title']) ?>" loading="lazy">
           <?php else: ?>
             <div class="nyt-placeholder">T</div>
           <?php endif; ?>

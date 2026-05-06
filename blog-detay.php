@@ -118,7 +118,7 @@ require __DIR__ . '/includes/header.php';
   <?php if (!empty($post['cover_image'])): ?>
   <div class="blog-detail-img">
     <div class="container container-narrow">
-      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h(tr_field($post, 'title') ?: $post['title']) ?>">
+      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h(tr_field($post, 'title') ?: $post['title']) ?>" loading="lazy">
     </div>
   </div>
   <?php endif; ?>

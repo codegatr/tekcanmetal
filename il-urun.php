@@ -294,7 +294,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div class="iu-hero-img">
           <?php if (!empty($urun['image'])): ?>
-            <img src="<?= h(img_url($urun['image'])) ?>" alt="<?= h($urun['name']) ?> <?= h($il['name']) ?>">
+            <img src="<?= h(img_url($urun['image'])) ?>" alt="<?= h($urun['name']) ?> <?= h($il['name']) ?>" loading="lazy">
           <?php else: ?>
             <div class="iu-hero-img-placeholder"><?= h(mb_strtoupper(mb_substr($urun['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
           <?php endif; ?>

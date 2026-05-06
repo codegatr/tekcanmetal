@@ -50,7 +50,7 @@ require __DIR__ . '/includes/header.php';
         <div class="pd-main-img">
           <?php $mainImg = $p['image'] ?: ($images[0]['image'] ?? null); ?>
           <?php if ($mainImg): ?>
-            <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>">
+            <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>" loading="lazy">
           <?php else: ?>
             <div class="pd-placeholder">
               <svg viewBox="0 0 200 200" width="120" height="120" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -62,10 +62,10 @@ require __DIR__ . '/includes/header.php';
         <?php if (count($images) > 1 || ($p['image'] && $images)): ?>
         <div class="pd-thumbs">
           <?php if ($p['image']): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt=""></button>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt="" loading="lazy"></button>
           <?php endif; ?>
           <?php foreach ($images as $im): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image'])) ?>"><img src="<?= h(img_url($im['image'])) ?>" alt=""></button>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image'])) ?>"><img src="<?= h(img_url($im['image'])) ?>" alt="" loading="lazy"></button>
           <?php endforeach; ?>
         </div>
         <?php endif; ?>

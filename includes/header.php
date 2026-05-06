@@ -100,11 +100,28 @@ foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
 
 <link rel="icon" href="<?= h(url(settings('favicon', 'assets/img/favicon.png'))) ?>">
 
+<!-- DNS prefetch + preconnect (LCP optimizasyonu) -->
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- Google Fonts: render-blocking olmayan async yükleme (PageSpeed best practice) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+<!-- Critical CSS -->
 <link rel="stylesheet" href="<?= h(url('assets/css/style.css')) ?>?v=<?= h(TM_VERSION) ?>">
+
+<!-- LCP optimizasyonu: Anasayfada ilk slider görselini preload et -->
+<?php
+if ($current === 'index'):
+    $firstSlider = row("SELECT image FROM tm_sliders WHERE is_active=1 AND image IS NOT NULL AND image != '' ORDER BY sort_order LIMIT 1");
+    if ($firstSlider && !empty($firstSlider['image'])):
+        $sliderUrl = url($firstSlider['image']);
+?>
+<link rel="preload" as="image" href="<?= h($sliderUrl) ?>" fetchpriority="high">
+<?php endif; endif; ?>
 
 <?php if ($code = settings('analytics_code')): ?>
 <?= $code ?>
@@ -397,7 +414,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
       <a href="<?= h(url_lang('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> <?= h(t('header.menu.home', 'Anasayfa')) ?>">
         <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
-          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img">
+          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40" fetchpriority="high">
         <?php else: ?>
           <span class="logo-mark">T</span>
           <span class="logo-text">
@@ -472,7 +489,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
     <a href="<?= h(url('/')) ?>" class="logo">
       <?php $logoFile2 = settings('logo', 'assets/img/logo.png'); ?>
       <?php if ($logoFile2 && file_exists(__DIR__ . '/../' . $logoFile2)): ?>
-        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img">
+        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40">
       <?php else: ?>
         <span class="logo-mark">T</span>
         <span class="logo-text">

@@ -454,7 +454,7 @@ require __DIR__ . '/includes/header.php';
           <span class="pn-card-num"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
           <div class="pn-card-logo">
             <?php if (!empty($p['logo'])): ?>
-              <img src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>">
+              <img src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy">
             <?php else: ?>
               <span class="pn-card-initial"><?= h(mb_strtoupper(mb_substr($p['name'], 0, 2, 'UTF-8'), 'UTF-8')) ?></span>
             <?php endif; ?>
