@@ -50,7 +50,7 @@ require __DIR__ . '/includes/header.php';
         <div class="pd-main-img">
           <?php $mainImg = $p['image'] ?: ($images[0]['image'] ?? null); ?>
           <?php if ($mainImg): ?>
-            <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>" loading="lazy">
+            <img id="pdMain" src="<?= h(img_url($mainImg)) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="pd-placeholder">
               <svg viewBox="0 0 200 200" width="120" height="120" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -62,10 +62,10 @@ require __DIR__ . '/includes/header.php';
         <?php if (count($images) > 1 || ($p['image'] && $images)): ?>
         <div class="pd-thumbs">
           <?php if ($p['image']): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt="" loading="lazy"></button>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($p['image'])) ?>"><img src="<?= h(img_url($p['image'])) ?>" alt="" loading="lazy" decoding="async"></button>
           <?php endif; ?>
           <?php foreach ($images as $im): ?>
-            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image'])) ?>"><img src="<?= h(img_url($im['image'])) ?>" alt="" loading="lazy"></button>
+            <button type="button" class="pd-thumb" data-img="<?= h(img_url($im['image'])) ?>"><img src="<?= h(img_url($im['image'])) ?>" alt="" loading="lazy" decoding="async"></button>
           <?php endforeach; ?>
         </div>
         <?php endif; ?>
@@ -118,7 +118,7 @@ require __DIR__ . '/includes/header.php';
         <a class="prod-card" href="<?= h(url_lang('urun.php?slug=' . urlencode($r['slug']))) ?>">
           <div class="prod-img">
             <?php if (!empty($r['image'])): ?>
-              <img src="<?= h(img_url($r['image'])) ?>" alt="<?= h(tr_field($r, 'title') ?: $r['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($r['image'])) ?>" alt="<?= h(tr_field($r, 'title') ?: $r['name']) ?>" loading="lazy" decoding="async">
             <?php else: ?>
               <div class="prod-placeholder"><svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="20" width="48" height="32" rx="2"/><path d="M8 32h48"/></svg></div>
             <?php endif; ?>

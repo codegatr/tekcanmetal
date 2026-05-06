@@ -118,7 +118,7 @@ require __DIR__ . '/includes/header.php';
   <?php if (!empty($post['cover_image'])): ?>
   <div class="blog-detail-img">
     <div class="container container-narrow">
-      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h(tr_field($post, 'title') ?: $post['title']) ?>" loading="lazy">
+      <img src="<?= h(img_url($post['cover_image'])) ?>" alt="<?= h(tr_field($post, 'title') ?: $post['title']) ?>" loading="lazy" decoding="async">
     </div>
   </div>
   <?php endif; ?>
@@ -139,7 +139,7 @@ require __DIR__ . '/includes/header.php';
       <article class="blog-card">
         <a href="<?= h(url('blog-detay.php?slug=' . urlencode($r['slug']))) ?>" class="blog-img-link">
           <?php if (!empty($r['cover_image'])): ?>
-            <img src="<?= h(img_url($r['cover_image'])) ?>" alt="<?= h($r['title']) ?>" loading="lazy">
+            <img src="<?= h(img_url($r['cover_image'])) ?>" alt="<?= h($r['title']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="blog-placeholder">📝</div>
           <?php endif; ?>

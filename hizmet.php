@@ -683,7 +683,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hz-other-card-img">
             <span class="hz-other-card-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($o['image'])): ?>
-              <img src="<?= h(img_url($o['image'])) ?>" alt="<?= h(tr_field($o, 'title')) ?>" loading="lazy">
+              <img src="<?= h(img_url($o['image'])) ?>" alt="<?= h(tr_field($o, 'title')) ?>" loading="lazy" decoding="async">
             <?php endif; ?>
           </div>
           <div class="hz-other-card-body">

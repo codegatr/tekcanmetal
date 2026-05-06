@@ -37,7 +37,7 @@ require __DIR__ . '/includes/header.php';
               data-index="<?= $i ?>"
               data-img="<?= h(img_url($im['image'])) ?>"
               data-caption="<?= h($im['caption'] ?? '') ?>">
-        <img src="<?= h(img_url($im['image'])) ?>" alt="<?= h($im['caption'] ?? $album['title']) ?>" loading="lazy">
+        <img src="<?= h(img_url($im['image'])) ?>" alt="<?= h($im['caption'] ?? $album['title']) ?>" loading="lazy" decoding="async">
       </button>
       <?php endforeach; ?>
     </div>
@@ -50,7 +50,7 @@ require __DIR__ . '/includes/header.php';
   <button class="lb-prev" aria-label="Önceki">‹</button>
   <button class="lb-next" aria-label="Sonraki">›</button>
   <div class="lb-frame">
-    <img id="lbImg" src="" alt="" loading="lazy">
+    <img id="lbImg" src="" alt="" loading="lazy" decoding="async">
     <div id="lbCap" class="lb-cap"></div>
   </div>
 </div>

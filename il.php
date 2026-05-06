@@ -360,7 +360,7 @@ require __DIR__ . '/includes/header.php';
         <a class="il-product" href="<?= h(url('il-urun.php?il=' . $il['slug'] . '&urun=' . $p['slug'])) ?>">
           <div class="il-product-img">
             <?php if (!empty($p['image'])): ?>
-              <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h($p['name']) ?> <?= h($il['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h($p['name']) ?> <?= h($il['name']) ?>" loading="lazy" decoding="async">
             <?php endif; ?>
           </div>
           <div class="il-product-body">

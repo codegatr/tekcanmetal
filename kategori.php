@@ -76,7 +76,7 @@ require __DIR__ . '/includes/header.php';
       <a class="prod-card" href="<?= h(url_lang('urun.php?slug=' . urlencode($p['slug']))) ?>">
         <div class="prod-img">
           <?php if (!empty($p['image'])): ?>
-            <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>" loading="lazy">
+            <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h(tr_field($p, 'title') ?: $p['name']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="prod-placeholder">
               <svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">

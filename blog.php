@@ -489,7 +489,7 @@ function tr_date_long($date) {
       <div class="nyt-lead-grid">
         <a href="<?= h(url('blog-detay.php?slug=' . urlencode($leadPost['slug']))) ?>" class="nyt-lead-img-link">
           <?php if (!empty($leadPost['cover_image'])): ?>
-            <img src="<?= h(img_url($leadPost['cover_image'])) ?>" alt="<?= h($leadPost['title']) ?>" loading="lazy">
+            <img src="<?= h(img_url($leadPost['cover_image'])) ?>" alt="<?= h($leadPost['title']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="nyt-placeholder">T</div>
           <?php endif; ?>
@@ -540,7 +540,7 @@ function tr_date_long($date) {
           <article class="nyt-article">
             <a href="<?= h(url('blog-detay.php?slug=' . urlencode($p['slug']))) ?>" class="nyt-article-img">
               <?php if (!empty($p['cover_image'])): ?>
-                <img src="<?= h(img_url($p['cover_image'])) ?>" alt="<?= h($p['title']) ?>" loading="lazy">
+                <img src="<?= h(img_url($p['cover_image'])) ?>" alt="<?= h($p['title']) ?>" loading="lazy" decoding="async">
               <?php else: ?>
                 <div class="nyt-placeholder">T</div>
               <?php endif; ?>

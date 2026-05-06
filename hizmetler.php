@@ -408,7 +408,7 @@ require __DIR__ . '/includes/header.php';
         <div class="hz-service-img">
           <span class="hz-service-img-num">— <?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
           <?php if (!empty($s['image'])): ?>
-            <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
+            <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="hz-service-img-placeholder"><?= h(mb_strtoupper(mb_substr($s['title'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
           <?php endif; ?>

@@ -414,7 +414,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
       <a href="<?= h(url_lang('/')) ?>" class="header-logo" aria-label="<?= h(settings('site_short_name')) ?> <?= h(t('header.menu.home', 'Anasayfa')) ?>">
         <?php $logoFile = settings('logo', 'assets/img/logo.png'); ?>
         <?php if ($logoFile && file_exists(__DIR__ . '/../' . $logoFile)): ?>
-          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40" fetchpriority="high">
+          <img src="<?= h(url($logoFile)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40" fetchpriority="high" decoding="async">
         <?php else: ?>
           <span class="logo-mark">T</span>
           <span class="logo-text">
@@ -489,7 +489,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
     <a href="<?= h(url('/')) ?>" class="logo">
       <?php $logoFile2 = settings('logo', 'assets/img/logo.png'); ?>
       <?php if ($logoFile2 && file_exists(__DIR__ . '/../' . $logoFile2)): ?>
-        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40">
+        <img src="<?= h(url($logoFile2)) ?>" alt="Tekcan Metal" class="logo-img" width="160" height="40" decoding="async">
       <?php else: ?>
         <span class="logo-mark">T</span>
         <span class="logo-text">

@@ -151,6 +151,9 @@ RedirectMatch 404 /\.htpasswd$
 # =====================================================
 # Tarayıcı önbelleği
 # =====================================================
+# =====================================================
+# Cache TTL süreleri (mod_expires)
+# =====================================================
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault                              "access plus 1 month"
@@ -181,6 +184,24 @@ RedirectMatch 404 /\.htpasswd$
     ExpiresByType application/xml               "access plus 1 hour"
     ExpiresByType application/xhtml+xml         "access plus 1 hour"
 </IfModule>
+
+# =====================================================
+# Cache-Control immutable header (PageSpeed best practice)
+# Static asset'ler için browser tekrar fetch yapmasın
+# =====================================================
+<IfModule mod_headers.c>
+    # Görseller, fontlar — uzun süreli cache + immutable
+    <FilesMatch "\.(jpe?g|png|gif|webp|svg|ico|woff2?|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=15552000, immutable"
+    </FilesMatch>
+
+    # CSS/JS — query string ile versionlandığı için max-age uzun + immutable
+    # ?v=1.0.113 gibi query değiştiğinde tarayıcı yine yeni sürümü alır
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+    </FilesMatch>
+</IfModule>
+
 
 # =====================================================
 # Hot-link koruması (uploads içindeki görseller için)

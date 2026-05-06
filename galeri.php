@@ -38,7 +38,7 @@ require __DIR__ . '/includes/header.php';
         <div class="album-cover">
           <?php $cover = $a['cover'] ?? $a['cover_image'] ?? null; ?>
           <?php if (!empty($cover)): ?>
-            <img src="<?= h(img_url($cover)) ?>" alt="<?= h($a['title']) ?>" loading="lazy">
+            <img src="<?= h(img_url($cover)) ?>" alt="<?= h($a['title']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="album-placeholder">📷</div>
           <?php endif; ?>

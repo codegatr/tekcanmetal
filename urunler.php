@@ -689,7 +689,7 @@ require __DIR__ . '/includes/header.php';
               <span class="urn-card-badge">★ Öne Çıkan</span>
             <?php endif; ?>
             <?php if (!empty($p['image'])): ?>
-              <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($p['image'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy" decoding="async">
             <?php else: ?>
               <div class="urn-card-placeholder"><?= h(mb_strtoupper(mb_substr($p['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>

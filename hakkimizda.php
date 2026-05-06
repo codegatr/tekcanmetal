@@ -1414,7 +1414,7 @@ require __DIR__ . '/includes/header.php';
         <?php foreach ($partners as $p): ?>
           <div class="kral-partner" title="<?= h($p['name']) ?>">
             <?php if (!empty($p['logo'])): ?>
-              <img src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($p['logo'])) ?>" alt="<?= h($p['name']) ?>" loading="lazy" decoding="async">
             <?php else: ?>
               <span style="font-family:var(--kral-serif);font-size:18px;color:var(--kral-navy);font-weight:600;"><?= h($p['name']) ?></span>
             <?php endif; ?>

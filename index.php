@@ -856,7 +856,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-product-img">
             <span class="hp-product-num"><?= str_pad($i+1, 2, '0', STR_PAD_LEFT) ?> —</span>
             <?php if (!empty($c['image'])): ?>
-              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy">
+              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy" decoding="async" width="400" height="280">
             <?php else: ?>
               <div class="hp-product-img-placeholder"><?= h(mb_strtoupper(mb_substr($c['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
@@ -889,7 +889,7 @@ require __DIR__ . '/includes/header.php';
           <div class="hp-service-img">
             <span class="hp-service-num">— 0<?= $i+1 ?> —</span>
             <?php if (!empty($s['image'])): ?>
-              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy">
+              <img src="<?= h(img_url($s['image'])) ?>" alt="<?= h(tr_field($s, 'title')) ?>" loading="lazy" decoding="async" width="400" height="280">
             <?php endif; ?>
           </div>
           <div class="hp-service-body">
@@ -984,7 +984,7 @@ require __DIR__ . '/includes/header.php';
         <a class="hp-news" href="<?= h(url_lang('blog-detay.php?slug=' . $n['slug'])) ?>">
           <?php if (!empty($n['cover_image'])): ?>
           <div class="hp-news-thumb">
-            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h(tr_field($n, 'title')) ?>" loading="lazy">
+            <img src="<?= h(img_url($n['cover_image'])) ?>" alt="<?= h(tr_field($n, 'title')) ?>" loading="lazy" decoding="async" width="400" height="240">
           </div>
           <?php endif; ?>
           <div class="hp-news-body">
@@ -1015,7 +1015,7 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($partners as $p): ?>
           <div class="hp-partner" title="<?= h($p['name']) ?>">
             <?php if (!empty($p['logo'])): ?>
-              <img class="hp-partner-logo" src="<?= h(img_url($p['logo'])) ?>" alt="<?= h(tr_field($p, 'name')) ?>" loading="lazy">
+              <img class="hp-partner-logo" src="<?= h(img_url($p['logo'])) ?>" alt="<?= h(tr_field($p, 'name')) ?>" loading="lazy" decoding="async" width="180" height="80">
             <?php else: ?>
               <div class="hp-partner-initial"><?= h(mb_strtoupper(mb_substr($p['name'], 0, 2, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>

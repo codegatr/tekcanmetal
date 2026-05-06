@@ -296,7 +296,7 @@ require __DIR__ . '/includes/header.php';
         <a class="uu-product" href="<?= h(url('kategori.php?slug=' . $c['slug'])) ?>">
           <div class="uu-product-img">
             <?php if (!empty($c['image'])): ?>
-              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h($c['name']) ?> <?= h($ulke['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h($c['name']) ?> <?= h($ulke['name']) ?>" loading="lazy" decoding="async">
             <?php endif; ?>
           </div>
           <div class="uu-product-body">

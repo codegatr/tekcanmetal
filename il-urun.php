@@ -294,7 +294,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div class="iu-hero-img">
           <?php if (!empty($urun['image'])): ?>
-            <img src="<?= h(img_url($urun['image'])) ?>" alt="<?= h($urun['name']) ?> <?= h($il['name']) ?>" loading="lazy">
+            <img src="<?= h(img_url($urun['image'])) ?>" alt="<?= h($urun['name']) ?> <?= h($il['name']) ?>" loading="lazy" decoding="async">
           <?php else: ?>
             <div class="iu-hero-img-placeholder"><?= h(mb_strtoupper(mb_substr($urun['name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
           <?php endif; ?>
@@ -383,7 +383,7 @@ require __DIR__ . '/includes/header.php';
         <a class="iu-related-card" href="<?= h(url('il-urun.php?il=' . $il['slug'] . '&urun=' . $r['slug'])) ?>">
           <div class="iu-related-card-img">
             <?php if (!empty($r['image'])): ?>
-              <img src="<?= h(img_url($r['image'])) ?>" alt="<?= h($r['name']) ?>" loading="lazy">
+              <img src="<?= h(img_url($r['image'])) ?>" alt="<?= h($r['name']) ?>" loading="lazy" decoding="async">
             <?php endif; ?>
           </div>
           <div class="iu-related-card-body">
