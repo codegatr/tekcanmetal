@@ -100,6 +100,7 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         <div class="adm-nav-title">Sistem</div>
         <a href="<?= h(admin_url('settings.php')) ?>"<?= nav_active('settings.php', $current) ?>>⚙ Ayarlar</a>
         <a href="<?= h(admin_url('seo-araclari.php')) ?>"<?= nav_active('seo-araclari.php', $current) ?>>🔍 SEO Araçları</a>
+        <a href="<?= h(admin_url('sitemap.php')) ?>"<?= nav_active('sitemap.php', $current) ?>>🗺 Site Haritası</a>
         <a href="<?= h(admin_url('gorsel-optimize.php')) ?>"<?= nav_active('gorsel-optimize.php', $current) ?>>🖼️ Görsel Optimize (WebP)</a>
         <a href="<?= h(admin_url('users.php')) ?>"<?= nav_active('users.php', $current) ?>>🔐 Kullanıcılar</a>
         <a href="<?= h(admin_url('guncelleme.php')) ?>"<?= nav_active('guncelleme.php', $current) ?>>🔄 Güncelleme</a>
