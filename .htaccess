@@ -280,6 +280,15 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^wp-content(/.*)?$              - [G,L]
     RewriteRule ^wp-includes(/.*)?$             - [G,L]
 
+    # WordPress saldırı/exploit vektörleri → 410 Gone (Search Console ve security için)
+    RewriteRule ^wp-login\.php$                 - [G,L]
+    RewriteRule ^wp-config\.php$                - [G,L]
+    RewriteRule ^wp-cron\.php$                  - [G,L]
+    RewriteRule ^xmlrpc\.php$                   - [G,L]
+    RewriteRule ^wp-trackback\.php$             - [G,L]
+    RewriteRule ^wp-comments-post\.php$         - [G,L]
+    RewriteRule ^wp-signup\.php$                - [G,L]
+
     # WordPress RSS feed'leri (28 URL Search Console'da raporlandı):
     # /feed/, /tag/X/feed/, /urun-gruplarimiz/X/feed/, /comments/feed/ vb.
     # Hepsi içerik kategorisine veya anasayfaya 301 redirect
@@ -288,9 +297,59 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^category/[^/]*/feed/?$         /urunler.php [R=301,L]
     RewriteRule ^[^/]+/feed/?$                  / [R=301,L]
     RewriteRule ^feed/?$                        / [R=301,L]
+    RewriteRule ^comments/?$                    / [R=301,L]
     RewriteRule ^comments/feed/?$               / [R=301,L]
 
-    RewriteRule ^?p=([0-9]+)$                   / [R=301,L]
+    # WordPress Tag URL'leri (314 + 523 URL Search Console raporu için)
+    # Spesifik tag'ler yukarıda zaten yakalanıyor; geri kalan tüm /tag/* için fallback
+    # NOT: /tag/.*$ yakalama kuralı yukarıdaki blokta zaten var
+
+    # WordPress Category URL'leri (genel)
+    # /category/X, /category/X/, /category/X/Y/ tümü → urunler
+    RewriteRule ^category/.*$                   /urunler.php [R=301,L]
+
+    # WordPress Author URL'leri → anasayfa
+    RewriteRule ^author/[^/]+/?.*$              / [R=301,L]
+
+    # WordPress Pagination URL'leri (/page/2/, /page/3/ vb) → anasayfa
+    RewriteRule ^page/[0-9]+/?$                 / [R=301,L]
+
+    # WordPress Date Archive URL'leri (/2020/, /2020/05/, /2020/05/15/) → blog
+    RewriteRule ^[0-9]{4}/[0-9]{2}/[0-9]{2}/.*$ /blog.php [R=301,L]
+    RewriteRule ^[0-9]{4}/[0-9]{2}/.*$          /blog.php [R=301,L]
+    RewriteRule ^[0-9]{4}/[0-9]{2}/?$           /blog.php [R=301,L]
+    RewriteRule ^[0-9]{4}/?$                    /blog.php [R=301,L]
+
+    # WordPress Search → ürünler sayfasının arama'sına
+    RewriteRule ^search/(.+?)/?$                /urunler.php?q=$1 [R=301,L,QSA]
+
+    # WordPress Attachment URL'leri (/attachment/X) → anasayfa
+    RewriteRule ^\?attachment_id=[0-9]+         / [R=301,L]
+    RewriteRule ^attachment/.*$                 / [R=301,L]
+
+    # WordPress query string redirect'leri (DOĞRU regex ile, query string üzerinden)
+    # /?p=NUMBER (eski permalink) → anasayfa
+    RewriteCond %{QUERY_STRING} ^p=([0-9]+)$
+    RewriteRule ^$ / [R=301,L]
+    # /?page_id=NUMBER → anasayfa
+    RewriteCond %{QUERY_STRING} ^page_id=([0-9]+)$
+    RewriteRule ^$ / [R=301,L]
+    # /?cat=NUMBER → ürünler
+    RewriteCond %{QUERY_STRING} ^cat=([0-9]+)$
+    RewriteRule ^$ /urunler.php? [R=301,L]
+    # /?m=YYYYMM (mobile WordPress) → anasayfa
+    RewriteCond %{QUERY_STRING} ^m=[0-9]+$
+    RewriteRule ^$ / [R=301,L]
+    # /?amp veya ?amp=1 → anasayfa
+    RewriteCond %{QUERY_STRING} ^amp=?[01]?$
+    RewriteRule ^$ /? [R=301,L]
+    # ?replytocom=N → kaldır
+    RewriteCond %{QUERY_STRING} ^replytocom=[0-9]+$
+    RewriteRule ^$ /? [R=301,L]
+
+    # ESKİ ?p= bug fix (yanlış regex idi: ^?p=)
+    # Yukarıdaki QUERY_STRING blokları doğru çalışacak
+
 
     # ═══════════════════════════════════════════════════
     # i18n DİL ROUTING (v1.0.56)
