@@ -33,8 +33,91 @@ $customIntro = val("SELECT custom_intro FROM tm_seo_il_urun WHERE il_slug=? AND 
 $pageTitle = $urun['name'] . ' ' . $il['name'] . ' Tedariği';
 $metaDesc  = $il['name'] . ' için ' . $urun['name'] . ' tedariği. ' . $il['cargo_info'] . ' Üretici sertifikalı, rekabetçi fiyat.';
 
+// Canonical URL — duplicate önleme
+$canonical = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/') .
+             '/il-urun.php?il=' . urlencode($ilSlug) . '&urun=' . urlencode($urunSlug);
+
 require __DIR__ . '/includes/header.php';
 ?>
+
+<!-- Canonical URL -->
+<?php echo '<link rel="canonical" href="' . htmlspecialchars($canonical, ENT_QUOTES, 'UTF-8') . '">' . "\n"; ?>
+
+<!-- Schema.org structured data (Product + Service + BreadcrumbList + LocalBusiness) -->
+<?php
+$baseUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
+$siteName = settings('site_name', 'Tekcan Metal');
+$sitePhone = '+90' . preg_replace('/\D/', '', settings('site_phone', '3323422452'));
+
+$schemaData = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        // 1. BreadcrumbList — gezinti yolu
+        [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Anasayfa', 'item' => $baseUrl . '/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $il['name'], 'item' => $baseUrl . '/il.php?slug=' . urlencode($il['slug'])],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $urun['name'], 'item' => $baseUrl . '/urun.php?slug=' . urlencode($urun['slug'])],
+                ['@type' => 'ListItem', 'position' => 4, 'name' => $il['name'] . ' ' . $urun['name'] . ' Tedariği'],
+            ],
+        ],
+        // 2. Product — Google'a "bu bir ürün" sinyali
+        array_filter([
+            '@type' => 'Product',
+            'name' => $urun['name'],
+            'description' => $urun['short_desc'] ?: ($urun['name'] . ' - ' . $il['name'] . ' için üretici sertifikalı tedarik'),
+            'category' => $urun['cat_name'] ?? null,
+            'image' => !empty($urun['image']) ? $baseUrl . '/' . ltrim($urun['image'], '/') : null,
+            'brand' => ['@type' => 'Brand', 'name' => $siteName],
+            'offers' => [
+                '@type' => 'Offer',
+                'priceCurrency' => 'TRY',
+                'availability' => 'https://schema.org/InStock',
+                'areaServed' => $il['name'],
+                'url' => $canonical,
+                'seller' => [
+                    '@type' => 'LocalBusiness',
+                    'name' => $siteName,
+                    'telephone' => $sitePhone,
+                    'address' => [
+                        '@type' => 'PostalAddress',
+                        'addressLocality' => 'Konya',
+                        'addressRegion' => 'Konya',
+                        'addressCountry' => 'TR',
+                    ],
+                ],
+            ],
+        ]),
+        // 3. Service — bölgesel tedarik hizmeti (en kritik sinyal)
+        [
+            '@type' => 'Service',
+            'serviceType' => $urun['name'] . ' Tedariği',
+            'name' => $il['name'] . ' ' . $urun['name'] . ' Tedariği',
+            'description' => $il['name'] . ' ve çevresine ' . $urun['name'] . ' tedariği. ' . $il['cargo_info'],
+            'areaServed' => [
+                '@type' => 'AdministrativeArea',
+                'name' => $il['name'],
+                'addressCountry' => 'TR',
+            ],
+            'provider' => [
+                '@type' => 'LocalBusiness',
+                'name' => $siteName,
+                'telephone' => $sitePhone,
+                'url' => $baseUrl,
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'addressLocality' => 'Konya',
+                    'addressCountry' => 'TR',
+                ],
+            ],
+        ],
+    ],
+];
+?>
+<script type="application/ld+json">
+<?= json_encode($schemaData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+</script>
 
 <style>.iu-page{--navy:#050d24;--navy-2:#0c1e44;--gold:#c9a86b;--red:#c8102e;--red-dark:#a00d24;--paper:#fafaf7;--line:#e3e0d8;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;background:var(--paper)}.iu-hero{background:linear-gradient(135deg,rgba(5,13,36,.94) 0%,rgba(20,54,114,.85) 100%);color:#fff;padding:120px 0 90px;position:relative;overflow:hidden;border-bottom:4px solid var(--gold)}.iu-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent 0,transparent 4px,rgba(255,255,255,.02) 4px,rgba(255,255,255,.02) 5px)}.iu-hero .container{position:relative;z-index:2}.iu-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}@media (max-width:900px){.iu-hero-grid{grid-template-columns:1fr;gap:30px}}.iu-hero-eyebrow{display:inline-flex;align-items:center;gap:14px;font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}.iu-hero-eyebrow::before{content:'';width:30px;height:1px;background:var(--gold)}.iu-hero h1{font-family:var(--serif);font-size:clamp(38px,5.5vw,64px);font-weight:500;line-height:1.05;letter-spacing:-1px;margin:0 0 20px;color:#fff}.iu-hero h1 em{font-style:italic;color:var(--gold)}.iu-hero-lead{font-family:var(--sans);font-size:16px;line-height:1.65;color:rgba(255,255,255,.78);margin:0 0 24px}.iu-hero-cargo{background:rgba(201,168,107,.12);border-left:3px solid var(--gold);padding:14px 18px;font-family:var(--sans);font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.55}.iu-hero-cargo strong{color:var(--gold)}.iu-hero-img{background:#fff;border:4px solid var(--gold);aspect-ratio:1;overflow:hidden;position:relative}.iu-hero-img img{width:100%;height:100%;object-fit:cover}.iu-hero-img-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:160px;color:rgba(5,13,36,.1)}.iu-breadcrumb-strip{background:#fff;border-bottom:1px solid var(--line);padding:18px 0}.iu-breadcrumb{font-family:var(--sans);font-size:12.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.iu-breadcrumb a{color:#5a5a5a;text-decoration:none;font-weight:500}.iu-breadcrumb a:hover{color:var(--red)}.iu-breadcrumb .sep{color:var(--gold)}.iu-breadcrumb .current{color:var(--navy);font-weight:600;font-style:italic;font-family:var(--serif);font-size:14.5px}.iu-main{padding:80px 0}.iu-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:50px;align-items:start}@media (max-width:900px){.iu-grid{grid-template-columns:1fr}}.iu-content h2{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--navy);margin:32px 0 14px;letter-spacing:-.3px;border-left:3px solid var(--gold);padding-left:14px}.iu-content h2:first-child{margin-top:0}.iu-content p{font-family:var(--sans);font-size:15.5px;line-height:1.75;color:#3a3a3a;margin:0 0 16px}.iu-content ul{margin:0 0 20px;padding:0;list-style:none}.iu-content ul li{position:relative;padding-left:22px;margin-bottom:10px;font-family:var(--sans);font-size:14.5px;line-height:1.65;color:#3a3a3a}.iu-content ul li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}.iu-content strong{color:var(--navy);font-weight:700}.iu-side{position:sticky;top:100px}@media (max-width:900px){.iu-side{position:static}}.iu-specs{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);padding:28px 28px 24px;margin-bottom:20px}.iu-specs-eyebrow{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:6px}.iu-specs h3{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--navy);margin:0 0 18px;letter-spacing:-.3px}.iu-specs-table{width:100%;border-collapse:collapse;font-size:13px}.iu-specs-table th,.iu-specs-table td{padding:9px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.iu-specs-table tr:last-child th,.iu-specs-table tr:last-child td{border-bottom:0}.iu-specs-table th{font-family:var(--sans);font-size:11px;font-weight:600;color:#5a5a5a;text-transform:uppercase;letter-spacing:.5px;width:45%;padding-right:10px}.iu-specs-table td{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--navy)}.iu-side-cta{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:28px;border-top:4px solid var(--red)}.iu-side-cta-eyebrow{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}.iu-side-cta h3{font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;margin:0 0 12px;line-height:1.2}.iu-side-cta h3 em{font-style:italic;color:var(--gold)}.iu-side-cta p{font-family:var(--sans);font-size:13px;line-height:1.6;color:rgba(255,255,255,.75);margin:0 0 18px}.iu-side-btn{display:block;text-align:center;padding:14px;margin-bottom:8px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:.2s;border:1.5px solid transparent}.iu-side-btn-primary{background:var(--red);color:#fff;border-color:var(--red)}.iu-side-btn-primary:hover{background:var(--red-dark);border-color:var(--red-dark)}.iu-side-btn-ghost{background:transparent;color:var(--gold);border-color:var(--gold)}.iu-side-btn-ghost:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}.iu-related{background:#fff;padding:80px 0;border-top:1px solid var(--line)}.iu-related-head{text-align:center;max-width:680px;margin:0 auto 40px}.iu-related-head .eyebrow{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:inline-block}.iu-related-head h2{font-family:var(--serif);font-size:34px;font-weight:500;letter-spacing:-.5px;line-height:1.15;color:var(--navy);margin:0}.iu-related-head h2 em{font-style:italic;color:var(--red)}.iu-related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}@media (max-width:900px){.iu-related-grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:480px){.iu-related-grid{grid-template-columns:1fr}}.iu-related-card{text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;transition:.25s}.iu-related-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 28px rgba(5,13,36,.1)}.iu-related-card-img{height:140px;background:var(--navy-2);overflow:hidden}.iu-related-card-img img{width:100%;height:100%;object-fit:cover}.iu-related-card-body{padding:14px 16px}.iu-related-card h4{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--navy);margin:0 0 6px;line-height:1.25}.iu-related-card-link{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red)}</style>
 
