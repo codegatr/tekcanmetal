@@ -1,7 +1,7 @@
 {
   "name": "Tekcan Metal CMS",
   "slug": "tekcanmetal",
-  "version": "1.0.120",
+  "version": "1.0.121",
   "release_date": "2026-05-12",
   "php_required": "8.1",
   "repo": "codegatr/tekcanmetal",
