@@ -364,6 +364,7 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^(en|ar|ru)/kategori/([a-z0-9\-]+)/?$           kategori.php?slug=$2 [L,QSA,E=LANG:%1]
     RewriteRule ^(en|ar|ru)/hizmet/([a-z0-9\-]+)/?$             hizmet.php?slug=$2 [L,QSA,E=LANG:%1]
     RewriteRule ^(en|ar|ru)/blog/([a-z0-9\-]+)/?$               blog-detay.php?slug=$2 [L,QSA,E=LANG:%1]
+    RewriteRule ^(en|ar|ru)/rehber/([a-z0-9\-]+)/?$             blog-detay.php?slug=$2-rehberi [L,QSA,E=LANG:%1]
     RewriteRule ^(en|ar|ru)/sayfa/([a-z0-9\-]+)/?$              sayfa.php?slug=$2 [L,QSA,E=LANG:%1]
     RewriteRule ^(en|ar|ru)/(.+\.php)$                          $2 [L,QSA,E=LANG:%1]
 
@@ -384,6 +385,7 @@ RedirectMatch 404 /\.htpasswd$
     RewriteRule ^kategori/([a-z0-9\-]+)/?$      kategori.php?slug=$1 [L,QSA]
     RewriteRule ^hizmet/([a-z0-9\-]+)/?$        hizmet.php?slug=$1 [L,QSA]
     RewriteRule ^blog/([a-z0-9\-]+)/?$          blog-detay.php?slug=$1 [L,QSA]
+    RewriteRule ^rehber/([a-z0-9\-]+)/?$        blog-detay.php?slug=$1-rehberi [L,QSA]
     RewriteRule ^sayfa/([a-z0-9\-]+)/?$         sayfa.php?slug=$1 [L,QSA]
 
     # Mevcut dosya/klasör değilse 404.php

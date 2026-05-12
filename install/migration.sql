@@ -13466,3 +13466,39 @@ DELETE FROM tm_price_lists
 WHERE brand_slug LIKE 'konya%boru%'
    OR brand_name LIKE '%Konya Boru%';
 
+
+-- =====================================================
+-- v1.0.120 — SEO: Rehber Yazıları Title Kısaltma + Pretty URL
+--
+-- Search Console performans verisi:
+--   "genişletilmiş sac" → 3,192 gösterim, 23 tık (CTR %0.7)
+--   "baklava sac"       → 1,666 gösterim, 21 tık (CTR %1.3)
+--
+-- Mevcut title'lar 70-76 karakter — Google 60'ta kesiyor.
+-- Title'lar 50-60 karakter aralığına optimize edildi (önemli
+-- anahtar kelimeler başta, marka sonda).
+--
+-- Pretty URL: /rehber/genisletilmis-sac/ pattern .htaccess'te
+-- aktif edildi. Bu sayfalar canonical olarak yeni URL'i kullanır.
+-- =====================================================
+
+UPDATE tm_blog_posts
+SET title = 'Genişletilmiş Sac: Ölçü, Ağırlık, Fiyat — Tekcan Metal'
+WHERE slug = 'genisletilmis-sac-rehberi';
+
+UPDATE tm_blog_posts
+SET title = 'Baklava Sac: Ölçü, Ağırlık, Çeşit ve Fiyat — Tekcan Metal'
+WHERE slug = 'baklava-sac-rehberi';
+
+UPDATE tm_blog_posts
+SET title = 'Galvanizli Sac: Z140-Z600, Ölçü, Ağırlık — Tekcan Metal'
+WHERE slug = 'galvanizli-sac-rehberi';
+
+UPDATE tm_blog_posts
+SET title = 'Trapez Sac: TR-18/27/35/45, Renk, Fiyat — Tekcan Metal'
+WHERE slug = 'trapez-sac-rehberi';
+
+UPDATE tm_blog_posts
+SET title = 'Kalın Levha Sac: S235-S460, 5-100mm — Tekcan Metal'
+WHERE slug = 'kalin-levha-sac-rehberi';
+

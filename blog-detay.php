@@ -21,9 +21,20 @@ $metaDesc  = tr_field($post, 'meta_desc') ?: tr_field($post, 'excerpt') ?: excer
 
 // SEO: Schema.org BlogPosting + Breadcrumb + FAQ markup
 $siteUrl = rtrim(settings('site_url', 'https://tekcanmetal.com'), '/');
-$postUrl = $siteUrl . '/blog-detay.php?slug=' . urlencode($post['slug']);
+
+// Pretty URL: 'urun-rehberi' kategorisindeki -rehberi suffix'li yazılar için /rehber/X/
+$isRehber = ($post['cat_slug'] ?? '') === 'urun-rehberi' && substr($post['slug'], -8) === '-rehberi';
+if ($isRehber) {
+    $prettySlug = substr($post['slug'], 0, -8); // -rehberi suffix'ini kaldır
+    $postUrl = $siteUrl . '/rehber/' . $prettySlug . '/';
+} else {
+    $postUrl = $siteUrl . '/blog-detay.php?slug=' . urlencode($post['slug']);
+}
 $postImage = !empty($post['cover_image']) ? $siteUrl . '/' . $post['cover_image'] : $siteUrl . '/' . settings('logo', 'assets/img/logo.png');
 $postContent = tr_field($post, 'content') ?: $post['content'];
+
+// Canonical URL — Google'ın hangi versiyonu kullanacağını söyle
+$canonical = $postUrl;
 
 // FAQ extraction (içerikte <h4>...</h4><p>...</p> patterni varsa)
 $faqItems = [];
@@ -92,6 +103,8 @@ if (count($faqItems) >= 2) {
 
 require __DIR__ . '/includes/header.php';
 ?>
+<!-- Canonical URL — rehber yazıları için pretty URL, diğerleri için blog-detay -->
+<link rel="canonical" href="<?= h($canonical) ?>">
 <?php foreach ($schemaItems as $sch): ?>
 <script type="application/ld+json"><?= json_encode($sch, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?></script>
 <?php endforeach; ?>

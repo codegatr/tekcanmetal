@@ -125,11 +125,22 @@ try {
 } catch (Throwable $e) {}
 
 // 5) Blog yazıları (multi-language) — yüksek priority
+// Rehber kategorisindeki -rehberi suffix'li yazılar pretty URL ile: /rehber/X/
 try {
-    $posts = all("SELECT slug, COALESCE(updated_at, published_at) AS lm FROM tm_blog_posts WHERE is_active=1 AND published_at IS NOT NULL ORDER BY published_at DESC");
+    $posts = all("SELECT p.slug, p.category_id, c.slug AS cat_slug, COALESCE(p.updated_at, p.published_at) AS lm
+                  FROM tm_blog_posts p LEFT JOIN tm_blog_categories c ON c.id=p.category_id
+                  WHERE p.is_active=1 AND p.published_at IS NOT NULL ORDER BY p.published_at DESC");
     foreach ($posts as $b) {
-        sm_url_multi($base, 'blog-detay.php?slug=' . urlencode($b['slug']),
-                     $b['lm'] ?? $today, 'weekly', '0.7', $LANGS);
+        $isRehber = ($b['cat_slug'] ?? '') === 'urun-rehberi' && substr($b['slug'], -8) === '-rehberi';
+        if ($isRehber) {
+            // Pretty URL + yüksek priority (büyük SEO fırsat sayfaları)
+            $prettySlug = substr($b['slug'], 0, -8);
+            sm_url_multi($base, 'rehber/' . $prettySlug . '/',
+                         $b['lm'] ?? $today, 'weekly', '0.9', $LANGS);
+        } else {
+            sm_url_multi($base, 'blog-detay.php?slug=' . urlencode($b['slug']),
+                         $b['lm'] ?? $today, 'weekly', '0.7', $LANGS);
+        }
     }
 } catch (Throwable $e) {}
 
