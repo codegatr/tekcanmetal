@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $errors = [];
         $enabled = isset($_POST['enabled']) ? '1' : '0';
         $mode    = ($_POST['mode'] ?? 'test') === 'live' ? 'live' : 'test';
+        $merchId = trim((string)($_POST['merchant_id'] ?? ''));
         $appId   = trim((string)($_POST['app_id'] ?? ''));
         $mKey    = trim((string)($_POST['merchant_key'] ?? ''));
         $secretIn = trim((string)($_POST['app_secret'] ?? ''));
@@ -36,16 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $notify  = trim((string)($_POST['notify_email'] ?? ''));
 
         $urlRe = '#^https://[a-z0-9.\-]+(:\d+)?(/[A-Za-z0-9._~\-/]*)?$#i';
-        if ($baseTest !== '' && !preg_match($urlRe, $baseTest)) $errors[] = 'Test API adresi https:// ile başlamalı ve geçerli olmalı.';
-        if ($baseLive !== '' && !preg_match($urlRe, $baseLive)) $errors[] = 'Canlı API adresi https:// ile başlamalı ve geçerli olmalı.';
+        if ($baseTest !== '' && !preg_match($urlRe, $baseTest)) $errors[] = 'Test Sunucu adresi https:// ile başlamalı ve geçerli olmalı.';
+        if ($baseLive !== '' && !preg_match($urlRe, $baseLive)) $errors[] = 'Canlı Sunucu adresi https:// ile başlamalı ve geçerli olmalı.';
         if ($min === null || $min <= 0)                          $errors[] = 'Minimum tutar geçersiz.';
         if ($max === null || ($min !== null && $max < $min))     $errors[] = 'Maksimum tutar, minimumdan küçük olamaz.';
         if ($notify !== '' && !filter_var($notify, FILTER_VALIDATE_EMAIL)) $errors[] = 'Bildirim e-postası geçersiz.';
+        if ($merchId !== '' && !preg_match('/^[0-9A-Za-z_\-]{1,40}$/', $merchId)) $errors[] = 'Üye İşyeri ID yalnızca harf/rakam içermeli.';
         if (strlen($appId) > 255 || strlen($mKey) > 255 || strlen($secretIn) > 255) $errors[] = 'Kimlik bilgisi alanları çok uzun.';
 
         $secret = $secretIn !== '' ? $secretIn : (string)settings('qnbpay_app_secret', '');
         if ($enabled === '1' && ($appId === '' || $mKey === '' || $secret === '')) {
-            $errors[] = 'Yayına almak için App ID, App Secret ve Merchant Key zorunludur.';
+            $errors[] = 'Yayına almak için Uygulama Anahtarı, Uygulama Parolası ve Üye İşyeri Anahtarı zorunludur.';
         }
         if ($enabled === '1' && $mode === 'live' && strpos((string)SITE_URL, 'https://') !== 0) {
             $errors[] = 'Canlı modda site adresi (SITE_URL) https:// olmalıdır.';
@@ -54,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
 
         settings_set('qnbpay_enabled', $enabled, 'payment');
         settings_set('qnbpay_mode', $mode, 'payment');
+        settings_set('qnbpay_merchant_id', $merchId, 'payment');
         settings_set('qnbpay_app_id', $appId, 'payment');
         settings_set('qnbpay_merchant_key', $mKey, 'payment');
         if ($secretIn !== '') settings_set('qnbpay_app_secret', $secretIn, 'payment');
@@ -67,17 +70,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         adm_back_with('success', 'Sanal POS ayarları kaydedildi.', $self . '?tab=settings');
     }
 
-    /* ---- Bağlantı testi (kayıtlı ayarlarla token alır) ---- */
+    /* ---- Bağlantı testi (kayıtlı ayarlarla token alır; adres adaylarını dener) ---- */
     if ($do === 'test') {
         $c = qnb_cfg();
         if ($c['app_id'] === '' || $c['app_secret'] === '') {
-            adm_back_with('error', 'Önce App ID ve App Secret kaydedin.', $self . '?tab=settings');
+            adm_back_with('error', 'Önce Uygulama Anahtarı ve Uygulama Parolası kaydedin.', $self . '?tab=settings');
         }
-        $r = qnb_token();
+        $pr  = qnb_probe();
+        $r   = $pr['result'];
         $host = parse_url($r['url'], PHP_URL_HOST) ?: '';
-        adm_back_with($r['ok'] ? 'success' : 'error',
-            'Bağlantı testi (' . $c['mode'] . ' / ' . $host . ', HTTP ' . $r['http'] . '): ' . $r['message'],
-            $self . '?tab=settings');
+        $msg = 'Bağlantı testi (' . $c['mode'] . ' / ' . $host . ', HTTP ' . $r['http'] . '): ' . $r['message'];
+        if ($pr['ok']) {
+            if ($r['base'] !== $c['base']) {
+                settings_set($c['mode'] === 'live' ? 'qnbpay_base_url_live' : 'qnbpay_base_url_test', $r['base'], 'payment');
+                $msg .= ' Çalışan sunucu adresi bulundu ve kaydedildi: ' . $r['base'];
+            }
+        } else {
+            $list = [];
+            foreach ($pr['tries'] as $t) $list[] = ($t['base'] ?? '') . ' → HTTP ' . $t['http'];
+            $msg .= ' | Denenen adresler: ' . implode('; ', $list);
+            if (!empty($r['json'])) $msg .= ' | Sunucu yanıt verdi ama kimlik reddedildi: Uygulama Anahtarı ile Uygulama Parolası\'nı (ve modu) kontrol edin; ikisi yer değiştirmiş olabilir.';
+        }
+        adm_back_with($pr['ok'] ? 'success' : 'error', $msg, $self . '?tab=settings');
     }
 
     /* ---- İnceleme/bekleyen kaydı elle sonuçlandır ---- */
@@ -112,23 +126,39 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
   <?php
     $ready  = qnb_enabled();
     $secSet = $cfg['app_secret'] !== '';
+    $retUrl = url('odeme-sonuc.php');
   ?>
   <div class="adm-panel">
     <div class="adm-panel-head">
       <h2>QNBpay Durumu</h2>
-      <span class="badge <?= $ready ? 'badge-on' : 'badge-off' ?>"><?= $ready ? 'Yayında (' . h($cfg['mode']) . ')' : 'Kapalı / eksik ayar' ?></span>
+      <span class="badge <?= $ready ? 'badge-on' : 'badge-off' ?>"><?= $ready ? 'Yayında (' . ($cfg['mode'] === 'live' ? 'canlı' : 'test') . ')' : 'Kapalı / eksik ayar' ?></span>
     </div>
     <div class="adm-panel-body">
-      <p class="help" style="margin:0 0 10px">API adresi (<?= h($cfg['mode']) ?>): <code><?= h($cfg['base']) ?></code></p>
-      <p class="help" style="margin:0 0 10px">QNBpay panelinde <strong>return / cancel URL</strong> olarak yetki vermeniz gerekirse: <code><?= h(url('odeme-sonuc.php')) ?></code></p>
+      <p class="help" style="margin:0 0 10px">Kullanılan sunucu (<?= $cfg['mode'] === 'live' ? 'Canlı' : 'Test' ?>): <code><?= h($cfg['base']) ?></code></p>
+      <?php if (!$ready): ?>
+        <p class="help" style="margin:0 0 10px">Menüde “Online Ödeme” yalnızca <strong>yayına alınınca</strong> ziyaretçilere görünür. Siz yönetici olarak giriş yapmışken menüde her zaman görürsünüz (önizleme).</p>
+      <?php endif; ?>
       <?php if (strpos((string)SITE_URL, 'https://') !== 0): ?>
         <p style="margin:0 0 10px;color:#b45309"><strong>Uyarı:</strong> SITE_URL https:// ile başlamıyor. Ödeme kuruluşları https dönüş adresi ister; canlı mod kaydedilemez.</p>
       <?php endif; ?>
       <form method="post" style="display:inline">
         <?= csrf_field() ?><input type="hidden" name="do" value="test">
-        <button type="submit" class="adm-btn adm-btn-ghost">🔌 Bağlantıyı Test Et (token al)</button>
+        <button type="submit" class="adm-btn adm-btn-ghost">🔌 Bağlantıyı Test Et</button>
       </form>
-      <span class="help" style="margin-left:8px">Kayıtlı App ID / App Secret ile QNBpay'den token isteği yapar; ödeme oluşturmaz.</span>
+      <span class="help" style="margin-left:8px">Kayıtlı Uygulama Anahtarı/Parolası ile QNBpay'den token ister; ödeme oluşturmaz. Sunucu yolu farklıysa çalışan adresi bulup kaydeder.</span>
+    </div>
+  </div>
+
+  <div class="adm-panel">
+    <div class="adm-panel-head"><h2>QNBpay Panelinde Girilecek Adresler</h2></div>
+    <div class="adm-panel-body">
+      <p class="help" style="margin:0 0 8px">QNBpay → <strong>Üye İşyeri Ayarları → API &amp; Entegrasyon → Url Bilgileri</strong>:</p>
+      <table class="adm-table"><tbody>
+        <tr><td style="width:220px">Dönüş Url</td><td><code><?= h($retUrl) ?></code></td></tr>
+        <tr><td>Başarılı Dönüş Url</td><td><code><?= h($retUrl) ?></code></td></tr>
+        <tr><td>Başarısız Dönüş Url</td><td><code><?= h($retUrl) ?></code></td></tr>
+      </tbody></table>
+      <p class="help" style="margin:10px 0 0">Üçü de aynı adres olabilir: sonucu bu sayfa, bankadan gelen doğrulamaya (hash) bakarak kendisi belirler. Adres panelde yazdığınızla <strong>birebir</strong> aynı olmalı (https, www var/yok).</p>
     </div>
   </div>
 
@@ -140,31 +170,41 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
         <div class="row"><label class="checkbox"><input type="checkbox" name="enabled" <?= $cfg['enabled'] ? 'checked' : '' ?>> Online ödemeyi yayına al (menüde “Online Ödeme” görünür)</label></div>
         <div class="row">
           <label>Mod</label>
-          <select name="mode" style="max-width:260px">
+          <select name="mode" style="max-width:280px">
             <option value="test" <?= $cfg['mode'] === 'test' ? 'selected' : '' ?>>Test (gerçek para çekilmez)</option>
             <option value="live" <?= $cfg['mode'] === 'live' ? 'selected' : '' ?>>Canlı</option>
           </select>
         </div>
+
+        <p class="help" style="margin:14px 0 6px"><strong>Entegrasyon Verileri</strong> — QNBpay panelindeki “API &amp; Entegrasyon” sayfasından (gözle butonuyla gösterin):</p>
         <div class="row-2">
-          <div class="row"><label>App ID</label><input type="text" name="app_id" value="<?= h($cfg['app_id']) ?>" autocomplete="off"></div>
-          <div class="row"><label>Merchant Key</label><input type="text" name="merchant_key" value="<?= h($cfg['merchant_key']) ?>" autocomplete="off"></div>
-        </div>
-        <div class="row">
-          <label>App Secret</label>
-          <input type="password" name="app_secret" value="" autocomplete="new-password" placeholder="<?= $secSet ? '•••••••• (kayıtlı — değiştirmek için yeni değer girin)' : 'QNBpay panelindeki App Secret' ?>">
-          <p class="help">Güvenlik için kayıtlı secret ekranda gösterilmez. Boş bırakırsanız mevcut değer korunur.</p>
+          <div class="row"><label>Üye İşyeri ID</label><input type="text" name="merchant_id" value="<?= h($cfg['merchant_id']) ?>" autocomplete="off" placeholder="örn. 41271">
+            <p class="help">Bilgi amaçlı saklanır; şu an ödeme isteklerinde kullanılmıyor.</p></div>
+          <div class="row"><label>Üye İşyeri Anahtarı</label><input type="text" name="merchant_key" value="<?= h($cfg['merchant_key']) ?>" autocomplete="off">
+            <p class="help">Genellikle <code>$2y$10$…</code> ile başlayan uzun anahtar.</p></div>
         </div>
         <div class="row-2">
-          <div class="row"><label>Min. tutar (₺)</label><input type="text" name="min_amount" value="<?= h(qnb_amount($cfg['min'])) ?>"></div>
-          <div class="row"><label>Maks. tutar (₺)</label><input type="text" name="max_amount" value="<?= h(qnb_amount($cfg['max'])) ?>"></div>
+          <div class="row"><label>Uygulama Anahtarı</label><input type="text" name="app_id" value="<?= h($cfg['app_id']) ?>" autocomplete="off">
+            <p class="help">Panelde “Uygulama Anahtarı” (App ID).</p></div>
+          <div class="row"><label>Uygulama Parolası</label>
+            <input type="password" name="app_secret" value="" autocomplete="new-password" placeholder="<?= $secSet ? '•••••••• (kayıtlı — değiştirmek için yeni değer girin)' : 'Panelde “Uygulama Parolası”' ?>">
+            <p class="help">Güvenlik için kayıtlı parola gösterilmez; boş bırakırsanız korunur.</p></div>
         </div>
-        <div class="row"><label>Bildirim e-postası</label><input type="text" name="notify_email" value="<?= h((string)settings('qnbpay_notify_email', '')) ?>" placeholder="Boşsa iletişim e-postası kullanılır: <?= h($cfg['notify']) ?>"></div>
-        <details style="margin-top:10px">
-          <summary style="cursor:pointer;font-weight:600">Gelişmiş: API adresi geçersiz kılma</summary>
-          <p class="help">QNBpay size farklı bir adres verdiyse yazın. Boş bırakılırsa varsayılan kullanılır.</p>
-          <div class="row"><label>Test API adresi</label><input type="text" name="base_url_test" value="<?= h((string)settings('qnbpay_base_url_test', '')) ?>" placeholder="<?= h(QNB_BASE_TEST) ?>"></div>
-          <div class="row"><label>Canlı API adresi</label><input type="text" name="base_url_live" value="<?= h((string)settings('qnbpay_base_url_live', '')) ?>" placeholder="<?= h(QNB_BASE_LIVE) ?>"></div>
-        </details>
+
+        <p class="help" style="margin:14px 0 6px"><strong>Sunucu adresleri</strong> — panelde “Canlı Sunucu” olarak görünen adres. Yalnızca alan adı yazarsanız <code>/ccpayment</code> otomatik eklenir; boş bırakırsanız varsayılan kullanılır.</p>
+        <div class="row-2">
+          <div class="row"><label>Canlı Sunucu</label><input type="text" name="base_url_live" value="<?= h((string)settings('qnbpay_base_url_live', '')) ?>" placeholder="https://panel.qnbpay.com.tr">
+            <p class="help">Şu an kullanılan: <code><?= h($cfg['base_live']) ?></code></p></div>
+          <div class="row"><label>Test Sunucu</label><input type="text" name="base_url_test" value="<?= h((string)settings('qnbpay_base_url_test', '')) ?>" placeholder="<?= h(QNB_BASE_TEST) ?>">
+            <p class="help">Şu an kullanılan: <code><?= h($cfg['base_test']) ?></code></p></div>
+        </div>
+
+        <div class="row-2" style="margin-top:14px">
+          <div class="row"><label>Asgari tutar (₺)</label><input type="text" name="min_amount" value="<?= h(qnb_amount($cfg['min'])) ?>"></div>
+          <div class="row"><label>Azami tutar (₺)</label><input type="text" name="max_amount" value="<?= h(qnb_amount($cfg['max'])) ?>"></div>
+        </div>
+        <div class="row"><label>Bildirim e-postası</label><input type="text" name="notify_email" value="<?= h((string)settings('qnbpay_notify_email', '')) ?>" placeholder="Boşsa iletişim e-postası kullanılır: <?= h($cfg['notify']) ?>">
+          <p class="help">Ödeme alındığında ve “İnceleme Gerekli” durumunda buraya e-posta gider.</p></div>
       </div>
     </div>
     <div class="form-actions"><button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button></div>
@@ -174,11 +214,10 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
     <div class="adm-panel-head"><h2>Canlıya Alma Kontrol Listesi</h2></div>
     <div class="adm-panel-body">
       <ol style="margin:0;padding-left:20px;line-height:1.8">
-        <li>QNBpay üye iş yeri panelinden <strong>App ID, App Secret, Merchant Key</strong> değerlerini alın (test ve canlı ayrı olabilir).</li>
-        <li>Mod <strong>Test</strong> iken kaydedin → <strong>Bağlantıyı Test Et</strong> başarılı olmalı.</li>
-        <li>Yayına alıp <code>/odeme.php</code> üzerinden test kartıyla bir işlem yapın; sonuç “Ödendi” görünmeli.</li>
-        <li>Başarısız ve iptal senaryolarını da deneyin (Ödemeler sekmesinde “Başarısız” görünmeli).</li>
-        <li>Canlı bilgileri girip modu <strong>Canlı</strong> yapın; küçük tutarlı bir gerçek işlem deneyin.</li>
+        <li>QNBpay panelinde <strong>Url Bilgileri</strong> alanlarına yukarıdaki adresi girip <strong>Kaydet</strong>'e basın.</li>
+        <li>Buradaki <strong>Entegrasyon Verileri</strong> alanlarını doldurup <strong>Kaydet</strong>; ardından <strong>Bağlantıyı Test Et</strong> başarılı olmalı.</li>
+        <li>“Yayına al”ı işaretleyin → menüde <strong>Online Ödeme</strong> görünür. <code>/odeme.php</code> ile küçük tutarlı bir işlem yapın.</li>
+        <li>Sonuç <strong>Ödemeler</strong> sekmesinde “Ödendi” görünmeli; başarısız/iptal senaryosunu da deneyin.</li>
       </ol>
     </div>
   </div>

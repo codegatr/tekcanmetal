@@ -14,19 +14,32 @@
  */
 
 defined('QNB_BASE_TEST') or define('QNB_BASE_TEST', 'https://test.qnbpay.com.tr/ccpayment');
-defined('QNB_BASE_LIVE') or define('QNB_BASE_LIVE', 'https://portal.qnbpay.com.tr/ccpayment');
+defined('QNB_BASE_LIVE') or define('QNB_BASE_LIVE', 'https://panel.qnbpay.com.tr/ccpayment');
+defined('QNB_BASE_LIVE_LEGACY') or define('QNB_BASE_LIVE_LEGACY', 'https://portal.qnbpay.com.tr/ccpayment');
 
 /* ============================================================
  * AYARLAR
  * ============================================================ */
 
+/**
+ * Panelde "Canlı Sunucu" olarak görünen adres yalnızca alan adıysa (https://panel.qnbpay.com.tr)
+ * CCPayment yolu /ccpayment eklenir; girilmiş bir /api/... son eki atılır. Boşsa varsayılan döner.
+ */
+function qnb_normalize_base(string $url, string $default): string {
+    $url = trim($url);
+    if ($url === '') return $default;
+    $url = (string)preg_replace('#/api(/.*)?$#i', '', rtrim($url, '/'));
+    $p = parse_url($url);
+    if (!$p || empty($p['host'])) return $default;
+    if (empty($p['path']) || $p['path'] === '/') $url = rtrim($url, '/') . '/ccpayment';
+    return rtrim($url, '/');
+}
+
 function qnb_cfg(): array {
     $mode = settings('qnbpay_mode', 'test') === 'live' ? 'live' : 'test';
 
-    $baseTest = trim((string)settings('qnbpay_base_url_test', ''));
-    $baseLive = trim((string)settings('qnbpay_base_url_live', ''));
-    $baseTest = rtrim($baseTest !== '' ? $baseTest : QNB_BASE_TEST, '/');
-    $baseLive = rtrim($baseLive !== '' ? $baseLive : QNB_BASE_LIVE, '/');
+    $baseTest = qnb_normalize_base((string)settings('qnbpay_base_url_test', ''), QNB_BASE_TEST);
+    $baseLive = qnb_normalize_base((string)settings('qnbpay_base_url_live', ''), QNB_BASE_LIVE);
 
     $min = (float)settings('qnbpay_min_amount', '1');
     if ($min <= 0) $min = 1.0;
@@ -39,7 +52,8 @@ function qnb_cfg(): array {
     return [
         'enabled'      => (string)settings('qnbpay_enabled', '0') === '1',
         'mode'         => $mode,
-        'app_id'       => trim((string)settings('qnbpay_app_id', '')),
+        'merchant_id'  => trim((string)settings('qnbpay_merchant_id', '')),   // "Üye İşyeri ID" (bilgi amaçlı)
+        'app_id'       => trim((string)settings('qnbpay_app_id', '')),          // "Uygulama Anahtarı"
         'app_secret'   => trim((string)settings('qnbpay_app_secret', '')),
         'merchant_key' => trim((string)settings('qnbpay_merchant_key', '')),
         'base'         => $mode === 'live' ? $baseLive : $baseTest,
@@ -300,9 +314,9 @@ function qnb_build_form(array $pay): array {
  * SUNUCU → QNBpay: token (bağlantı testi)
  * ============================================================ */
 
-function qnb_token(): array {
+function qnb_token(?string $base = null, int $timeout = 20): array {
     $c = qnb_cfg();
-    $url = $c['base'] . '/api/token';
+    $url = ($base ?? $c['base']) . '/api/token';
     if (!function_exists('curl_init')) {
         return ['ok' => false, 'http' => 0, 'message' => 'PHP cURL eklentisi yüklü değil.', 'url' => $url];
     }
@@ -312,8 +326,8 @@ function qnb_token(): array {
         CURLOPT_POSTFIELDS     => json_encode(['app_id' => $c['app_id'], 'app_secret' => $c['app_secret']]),
         CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Accept: application/json'],
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 20,
-        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT        => $timeout,
+        CURLOPT_CONNECTTIMEOUT => min(10, $timeout),
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_SSL_VERIFYHOST => 2,
     ]);
@@ -328,11 +342,43 @@ function qnb_token(): array {
     $j = json_decode((string)$body, true);
     $token = is_array($j) ? ($j['data']['token'] ?? '') : '';
     if ($token !== '') {
-        return ['ok' => true, 'http' => $http, 'message' => 'Kimlik doğrulandı (token alındı).', 'url' => $url];
+        return ['ok' => true, 'http' => $http, 'message' => 'Kimlik doğrulandı (token alındı).', 'url' => $url, 'json' => true];
     }
     $msg = is_array($j) ? (string)($j['status_description'] ?? $j['message'] ?? '') : '';
     if ($msg === '') $msg = mb_substr(trim(strip_tags((string)$body)), 0, 200, 'UTF-8');
-    return ['ok' => false, 'http' => $http, 'message' => 'Token alınamadı: ' . ($msg ?: 'boş yanıt'), 'url' => $url];
+    // 'json' => sunucu protokolü konuştu (adres doğru; büyük olasılıkla kimlik bilgisi hatalı)
+    return ['ok' => false, 'http' => $http, 'message' => 'Token alınamadı: ' . ($msg ?: 'boş yanıt'), 'url' => $url,
+            'json' => is_array($j) && isset($j['status_code'])];
+}
+
+/** Yapılandırılan adres + makul alternatifler (yol farkı ihtimaline karşı). */
+function qnb_base_candidates(): array {
+    $c = qnb_cfg();
+    $list = [$c['base']];
+    $p = parse_url($c['base']);
+    if (!empty($p['host'])) {
+        $root = ($p['scheme'] ?? 'https') . '://' . $p['host'] . (isset($p['port']) ? ':' . $p['port'] : '');
+        $list[] = $root . '/ccpayment';
+        $list[] = $root;
+    }
+    if ($c['mode'] === 'live') $list[] = QNB_BASE_LIVE_LEGACY;
+    return array_values(array_unique($list));
+}
+
+/**
+ * Bağlantı testi: adayları sırayla dener. Sunucu protokolü konuşup kimlik reddederse durur
+ * (adres doğrudur; kimlik bilgisi yanlıştır). @return array ['ok','result','tries']
+ */
+function qnb_probe(): array {
+    $tries = [];
+    foreach (qnb_base_candidates() as $base) {
+        $r = qnb_token($base, 12);
+        $r['base'] = $base;
+        $tries[] = $r;
+        if ($r['ok'] || !empty($r['json'])) break;
+    }
+    $last = end($tries);
+    return ['ok' => (bool)$last['ok'], 'result' => $last['ok'] || !empty($last['json']) ? $last : $tries[0], 'tries' => $tries];
 }
 
 /* ============================================================

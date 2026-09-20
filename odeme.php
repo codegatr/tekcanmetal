@@ -169,6 +169,12 @@ require __DIR__ . '/includes/header.php';
       <div class="pay-wrap">
 
       <?php if (!$payOn): ?>
+        <?php if (!empty($_SESSION['admin_id']) && in_array($_SESSION['admin_role'] ?? '', ['superadmin', 'admin'], true)): ?>
+        <div class="pay-off" style="margin-bottom:18px;border-top-color:#c8102e;text-align:left">
+          <strong>Yönetici önizlemesi:</strong> Online ödeme henüz <em>yayında değil</em>; bu menü öğesini ve sayfayı yalnızca siz görüyorsunuz.
+          <a href="<?= h(url('admin/sanal-pos.php?tab=settings')) ?>" style="margin:0 0 0 6px">Sanal POS → Ayarlar</a>
+        </div>
+        <?php endif; ?>
         <div class="pay-off">
           <h2><?= h(t('pay.off_title', 'Online ödeme şu anda kullanılamıyor')) ?></h2>
           <p><?= h(t('pay.off_text', 'Ödemenizi aşağıdaki yöntemlerle yapabilirsiniz.')) ?></p>

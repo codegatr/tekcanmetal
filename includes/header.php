@@ -9,6 +9,10 @@ if (is_file(__DIR__ . '/qnbpay.php')) {
     try {
         require_once __DIR__ . '/qnbpay.php';
         $qnbOn = function_exists('qnb_enabled') && qnb_enabled();
+        // Yönetici önizlemesi: giriş yapmış admin, POS henüz yayında değilken de menüyü görür
+        if (!$qnbOn && !empty($_SESSION['admin_id']) && in_array($_SESSION['admin_role'] ?? '', ['superadmin', 'admin'], true)) {
+            $qnbOn = true;
+        }
     } catch (Throwable $e) {
         $qnbOn = false;
     }
