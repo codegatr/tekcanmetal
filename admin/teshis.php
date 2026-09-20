@@ -41,6 +41,7 @@ function get_table_counts(): array {
         'tm_gallery_images'   => 'Galeri Görselleri',
         'tm_contact_messages' => 'İletişim Mesajları',
         'tm_mail_orders'      => 'Mail Order',
+        'tm_payments'         => 'Sanal POS Ödemeleri',
         'tm_loyalty_members'  => 'Sadakat Üyeleri',
         'tm_system_versions'  => 'Sürüm Geçmişi',
         'tm_activity_logs'    => 'Aktivite Logları',

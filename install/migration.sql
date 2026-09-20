@@ -13705,3 +13705,53 @@ WHERE slug = 'dekoratif-saclar';
 -- 5) İçerik dolgusu doğrulama: kaç byte yazıldı?
 -- (Sonraki migration'a info: bu UPDATE'ler 20+ KB içerik yazar)
 
+
+-- =====================================================
+-- v1.0.122 — QNBpay Sanal POS (online ödeme)
+-- Ödeme kayıtları + ayar anahtarları. Idempotent.
+-- (Aynı DDL includes/qnbpay.php::qnb_schema_sql() içinde de bulunur;
+--  migration çalışmazsa tablo ilk kullanımda kendini oluşturur.)
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS tm_payments (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    invoice_id VARCHAR(40) NOT NULL,
+    public_ref CHAR(32) NOT NULL,
+    full_name VARCHAR(150) NOT NULL,
+    company VARCHAR(150) NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    description VARCHAR(500) NULL,
+    amount DECIMAL(12,2) NOT NULL,
+    currency CHAR(3) NOT NULL DEFAULT 'TRY',
+    installments TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    status ENUM('pending','paid','failed','review') NOT NULL DEFAULT 'pending',
+    pos_mode ENUM('test','live') NOT NULL DEFAULT 'test',
+    order_no VARCHAR(64) NULL,
+    gateway_code VARCHAR(30) NULL,
+    gateway_message VARCHAR(500) NULL,
+    md_status VARCHAR(10) NULL,
+    card_mask VARCHAR(32) NULL,
+    hash_valid TINYINT(1) NOT NULL DEFAULT 0,
+    raw_response TEXT NULL,
+    ip_address VARCHAR(45) NULL,
+    user_agent VARCHAR(255) NULL,
+    paid_at DATETIME NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uniq_invoice (invoice_id),
+    UNIQUE KEY uniq_ref (public_ref),
+    INDEX idx_status_created (status, created_at),
+    INDEX idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO tm_settings (setting_key, setting_value, setting_group) VALUES
+    ('qnbpay_enabled',      '0',      'payment'),
+    ('qnbpay_mode',         'test',   'payment'),
+    ('qnbpay_app_id',       '',       'payment'),
+    ('qnbpay_app_secret',   '',       'payment'),
+    ('qnbpay_merchant_key', '',       'payment'),
+    ('qnbpay_min_amount',   '1.00',   'payment'),
+    ('qnbpay_max_amount',   '250000.00', 'payment'),
+    ('qnbpay_notify_email', '',       'payment');

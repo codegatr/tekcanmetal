@@ -33,6 +33,8 @@ Disallow: /yedek/
 Disallow: /uploads/cache/
 Disallow: /uploads/_thumbs/
 Disallow: /404.php
+Disallow: /odeme.php
+Disallow: /odeme-sonuc.php
 
 # Search ve filter sayfaları (duplicate content riski)
 Disallow: /*?s=

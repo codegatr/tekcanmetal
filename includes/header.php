@@ -2,6 +2,8 @@
 require_once __DIR__ . '/db.php';
 
 $current = basename($_SERVER['PHP_SELF'], '.php');
+require_once __DIR__ . '/qnbpay.php';
+$qnbOn = qnb_enabled();   // Sanal POS yayındaysa menüde göster (v1.0.122)
 $pageTitle = $pageTitle ?? settings('site_short_name', 'Tekcan Metal');
 $metaDesc  = $metaDesc  ?? settings('site_description', '');
 $canonical = url(ltrim($_SERVER['REQUEST_URI'] ?? '/', '/'));
@@ -95,8 +97,8 @@ foreach (['tr', 'en', 'ar', 'ru'] as $lang) {
 <?php endif; ?>
 
 <!-- Robots -->
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="robots" content="<?= h($metaRobots ?? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1') ?>">
+<meta name="googlebot" content="<?= h($metaRobots ?? 'index, follow, max-snippet:-1, max-image-preview:large') ?>">
 
 <link rel="icon" href="<?= h(url(settings('favicon', 'assets/img/favicon.png'))) ?>">
 
@@ -446,6 +448,11 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
             <li><a href="<?= h(url_lang('galeri.php')) ?>"><?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a></li>
           </ul>
         </li>
+        <?php if (!empty($qnbOn)): ?>
+        <li class="<?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">
+          <a href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?></a>
+        </li>
+        <?php endif; ?>
         <li class="<?= $current==='iletisim'?'active':'' ?>">
           <a href="<?= h(url_lang('iletisim.php')) ?>"><?= h(t('header.menu.contact', 'İletişim')) ?></a>
         </li>
@@ -519,6 +526,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
     <a href="<?= h(url_lang('hesaplama.php')) ?>" class="parent <?= $current==='hesaplama'?'active':'' ?>">📐 <?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a>
     <a href="<?= h(url_lang('galeri.php')) ?>" class="parent <?= $current==='galeri'?'active':'' ?>">📷 <?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a>
     <a href="<?= h(url_lang('blog.php')) ?>" class="parent <?= $current==='blog'?'active':'' ?>">📰 <?= h(t('header.menu.blog', "Tekcan'dan Haberler")) ?></a>
+    <?php if (!empty($qnbOn)): ?><a href="<?= h(url_lang('odeme.php')) ?>" class="parent <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">🔒 <?= h(t('header.menu.online_payment', 'Online Ödeme')) ?></a><?php endif; ?>
     <a href="<?= h(url_lang('iletisim.php')) ?>" class="parent <?= $current==='iletisim'?'active':'' ?>">📞 <?= h(t('header.menu.contact', 'İletişim')) ?></a>
     <a href="<?= h(url_lang('mail-order.php')) ?>" class="parent">💳 <?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>
   </nav>

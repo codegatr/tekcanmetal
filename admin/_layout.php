@@ -94,6 +94,10 @@ $roleLabels = ['superadmin' => 'Süper Yönetici', 'admin' => 'Yönetici', 'edit
         <div class="adm-nav-title">Kurumsal</div>
         <a href="<?= h(admin_url('partners.php')) ?>"<?= nav_active('partners.php', $current) ?>>🤝 Çözüm Ortakları</a>
         <a href="<?= h(admin_url('banks.php')) ?>"<?= nav_active('banks.php', $current) ?>>🏦 Bankalar / IBAN</a>
+        <?php if (in_array($adminUser['role'] ?? '', ['superadmin','admin'], true)):
+            $payReview = 0; try { $payReview = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='review'"); } catch (Throwable $e) {} ?>
+        <a href="<?= h(admin_url('sanal-pos.php')) ?>"<?= nav_active('sanal-pos.php', $current) ?>>💳 Sanal POS / Ödemeler<?= $payReview ? ' <span style="background:#c8102e;color:#fff;border-radius:9px;padding:1px 7px;font-size:11px;margin-left:4px">' . $payReview . '</span>' : '' ?></a>
+        <?php endif; ?>
       </div>
 
       <div class="adm-nav-section">
