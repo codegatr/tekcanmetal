@@ -2,8 +2,17 @@
 require_once __DIR__ . '/db.php';
 
 $current = basename($_SERVER['PHP_SELF'], '.php');
-require_once __DIR__ . '/qnbpay.php';
-$qnbOn = qnb_enabled();   // Sanal POS yayındaysa menüde göster (v1.0.122)
+// Sanal POS yayındaysa menüde göster. Bu blok siteyi ASLA düşürmemeli: dosya eksik/bozuksa
+// (yarım güncelleme vb.) menü öğesi sessizce gizlenir.
+$qnbOn = false;
+if (is_file(__DIR__ . '/qnbpay.php')) {
+    try {
+        require_once __DIR__ . '/qnbpay.php';
+        $qnbOn = function_exists('qnb_enabled') && qnb_enabled();
+    } catch (Throwable $e) {
+        $qnbOn = false;
+    }
+}
 $pageTitle = $pageTitle ?? settings('site_short_name', 'Tekcan Metal');
 $metaDesc  = $metaDesc  ?? settings('site_description', '');
 $canonical = url(ltrim($_SERVER['REQUEST_URI'] ?? '/', '/'));
