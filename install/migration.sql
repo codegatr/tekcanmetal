@@ -13761,7 +13761,11 @@ INSERT IGNORE INTO tm_settings (setting_key, setting_value, setting_group) VALUE
     ('qnbpay_hours_enabled','1',      'payment'),
     ('qnbpay_open_time',    '07:00',  'payment'),
     ('qnbpay_close_time',   '23:00',  'payment'),
-    ('qnbpay_paused_until', '0',      'payment');
+    ('qnbpay_paused_until', '0',      'payment'),
+    ('qnbpay_test_merchant_id',  '', 'payment'),
+    ('qnbpay_test_merchant_key', '', 'payment'),
+    ('qnbpay_test_app_id',       '', 'payment'),
+    ('qnbpay_test_app_secret',   '', 'payment');
 
 -- v1.0.125: v1.0.122'de oluşmuş tm_payments tablosuna remote_addr ekle (idempotent)
 SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS

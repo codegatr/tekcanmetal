@@ -39,6 +39,7 @@ function qnb_normalize_base(string $url, string $default): string {
 
 function qnb_cfg(): array {
     $mode = settings('qnbpay_mode', 'test') === 'live' ? 'live' : 'test';
+    $pre  = $mode === 'test' ? 'qnbpay_test_' : 'qnbpay_';
 
     $baseTest = qnb_normalize_base((string)settings('qnbpay_base_url_test', ''), QNB_BASE_TEST);
     $baseLive = qnb_normalize_base((string)settings('qnbpay_base_url_live', ''), QNB_BASE_LIVE);
@@ -54,10 +55,11 @@ function qnb_cfg(): array {
     return [
         'enabled'      => (string)settings('qnbpay_enabled', '0') === '1',
         'mode'         => $mode,
-        'merchant_id'  => trim((string)settings('qnbpay_merchant_id', '')),   // "Üye İşyeri ID" (bilgi amaçlı)
-        'app_id'       => trim((string)settings('qnbpay_app_id', '')),          // "Uygulama Anahtarı"
-        'app_secret'   => trim((string)settings('qnbpay_app_secret', '')),
-        'merchant_key' => trim((string)settings('qnbpay_merchant_key', '')),
+        // Aktif moda ait bilgi seti: canlı = qnbpay_*, test = qnbpay_test_*
+        'merchant_id'  => trim((string)settings($pre . 'merchant_id', '')),    // "Üye İşyeri ID" (bilgi amaçlı)
+        'app_id'       => trim((string)settings($pre . 'app_id', '')),          // "Uygulama Anahtarı" (APP KEY)
+        'app_secret'   => trim((string)settings($pre . 'app_secret', '')),      // "Uygulama Parolası" (APP SECRET)
+        'merchant_key' => trim((string)settings($pre . 'merchant_key', '')),    // "Üye İşyeri Anahtarı" (Merchant KEY)
         'base'         => $mode === 'live' ? $baseLive : $baseTest,
         'base_test'    => $baseTest,
         'base_live'    => $baseLive,
@@ -67,7 +69,18 @@ function qnb_cfg(): array {
     ];
 }
 
-/** Sanal POS yayında mı? (Açık + kimlik bilgileri dolu) */
+/** Bir moda ait bilgi seti (admin ekranı için; parola değeri döndürülmez, yalnızca kayıtlı mı bilgisi). */
+function qnb_creds(string $mode): array {
+    $pre = $mode === 'test' ? 'qnbpay_test_' : 'qnbpay_';
+    return [
+        'merchant_id'    => trim((string)settings($pre . 'merchant_id', '')),
+        'merchant_key'   => trim((string)settings($pre . 'merchant_key', '')),
+        'app_id'         => trim((string)settings($pre . 'app_id', '')),
+        'app_secret_set' => trim((string)settings($pre . 'app_secret', '')) !== '',
+    ];
+}
+
+/** Sanal POS yayında mı? (Açık + aktif moddaki kimlik bilgileri dolu) */
 function qnb_enabled(): bool {
     $c = qnb_cfg();
     return $c['enabled'] && $c['app_id'] !== '' && $c['app_secret'] !== '' && $c['merchant_key'] !== '';

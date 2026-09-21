@@ -353,6 +353,44 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
 </script>
 <?php endif; ?>
 
+<?php if (!empty($qnbOn)): ?>
+<style id="qnb-nav-cta">
+/* Online Ödeme menü vurgusu (kırmızı düğme). Başlık ızgarası dardır (düğmesiz ~1441px ister);
+   bu yüzden düğme, ekran genişliğine göre kademeli sıkışır (gerçek tarayıcıda ölçülerek belirlendi). */
+.main-nav>li.nav-cta{display:flex;align-items:center;margin:0 8px 0 10px}
+.main-nav>li.nav-cta>a{background:var(--accent,#c8102e);color:#fff!important;padding:11px 20px;border-radius:6px;gap:10px;box-shadow:0 6px 18px rgba(200,16,46,.32);transition:background .18s,transform .18s,box-shadow .18s}
+.main-nav>li.nav-cta>a::before{display:none}
+.main-nav>li.nav-cta>a:hover,.main-nav>li.nav-cta.active>a{background:var(--accent-dark,#a00d24);color:#fff!important;transform:translateY(-1px);box-shadow:0 10px 24px rgba(200,16,46,.42)}
+.nav-cta .cta-arrow{display:inline-block;font-size:15px;line-height:1;transition:transform .2s}
+.main-nav>li.nav-cta>a:hover .cta-arrow{transform:translateX(4px)}
+/* Kademe 1 (≤1819px): ok korunur, boşluklar sıkılaşır */
+@media (min-width:1101px) and (max-width:1819px){
+  .main-nav>li>a{padding-left:8px;padding-right:8px;letter-spacing:.5px}
+  .main-nav>li>a::before{left:8px;right:8px}
+  .main-nav>li.nav-cta{margin:0 2px 0 4px}
+  .main-nav>li.nav-cta>a{padding:9px 13px;gap:6px}
+}
+/* Kademe 2 (≤1559px): ok gizlenir, yazı 12px */
+@media (min-width:1101px) and (max-width:1559px){
+  .main-nav>li>a{padding-left:7px;padding-right:7px;letter-spacing:.4px;font-size:12px}
+  .main-nav>li>a::before{left:7px;right:7px}
+  .main-nav>li.nav-cta{margin:0 2px 0 3px}
+  .main-nav>li.nav-cta>a{padding:8px 11px;gap:0}
+  .nav-cta .cta-arrow{display:none}
+  .header-inner{gap:12px}
+}
+/* Kademe 3 (≤1439px): yazı 11.5px */
+@media (min-width:1101px) and (max-width:1439px){
+  .main-nav>li>a{padding-left:6px;padding-right:6px;letter-spacing:.3px;font-size:11.5px}
+  .main-nav>li>a::before{left:6px;right:6px}
+  .main-nav>li.nav-cta>a{padding:8px 10px}
+  .header-inner{gap:10px}
+}
+.offcanvas-nav a.nav-cta{background:var(--accent,#c8102e)!important;color:#fff!important;border-radius:6px;text-align:center;font-weight:700;margin:10px 0;justify-content:center}
+.offcanvas-nav a.nav-cta .cta-arrow{margin-left:8px}
+@media (prefers-reduced-motion:reduce){.main-nav>li.nav-cta>a,.nav-cta .cta-arrow{transition:none}}
+</style>
+<?php endif; ?>
 </head>
 <body class="page-<?= h($current) ?> <?= $current === 'index' ? 'home-page' : 'inner-page' ?>">
 
@@ -462,8 +500,8 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
           </ul>
         </li>
         <?php if (!empty($qnbOn)): ?>
-        <li class="<?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">
-          <a href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?></a>
+        <li class="nav-cta <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">
+          <a href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a>
         </li>
         <?php endif; ?>
         <li class="<?= $current==='iletisim'?'active':'' ?>">
@@ -539,7 +577,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
     <a href="<?= h(url_lang('hesaplama.php')) ?>" class="parent <?= $current==='hesaplama'?'active':'' ?>">📐 <?= h(t('header.menu.calculator', 'Ağırlık Hesaplama')) ?></a>
     <a href="<?= h(url_lang('galeri.php')) ?>" class="parent <?= $current==='galeri'?'active':'' ?>">📷 <?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a>
     <a href="<?= h(url_lang('blog.php')) ?>" class="parent <?= $current==='blog'?'active':'' ?>">📰 <?= h(t('header.menu.blog', "Tekcan'dan Haberler")) ?></a>
-    <?php if (!empty($qnbOn)): ?><a href="<?= h(url_lang('odeme.php')) ?>" class="parent <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">🔒 <?= h(t('header.menu.online_payment', 'Online Ödeme')) ?></a><?php endif; ?>
+    <?php if (!empty($qnbOn)): ?><a href="<?= h(url_lang('odeme.php')) ?>" class="parent nav-cta <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">🔒 <?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a><?php endif; ?>
     <a href="<?= h(url_lang('iletisim.php')) ?>" class="parent <?= $current==='iletisim'?'active':'' ?>">📞 <?= h(t('header.menu.contact', 'İletişim')) ?></a>
     <a href="<?= h(url_lang('mail-order.php')) ?>" class="parent">💳 <?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>
   </nav>

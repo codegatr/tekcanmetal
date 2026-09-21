@@ -26,10 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $errors = [];
         $enabled = isset($_POST['enabled']) ? '1' : '0';
         $mode    = ($_POST['mode'] ?? 'test') === 'live' ? 'live' : 'test';
-        $merchId = trim((string)($_POST['merchant_id'] ?? ''));
-        $appId   = trim((string)($_POST['app_id'] ?? ''));
-        $mKey    = trim((string)($_POST['merchant_key'] ?? ''));
-        $secretIn = trim((string)($_POST['app_secret'] ?? ''));
+        // İki ayrı bilgi seti: canlı (qnbpay_*, alan adları düz) ve test (qnbpay_test_*, alan adları test_ önekli).
+        // Formda gönderilmeyen set olduğu gibi korunur.
+        $sets = ['live' => ['pre' => 'qnbpay_', 'f' => ''], 'test' => ['pre' => 'qnbpay_test_', 'f' => 'test_']];
+        $cred = [];
+        foreach ($sets as $m => $d) {
+            if (!isset($_POST[$d['f'] . 'app_id']) && !isset($_POST[$d['f'] . 'merchant_key']) && !isset($_POST[$d['f'] . 'app_secret'])) continue;
+            $cred[$m] = [
+                'merchant_id'  => trim((string)($_POST[$d['f'] . 'merchant_id'] ?? '')),
+                'app_id'       => trim((string)($_POST[$d['f'] . 'app_id'] ?? '')),
+                'merchant_key' => trim((string)($_POST[$d['f'] . 'merchant_key'] ?? '')),
+                'secret_in'    => trim((string)($_POST[$d['f'] . 'app_secret'] ?? '')),
+            ];
+        }
         $baseTest = trim((string)($_POST['base_url_test'] ?? ''));
         $baseLive = trim((string)($_POST['base_url_live'] ?? ''));
         $min     = qnb_parse_amount((string)($_POST['min_amount'] ?? '1'));
@@ -47,12 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         if ($notify !== '' && !filter_var($notify, FILTER_VALIDATE_EMAIL)) $errors[] = 'Bildirim e-postası geçersiz.';
         if (qnb_hhmm_to_min($openT) === null || qnb_hhmm_to_min($closeT) === null) $errors[] = 'Açılış/kapanış saati SS:DD biçiminde olmalı (örn. 07:00).';
         elseif ($hoursOn === '1' && $openT === $closeT) $errors[] = 'Açılış ve kapanış saati aynı olamaz.';
-        if ($merchId !== '' && !preg_match('/^[0-9A-Za-z_\-]{1,40}$/', $merchId)) $errors[] = 'Üye İşyeri ID yalnızca harf/rakam içermeli.';
-        if (strlen($appId) > 255 || strlen($mKey) > 255 || strlen($secretIn) > 255) $errors[] = 'Kimlik bilgisi alanları çok uzun.';
-
-        $secret = $secretIn !== '' ? $secretIn : (string)settings('qnbpay_app_secret', '');
-        if ($enabled === '1' && ($appId === '' || $mKey === '' || $secret === '')) {
-            $errors[] = 'Yayına almak için Uygulama Anahtarı, Uygulama Parolası ve Üye İşyeri Anahtarı zorunludur.';
+        foreach ($cred as $m => $c0) {
+            $lbl = $m === 'live' ? 'Canlı' : 'Test';
+            if ($c0['merchant_id'] !== '' && !preg_match('/^[0-9A-Za-z_\-]{1,40}$/', $c0['merchant_id'])) $errors[] = $lbl . ' Üye İşyeri ID yalnızca harf/rakam içermeli.';
+            if (strlen($c0['app_id']) > 255 || strlen($c0['merchant_key']) > 255 || strlen($c0['secret_in']) > 255) $errors[] = $lbl . ' bilgi alanları çok uzun.';
+        }
+        // Yayına almak için AKTİF moddaki set eksiksiz olmalı (formdan gelen ya da kayıtlı değerle)
+        $actPre = $sets[$mode]['pre'];
+        $act = $cred[$mode] ?? ['app_id' => (string)settings($actPre . 'app_id', ''), 'merchant_key' => (string)settings($actPre . 'merchant_key', ''), 'secret_in' => ''];
+        $secret = $act['secret_in'] !== '' ? $act['secret_in'] : (string)settings($actPre . 'app_secret', '');
+        if ($enabled === '1' && (trim((string)$act['app_id']) === '' || trim((string)$act['merchant_key']) === '' || trim($secret) === '')) {
+            $errors[] = 'Yayına almak için ' . ($mode === 'live' ? 'Canlı' : 'Test') . ' bilgilerinde Uygulama Anahtarı, Uygulama Parolası ve Üye İşyeri Anahtarı zorunludur.';
         }
         if ($enabled === '1' && $mode === 'live' && strpos((string)SITE_URL, 'https://') !== 0) {
             $errors[] = 'Canlı modda site adresi (SITE_URL) https:// olmalıdır.';
@@ -61,10 +75,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
 
         settings_set('qnbpay_enabled', $enabled, 'payment');
         settings_set('qnbpay_mode', $mode, 'payment');
-        settings_set('qnbpay_merchant_id', $merchId, 'payment');
-        settings_set('qnbpay_app_id', $appId, 'payment');
-        settings_set('qnbpay_merchant_key', $mKey, 'payment');
-        if ($secretIn !== '') settings_set('qnbpay_app_secret', $secretIn, 'payment');
+        foreach ($cred as $m => $c0) {
+            $pre = $sets[$m]['pre'];
+            settings_set($pre . 'merchant_id', $c0['merchant_id'], 'payment');
+            settings_set($pre . 'app_id', $c0['app_id'], 'payment');
+            settings_set($pre . 'merchant_key', $c0['merchant_key'], 'payment');
+            if ($c0['secret_in'] !== '') settings_set($pre . 'app_secret', $c0['secret_in'], 'payment');
+        }
         settings_set('qnbpay_base_url_test', $baseTest, 'payment');
         settings_set('qnbpay_base_url_live', $baseLive, 'payment');
         settings_set('qnbpay_min_amount', qnb_amount($min), 'payment');
@@ -166,7 +183,7 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
       <span class="badge <?= $ready ? 'badge-on' : 'badge-off' ?>"><?= $ready ? 'Yayında (' . ($cfg['mode'] === 'live' ? 'canlı' : 'test') . ')' : 'Kapalı / eksik ayar' ?></span>
     </div>
     <div class="adm-panel-body">
-      <p class="help" style="margin:0 0 10px">Kullanılan sunucu (<?= $cfg['mode'] === 'live' ? 'Canlı' : 'Test' ?>): <code><?= h($cfg['base']) ?></code></p>
+      <p class="help" style="margin:0 0 10px">Kullanılan sunucu (<?= $cfg['mode'] === 'live' ? 'Canlı' : 'Test' ?>): <code><?= h($cfg['base']) ?></code> · Kullanılan bilgi seti: <strong><?= $cfg['mode'] === 'live' ? 'Canlı' : 'Test' ?> Üye İşyeri Bilgileri</strong></p>
       <?php $hc = qnb_hours_cfg(); $isOpen = qnb_is_open_now(); ?>
       <p class="help" style="margin:0 0 10px">Çalışma saatleri:
         <?php if ($hc['enabled']): ?><strong><?= h($hc['open']) ?>–<?= h($hc['close']) ?></strong> (Türkiye saati) · şu an Türkiye saati <strong><?= h(qnb_now_tr()) ?></strong> →
@@ -222,27 +239,42 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
         </div>
         <p class="help">Varsayılan 07:00–23:00. Gece yarısını aşan aralık da girilebilir (örn. 22:00–06:00 açık). Gece test yapacaksanız geçici olarak kutuyu kaldırın.</p>
 
-        <p class="help" style="margin:14px 0 6px"><strong>Entegrasyon Verileri</strong> — QNBpay panelindeki “API &amp; Entegrasyon” sayfasından (gözle butonuyla gösterin):</p>
-        <div class="row-2">
-          <div class="row"><label>Üye İşyeri ID</label><input type="text" name="merchant_id" value="<?= h($cfg['merchant_id']) ?>" autocomplete="off" placeholder="örn. 41271">
-            <p class="help">Bilgi amaçlı saklanır; şu an ödeme isteklerinde kullanılmıyor.</p></div>
-          <div class="row"><label>Üye İşyeri Anahtarı</label><input type="text" name="merchant_key" value="<?= h($cfg['merchant_key']) ?>" autocomplete="off">
-            <p class="help">Genellikle <code>$2y$10$…</code> ile başlayan uzun anahtar.</p></div>
+        <?php
+        $credSets = [
+            'live' => ['label' => 'Canlı', 'pf' => '',      'src' => 'QNBpay üye işyeri paneli → Üye İşyeri Ayarları → API & Entegrasyon (gözle butonuyla gösterin)'],
+            'test' => ['label' => 'Test',  'pf' => 'test_', 'src' => 'QNBpay Entegrasyon Kılavuzu → “Test Üye İşyeri Bilgileri”. Kopyala-yapıştır yapın: büyük I ile küçük l harfleri karışabilir'],
+        ];
+        foreach ($credSets as $cm => $cs):
+            $cr = qnb_creds($cm); $pf = $cs['pf'];
+        ?>
+        <div style="margin-top:14px;padding:14px 16px;border:1px solid #e3e0d8;border-left:4px solid <?= $cfg['mode'] === $cm ? '#047857' : '#e3e0d8' ?>;border-radius:6px">
+          <p class="help" style="margin:0 0 8px"><strong><?= h($cs['label']) ?> Üye İşyeri Bilgileri</strong>
+            <?php if ($cfg['mode'] === $cm): ?><span class="badge badge-on">Kullanımda</span><?php endif; ?>
+            — <?= h($cs['src']) ?></p>
+          <div class="row-2">
+            <div class="row"><label>Üye İşyeri ID <span style="opacity:.6;font-weight:400">(Merchant ID)</span></label>
+              <input type="text" name="<?= $pf ?>merchant_id" value="<?= h($cr['merchant_id']) ?>" autocomplete="off" placeholder="<?= $cm === 'test' ? 'örn. 20158' : 'örn. 41271' ?>">
+              <p class="help">Bilgi amaçlı saklanır; ödeme isteklerinde kullanılmıyor.</p></div>
+            <div class="row"><label>Üye İşyeri Anahtarı <span style="opacity:.6;font-weight:400">(Merchant KEY)</span></label>
+              <input type="text" name="<?= $pf ?>merchant_key" value="<?= h($cr['merchant_key']) ?>" autocomplete="off">
+              <p class="help">Genellikle <code>$2y$10$…</code> ile başlayan uzun anahtar.</p></div>
+          </div>
+          <div class="row-2">
+            <div class="row"><label>Uygulama Anahtarı <span style="opacity:.6;font-weight:400">(APP KEY)</span></label>
+              <input type="text" name="<?= $pf ?>app_id" value="<?= h($cr['app_id']) ?>" autocomplete="off"></div>
+            <div class="row"><label>Uygulama Parolası <span style="opacity:.6;font-weight:400">(APP SECRET)</span></label>
+              <input type="password" name="<?= $pf ?>app_secret" value="" autocomplete="new-password" placeholder="<?= $cr['app_secret_set'] ? '•••••••• (kayıtlı — değiştirmek için yeni değer girin)' : 'APP SECRET' ?>">
+              <p class="help">Kayıtlı parola gösterilmez; boş bırakırsanız korunur.</p></div>
+          </div>
         </div>
-        <div class="row-2">
-          <div class="row"><label>Uygulama Anahtarı</label><input type="text" name="app_id" value="<?= h($cfg['app_id']) ?>" autocomplete="off">
-            <p class="help">Panelde “Uygulama Anahtarı” (App ID).</p></div>
-          <div class="row"><label>Uygulama Parolası</label>
-            <input type="password" name="app_secret" value="" autocomplete="new-password" placeholder="<?= $secSet ? '•••••••• (kayıtlı — değiştirmek için yeni değer girin)' : 'Panelde “Uygulama Parolası”' ?>">
-            <p class="help">Güvenlik için kayıtlı parola gösterilmez; boş bırakırsanız korunur.</p></div>
-        </div>
+        <?php endforeach; ?>
 
         <p class="help" style="margin:14px 0 6px"><strong>Sunucu adresleri</strong> — boş bırakırsanız doğrulanmış varsayılan kullanılır (canlı: <code>portal.qnbpay.com.tr</code>). Panelde “Canlı Sunucu” olarak görünen <code>panel.qnbpay.com.tr</code> panel adresidir; ödeme API'si için gerekmez. Yalnızca alan adı yazarsanız <code>/ccpayment</code> eklenir; <strong>Bağlantıyı Test Et</strong> çalışmayan adreste alternatifleri dener.</p>
         <div class="row-2">
           <div class="row"><label>Canlı Sunucu</label><input type="text" name="base_url_live" value="<?= h((string)settings('qnbpay_base_url_live', '')) ?>" placeholder="<?= h(QNB_BASE_LIVE) ?>">
             <p class="help">Şu an kullanılan: <code><?= h($cfg['base_live']) ?></code></p></div>
           <div class="row"><label>Test Sunucu</label><input type="text" name="base_url_test" value="<?= h((string)settings('qnbpay_base_url_test', '')) ?>" placeholder="<?= h(QNB_BASE_TEST) ?>">
-            <p class="help">Şu an kullanılan: <code><?= h($cfg['base_test']) ?></code></p></div>
+            <p class="help">Şu an kullanılan: <code><?= h($cfg['base_test']) ?></code> · Adres için Kılavuz'daki “Erişim URL'leri” sayfasına bakın.</p></div>
         </div>
 
         <div class="row-2" style="margin-top:14px">
