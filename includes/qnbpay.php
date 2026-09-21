@@ -14,8 +14,10 @@
  */
 
 defined('QNB_BASE_TEST') or define('QNB_BASE_TEST', 'https://test.qnbpay.com.tr/ccpayment');
-defined('QNB_BASE_LIVE') or define('QNB_BASE_LIVE', 'https://panel.qnbpay.com.tr/ccpayment');
-defined('QNB_BASE_LIVE_LEGACY') or define('QNB_BASE_LIVE_LEGACY', 'https://portal.qnbpay.com.tr/ccpayment');
+// Canlı ödeme API adresi: portal.qnbpay.com.tr (gerçek token isteğiyle doğrulandı).
+// Üye işyeri panelinin gösterdiği "Canlı Sunucu" (panel.qnbpay.com.tr) panel adresidir, API adresi değildir.
+defined('QNB_BASE_LIVE') or define('QNB_BASE_LIVE', 'https://portal.qnbpay.com.tr/ccpayment');
+defined('QNB_BASE_LIVE_ALT') or define('QNB_BASE_LIVE_ALT', 'https://panel.qnbpay.com.tr/ccpayment');
 
 /* ============================================================
  * AYARLAR
@@ -373,7 +375,7 @@ function qnb_base_candidates(): array {
         $list[] = $root . '/ccpayment';
         $list[] = $root;
     }
-    if ($c['mode'] === 'live') $list[] = QNB_BASE_LIVE_LEGACY;
+    if ($c['mode'] === 'live') $list[] = QNB_BASE_LIVE_ALT;
     return array_values(array_unique($list));
 }
 

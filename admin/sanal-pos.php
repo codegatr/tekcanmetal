@@ -237,9 +237,9 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
             <p class="help">Güvenlik için kayıtlı parola gösterilmez; boş bırakırsanız korunur.</p></div>
         </div>
 
-        <p class="help" style="margin:14px 0 6px"><strong>Sunucu adresleri</strong> — panelde “Canlı Sunucu” olarak görünen adres. Yalnızca alan adı yazarsanız <code>/ccpayment</code> otomatik eklenir; boş bırakırsanız varsayılan kullanılır.</p>
+        <p class="help" style="margin:14px 0 6px"><strong>Sunucu adresleri</strong> — boş bırakırsanız doğrulanmış varsayılan kullanılır (canlı: <code>portal.qnbpay.com.tr</code>). Panelde “Canlı Sunucu” olarak görünen <code>panel.qnbpay.com.tr</code> panel adresidir; ödeme API'si için gerekmez. Yalnızca alan adı yazarsanız <code>/ccpayment</code> eklenir; <strong>Bağlantıyı Test Et</strong> çalışmayan adreste alternatifleri dener.</p>
         <div class="row-2">
-          <div class="row"><label>Canlı Sunucu</label><input type="text" name="base_url_live" value="<?= h((string)settings('qnbpay_base_url_live', '')) ?>" placeholder="https://panel.qnbpay.com.tr">
+          <div class="row"><label>Canlı Sunucu</label><input type="text" name="base_url_live" value="<?= h((string)settings('qnbpay_base_url_live', '')) ?>" placeholder="<?= h(QNB_BASE_LIVE) ?>">
             <p class="help">Şu an kullanılan: <code><?= h($cfg['base_live']) ?></code></p></div>
           <div class="row"><label>Test Sunucu</label><input type="text" name="base_url_test" value="<?= h((string)settings('qnbpay_base_url_test', '')) ?>" placeholder="<?= h(QNB_BASE_TEST) ?>">
             <p class="help">Şu an kullanılan: <code><?= h($cfg['base_test']) ?></code></p></div>
