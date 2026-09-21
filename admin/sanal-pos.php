@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         $min     = qnb_parse_amount((string)($_POST['min_amount'] ?? '1'));
         $max     = qnb_parse_amount((string)($_POST['max_amount'] ?? '250000'));
         $notify  = trim((string)($_POST['notify_email'] ?? ''));
+        $hoursOn = isset($_POST['hours_enabled']) ? '1' : '0';
+        $openT   = trim((string)($_POST['open_time'] ?? '07:00'));
+        $closeT  = trim((string)($_POST['close_time'] ?? '23:00'));
 
         $urlRe = '#^https://[a-z0-9.\-]+(:\d+)?(/[A-Za-z0-9._~\-/]*)?$#i';
         if ($baseTest !== '' && !preg_match($urlRe, $baseTest)) $errors[] = 'Test Sunucu adresi https:// ile başlamalı ve geçerli olmalı.';
@@ -42,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         if ($min === null || $min <= 0)                          $errors[] = 'Minimum tutar geçersiz.';
         if ($max === null || ($min !== null && $max < $min))     $errors[] = 'Maksimum tutar, minimumdan küçük olamaz.';
         if ($notify !== '' && !filter_var($notify, FILTER_VALIDATE_EMAIL)) $errors[] = 'Bildirim e-postası geçersiz.';
+        if (qnb_hhmm_to_min($openT) === null || qnb_hhmm_to_min($closeT) === null) $errors[] = 'Açılış/kapanış saati SS:DD biçiminde olmalı (örn. 07:00).';
+        elseif ($hoursOn === '1' && $openT === $closeT) $errors[] = 'Açılış ve kapanış saati aynı olamaz.';
         if ($merchId !== '' && !preg_match('/^[0-9A-Za-z_\-]{1,40}$/', $merchId)) $errors[] = 'Üye İşyeri ID yalnızca harf/rakam içermeli.';
         if (strlen($appId) > 255 || strlen($mKey) > 255 || strlen($secretIn) > 255) $errors[] = 'Kimlik bilgisi alanları çok uzun.';
 
@@ -65,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         settings_set('qnbpay_min_amount', qnb_amount($min), 'payment');
         settings_set('qnbpay_max_amount', qnb_amount($max), 'payment');
         settings_set('qnbpay_notify_email', $notify, 'payment');
+        settings_set('qnbpay_hours_enabled', $hoursOn, 'payment');
+        settings_set('qnbpay_open_time', $openT, 'payment');
+        settings_set('qnbpay_close_time', $closeT, 'payment');
 
         log_activity('update', 'sanal_pos', null, 'Sanal POS ayarları güncellendi (mod: ' . $mode . ', durum: ' . ($enabled === '1' ? 'açık' : 'kapalı') . ')');
         adm_back_with('success', 'Sanal POS ayarları kaydedildi.', $self . '?tab=settings');
@@ -94,6 +102,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         adm_back_with($pr['ok'] ? 'success' : 'error', $msg, $self . '?tab=settings');
     }
 
+    /* ---- Otomatik duraklatmayı kaldır ---- */
+    if ($do === 'resume') {
+        settings_set('qnbpay_paused_until', '0', 'payment');
+        log_activity('update', 'sanal_pos', null, 'Ödeme formu duraklatması elle kaldırıldı');
+        adm_back_with('success', 'Ödeme formu yeniden açıldı.', $self);
+    }
+
     /* ---- İnceleme/bekleyen kaydı elle sonuçlandır ---- */
     if ($do === 'resolve') {
         $id = (int)($_POST['id'] ?? 0);
@@ -121,6 +136,23 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
   <a href="?tab=settings" class="<?= $tab === 'settings' ? 'active' : '' ?>">⚙ Ayarlar</a>
 </div>
 
+<?php if (qnb_is_paused()):
+    $wMin = (int)qnb_limits()['brk_window'];
+    $recentFails = 0; try { $recentFails = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='failed' AND updated_at > (NOW() - INTERVAL $wMin MINUTE)"); } catch (Throwable $e) {}
+?>
+  <div class="adm-panel" style="border-left:4px solid #c8102e">
+    <div class="adm-panel-body">
+      <strong>⚠ Ödeme formu otomatik duraklatıldı</strong> — Türkiye saatiyle <strong><?= h((new DateTime('@' . qnb_paused_until()))->setTimezone(qnb_tz())->format('H:i')) ?></strong>'e kadar.
+      Son <?= $wMin ?> dakikada <?= $recentFails ?> başarısız işlem görüldü (kart deneme saldırısı olabilir).
+      <form method="post" style="display:inline;margin-left:10px" onsubmit="return confirm('Duraklatmayı kaldırıp formu şimdi açmak istiyor musunuz?')">
+        <?= csrf_field() ?><input type="hidden" name="do" value="resume">
+        <button type="submit" class="adm-btn adm-btn-sm adm-btn-primary">Duraklatmayı kaldır</button>
+      </form>
+      <a href="<?= h(admin_url('sanal-pos.php?status=failed')) ?>" class="adm-btn adm-btn-sm adm-btn-ghost" style="margin-left:6px">Başarısızları incele</a>
+    </div>
+  </div>
+<?php endif; ?>
+
 <?php if ($tab === 'settings'): ?>
 
   <?php
@@ -135,6 +167,11 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
     </div>
     <div class="adm-panel-body">
       <p class="help" style="margin:0 0 10px">Kullanılan sunucu (<?= $cfg['mode'] === 'live' ? 'Canlı' : 'Test' ?>): <code><?= h($cfg['base']) ?></code></p>
+      <?php $hc = qnb_hours_cfg(); $isOpen = qnb_is_open_now(); ?>
+      <p class="help" style="margin:0 0 10px">Çalışma saatleri:
+        <?php if ($hc['enabled']): ?><strong><?= h($hc['open']) ?>–<?= h($hc['close']) ?></strong> (Türkiye saati) · şu an Türkiye saati <strong><?= h(qnb_now_tr()) ?></strong> →
+          <span class="badge <?= $isOpen ? 'badge-on' : 'badge-warn' ?>"><?= $isOpen ? 'Açık' : 'Kapalı (yeni ödeme alınmıyor)' ?></span>
+        <?php else: ?><strong>Kısıt yok</strong> (7/24 açık)<?php endif; ?></p>
       <?php if (!$ready): ?>
         <p class="help" style="margin:0 0 10px">Menüde “Online Ödeme” yalnızca <strong>yayına alınınca</strong> ziyaretçilere görünür. Siz yönetici olarak giriş yapmışken menüde her zaman görürsünüz (önizleme).</p>
       <?php endif; ?>
@@ -176,6 +213,15 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
           </select>
         </div>
 
+
+        <p class="help" style="margin:14px 0 6px"><strong>Çalışma Saatleri</strong> (Türkiye saati) — kapalıyken yeni ödeme başlatılamaz; açıkken başlamış bir ödemenin banka dönüşü ve dekontu her zaman işlenir.</p>
+        <div class="row"><label class="checkbox"><input type="checkbox" name="hours_enabled" <?= $hc['enabled'] ? 'checked' : '' ?>> Çalışma saatlerini uygula</label></div>
+        <div class="row-2">
+          <div class="row"><label>Açılış saati</label><input type="time" name="open_time" value="<?= h($hc['open']) ?>" style="max-width:160px"></div>
+          <div class="row"><label>Kapanış saati</label><input type="time" name="close_time" value="<?= h($hc['close']) ?>" style="max-width:160px"></div>
+        </div>
+        <p class="help">Varsayılan 07:00–23:00. Gece yarısını aşan aralık da girilebilir (örn. 22:00–06:00 açık). Gece test yapacaksanız geçici olarak kutuyu kaldırın.</p>
+
         <p class="help" style="margin:14px 0 6px"><strong>Entegrasyon Verileri</strong> — QNBpay panelindeki “API &amp; Entegrasyon” sayfasından (gözle butonuyla gösterin):</p>
         <div class="row-2">
           <div class="row"><label>Üye İşyeri ID</label><input type="text" name="merchant_id" value="<?= h($cfg['merchant_id']) ?>" autocomplete="off" placeholder="örn. 41271">
@@ -200,7 +246,8 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
         </div>
 
         <div class="row-2" style="margin-top:14px">
-          <div class="row"><label>Asgari tutar (₺)</label><input type="text" name="min_amount" value="<?= h(qnb_amount($cfg['min'])) ?>"></div>
+          <div class="row"><label>Asgari tutar (₺)</label><input type="text" name="min_amount" value="<?= h(qnb_amount($cfg['min'])) ?>">
+            <p class="help">Kart deneme saldırıları küçük tutarla yapılır; işinize uygun bir asgari tutar belirleyin.</p></div>
           <div class="row"><label>Azami tutar (₺)</label><input type="text" name="max_amount" value="<?= h(qnb_amount($cfg['max'])) ?>"></div>
         </div>
         <div class="row"><label>Bildirim e-postası</label><input type="text" name="notify_email" value="<?= h((string)settings('qnbpay_notify_email', '')) ?>" placeholder="Boşsa iletişim e-postası kullanılır: <?= h($cfg['notify']) ?>">
@@ -209,6 +256,19 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
     </div>
     <div class="form-actions"><button type="submit" class="adm-btn adm-btn-primary">💾 Kaydet</button></div>
   </form>
+
+  <?php $L = qnb_limits(); ?>
+  <div class="adm-panel">
+    <div class="adm-panel-head"><h2>Otomatik Koruma (kart deneme / bot)</h2></div>
+    <div class="adm-panel-body">
+      <ul style="margin:0;padding-left:20px;line-height:1.8">
+        <li>3D Secure zorunlu; kart bilgisi sunucudan geçmez ve saklanmaz.</li>
+        <li>10 dakikada en fazla: aynı bağlantı adresinden <?= (int)$L['per_remote'] ?>, bildirilen IP'den <?= (int)$L['per_claimed_ip'] ?>, aynı e-postadan <?= (int)$L['per_email'] ?>, toplam <?= (int)$L['global'] ?> deneme.</li>
+        <li>Aynı IP/e-posta <?= (int)$L['fail_window'] ?> dakikada <?= (int)$L['fail_per_actor'] ?> başarısız işlemden sonra <?= (int)$L['fail_window'] ?> dk bekletilir.</li>
+        <li><?= (int)$L['brk_window'] ?> dakikada <?= (int)$L['brk_failures'] ?> başarısız işlem olursa form <?= (int)$L['brk_pause'] ?> dk otomatik durdurulur ve size e-posta gelir.</li>
+      </ul>
+    </div>
+  </div>
 
   <div class="adm-panel">
     <div class="adm-panel-head"><h2>Canlıya Alma Kontrol Listesi</h2></div>

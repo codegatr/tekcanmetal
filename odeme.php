@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'init'
 
     qnb_ensure_schema();
     if (!qnb_enabled())                $fail('Online ödeme şu anda kullanılamıyor.', 503);
+    if (!qnb_is_open_now())            $fail(qnb_closed_msg(), 503);   // çalışma saatleri dışında yeni ödeme başlatılamaz
     $cfg = qnb_cfg();
 
     $full    = mb_substr($in('full_name'), 0, 150, 'UTF-8');
@@ -39,12 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'init'
     if ($amount < $cfg['min'] || $amount > $cfg['max'])                 $fail('Tutar ' . qnb_money($cfg['min']) . ' ile ' . qnb_money($cfg['max']) . ' arasında olmalıdır.');
     if (empty($_POST['kvkk']))                                          $fail('KVKK aydınlatma metnini onaylamanız gerekir.');
 
-    // Basit hız sınırı (IP başına 10 dk'da 8, genel 10 dk'da 80 deneme)
-    try {
-        $perIp = (int)val("SELECT COUNT(*) FROM tm_payments WHERE ip_address=? AND created_at > (NOW() - INTERVAL 10 MINUTE)", [get_ip()]);
-        $all   = (int)val("SELECT COUNT(*) FROM tm_payments WHERE created_at > (NOW() - INTERVAL 10 MINUTE)");
-    } catch (Throwable $e) { $perIp = 0; $all = 0; }
-    if ($perIp >= 8 || $all >= 80) $fail('Çok fazla deneme yaptınız. Lütfen birkaç dakika sonra tekrar deneyin.', 429);
+    // Kötüye kullanım koruması: IP/bağlantı/e-posta/başarısız deneme sınırları + otomatik duraklatma
+    $abuse = qnb_abuse_check($email);
+    if ($abuse) $fail($abuse['msg'], $abuse['code']);
 
     try {
         $invoiceId = qnb_new_invoice_id();
@@ -74,6 +72,8 @@ $pageTitle  = t('pay.title', 'Online Ödeme');
 $metaDesc   = t('pay.meta_desc', 'Tekcan Metal güvenli online ödeme — kredi/banka kartınızla 3D Secure doğrulamalı ödeme yapın.');
 $metaRobots = 'noindex, nofollow';
 $payOn      = qnb_enabled();
+$payPaused  = $payOn && qnb_is_paused();
+$payClosed  = $payOn && !$payPaused && !qnb_is_open_now();
 $payCfg     = qnb_cfg();
 
 $js = [
@@ -168,16 +168,25 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="pay-wrap">
 
-      <?php if (!$payOn): ?>
-        <?php if (!empty($_SESSION['admin_id']) && in_array($_SESSION['admin_role'] ?? '', ['superadmin', 'admin'], true)): ?>
+      <?php if (!$payOn || $payPaused || $payClosed): ?>
+        <?php if (!$payOn && !empty($_SESSION['admin_id']) && in_array($_SESSION['admin_role'] ?? '', ['superadmin', 'admin'], true)): ?>
         <div class="pay-off" style="margin-bottom:18px;border-top-color:#c8102e;text-align:left">
           <strong>Yönetici önizlemesi:</strong> Online ödeme henüz <em>yayında değil</em>; bu menü öğesini ve sayfayı yalnızca siz görüyorsunuz.
           <a href="<?= h(url('admin/sanal-pos.php?tab=settings')) ?>" style="margin:0 0 0 6px">Sanal POS → Ayarlar</a>
         </div>
         <?php endif; ?>
         <div class="pay-off">
-          <h2><?= h(t('pay.off_title', 'Online ödeme şu anda kullanılamıyor')) ?></h2>
-          <p><?= h(t('pay.off_text', 'Ödemenizi aşağıdaki yöntemlerle yapabilirsiniz.')) ?></p>
+          <?php if ($payClosed): ?>
+            <h2><?= h(t('pay.closed_title', 'Online ödeme sistemi şu anda kapalı')) ?></h2>
+            <p><?= h(qnb_closed_msg()) ?></p>
+            <p><?= h(t('pay.off_text', 'Ödemenizi aşağıdaki yöntemlerle yapabilirsiniz.')) ?></p>
+          <?php elseif ($payPaused): ?>
+            <h2><?= h(t('pay.paused_title', 'Online ödeme geçici olarak durduruldu')) ?></h2>
+            <p><?= h(t('pay.paused_text', 'Güvenlik nedeniyle online ödeme kısa süreliğine durduruldu. Lütfen daha sonra tekrar deneyin veya aşağıdaki yöntemlerle ödeme yapın.')) ?></p>
+          <?php else: ?>
+            <h2><?= h(t('pay.off_title', 'Online ödeme şu anda kullanılamıyor')) ?></h2>
+            <p><?= h(t('pay.off_text', 'Ödemenizi aşağıdaki yöntemlerle yapabilirsiniz.')) ?></p>
+          <?php endif; ?>
           <p>
             <a href="<?= h(url_lang('iban.php')) ?>"><?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a>
             <a href="<?= h(url_lang('mail-order.php')) ?>"><?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>

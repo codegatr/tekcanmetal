@@ -101,6 +101,9 @@ require __DIR__ . '/includes/header.php';
         <?php if (!empty($pay['description'])): ?><tr><td><?= h(t('payres.t_desc', 'Açıklama')) ?></td><td><?= h($pay['description']) ?></td></tr><?php endif; ?>
       </table>
 
+      <?php if ($status === 'paid'): ?>
+        <a class="pr-btn" href="<?= h(url('odeme-dekont.php?ref=' . $pay['public_ref'])) ?>" target="_blank" rel="noopener" style="margin-right:8px">🖨 <?= h(t('payres.receipt', 'Dekontu Görüntüle / Yazdır')) ?></a>
+      <?php endif; ?>
       <?php if ($status === 'failed' || $status === 'pending'): ?>
         <a class="pr-btn" href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('payres.retry', 'Tekrar Dene')) ?></a>
       <?php else: ?>

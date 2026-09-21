@@ -13735,6 +13735,7 @@ CREATE TABLE IF NOT EXISTS tm_payments (
     hash_valid TINYINT(1) NOT NULL DEFAULT 0,
     raw_response TEXT NULL,
     ip_address VARCHAR(45) NULL,
+    remote_addr VARCHAR(45) NULL,
     user_agent VARCHAR(255) NULL,
     paid_at DATETIME NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -13743,7 +13744,8 @@ CREATE TABLE IF NOT EXISTS tm_payments (
     UNIQUE KEY uniq_invoice (invoice_id),
     UNIQUE KEY uniq_ref (public_ref),
     INDEX idx_status_created (status, created_at),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_remote (remote_addr, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO tm_settings (setting_key, setting_value, setting_group) VALUES
@@ -13754,4 +13756,19 @@ INSERT IGNORE INTO tm_settings (setting_key, setting_value, setting_group) VALUE
     ('qnbpay_merchant_key', '',       'payment'),
     ('qnbpay_min_amount',   '1.00',   'payment'),
     ('qnbpay_max_amount',   '250000.00', 'payment'),
-    ('qnbpay_notify_email', '',       'payment');
+    ('qnbpay_notify_email', '',       'payment'),
+    ('qnbpay_merchant_id',  '',       'payment'),
+    ('qnbpay_hours_enabled','1',      'payment'),
+    ('qnbpay_open_time',    '07:00',  'payment'),
+    ('qnbpay_close_time',   '23:00',  'payment'),
+    ('qnbpay_paused_until', '0',      'payment');
+
+-- v1.0.125: v1.0.122'de oluşmuş tm_payments tablosuna remote_addr ekle (idempotent)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_payments'
+                     AND COLUMN_NAME = 'remote_addr');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_payments ADD COLUMN remote_addr VARCHAR(45) NULL AFTER ip_address, ADD INDEX idx_remote (remote_addr, created_at)',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;

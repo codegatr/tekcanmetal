@@ -98,6 +98,7 @@ function qnb_schema_sql(): string {
     hash_valid TINYINT(1) NOT NULL DEFAULT 0,
     raw_response TEXT NULL,
     ip_address VARCHAR(45) NULL,
+    remote_addr VARCHAR(45) NULL,
     user_agent VARCHAR(255) NULL,
     paid_at DATETIME NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -106,7 +107,8 @@ function qnb_schema_sql(): string {
     UNIQUE KEY uniq_invoice (invoice_id),
     UNIQUE KEY uniq_ref (public_ref),
     INDEX idx_status_created (status, created_at),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_remote (remote_addr, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 }
 
@@ -117,6 +119,11 @@ function qnb_ensure_schema(): void {
     $done = true;
     try {
         db()->exec(qnb_schema_sql());
+        // v1.0.125: v1.0.122'de oluşmuş tabloya remote_addr ekle (idempotent)
+        $has = (int)val("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tm_payments' AND COLUMN_NAME = 'remote_addr'");
+        if (!$has) {
+            db()->exec("ALTER TABLE tm_payments ADD COLUMN remote_addr VARCHAR(45) NULL AFTER ip_address, ADD INDEX idx_remote (remote_addr, created_at)");
+        }
     } catch (Throwable $e) {
         // Sessiz: çağıran sayfa tabloya erişemezse kendi hata mesajını gösterir
     }
@@ -235,6 +242,11 @@ function qnb_mask_pan(string $s): string {
     return substr((string)preg_replace('/[^0-9*Xx\- ]/', '', $s), 0, 32);
 }
 
+/** "411111******0001" → "0001" (yoksa boş) */
+function qnb_card_last4(?string $mask): string {
+    return preg_match('/(\d{4})\s*$/', (string)$mask, $m) ? $m[1] : '';
+}
+
 function qnb_status_label(string $st): string {
     return [
         'pending' => 'Bekliyor',
@@ -258,15 +270,15 @@ function qnb_create_payment(array $d): int {
     $c = qnb_cfg();
     q("INSERT INTO tm_payments
          (invoice_id, public_ref, full_name, company, email, phone, description, amount, currency,
-          installments, status, pos_mode, ip_address, user_agent)
-       VALUES (?,?,?,?,?,?,?,?, 'TRY', 1, 'pending', ?, ?, ?)",
+          installments, status, pos_mode, ip_address, remote_addr, user_agent)
+       VALUES (?,?,?,?,?,?,?,?, 'TRY', 1, 'pending', ?, ?, ?, ?)",
       [
         $d['invoice_id'], bin2hex(random_bytes(16)),
         $d['full_name'], $d['company'] !== '' ? $d['company'] : null,
         $d['email'], $d['phone'],
         $d['description'] !== '' ? $d['description'] : null,
         qnb_amount((float)$d['amount']),
-        $c['mode'], get_ip(), mb_substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255, 'UTF-8'),
+        $c['mode'], get_ip(), qnb_remote_addr(), mb_substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255, 'UTF-8'),
       ]);
     return (int)db()->lastInsertId();
 }
@@ -382,6 +394,137 @@ function qnb_probe(): array {
 }
 
 /* ============================================================
+ * ÇALIŞMA SAATLERİ (Türkiye saati — sunucu saat diliminden bağımsız)
+ * Varsayılan: her gün 07:00–23:00 açık; 23:00–07:00 arası yeni ödeme başlatılamaz.
+ * ============================================================ */
+
+function qnb_tz(): DateTimeZone {
+    try { return new DateTimeZone('Europe/Istanbul'); }
+    catch (Throwable $e) { return new DateTimeZone('+03:00'); }   // Türkiye 2016'dan beri sabit UTC+3
+}
+
+/** "HH:MM" → gün içi dakika (geçersizse null) */
+function qnb_hhmm_to_min(string $t): ?int {
+    return preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', trim($t), $m) ? ((int)$m[1] * 60 + (int)$m[2]) : null;
+}
+
+function qnb_hours_cfg(): array {
+    $open  = trim((string)settings('qnbpay_open_time', '07:00'));
+    $close = trim((string)settings('qnbpay_close_time', '23:00'));
+    return [
+        'enabled' => (string)settings('qnbpay_hours_enabled', '1') === '1',
+        'open'    => qnb_hhmm_to_min($open)  === null ? '07:00' : $open,
+        'close'   => qnb_hhmm_to_min($close) === null ? '23:00' : $close,
+    ];
+}
+
+/** Saf fonksiyon: verilen anda (unix zaman damgası) Türkiye saatine göre açık mı? Gece yarısını aşan aralıkları destekler. */
+function qnb_is_open_at(int $ts, string $open, string $close): bool {
+    $o = qnb_hhmm_to_min($open);
+    $c = qnb_hhmm_to_min($close);
+    if ($o === null || $c === null || $o === $c) return true;   // geçersiz/aynı saat → kısıt yok
+    $d = (new DateTime('@' . $ts))->setTimezone(qnb_tz());
+    $m = (int)$d->format('G') * 60 + (int)$d->format('i');
+    return $o < $c ? ($m >= $o && $m < $c) : ($m >= $o || $m < $c);
+}
+
+function qnb_is_open_now(): bool {
+    $h = qnb_hours_cfg();
+    return !$h['enabled'] || qnb_is_open_at(time(), $h['open'], $h['close']);
+}
+
+function qnb_now_tr(): string {
+    return (new DateTime('now', qnb_tz()))->format('H:i');
+}
+
+function qnb_closed_msg(): string {
+    $h = qnb_hours_cfg();
+    return "Online ödeme sistemi her gün {$h['open']}–{$h['close']} (Türkiye saati) arasında hizmet vermektedir. "
+         . "Şu an kapalıdır; saat {$h['open']} itibarıyla tekrar açılacaktır.";
+}
+
+/* ============================================================
+ * KÖTÜYE KULLANIM KORUMASI (kart deneme / bot saldırıları)
+ * ============================================================ */
+
+function qnb_limits(): array {
+    return [
+        'per_claimed_ip' => 8,    // 10 dk'da, başlıkla bildirilen IP (X-Forwarded-For sahtelenebilir)
+        'per_remote'     => 20,   // 10 dk'da, gerçek TCP bağlantı adresi (sahtelenemez)
+        'per_email'      => 5,    // 10 dk'da, aynı e-posta
+        'global'         => 80,   // 10 dk'da, tüm denemeler
+        'fail_window'    => 30,   // dk — aynı IP/e-posta bu sürede 'fail_per_actor' başarısızdan sonra bekletilir
+        'fail_per_actor' => 3,
+        'brk_window'     => 10,   // dk — bu sürede 'brk_failures' başarısız (kimden olursa olsun) → form duraklatılır
+        'brk_failures'   => 10,
+        'brk_pause'      => 30,   // dk
+    ];
+}
+
+/** Sahtelenemeyen bağlantı adresi (Cloudflare/proxy arkasındaysa proxy adresi olabilir; bu yüzden limiti geniştir). */
+function qnb_remote_addr(): string {
+    $r = (string)($_SERVER['REMOTE_ADDR'] ?? '');
+    return filter_var($r, FILTER_VALIDATE_IP) ? $r : '0.0.0.0';
+}
+
+function qnb_paused_until(): int { return (int)settings('qnbpay_paused_until', '0'); }
+function qnb_is_paused(): bool   { return qnb_paused_until() > time(); }
+
+/**
+ * Yeni ödeme denemesine izin verilir mi? İzin yoksa ['code'=>HTTP, 'msg'=>Türkçe mesaj], varsa null.
+ * Veritabanı hatasında (fail-open) null döner: koruma, ödemeyi bozmasın.
+ */
+function qnb_abuse_check(string $email): ?array {
+    $L = qnb_limits();
+    if (qnb_is_paused()) {
+        return ['code' => 503, 'msg' => 'Online ödeme geçici olarak durduruldu. Lütfen daha sonra tekrar deneyin veya IBAN / mail order ile ödeme yapın.'];
+    }
+    $ip = get_ip();
+    $remote = qnb_remote_addr();
+    $email = mb_strtolower(trim($email), 'UTF-8');
+    $busy = ['code' => 429, 'msg' => 'Çok fazla deneme yaptınız. Lütfen birkaç dakika sonra tekrar deneyin.'];
+    try {
+        $win = "created_at > (NOW() - INTERVAL 10 MINUTE)";
+        if ((int)val("SELECT COUNT(*) FROM tm_payments WHERE $win") >= $L['global']) return $busy;
+        if ((int)val("SELECT COUNT(*) FROM tm_payments WHERE $win AND ip_address=?", [$ip]) >= $L['per_claimed_ip']) return $busy;
+        if ((int)val("SELECT COUNT(*) FROM tm_payments WHERE $win AND remote_addr=?", [$remote]) >= $L['per_remote']) return $busy;
+        if ((int)val("SELECT COUNT(*) FROM tm_payments WHERE $win AND LOWER(email)=?", [$email]) >= $L['per_email']) return $busy;
+
+        $fw = (int)$L['fail_window'];
+        $fails = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='failed' AND updated_at > (NOW() - INTERVAL $fw MINUTE)
+                            AND (remote_addr=? OR ip_address=? OR LOWER(email)=?)", [$remote, $ip, $email]);
+        if ($fails >= $L['fail_per_actor']) {
+            return ['code' => 429, 'msg' => 'Çok sayıda başarısız deneme yapıldı. Güvenliğiniz için bir süre beklemeniz gerekiyor; lütfen ' . $fw . ' dakika sonra tekrar deneyin veya bizimle iletişime geçin.'];
+        }
+    } catch (Throwable $e) {
+        return null;
+    }
+    return null;
+}
+
+/** Kısa sürede çok sayıda başarısız işlem → formu otomatik duraklat ve yöneticiye haber ver. */
+function qnb_check_breaker(): void {
+    if (qnb_is_paused()) return;
+    $L = qnb_limits();
+    $w = (int)$L['brk_window'];
+    $n = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='failed' AND updated_at > (NOW() - INTERVAL $w MINUTE)");
+    if ($n < $L['brk_failures']) return;
+
+    $mins  = (int)$L['brk_pause'];
+    settings_set('qnbpay_paused_until', (string)(time() + $mins * 60), 'payment');
+    if (function_exists('log_activity')) {
+        log_activity('update', 'sanal_pos', null, "Ödeme formu otomatik duraklatıldı ($n başarısız işlem / $w dk)");
+    }
+    $c = qnb_cfg();
+    qnb_mail($c['notify'], '[Sanal POS] UYARI: ödeme formu geçici olarak duraklatıldı',
+        "Son {$w} dakikada {$n} başarısız ödeme işlemi görüldü. Kart deneme (fraud) saldırısı olabilir.\n\n"
+      . "Online ödeme formu {$mins} dakika süreyle otomatik duraklatıldı (süre bitince kendiliğinden açılır).\n"
+      . "Erken açmak için: " . url('admin/sanal-pos.php') . "  →  “Duraklatmayı kaldır”\n\n"
+      . "Öneri: QNBpay panelinden son işlemleri inceleyin; şüpheli bir durum varsa QNBpay ile iletişime geçin.\n"
+      . "Detay: " . url('admin/sanal-pos.php?status=failed') . "\n");
+}
+
+/* ============================================================
  * DÖNÜŞ İŞLEME (return_url / cancel_url)
  * ============================================================ */
 
@@ -461,7 +604,11 @@ function qnb_apply_return(array $pay, array $in): array {
     ], $allowedFrom);
 
     $st = q($sql, $params);
-    return ['status' => $new, 'changed' => $st->rowCount() > 0 && $cur !== $new, 'hash_ok' => $hashOk];
+    $changed = $st->rowCount() > 0 && $cur !== $new;
+    if ($new === 'failed' && $changed) {
+        try { qnb_check_breaker(); } catch (Throwable $e) { /* sessiz */ }
+    }
+    return ['status' => $new, 'changed' => $changed, 'hash_ok' => $hashOk];
 }
 
 /* ============================================================
@@ -490,6 +637,7 @@ function qnb_notify(int $paymentId): void {
     $tag  = $p['pos_mode'] === 'test' ? ' [TEST]' : '';
     $amt  = qnb_money((float)$p['amount']);
     $site = settings('site_short_name', 'Tekcan Metal');
+    $adminLink = url('admin/sanal-pos.php?view=' . (int)$p['id']);
 
     $lines = [
         'Referans     : ' . $p['invoice_id'],
@@ -504,6 +652,7 @@ function qnb_notify(int $paymentId): void {
         'Durum        : ' . qnb_status_label((string)$p['status']),
         'Mesaj        : ' . ($p['gateway_message'] ?: '—'),
         'Zaman        : ' . date('Y-m-d H:i:s'),
+        'Yönetim      : ' . $adminLink,
     ];
 
     if ($p['status'] === 'review') {
@@ -519,8 +668,11 @@ function qnb_notify(int $paymentId): void {
     qnb_mail((string)$p['email'], "{$site} — Ödemeniz alındı ({$amt})",
         "Sayın {$p['full_name']},\n\n"
       . "{$amt} tutarındaki ödemeniz başarıyla alınmıştır.\n\n"
-      . "Referans No : {$p['invoice_id']}\n"
-      . "Tarih       : " . date('d.m.Y H:i') . "\n\n"
-      . "Bu e-posta bilgilendirme amaçlıdır. Sorularınız için bizimle iletişime geçebilirsiniz.\n\n"
+      . "Referans No     : {$p['invoice_id']}\n"
+      . "Banka İşlem No  : " . ($p['order_no'] ?: '—') . "\n"
+      . "Tarih           : " . date('d.m.Y H:i') . "\n\n"
+      . "Dekont (yazdırabilir / PDF olarak kaydedebilirsiniz):\n" . url('odeme-dekont.php?ref=' . $p['public_ref']) . "\n\n"
+      . "Bu e-posta ve dekont bilgilendirme amaçlıdır; fatura yerine geçmez.\n"
+      . "Sorularınız için bizimle iletişime geçebilirsiniz.\n\n"
       . "{$site}\n" . url('') . "\n");
 }
