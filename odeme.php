@@ -1,6 +1,34 @@
 <?php
 require __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/qnbpay.php';
+require_once __DIR__ . '/includes/customer_auth.php';
+cust_ensure_schema();
+
+/* ============================================================
+ * Müşteri girişi / çıkışı / zorunlu şifre değiştirme (PRG deseni)
+ * ============================================================ */
+$custErr = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'customer_login') {
+    if (!csrf_check()) {
+        $custErr = 'Oturum doğrulama hatası. Sayfayı yenileyip tekrar deneyin.';
+    } else {
+        $r = customer_login((string)($_POST['username'] ?? ''), (string)($_POST['password'] ?? ''));
+        if ($r['ok']) redirect('odeme.php'); else $custErr = $r['msg'];
+    }
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'customer_logout' && csrf_check()) {
+    customer_logout();
+    redirect('odeme.php');
+}
+$cust = customer();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'customer_change_password' && $cust) {
+    if (!csrf_check()) {
+        $custErr = 'Oturum doğrulama hatası. Sayfayı yenileyip tekrar deneyin.';
+    } else {
+        $r = customer_change_password((int)$cust['id'], (string)($_POST['current_password'] ?? ''), (string)($_POST['new_password'] ?? ''));
+        if ($r['ok']) redirect('odeme.php'); else $custErr = $r['msg'];
+    }
+}
 
 /* ============================================================
  * AJAX: ödeme kaydı aç + QNBpay form alanlarını (hash_key dahil) üret
@@ -55,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'init'
             'description' => $desc,
             'amount'      => $amount,
         ]);
+        if ($cust) q("UPDATE tm_payments SET customer_id=? WHERE id=?", [$cust['id'], $id]);
         $pay  = row("SELECT * FROM tm_payments WHERE id=?", [$id]);
         $form = qnb_build_form($pay);
     } catch (Throwable $e) {
@@ -142,6 +171,29 @@ require __DIR__ . '/includes/header.php';
 .pay-off{background:#fff;border:1px solid #e3e0d8;border-top:4px solid var(--gold);padding:44px;text-align:center;font-family:var(--sans)}
 .pay-off h2{font-family:var(--serif);color:var(--navy);margin:0 0 12px}
 .pay-off a{color:var(--navy);text-decoration:underline;margin:0 8px}
+.pay-account{background:#fff;border:1px solid #e3e0d8;border-left:4px solid #047857;margin-bottom:20px}
+.pay-account-head{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;font-family:var(--sans);font-size:14px;color:var(--navy);flex-wrap:wrap;gap:10px}
+.pay-account-user{opacity:.55;font-size:12px;margin-left:4px}
+.pay-account-logout button{background:none;border:1px solid #d4d2cc;padding:7px 14px;font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;color:#777}
+.pay-account-logout button:hover{border-color:var(--red);color:var(--red)}
+.pay-account-body{padding:0 22px 20px;border-top:1px solid #f0eee8}
+.pay-account-note{font-family:var(--sans);font-size:13px;color:#8a5a00;background:#fff7e6;border:1px solid #f0d9a8;padding:10px 14px;margin:16px 0}
+.pay-account-error{font-family:var(--sans);font-size:13px;color:#a00d24;background:#fff5f5;border:1px solid #fecaca;padding:10px 14px;margin:0 0 14px}
+.pay-account-form .pay-row{margin-top:14px}
+.pay-account-hist-head{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--navy);padding-top:16px;margin-bottom:8px}
+.pay-account-hist{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:12.5px}
+.pay-account-hist td{padding:7px 4px;border-bottom:1px solid #f0eee8;color:#3a3a3a}
+.pay-account-hist td a{color:var(--navy);text-decoration:underline}
+.pay-login{background:#fff;border:1px solid #e3e0d8;margin-bottom:20px}
+.pay-login summary{padding:14px 22px;font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--navy);cursor:pointer;list-style:none}
+.pay-login summary::-webkit-details-marker{display:none}
+.pay-login-body{padding:0 22px 20px;border-top:1px solid #f0eee8}
+.pay-login-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pay-login-form input{flex:1;min-width:160px;padding:11px 13px;font-family:var(--sans);font-size:13.5px;border:1px solid #d4d2cc;background:var(--paper)}
+.pay-login-form input:focus{outline:0;border-color:var(--gold);background:#fff}
+.pay-login-form button{background:var(--navy);color:#fff;border:0;padding:11px 22px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer}
+.pay-login-form button:hover{background:var(--gold);color:var(--navy)}
+.pay-login-hint{font-family:var(--sans);font-size:11.5px;color:#888;margin:10px 0 0}
 </style>
 
 <div class="pay-page">
@@ -195,6 +247,80 @@ require __DIR__ . '/includes/header.php';
         </div>
       <?php else: ?>
 
+        <?php if ($cust && $cust['must_change_password']): ?>
+
+        <div class="pay-account">
+          <div class="pay-account-head">
+            <div>👤 <?= h(t('pay.cust_hello', 'Merhaba')) ?>, <strong><?= h($cust['full_name']) ?></strong>
+              <span class="pay-account-user">@<?= h($cust['username']) ?></span></div>
+            <form method="post" class="pay-account-logout">
+              <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
+              <button type="submit"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></button>
+            </form>
+          </div>
+          <div class="pay-account-body">
+            <p class="pay-account-note">⚠ <?= h(t('pay.cust_must_change', 'Güvenliğiniz için, size iletilen ilk şifreyi değiştirmeniz gerekiyor. Yeni şifrenizi belirledikten sonra ödeme işleminize devam edebilirsiniz.')) ?></p>
+            <?php if ($custErr): ?><div class="pay-account-error"><?= h($custErr) ?></div><?php endif; ?>
+            <form method="post" class="pay-account-form">
+              <?= csrf_field() ?><input type="hidden" name="action" value="customer_change_password">
+              <div class="pay-row">
+                <div class="pay-field"><label><?= h(t('pay.cust_current_pw', 'Mevcut Şifre')) ?></label><input type="password" name="current_password" required autocomplete="current-password"></div>
+                <div class="pay-field"><label><?= h(t('pay.cust_new_pw', 'Yeni Şifre (en az 8 karakter)')) ?></label><input type="password" name="new_password" minlength="8" required autocomplete="new-password"></div>
+              </div>
+              <button type="submit" class="pay-btn" style="width:auto;padding:12px 26px"><?= h(t('pay.cust_change_pw_btn', 'Şifreyi Değiştir')) ?></button>
+            </form>
+          </div>
+        </div>
+
+        <?php else: ?>
+
+        <?php if ($cust): ?>
+          <?php
+            $custHistory = [];
+            try { $custHistory = all("SELECT invoice_id, public_ref, amount, status, created_at FROM tm_payments WHERE customer_id=? ORDER BY id DESC LIMIT 5", [$cust['id']]); }
+            catch (Throwable $e) { /* geçmiş listesi gösterilemezse ödeme akışı yine de çalışsın */ }
+          ?>
+        <div class="pay-account">
+          <div class="pay-account-head">
+            <div>👤 <?= h(t('pay.cust_hello', 'Merhaba')) ?>, <strong><?= h($cust['full_name']) ?></strong>
+              <span class="pay-account-user">@<?= h($cust['username']) ?></span></div>
+            <form method="post" class="pay-account-logout">
+              <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
+              <button type="submit"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></button>
+            </form>
+          </div>
+          <?php if ($custHistory): ?>
+          <div class="pay-account-body">
+            <div class="pay-account-hist-head"><?= h(t('pay.cust_history', 'Geçmiş Ödemelerim')) ?></div>
+            <table class="pay-account-hist">
+              <?php foreach ($custHistory as $ch): ?>
+              <tr>
+                <td><?= h(tr_date($ch['created_at'])) ?></td>
+                <td><?= h(qnb_money((float)$ch['amount'])) ?></td>
+                <td><?= qnb_status_badge((string)$ch['status']) ?></td>
+                <td><?php if ($ch['status'] === 'paid'): ?><a href="<?= h(url('odeme-dekont.php?ref=' . $ch['public_ref'])) ?>" target="_blank"><?= h(t('pay.cust_receipt', 'Dekont')) ?></a><?php endif; ?></td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          </div>
+          <?php endif; ?>
+        </div>
+        <?php else: ?>
+        <details class="pay-login">
+          <summary>🔑 <?= h(t('pay.cust_have_account', 'Zaten müşterimiz misiniz? Kullanıcı adı ve şifrenizle giriş yapın')) ?></summary>
+          <div class="pay-login-body">
+            <?php if ($custErr): ?><div class="pay-account-error"><?= h($custErr) ?></div><?php endif; ?>
+            <form method="post" class="pay-login-form">
+              <?= csrf_field() ?><input type="hidden" name="action" value="customer_login">
+              <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username">
+              <input type="password" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
+              <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?></button>
+            </form>
+            <p class="pay-login-hint"><?= h(t('pay.cust_no_account', 'Hesabınız yoksa misafir olarak ödeme yapabilirsiniz; müşteri hesabı yalnızca tarafımızca oluşturulur.')) ?></p>
+          </div>
+        </details>
+        <?php endif; ?>
+
         <div class="pay-alert" id="payErr" role="alert"></div>
 
         <form id="payForm" class="pay-form" novalidate autocomplete="on" data-init="<?= h(url('odeme.php')) ?>"
@@ -206,15 +332,15 @@ require __DIR__ . '/includes/header.php';
             <div class="pay-fs-head"><div class="pay-fs-num">1</div><h3><?= h(t('pay.s1', 'Ödeme Yapan')) ?></h3></div>
             <div class="pay-row">
               <div class="pay-field"><label for="pf_name"><?= h(t('pay.f_name', 'Ad Soyad')) ?> *</label>
-                <input type="text" id="pf_name" name="full_name" maxlength="150" autocomplete="name" required></div>
+                <input type="text" id="pf_name" name="full_name" maxlength="150" autocomplete="name" required value="<?= h($cust['full_name'] ?? '') ?>"></div>
               <div class="pay-field"><label for="pf_phone"><?= h(t('pay.f_phone', 'Telefon')) ?> *</label>
-                <input type="tel" id="pf_phone" name="phone" maxlength="30" autocomplete="tel" required></div>
+                <input type="tel" id="pf_phone" name="phone" maxlength="30" autocomplete="tel" required value="<?= h($cust['phone'] ?? '') ?>"></div>
             </div>
             <div class="pay-row">
               <div class="pay-field"><label for="pf_email"><?= h(t('pay.f_email', 'E-posta')) ?> *</label>
-                <input type="email" id="pf_email" name="email" maxlength="150" autocomplete="email" required></div>
+                <input type="email" id="pf_email" name="email" maxlength="150" autocomplete="email" required value="<?= h($cust['email'] ?? '') ?>"></div>
               <div class="pay-field"><label for="pf_company"><?= h(t('pay.f_company', 'Firma (opsiyonel)')) ?></label>
-                <input type="text" id="pf_company" name="company" maxlength="150" autocomplete="organization"></div>
+                <input type="text" id="pf_company" name="company" maxlength="150" autocomplete="organization" value="<?= h($cust['company'] ?? '') ?>"></div>
             </div>
           </fieldset>
 
@@ -246,7 +372,7 @@ require __DIR__ . '/includes/header.php';
           <div class="pay-submit">
             <label class="pay-check">
               <input type="checkbox" name="kvkk" value="1" required>
-              <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank" rel="noopener"><?= h(t('pay.kvkk_link', 'KVKK Aydınlatma Metni')) ?></a><?= h(t('pay.kvkk_rest', "'ni okudum ve ödeme işlemi için kişisel verilerimin işlenmesini onaylıyorum.")) ?></span>
+              <span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>" target="_blank" rel="noopener"><?= h(t('pay.kvkk_link', 'KVKK Aydınlatma Metni')) ?></a>, <a href="<?= h(url('sayfa.php?slug=mesafeli-satis-sozlesmesi')) ?>" target="_blank" rel="noopener"><?= h(t('pay.mesafeli_link', 'Mesafeli Satış Sözleşmesi')) ?></a> <?= h(t('pay.ve', 've')) ?> <a href="<?= h(url('sayfa.php?slug=iptal-iade-politikasi')) ?>" target="_blank" rel="noopener"><?= h(t('pay.iade_link', 'İptal ve İade Politikası')) ?></a>'<?= h(t('pay.kvkk_rest2', "nı okudum, anladım ve kabul ediyorum.")) ?></span>
             </label>
             <button type="submit" class="pay-btn" id="payBtn"><?= h($js['btn']) ?> →</button>
           </div>
@@ -335,6 +461,8 @@ require __DIR__ . '/includes/header.php';
           window.addEventListener('pageshow', function (e) { if (e.persisted) { btn.disabled = false; btn.textContent = I.btn + ' →'; } });
         })();
         </script>
+
+        <?php endif; ?>
 
       <?php endif; ?>
 

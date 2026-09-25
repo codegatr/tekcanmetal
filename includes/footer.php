@@ -64,6 +64,8 @@
           <?php if (!empty($qnbOn)): ?><li><a href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?></a></li><?php endif; ?>
           <li><a href="<?= h(url_lang('sadakat.php')) ?>"><?= h(t('header.menu.loyalty', 'Sadakat Programı')) ?></a></li>
           <li><a href="<?= h(url_lang('sayfa.php?slug=kvkk')) ?>"><?= h(t('footer.kvkk', 'KVKK Aydınlatma')) ?></a></li>
+          <li><a href="<?= h(url_lang('sayfa.php?slug=mesafeli-satis-sozlesmesi')) ?>"><?= h(t('footer.mesafeli', 'Mesafeli Satış Sözleşmesi')) ?></a></li>
+          <li><a href="<?= h(url_lang('sayfa.php?slug=iptal-iade-politikasi')) ?>"><?= h(t('footer.iade', 'İptal ve İade Politikası')) ?></a></li>
         </ul>
       </div>
 

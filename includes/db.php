@@ -77,6 +77,14 @@ function settings_set(string $key, $value, string $group = 'general'): void {
 }
 
 // ---- Güvenlik ----
+/** $s yalnızca ASCII harf/rakam/tire ise (örn. "layers", "bar-chart") bir ikon-kütüphane
+ *  adıdır, emoji DEĞİLDİR — kategori/ürün başlıklarında böyle değerler gösterilmemelidir.
+ *  (Üretim verisinde 'icon' alanına emoji yerine ikon adı girilmiş kayıtlar görüldü.) */
+function is_emoji_icon(string $s): bool {
+    $s = trim($s);
+    return $s !== '' && !preg_match('/^[a-zA-Z0-9\-_]+$/', $s);
+}
+
 function h($v): string {
     if ($v === null) return '';
     return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');

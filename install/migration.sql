@@ -13776,3 +13776,137 @@ SET @sql = IF(@col_exists = 0,
   'ALTER TABLE tm_payments ADD COLUMN remote_addr VARCHAR(45) NULL AFTER ip_address, ADD INDEX idx_remote (remote_addr, created_at)',
   'SELECT 1');
 PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+
+-- =====================================================
+-- v1.0.130 — Online ödeme için yasal sayfalar (taslak)
+-- Mesafeli Satış Sözleşmesi ve İptal/İade Politikası.
+-- ÖNEMLİ: Bu içerikler genel bir taslaktır; yayından önce
+-- bir hukuk danışmanına kontrol ettirilmesi ve köşeli
+-- parantez içindeki firma bilgilerinin doldurulması gerekir.
+-- =====================================================
+
+INSERT IGNORE INTO tm_pages (slug, title, subtitle, content, meta_title, meta_desc, is_active, sort_order) VALUES
+('mesafeli-satis-sozlesmesi', 'Mesafeli Satış Sözleşmesi', 'Online ödeme ile yapılan alışverişlere ilişkin şartlar',
+ '<p><em>Bu metin genel bir taslaktır; yürürlükteki mevzuata (6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği) tam uyum için yayınlanmadan önce bir hukuk danışmanına kontrol ettirilmesi tavsiye edilir. Köşeli parantez içindeki alanlar firma bilgileriyle doldurulmalıdır.</em></p>
+
+<h2>Madde 1 &ndash; Taraflar</h2>
+<p><strong>SATICI:</strong><br>
+Unvan: Tekcan Metal Sanayi ve Ticaret Ltd. Şti.<br>
+Adres: [Açık adres]<br>
+Telefon: 0 332 342 24 52<br>
+E-posta: info@tekcanmetal.com<br>
+Vergi Dairesi / No: [Vergi dairesi ve numarası]<br>
+Mersis No: [Mersis numarası]</p>
+<p><strong>ALICI:</strong><br>
+Online ödeme formunda belirtilen ad soyad, e-posta, telefon ve fatura/açıklama bilgileri esas alınır.</p>
+
+<h2>Madde 2 &ndash; Konu</h2>
+<p>İşbu sözleşmenin konusu, ALICI\'nın SATICI\'ya ait <a href="/odeme.php">online ödeme sayfası</a> üzerinden elektronik ortamda sipariş verdiği ve/veya bedelini ödediği mal/hizmete ilişkin olarak, 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerinin belirlenmesidir.</p>
+
+<h2>Madde 3 &ndash; Sözleşme Konusu Ürün/Hizmet Bilgileri</h2>
+<p>Ürünün/hizmetin türü, miktarı, marka/modeli, satış bedeli, ödeme şekli ve teslimat bilgileri, ödeme sırasında ALICI\'ya e-posta ile gönderilen ödeme onayı ve dekontta belirtildiği şekildedir. Bu belgeler işbu sözleşmenin ayrılmaz parçasıdır.</p>
+
+<h2>Madde 4 &ndash; Genel Hükümler</h2>
+<ul>
+<li>ALICI, online ödeme sayfasında yer alan ürün/hizmete ilişkin temel nitelikleri, satış fiyatını ve ödeme şeklini okuyup bilgi sahibi olduğunu ve elektronik ortamda gerekli onayı verdiğini kabul eder.</li>
+<li>Ürün/hizmetin teslim/ifa süresi, sipariş sırasında veya ayrıca mutabık kalınan süre içinde gerçekleştirilir.</li>
+<li>SATICI, sipariş konusu ürün/hizmetin yerine getirilmesinin imkânsızlaşması halinde bu durumu öğrendiği tarihten itibaren 3 (üç) gün içinde ALICI\'ya bildirir ve varsa tahsil edilen bedeli iade eder.</li>
+</ul>
+
+<h2>Madde 5 &ndash; Cayma Hakkı</h2>
+<p>ALICI; hizmet ifasına ilişkin sözleşmelerde, hizmetin ifasına başlanmamış olması kaydıyla, mal satışına ilişkin sözleşmelerde ise malın ALICI veya gösterdiği üçüncü kişiye tesliminden itibaren <strong>14 (on dört) gün</strong> içinde herhangi bir gerekçe göstermeksizin ve cezai şart ödemeksizin sözleşmeden cayma hakkına sahiptir.</p>
+<p>Mesafeli Sözleşmeler Yönetmeliği\'nin 15. maddesi uyarınca; ALICI\'nın istekleri veya kişisel ihtiyaçları doğrultusunda hazırlanan (özel ölçü/kesim gibi) mallarda ve niteliği itibarıyla iade edilemeyecek mallarda cayma hakkı kullanılamaz. Sipariş konusu ürünün bu istisna kapsamına girip girmediği, sipariş onayında ayrıca belirtilir.</p>
+<p>Cayma hakkının kullanılması için bu süre içinde SATICI\'ya <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a> adresinden veya <a href="/iletisim.php">iletişim</a> kanallarından yazılı bildirimde bulunulması gerekir. Cayma bildiriminin SATICI\'ya ulaşmasını takip eden 14 gün içinde, mal iadesi SATICI\'ya ulaştıktan sonra bedel ALICI\'ya iade edilir.</p>
+
+<h2>Madde 6 &ndash; Ödeme ve Teslimat</h2>
+<p>Ödemeler, SATICI\'nın anlaşmalı olduğu ödeme kuruluşu üzerinden 3D Secure doğrulamalı kredi/banka kartı ile alınır. Kart bilgileri SATICI\'nın sunucularında saklanmaz. Ödemenin onaylanmasının ardından ALICI\'ya bir dekont ve onay e-postası gönderilir.</p>
+
+<h2>Madde 7 &ndash; Temerrüt Hali ve Hukuki Sonuçları</h2>
+<p>ALICI\'nın ödeme aracıyla borcunu temerrüde düşmesi halinde, kart sahibi bankanın kendi mevzuat ve sözleşme hükümleri geçerlidir. ALICI, temerrüt halinde doğacak zarar ve ziyandan sorumlu olduğunu kabul eder.</p>
+
+<h2>Madde 8 &ndash; Uyuşmazlıkların Çözümü</h2>
+<p>İşbu sözleşmeden doğan uyuşmazlıklarda, Ticaret Bakanlığınca ilan edilen değere kadar ALICI\'nın veya SATICI\'nın yerleşim yerindeki Tüketici Hakem Heyetleri, bu değerin üzerindeki uyuşmazlıklarda ise Tüketici Mahkemeleri yetkilidir.</p>
+
+<h2>Madde 9 &ndash; Yürürlük</h2>
+<p>ALICI, online ödeme sayfasındaki ilgili onay kutusunu işaretleyerek işbu Mesafeli Satış Sözleşmesi\'nin tüm koşullarını okuduğunu, anladığını ve kabul ettiğini beyan eder.</p>',
+ 'Mesafeli Satış Sözleşmesi | Tekcan Metal', 'Tekcan Metal online ödeme sayfası üzerinden yapılan alışverişlere ilişkin Mesafeli Satış Sözleşmesi.', 1, 90),
+('iptal-iade-politikasi', 'İptal ve İade Politikası', 'Sipariş iptali, cayma hakkı ve iade süreci',
+ '<p><em>Bu metin genel bir taslaktır; yayınlanmadan önce bir hukuk danışmanına kontrol ettirilmesi tavsiye edilir. Köşeli parantez içindeki alanlar firma politikasına göre doldurulmalı/düzenlenmelidir.</em></p>
+
+<h2>1. Sipariş İptali</h2>
+<p>Online ödeme sayfası üzerinden yapılan ödemelerde, kart bilgileri bankanın 3D Secure ekranında doğrulanır. Ödeme banka tarafından onaylandıktan sonra işlem tamamlanmış sayılır. Ödeme tamamlanmadan (3D Secure adımında veya öncesinde) vazgeçilen işlemlerde kartınızdan herhangi bir tutar çekilmez.</p>
+<p>Ödemesi tamamlanmış ancak henüz mal/hizmet ifasına başlanmamış siparişlerde, iptal talebi <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a> adresine veya <a href="/iletisim.php">iletişim</a> sayfamızdan iletilebilir.</p>
+
+<h2>2. İade Koşulları</h2>
+<ul>
+<li>İade talepleri, <a href="/sayfa.php?slug=mesafeli-satis-sozlesmesi">Mesafeli Satış Sözleşmesi</a>\'nde belirtilen cayma hakkı süresi ve koşulları çerçevesinde değerlendirilir.</li>
+<li>ALICI\'nın özel talebi üzerine standart ölçülerden farklı kesilen, işlenen veya siparişe özel hazırlanan ürünlerde (özel ebat kesim, özel işlem gören sac/boru/profil vb.) niteliği gereği cayma hakkı bulunmayabilir; bu durum sipariş onayında ayrıca belirtilir.</li>
+<li>İade edilecek ürünün kullanılmamış, tekrar satılabilir durumda ve orijinal ambalajında olması gerekir.</li>
+</ul>
+
+<h2>3. İade Süreci</h2>
+<ol>
+<li>İade talebiniz, sipariş/fatura referans numaranız ile birlikte tarafımıza iletilir.</li>
+<li>Talebiniz değerlendirilir ve onaylanması halinde ürün iade süreci başlatılır.</li>
+<li>Ürünün tarafımıza ulaşması ve kontrolünün ardından, ödemenin yapıldığı kredi/banka kartına iade işlemi gerçekleştirilir.</li>
+<li>Kartınıza yapılan iadenin hesabınıza yansıma süresi bankanızın işlem sürelerine bağlıdır; bu süre üzerinde SATICI\'nın kontrolü bulunmamaktadır.</li>
+</ol>
+
+<h2>4. İade Edilemeyecek Durumlar</h2>
+<ul>
+<li>ALICI\'nın istek ve onayı ile standart dışı kesilen/işlenen ürünler,</li>
+<li>Kullanılmış, hasar görmüş veya eksik parçalı olarak iade edilen ürünler,</li>
+<li>Cayma hakkı süresi geçirilmiş talepler,</li>
+<li>Niteliği itibarıyla iadeye uygun olmayan, siparişe özel tedarik edilen ürünler.</li>
+</ul>
+
+<h2>5. Hatalı veya Eksik Ürün Teslimatı</h2>
+<p>Sipariş edilenden farklı, eksik veya hasarlı ürün tesliminde, durumun teslimatı takip eden makul süre içinde bildirilmesi halinde ürün SATICI tarafından ücretsiz olarak değiştirilir veya bedeli iade edilir.</p>
+
+<h2>6. İletişim</h2>
+<p>İptal ve iade talepleriniz için:</p>
+<p>E-posta: <a href="mailto:info@tekcanmetal.com">info@tekcanmetal.com</a><br>
+Telefon: 0 332 342 24 52<br>
+<a href="/iletisim.php">İletişim sayfamız</a></p>',
+ 'İptal ve İade Politikası | Tekcan Metal', 'Tekcan Metal online ödeme sayfası üzerinden yapılan alışverişlerde iptal, cayma hakkı ve iade süreci.', 1, 91);
+
+
+-- =====================================================
+-- v1.0.130 — Sanal POS müşteri hesapları (opsiyonel müşteri girişi)
+-- Hesaplar yalnızca yönetici tarafından oluşturulur, kendiliğinden kayıt yoktur.
+-- (Aynı DDL includes/customer_auth.php::cust_schema_sql() içinde de bulunur;
+--  migration çalışmazsa tablo ilk kullanımda kendini oluşturur.)
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS tm_customers (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    username VARCHAR(60) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(150) NOT NULL,
+    company VARCHAR(150) NULL,
+    email VARCHAR(150) NULL,
+    phone VARCHAR(30) NULL,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    must_change_password TINYINT(1) NOT NULL DEFAULT 0,
+    failed_attempts TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    locked_until DATETIME NULL,
+    last_login_at DATETIME NULL,
+    last_ip VARCHAR(45) NULL,
+    created_by INT UNSIGNED NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uniq_username (username),
+    INDEX idx_active (is_active)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- v1.0.130: tm_payments'e customer_id ekle (idempotent)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = DATABASE()
+                     AND TABLE_NAME = 'tm_payments'
+                     AND COLUMN_NAME = 'customer_id');
+SET @sql = IF(@col_exists = 0,
+  'ALTER TABLE tm_payments ADD COLUMN customer_id INT UNSIGNED NULL AFTER email, ADD INDEX idx_customer (customer_id)',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;

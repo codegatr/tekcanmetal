@@ -437,8 +437,10 @@ foreach ($rows as $r) {
             <?php if (!empty($r['parent_name'])): ?>
               <span class="cat-parent-tag">↑ <?= h($r['parent_name']) ?></span>
             <?php endif; ?>
-            <?php if (!empty($r['icon'])): ?>
+            <?php if (!empty($r['icon']) && is_emoji_icon($r['icon'])): ?>
               <span style="opacity:.7;margin-left:6px"><?= h($r['icon']) ?></span>
+            <?php elseif (!empty($r['icon'])): ?>
+              <span style="opacity:.5;margin-left:6px;font-size:11px" title="Bu alana emoji yerine bir ikon adı girilmiş, kullanıcı tarafında gösterilmiyor">⚠ <?= h($r['icon']) ?></span>
             <?php endif; ?>
           </td>
           <td><code style="font-size:11.5px"><?= h($r['slug']) ?></code></td>

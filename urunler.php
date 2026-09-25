@@ -232,7 +232,7 @@ if ($isHubView && $hubGroups):
               <img src="<?= h(img_url($c['image'])) ?>" alt="<?= h(tr_field($c, 'name')) ?>" loading="lazy" decoding="async">
             <?php endif; ?>
             <div>
-              <h3><a href="<?= h(url('kategori.php?slug=' . urlencode($c['slug']))) ?>"><?= !empty($c['icon']) ? h($c['icon']) . ' ' : '' ?><?= h(tr_field($c, 'name')) ?></a></h3>
+              <h3><a href="<?= h(url('kategori.php?slug=' . urlencode($c['slug']))) ?>"><?= is_emoji_icon($c['icon'] ?? '') ? h($c['icon']) . ' ' : '' ?><?= h(tr_field($c, 'name')) ?></a></h3>
               <?php if (!empty($c['short_desc'])): ?><p><?= h(tr_field($c, 'short_desc')) ?></p><?php endif; ?>
             </div>
           </header>
