@@ -505,7 +505,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
         </li>
         <?php if (!empty($qnbOn)): ?>
         <li class="nav-cta <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">
-          <a href="<?= h(url_lang('odeme.php')) ?>"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a>
+          <a href="<?= h(url_lang('odeme.php')) ?>" target="_blank" rel="noopener"><?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a>
         </li>
         <?php endif; ?>
       </ul>
@@ -579,7 +579,7 @@ if ($pageBaseName === 'sss' && !empty($faqs) && is_array($faqs)) :
     <a href="<?= h(url_lang('galeri.php')) ?>" class="parent <?= $current==='galeri'?'active':'' ?>">📷 <?= h(t('header.menu.gallery', 'Foto Galeri')) ?></a>
     <a href="<?= h(url_lang('blog.php')) ?>" class="parent <?= $current==='blog'?'active':'' ?>">📰 <?= h(t('header.menu.blog', "Tekcan'dan Haberler")) ?></a>
     <a href="<?= h(url_lang('iletisim.php')) ?>" class="parent <?= $current==='iletisim'?'active':'' ?>">📞 <?= h(t('header.menu.contact', 'İletişim')) ?></a>
-    <?php if (!empty($qnbOn)): ?><a href="<?= h(url_lang('odeme.php')) ?>" class="parent nav-cta <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>">🔒 <?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a><?php endif; ?>
+    <?php if (!empty($qnbOn)): ?><a href="<?= h(url_lang('odeme.php')) ?>" class="parent nav-cta <?= in_array($current,['odeme','odeme-sonuc'])?'active':'' ?>" target="_blank" rel="noopener">🔒 <?= h(t('header.menu.online_payment', 'Online Ödeme')) ?> <span class="cta-arrow" aria-hidden="true">→</span></a><?php endif; ?>
     <a href="<?= h(url_lang('mail-order.php')) ?>" class="parent">💳 <?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>
   </nav>
 </aside>
