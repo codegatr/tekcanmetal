@@ -36,6 +36,7 @@ Disallow: /404.php
 Disallow: /odeme.php
 Disallow: /odeme-sonuc.php
 Disallow: /odeme-dekont.php
+Disallow: /odeme-gecmisim.php
 
 # Search ve filter sayfaları (duplicate content riski)
 Disallow: /*?s=

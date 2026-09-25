@@ -125,6 +125,9 @@ $js = [
 
 $siteShort = settings('site_short_name', 'Tekcan Metal');
 $logoPath  = settings('logo', 'assets/img/logo.png');
+// Koyu (lacivert) zeminler için şeffaf/beyaz logo varsa onu kullan; yoksa normal logoya, o da yoksa metin işaretine düş.
+$logoWhitePath = preg_replace('/\.(png|svg|jpe?g)$/i', '-white.$1', $logoPath) ?: $logoPath;
+$logoOnDark = file_exists(__DIR__ . '/' . $logoWhitePath) ? $logoWhitePath : (file_exists(__DIR__ . '/' . $logoPath) ? $logoPath : null);
 ?>
 <!doctype html>
 <html lang="tr">
@@ -153,6 +156,8 @@ a{color:inherit}
 .ck-top{background:var(--navy);border-bottom:3px solid var(--red)}
 .ck-top-inner{max-width:1080px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .ck-brand{display:flex;align-items:center;gap:10px}
+.ck-brand-logo{height:38px;width:auto;max-width:220px;display:block;object-fit:contain}
+@media (max-width:480px){.ck-brand-logo{height:30px;max-width:160px}}
 .ck-brand-mark{width:34px;height:34px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold);flex-shrink:0}
 .ck-brand-text{font-family:var(--serif);font-size:16.5px;font-weight:600;color:#fff;letter-spacing:.3px}
 .ck-brand-text em{font-style:italic;color:var(--gold)}
@@ -303,8 +308,12 @@ a{color:inherit}
 <header class="ck-top">
   <div class="ck-top-inner">
     <div class="ck-brand">
-      <span class="ck-brand-mark">T</span>
-      <span class="ck-brand-text">TEKCAN <em>METAL</em></span>
+      <?php if ($logoOnDark): ?>
+        <img src="<?= h(url($logoOnDark)) ?>" alt="<?= h($siteShort) ?>" class="ck-brand-logo">
+      <?php else: ?>
+        <span class="ck-brand-mark">T</span>
+        <span class="ck-brand-text">TEKCAN <em>METAL</em></span>
+      <?php endif; ?>
     </div>
     <div class="ck-secure-chip"><span class="dot"></span><span class="txt"><?= h(t('pay.secure_badge', 'Güvenli Bağlantı')) ?></span></div>
   </div>
@@ -413,7 +422,10 @@ a{color:inherit}
       </div>
       <?php if ($custHistory): ?>
       <div class="pay-account-body">
-        <div class="pay-account-hist-head"><?= h(t('pay.cust_history', 'Geçmiş Ödemelerim')) ?></div>
+        <div class="pay-account-hist-head" style="display:flex;justify-content:space-between;align-items:center">
+          <span><?= h(t('pay.cust_history', 'Geçmiş Ödemelerim')) ?></span>
+          <a href="<?= h(url('odeme-gecmisim.php')) ?>" style="color:var(--navy);text-transform:none;letter-spacing:0;font-weight:600;font-size:12px"><?= h(t('pay.cust_history_all', 'Tümünü gör')) ?> →</a>
+        </div>
         <div class="pay-account-hist-wrap"><table class="pay-account-hist">
           <?php foreach ($custHistory as $ch): ?>
           <tr>
