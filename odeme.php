@@ -51,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'init'
     qnb_ensure_schema();
     if (!qnb_enabled())                $fail('Online ödeme şu anda kullanılamıyor.', 503);
     if (!qnb_is_open_now())            $fail(qnb_closed_msg(), 503);   // çalışma saatleri dışında yeni ödeme başlatılamaz
+    if (!$cust)                        $fail('Ödeme yapmak için giriş yapmanız gerekiyor.', 401);   // zorunlu müşteri girişi (sunucu tarafı — client-side gizleme yeterli değil)
+    if ($cust['must_change_password']) $fail('Ödeme yapmadan önce şifrenizi değiştirmeniz gerekiyor.', 403);
     $cfg = qnb_cfg();
 
     $full    = mb_substr($in('full_name'), 0, 150, 'UTF-8');
@@ -194,6 +196,16 @@ require __DIR__ . '/includes/header.php';
 .pay-login-form button{background:var(--navy);color:#fff;border:0;padding:11px 22px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer}
 .pay-login-form button:hover{background:var(--gold);color:var(--navy)}
 .pay-login-hint{font-family:var(--sans);font-size:11.5px;color:#888;margin:10px 0 0}
+.pay-gate{background:#fff;border:1px solid #e3e0d8;border-top:4px solid var(--navy);padding:48px 42px;text-align:center;max-width:480px;margin:0 auto}
+@media (max-width:600px){.pay-gate{padding:32px 22px}}
+.pay-gate-icon{width:56px;height:56px;line-height:56px;margin:0 auto 18px;background:var(--navy);color:var(--gold);border-radius:50%;font-size:22px}
+.pay-gate h2{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--navy);margin:0 0 10px}
+.pay-gate p{font-family:var(--sans);font-size:13.5px;line-height:1.6;color:#666;margin:0 0 22px}
+.pay-gate .pay-login-form{margin-top:0;flex-direction:column}
+.pay-gate .pay-login-form input,.pay-gate .pay-login-form button{width:100%}
+.pay-gate .pay-login-hint{margin-top:14px}
+.pay-gate .pay-login-alt{margin:20px 0 0;padding-top:18px;border-top:1px solid #f0eee8;font-family:var(--sans);font-size:12.5px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.pay-gate .pay-login-alt a{color:var(--navy);text-decoration:underline}
 </style>
 
 <div class="pay-page">
@@ -247,7 +259,28 @@ require __DIR__ . '/includes/header.php';
         </div>
       <?php else: ?>
 
-        <?php if ($cust && $cust['must_change_password']): ?>
+        <?php if (!$cust): ?>
+
+        <div class="pay-gate">
+          <div class="pay-gate-icon">🔒</div>
+          <h2><?= h(t('pay.gate_title', 'Ödeme Yapmak İçin Giriş Yapın')) ?></h2>
+          <p><?= h(t('pay.gate_lead', 'Online ödeme sayfamız yalnızca kayıtlı müşterilerimize açıktır. Kullanıcı adı ve şifreniz tarafımızca size iletilmiştir.')) ?></p>
+          <?php if ($custErr): ?><div class="pay-account-error"><?= h($custErr) ?></div><?php endif; ?>
+          <form method="post" class="pay-login-form">
+            <?= csrf_field() ?><input type="hidden" name="action" value="customer_login">
+            <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username" autofocus>
+            <input type="password" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
+            <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?></button>
+          </form>
+          <p class="pay-login-hint"><?= h(t('pay.cust_no_account', 'Kullanıcı adı ve şifrenizi almadıysanız veya kaybettiyseniz bizimle iletişime geçin.')) ?></p>
+          <p class="pay-login-alt">
+            <a href="<?= h(url_lang('iban.php')) ?>"><?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a>
+            <a href="<?= h(url_lang('mail-order.php')) ?>"><?= h(t('header.menu.mail_order', 'Mail Order Formu')) ?></a>
+            <a href="<?= h(url_lang('iletisim.php')) ?>"><?= h(t('header.menu.contact', 'İletişim')) ?></a>
+          </p>
+        </div>
+
+        <?php elseif ($cust['must_change_password']): ?>
 
         <div class="pay-account">
           <div class="pay-account-head">
@@ -274,12 +307,11 @@ require __DIR__ . '/includes/header.php';
 
         <?php else: ?>
 
-        <?php if ($cust): ?>
-          <?php
-            $custHistory = [];
-            try { $custHistory = all("SELECT invoice_id, public_ref, amount, status, created_at FROM tm_payments WHERE customer_id=? ORDER BY id DESC LIMIT 5", [$cust['id']]); }
-            catch (Throwable $e) { /* geçmiş listesi gösterilemezse ödeme akışı yine de çalışsın */ }
-          ?>
+        <?php
+          $custHistory = [];
+          try { $custHistory = all("SELECT invoice_id, public_ref, amount, status, created_at FROM tm_payments WHERE customer_id=? ORDER BY id DESC LIMIT 5", [$cust['id']]); }
+          catch (Throwable $e) { /* geçmiş listesi gösterilemezse ödeme akışı yine de çalışsın */ }
+        ?>
         <div class="pay-account">
           <div class="pay-account-head">
             <div>👤 <?= h(t('pay.cust_hello', 'Merhaba')) ?>, <strong><?= h($cust['full_name']) ?></strong>
@@ -305,21 +337,6 @@ require __DIR__ . '/includes/header.php';
           </div>
           <?php endif; ?>
         </div>
-        <?php else: ?>
-        <details class="pay-login">
-          <summary>🔑 <?= h(t('pay.cust_have_account', 'Zaten müşterimiz misiniz? Kullanıcı adı ve şifrenizle giriş yapın')) ?></summary>
-          <div class="pay-login-body">
-            <?php if ($custErr): ?><div class="pay-account-error"><?= h($custErr) ?></div><?php endif; ?>
-            <form method="post" class="pay-login-form">
-              <?= csrf_field() ?><input type="hidden" name="action" value="customer_login">
-              <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username">
-              <input type="password" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
-              <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?></button>
-            </form>
-            <p class="pay-login-hint"><?= h(t('pay.cust_no_account', 'Hesabınız yoksa misafir olarak ödeme yapabilirsiniz; müşteri hesabı yalnızca tarafımızca oluşturulur.')) ?></p>
-          </div>
-        </details>
-        <?php endif; ?>
 
         <div class="pay-alert" id="payErr" role="alert"></div>
 
