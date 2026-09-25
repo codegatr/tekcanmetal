@@ -194,16 +194,24 @@ a{color:inherit}
 .pay-gate h2{font-family:var(--serif);font-size:23px;font-weight:600;color:var(--navy);margin:0 0 8px}
 .pay-gate p{font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 20px}
 .pay-gate .pay-login-form{margin-top:0;flex-direction:column}
-.pay-gate .pay-login-form input,.pay-gate .pay-login-form button{width:100%}
+.pay-gate .pay-login-form input,.pay-gate .pay-login-form button:not(.pw-toggle){width:100%}
 .pay-gate .pay-login-hint{margin-top:14px}
 .pay-gate .pay-login-alt{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);font-family:var(--sans);font-size:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .pay-gate .pay-login-alt a{color:var(--navy);text-decoration:underline}
 
 .pay-login-form{display:flex;gap:10px;flex-wrap:wrap}
 .pay-login-form input{flex:1;min-width:160px;padding:13px 14px;font-family:var(--sans);font-size:16px;border:1px solid #d8d5cc;border-radius:8px;background:var(--paper)}
+.pay-login-form .pw-field{flex:1;min-width:160px}
+.pw-field{position:relative}
+.pw-field input{width:100%;padding-right:42px!important}
+.pw-toggle{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:0;cursor:pointer;color:#9a9689;padding:8px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.pw-toggle:hover{color:var(--navy)}
+.pw-toggle .eye-off{display:none}
+.pw-toggle.is-visible .eye-on{display:none}
+.pw-toggle.is-visible .eye-off{display:block}
 .pay-login-form input:focus{outline:0;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(201,168,107,.15)}
-.pay-login-form button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:13px 22px;font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:.18s}
-.pay-login-form button:hover{background:var(--navy-2)}
+.pay-login-form button:not(.pw-toggle){background:var(--navy);color:#fff;border:0;border-radius:8px;padding:13px 22px;font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:.18s}
+.pay-login-form button:not(.pw-toggle):hover{background:var(--navy-2)}
 .pay-login-hint{font-family:var(--sans);font-size:11.5px;color:var(--muted);margin:10px 0 0}
 .pay-account-error{font-family:var(--sans);font-size:13px;color:var(--red-dark);background:#fff5f5;border-radius:8px;border:1px solid #fecaca;padding:10px 14px;margin:0 0 14px;text-align:left}
 
@@ -319,7 +327,10 @@ a{color:inherit}
       <form method="post" class="pay-login-form">
         <?= csrf_field() ?><input type="hidden" name="action" value="customer_login">
         <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username" autofocus>
-        <input type="password" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
+        <div class="pw-field">
+          <input type="password" id="gatePassword" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
+          <button type="button" class="pw-toggle" data-pw-toggle="#gatePassword" aria-label="<?= h(t('pay.pw_show', 'Şifreyi göster')) ?>"><svg class="eye-on" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button>
+        </div>
         <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?></button>
       </form>
       <p class="pay-login-hint"><?= h(t('pay.cust_no_account', 'Kullanıcı adı ve şifrenizi almadıysanız veya kaybettiyseniz bizimle iletişime geçin.')) ?></p>
@@ -347,8 +358,12 @@ a{color:inherit}
         <form method="post" class="pay-account-form">
           <?= csrf_field() ?><input type="hidden" name="action" value="customer_change_password">
           <div class="pay-row">
-            <div class="pay-field"><label><?= h(t('pay.cust_current_pw', 'Mevcut Şifre')) ?></label><input type="password" name="current_password" required autocomplete="current-password"></div>
-            <div class="pay-field"><label><?= h(t('pay.cust_new_pw', 'Yeni Şifre (en az 8 karakter)')) ?></label><input type="password" name="new_password" minlength="8" required autocomplete="new-password"></div>
+            <div class="pay-field"><label><?= h(t('pay.cust_current_pw', 'Mevcut Şifre')) ?></label>
+              <div class="pw-field"><input type="password" id="curPw" name="current_password" required autocomplete="current-password"><button type="button" class="pw-toggle" data-pw-toggle="#curPw" aria-label="<?= h(t('pay.pw_show', 'Şifreyi göster')) ?>"><svg class="eye-on" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button></div>
+            </div>
+            <div class="pay-field"><label><?= h(t('pay.cust_new_pw', 'Yeni Şifre (en az 8 karakter)')) ?></label>
+              <div class="pw-field"><input type="password" id="newPw" name="new_password" minlength="8" required autocomplete="new-password"><button type="button" class="pw-toggle" data-pw-toggle="#newPw" aria-label="<?= h(t('pay.pw_show', 'Şifreyi göster')) ?>"><svg class="eye-on" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button></div>
+            </div>
           </div>
           <button type="submit" class="pay-btn pay-btn-auto"><?= h(t('pay.cust_change_pw_btn', 'Şifreyi Değiştir')) ?></button>
         </form>
@@ -582,6 +597,23 @@ a{color:inherit}
 
   </div>
 </main>
+
+<script>
+/* Şifre göster/gizle — sayfada hangi ekran render edilmiş olursa olsun (giriş, şifre
+   değiştirme) çalışır; bu yüzden tüm koşullu bloklardan bağımsız, tek yerde tanımlanır. */
+(function () {
+  document.querySelectorAll('[data-pw-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var input = document.querySelector(btn.getAttribute('data-pw-toggle'));
+      if (!input) return;
+      var show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.classList.toggle('is-visible', show);
+      btn.setAttribute('aria-label', show ? <?= json_encode(t('pay.pw_hide', 'Şifreyi gizle'), JSON_UNESCAPED_UNICODE) ?> : <?= json_encode(t('pay.pw_show', 'Şifreyi göster'), JSON_UNESCAPED_UNICODE) ?>);
+    });
+  });
+})();
+</script>
 
 <footer class="ck-footer">
   <p>© <?= h(date('Y')) ?> <?= h($siteShort) ?>
