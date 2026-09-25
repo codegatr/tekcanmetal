@@ -155,7 +155,7 @@ require __DIR__ . '/includes/header.php';
 .pay-field{display:flex;flex-direction:column;margin-bottom:18px}
 .pay-row .pay-field{margin-bottom:0}
 .pay-field label{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);margin-bottom:6px}
-.pay-field input,.pay-field textarea{width:100%;padding:12px 14px;font-family:var(--sans);font-size:14px;border:1px solid #d4d2cc;background:var(--paper);border-radius:0;box-sizing:border-box}
+.pay-field input,.pay-field textarea{width:100%;padding:12px 14px;font-family:var(--sans);font-size:16px;border:1px solid #d4d2cc;background:var(--paper);border-radius:0;box-sizing:border-box}
 .pay-field input:focus,.pay-field textarea:focus{outline:0;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(201,168,107,.15)}
 .pay-field textarea{resize:vertical;min-height:80px}
 .pay-hint{font-family:var(--sans);font-size:11.5px;color:#888;margin-top:4px}
@@ -166,6 +166,8 @@ require __DIR__ . '/includes/header.php';
 .pay-check input{margin-top:3px;flex-shrink:0}
 .pay-check a{color:var(--navy);text-decoration:underline}
 .pay-btn{width:100%;padding:18px;background:var(--navy);color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:0;cursor:pointer;transition:.18s}
+.pay-btn-auto{width:auto;padding:12px 26px}
+@media (max-width:600px){.pay-btn-auto{width:100%;padding:16px}}
 .pay-btn:hover:not(:disabled){background:var(--gold);color:var(--navy)}
 .pay-btn:disabled{opacity:.6;cursor:wait}
 .pay-alert{background:#fff;border-left:4px solid var(--red);padding:14px 18px;margin:0 0 20px;font-family:var(--sans);font-size:13.5px;color:#a00d24;display:none}
@@ -191,7 +193,7 @@ require __DIR__ . '/includes/header.php';
 .pay-login summary::-webkit-details-marker{display:none}
 .pay-login-body{padding:0 22px 20px;border-top:1px solid #f0eee8}
 .pay-login-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.pay-login-form input{flex:1;min-width:160px;padding:11px 13px;font-family:var(--sans);font-size:13.5px;border:1px solid #d4d2cc;background:var(--paper)}
+.pay-login-form input{flex:1;min-width:160px;padding:11px 13px;font-family:var(--sans);font-size:16px;border:1px solid #d4d2cc;background:var(--paper)}
 .pay-login-form input:focus{outline:0;border-color:var(--gold);background:#fff}
 .pay-login-form button{background:var(--navy);color:#fff;border:0;padding:11px 22px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer}
 .pay-login-form button:hover{background:var(--gold);color:var(--navy)}
@@ -206,6 +208,52 @@ require __DIR__ . '/includes/header.php';
 .pay-gate .pay-login-hint{margin-top:14px}
 .pay-gate .pay-login-alt{margin:20px 0 0;padding-top:18px;border-top:1px solid #f0eee8;font-family:var(--sans);font-size:12.5px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .pay-gate .pay-login-alt a{color:var(--navy);text-decoration:underline}
+
+/* ============================================================
+ * MOBİL — native-app hissi veren, sıkı ve dokunmaya uygun düzen.
+ * Not: sitedeki genel mobil menü (.offcanvas) her sayfada, kapalıyken
+ * bile DOM genişliğini artırıyor; bu, yalnızca bu sayfaya özel bir
+ * güvenlik önlemiyle (overflow-x:hidden) engellenir.
+ * ============================================================ */
+.pay-page{overflow-x:hidden}
+body{overflow-x:hidden}
+@media (max-width:600px){
+  .pay-hero{padding:34px 0 26px}
+  .pay-eyebrow{margin-bottom:14px;gap:10px}
+  .pay-hero h1{font-size:28px;margin:0 0 8px}
+  .pay-hero p{font-size:13.5px}
+  .pay-trust{padding:16px 0}
+  .pay-trust-item{padding:0 16px;font-size:11.5px}
+  .pay-section{padding:28px 0 56px}
+  .pay-fs-num{width:28px;height:28px;font-size:15px}
+  .pay-fs-head h3{font-size:19px}
+  .pay-fs-head{margin-bottom:16px;gap:10px}
+  .pay-row{gap:14px;margin-bottom:14px}
+  .pay-field{margin-bottom:14px}
+  .pay-field label{font-size:10.5px;letter-spacing:1px}
+  .pay-field input,.pay-field textarea{padding:13px 14px}
+  /* Kart no tam genişlik; SKT + CVV yan yana — çoğu bankacılık/ödeme uygulamasının deseni */
+  .pay-row.r3{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"no no" "exp cvv";gap:14px}
+  .pay-row.r3 .pay-field:nth-child(1){grid-area:no}
+  .pay-row.r3 .pay-field:nth-child(2){grid-area:exp}
+  .pay-row.r3 .pay-field:nth-child(3){grid-area:cvv}
+  .pay-secure{padding:12px 14px;font-size:12.5px}
+  .pay-btn{padding:16px;font-size:12.5px;letter-spacing:1.5px}
+  .pay-check{font-size:12.5px}
+  .pay-check input{width:18px;height:18px}
+  .pay-account-head{padding:14px 16px}
+  .pay-account-body{padding:0 16px 16px}
+  .pay-account-hist-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
+  .pay-account-hist{font-size:11.5px;min-width:420px}
+  .pay-gate{padding:28px 18px}
+  .pay-gate-icon{width:48px;height:48px;line-height:48px;font-size:19px}
+  .pay-gate h2{font-size:21px}
+  .pay-login-body{padding:0 16px 16px}
+  .pay-login-alt{gap:10px;font-size:11.5px}
+}
+@supports (padding: max(0px)){
+  .pay-page{padding-bottom:env(safe-area-inset-bottom,0px)}
+}
 </style>
 
 <div class="pay-page">
@@ -300,7 +348,7 @@ require __DIR__ . '/includes/header.php';
                 <div class="pay-field"><label><?= h(t('pay.cust_current_pw', 'Mevcut Şifre')) ?></label><input type="password" name="current_password" required autocomplete="current-password"></div>
                 <div class="pay-field"><label><?= h(t('pay.cust_new_pw', 'Yeni Şifre (en az 8 karakter)')) ?></label><input type="password" name="new_password" minlength="8" required autocomplete="new-password"></div>
               </div>
-              <button type="submit" class="pay-btn" style="width:auto;padding:12px 26px"><?= h(t('pay.cust_change_pw_btn', 'Şifreyi Değiştir')) ?></button>
+              <button type="submit" class="pay-btn pay-btn-auto"><?= h(t('pay.cust_change_pw_btn', 'Şifreyi Değiştir')) ?></button>
             </form>
           </div>
         </div>
@@ -324,7 +372,7 @@ require __DIR__ . '/includes/header.php';
           <?php if ($custHistory): ?>
           <div class="pay-account-body">
             <div class="pay-account-hist-head"><?= h(t('pay.cust_history', 'Geçmiş Ödemelerim')) ?></div>
-            <table class="pay-account-hist">
+            <div class="pay-account-hist-wrap"><table class="pay-account-hist">
               <?php foreach ($custHistory as $ch): ?>
               <tr>
                 <td><?= h(tr_date($ch['created_at'])) ?></td>
@@ -333,7 +381,7 @@ require __DIR__ . '/includes/header.php';
                 <td><?php if ($ch['status'] === 'paid'): ?><a href="<?= h(url('odeme-dekont.php?ref=' . $ch['public_ref'])) ?>" target="_blank"><?= h(t('pay.cust_receipt', 'Dekont')) ?></a><?php endif; ?></td>
               </tr>
               <?php endforeach; ?>
-            </table>
+            </table></div>
           </div>
           <?php endif; ?>
         </div>
