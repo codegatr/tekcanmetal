@@ -164,6 +164,29 @@ a{color:inherit}
 .ck-shell{width:100%;max-width:460px}
 .ck-amount-badge{display:none}
 
+/* Giriş ekranı — split-screen (yalnızca kayıtlı müşteri girişi beklenirken; ödeme formu ve
+   hesap ekranı işlevsel formlar olduğu için tek-kart düzeninde kalır). */
+.ck-main-split{padding:0;align-items:stretch}
+.ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1040px;width:100%;min-height:calc(100vh - 65px);
+  border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(15,13,8,.04),0 18px 44px rgba(15,13,8,.1)}
+.ck-split-left{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 44px}
+.ck-split-left .pay-gate{box-shadow:none;border-radius:0;padding:0;max-width:360px}
+.ck-split-right{background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 100%);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;color:#fff}
+.ck-split-right::before{content:'';position:absolute;width:460px;height:460px;border:60px solid rgba(255,255,255,.07);
+  border-radius:50%;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);right:-130px;bottom:-130px}
+.ck-split-phone{width:168px;height:266px;border-radius:26px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.3);
+  display:grid;place-items:center;border:7px solid #08122c;margin-bottom:30px;position:relative;z-index:1}
+.ck-split-phone svg{color:var(--gold)}
+.ck-split-right h2{font-family:var(--serif);font-size:25px;font-weight:600;text-align:center;max-width:320px;line-height:1.3;position:relative;z-index:1;margin:0 0 12px}
+.ck-split-right p{font-family:var(--sans);font-size:13px;color:rgba(255,255,255,.72);text-align:center;max-width:290px;position:relative;z-index:1;margin:0}
+@media (max-width:900px){
+  .ck-main-split{padding:0}
+  .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;min-height:auto}
+  .ck-split-right{display:none}
+  .ck-split-left{padding:36px 20px}
+}
+
 /* Canlı kart önizlemesi — ödeme formunda kullanıcı yazdıkça güncellenir */
 .ck-cardpreview{width:100%;max-width:400px;margin:0 auto 22px;aspect-ratio:1.586;border-radius:16px;position:relative;overflow:hidden;
   background:linear-gradient(135deg,#0c1e44 0%,#143672 45%,#1e4a9e 100%);box-shadow:0 16px 40px rgba(5,13,36,.28);color:#fff;
@@ -287,8 +310,10 @@ a{color:inherit}
   </div>
 </header>
 
-<main class="ck-main">
-  <div class="ck-shell">
+<?php $showSplit = $payOn && !$payPaused && !$payClosed && !$cust; ?>
+<main class="ck-main<?= $showSplit ? ' ck-main-split' : '' ?>">
+  <div class="<?= $showSplit ? 'ck-shell-split' : 'ck-shell' ?>">
+  <?php if ($showSplit): ?><div class="ck-split-left"><?php endif; ?>
 
   <?php if (!$payOn || $payPaused || $payClosed): ?>
     <?php if (!$payOn && !empty($_SESSION['admin_id']) && in_array($_SESSION['admin_role'] ?? '', ['superadmin', 'admin'], true)): ?>
@@ -595,6 +620,16 @@ a{color:inherit}
 
   <?php endif; ?>
 
+  <?php if ($showSplit): ?>
+    </div><!-- .ck-split-left -->
+    <div class="ck-split-right">
+      <div class="ck-split-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2><?= h(t('pay.split_title', 'Tekcan Metal ile güvenli ödeme')) ?></h2>
+      <p><?= h(t('pay.split_lead', 'Bankanızın 3D Secure altyapısıyla kart bilgileriniz korunur. Tüm işlemler kayıt altına alınır.')) ?></p>
+    </div>
+  <?php endif; ?>
   </div>
 </main>
 
