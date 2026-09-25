@@ -257,6 +257,29 @@ a{color:inherit}
 .pay-account-hist td{padding:7px 4px;border-bottom:1px solid var(--line);color:#3a3a3a}
 .pay-account-hist td a{color:var(--navy);text-decoration:underline}
 
+.pay-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 20px 4px}
+.pay-stat{position:relative;background:#fafaf8;border-radius:10px;padding:16px 14px 14px;overflow:hidden;border:1px solid var(--line)}
+.pay-stat-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.pay-stat-accent.green{background:#2f9e5c}
+.pay-stat-accent.gold{background:var(--gold)}
+.pay-stat-accent.blue{background:#2f6fa8}
+.pay-stat-accent.red{background:var(--red)}
+.pay-stat-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;margin-bottom:10px}
+.pay-stat-ic.green{background:rgba(47,158,92,.12);color:#2f9e5c}
+.pay-stat-ic.gold{background:rgba(201,168,107,.18);color:var(--gold-dark)}
+.pay-stat-ic.blue{background:rgba(47,111,168,.12);color:#2f6fa8}
+.pay-stat-ic.red{background:rgba(200,16,46,.1);color:var(--red)}
+.pay-stat-label{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.4px;color:#8a8578;margin-bottom:6px;line-height:1.4}
+.pay-stat-value{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--navy)}
+@media (max-width:720px){.pay-stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.pay-stats-grid{grid-template-columns:1fr;gap:10px}.pay-stat-value{font-size:17px}}
+
+.pay-empty{text-align:center;padding:34px 16px 30px;color:#8a8578}
+.pay-empty-ic{font-size:34px;margin-bottom:10px;opacity:.55}
+.pay-empty p{font-family:var(--sans);font-size:13px;margin:0 0 16px;color:#6b675d}
+.pay-empty-btn{display:inline-block;background:var(--navy);color:#fff;font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:11px 22px;border-radius:8px;text-decoration:none;transition:.18s}
+.pay-empty-btn:hover{background:var(--navy-2)}
+
 .ck-card-head{padding:22px 26px 4px;text-align:center}
 .ck-card-head h1{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--navy);margin:0 0 4px}
 .ck-card-head p{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0}
@@ -410,6 +433,16 @@ a{color:inherit}
       $custHistory = [];
       try { $custHistory = all("SELECT invoice_id, public_ref, amount, status, created_at FROM tm_payments WHERE customer_id=? ORDER BY id DESC LIMIT 5", [$cust['id']]); }
       catch (Throwable $e) { /* geçmiş listesi gösterilemezse ödeme akışı yine de çalışsın */ }
+
+      $custStats = ['paid_count' => 0, 'paid_sum' => 0.0, 'pending_count' => 0, 'pending_sum' => 0.0, 'failed_count' => 0, 'today_sum' => 0.0];
+      try {
+        $custStats['paid_count']    = (int)val("SELECT COUNT(*) FROM tm_payments WHERE customer_id=? AND status='paid'", [$cust['id']]);
+        $custStats['paid_sum']      = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE customer_id=? AND status='paid'", [$cust['id']]);
+        $custStats['pending_count'] = (int)val("SELECT COUNT(*) FROM tm_payments WHERE customer_id=? AND status='pending'", [$cust['id']]);
+        $custStats['pending_sum']   = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE customer_id=? AND status='pending'", [$cust['id']]);
+        $custStats['failed_count']  = (int)val("SELECT COUNT(*) FROM tm_payments WHERE customer_id=? AND status IN ('failed','review')", [$cust['id']]);
+        $custStats['today_sum']     = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE customer_id=? AND status='paid' AND DATE(created_at)=CURDATE()", [$cust['id']]);
+      } catch (Throwable $e) { /* istatistikler gösterilemezse ödeme akışı yine de çalışsın */ }
     ?>
     <div class="pay-account">
       <div class="pay-account-head">
@@ -420,12 +453,40 @@ a{color:inherit}
           <button type="submit"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></button>
         </form>
       </div>
-      <?php if ($custHistory): ?>
+
+      <div class="pay-stats-grid">
+        <div class="pay-stat">
+          <span class="pay-stat-accent green"></span>
+          <div class="pay-stat-ic green">✓</div>
+          <div class="pay-stat-label"><?= h(t('pay.stat_paid', 'Toplam Tahsilat')) ?> (<?= (int)$custStats['paid_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
+          <div class="pay-stat-value"><?= h(qnb_money($custStats['paid_sum'])) ?></div>
+        </div>
+        <div class="pay-stat">
+          <span class="pay-stat-accent gold"></span>
+          <div class="pay-stat-ic gold">⏳</div>
+          <div class="pay-stat-label"><?= h(t('pay.stat_pending', 'Bekleyen Ödeme')) ?> (<?= (int)$custStats['pending_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
+          <div class="pay-stat-value"><?= h(qnb_money($custStats['pending_sum'])) ?></div>
+        </div>
+        <div class="pay-stat">
+          <span class="pay-stat-accent blue"></span>
+          <div class="pay-stat-ic blue">📅</div>
+          <div class="pay-stat-label"><?= h(t('pay.stat_today', 'Bugünkü Tahsilat')) ?></div>
+          <div class="pay-stat-value"><?= h(qnb_money($custStats['today_sum'])) ?></div>
+        </div>
+        <div class="pay-stat">
+          <span class="pay-stat-accent red"></span>
+          <div class="pay-stat-ic red">⚠</div>
+          <div class="pay-stat-label"><?= h(t('pay.stat_failed', 'Başarısız / İncelemede')) ?></div>
+          <div class="pay-stat-value"><?= (int)$custStats['failed_count'] ?> <span style="font-size:12px;font-weight:600;opacity:.6"><?= h(t('pay.stat_op', 'işlem')) ?></span></div>
+        </div>
+      </div>
+
       <div class="pay-account-body">
         <div class="pay-account-hist-head" style="display:flex;justify-content:space-between;align-items:center">
-          <span><?= h(t('pay.cust_history', 'Geçmiş Ödemelerim')) ?></span>
+          <span><?= h(t('pay.cust_history', 'Son Ödemeler')) ?></span>
           <a href="<?= h(url('odeme-gecmisim.php')) ?>" style="color:var(--navy);text-transform:none;letter-spacing:0;font-weight:600;font-size:12px"><?= h(t('pay.cust_history_all', 'Tümünü gör')) ?> →</a>
         </div>
+        <?php if ($custHistory): ?>
         <div class="pay-account-hist-wrap"><table class="pay-account-hist">
           <?php foreach ($custHistory as $ch): ?>
           <tr>
@@ -436,8 +497,14 @@ a{color:inherit}
           </tr>
           <?php endforeach; ?>
         </table></div>
+        <?php else: ?>
+        <div class="pay-empty">
+          <div class="pay-empty-ic">🧾</div>
+          <p><?= h(t('pay.cust_empty', 'Henüz işlem yok. İlk tahsilatınızı aşağıdan oluşturabilirsiniz.')) ?></p>
+          <a href="#yeni-tahsilat" class="pay-empty-btn"><?= h(t('pay.cust_empty_cta', 'Yeni Tahsilat')) ?></a>
+        </div>
+        <?php endif; ?>
       </div>
-      <?php endif; ?>
     </div>
 
     <div class="ck-cardpreview" id="ckCardPreview">
@@ -454,7 +521,7 @@ a{color:inherit}
 
     <div class="pay-alert" id="payErr" role="alert"></div>
 
-    <div class="ck-card">
+    <div class="ck-card" id="yeni-tahsilat">
       <div class="ck-card-head">
         <h1><?= h(t('pay.card_h1', 'Güvenli Ödeme')) ?></h1>
         <p><?= h(t('pay.card_lead', '3D Secure doğrulamalı, kart bilgisi saklanmayan ödeme.')) ?></p>
