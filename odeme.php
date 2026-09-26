@@ -151,7 +151,7 @@ $logoOnDark = file_exists(__DIR__ . '/' . $logoWhitePath) ? $logoWhitePath : (fi
   --paper:#f6f7f9;--ink:#1a1a1a;--line:#e2e4e9;--muted:#6b7280;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--shadow:0 1px 2px rgba(15,13,8,.05),0 1px 6px rgba(15,13,8,.04)}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;overflow-x:hidden;font-family:var(--sans);color:var(--ink);background:linear-gradient(180deg,#f3f1ec 0%,#eceae3 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+body{margin:0;overflow-x:hidden;font-family:var(--sans);color:var(--ink);background:#eef0f3;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 .ck-top{background:var(--navy);border-bottom:3px solid var(--red)}
 .ck-top-inner{max-width:1080px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
@@ -257,22 +257,21 @@ a{color:inherit}
 .pay-account-hist td{padding:6px 4px;border-bottom:1px solid var(--line);color:#3a3a3a}
 .pay-account-hist td a{color:var(--navy);text-decoration:underline}
 
-.pay-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 16px 2px}
-.pay-stat{position:relative;background:#fbfbfc;border-radius:6px;padding:10px 10px 9px;overflow:hidden;border:1px solid var(--line)}
-.pay-stat-accent{position:absolute;top:0;left:0;right:0;height:3px}
-.pay-stat-accent.green{background:#2f9e5c}
-.pay-stat-accent.gold{background:var(--gold)}
-.pay-stat-accent.blue{background:#2f6fa8}
-.pay-stat-accent.red{background:var(--red)}
-.pay-stat-ic{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;margin-bottom:6px}
+.pay-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 16px 2px}
+.pay-stat{position:relative;background:#fff;border-radius:8px;padding:12px 12px 11px 14px;overflow:hidden;border:1px solid var(--line);border-left:4px solid transparent}
+.pay-stat.green{border-left-color:#2f9e5c}
+.pay-stat.gold{border-left-color:#d69a1f}
+.pay-stat.blue{border-left-color:#2f6fa8}
+.pay-stat.red{border-left-color:var(--red)}
+.pay-stat-ic{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.pay-stat-ic svg{width:14px;height:14px}
 .pay-stat-ic.green{background:rgba(47,158,92,.12);color:#2f9e5c}
-.pay-stat-ic.gold{background:rgba(201,168,107,.18);color:var(--gold-dark)}
+.pay-stat-ic.gold{background:rgba(214,154,31,.14);color:#b9820f}
 .pay-stat-ic.blue{background:rgba(47,111,168,.12);color:#2f6fa8}
 .pay-stat-ic.red{background:rgba(200,16,46,.1);color:var(--red)}
-.pay-stat-label{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.3px;color:#767b85;margin-bottom:3px;line-height:1.35}
-.pay-stat-value{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--navy)}
-@media (max-width:720px){.pay-stats-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:420px){.pay-stats-grid{grid-template-columns:1fr;gap:8px}.pay-stat-value{font-size:14px}}
+.pay-stat-label{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0;color:#6b7280;margin-bottom:4px;line-height:1.35}
+.pay-stat-value{font-family:var(--sans);font-size:19px;font-weight:700;color:#1a1a1a}
+@media (max-width:360px){.pay-stats-grid{grid-template-columns:1fr;gap:8px}.pay-stat-value{font-size:14px}}
 
 .pay-empty{text-align:center;padding:20px 14px 18px;color:#767b85}
 .pay-empty-ic{font-size:22px;margin-bottom:6px;opacity:.5}
@@ -455,27 +454,23 @@ a{color:inherit}
       </div>
 
       <div class="pay-stats-grid">
-        <div class="pay-stat">
-          <span class="pay-stat-accent green"></span>
-          <div class="pay-stat-ic green">✓</div>
+        <div class="pay-stat green">
+          <div class="pay-stat-ic green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
           <div class="pay-stat-label"><?= h(t('pay.stat_paid', 'Toplam Tahsilat')) ?> (<?= (int)$custStats['paid_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
           <div class="pay-stat-value"><?= h(qnb_money($custStats['paid_sum'])) ?></div>
         </div>
-        <div class="pay-stat">
-          <span class="pay-stat-accent gold"></span>
-          <div class="pay-stat-ic gold">⏳</div>
+        <div class="pay-stat gold">
+          <div class="pay-stat-ic gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="pay-stat-label"><?= h(t('pay.stat_pending', 'Bekleyen Ödeme')) ?> (<?= (int)$custStats['pending_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
           <div class="pay-stat-value"><?= h(qnb_money($custStats['pending_sum'])) ?></div>
         </div>
-        <div class="pay-stat">
-          <span class="pay-stat-accent blue"></span>
-          <div class="pay-stat-ic blue">📅</div>
+        <div class="pay-stat blue">
+          <div class="pay-stat-ic blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
           <div class="pay-stat-label"><?= h(t('pay.stat_today', 'Bugünkü Tahsilat')) ?></div>
           <div class="pay-stat-value"><?= h(qnb_money($custStats['today_sum'])) ?></div>
         </div>
-        <div class="pay-stat">
-          <span class="pay-stat-accent red"></span>
-          <div class="pay-stat-ic red">⚠</div>
+        <div class="pay-stat red">
+          <div class="pay-stat-ic red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="pay-stat-label"><?= h(t('pay.stat_failed', 'Başarısız / İncelemede')) ?></div>
           <div class="pay-stat-value"><?= (int)$custStats['failed_count'] ?> <span style="font-size:12px;font-weight:600;opacity:.6"><?= h(t('pay.stat_op', 'işlem')) ?></span></div>
         </div>
