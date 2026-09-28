@@ -2,6 +2,24 @@
 define('TM_ADMIN', true);
 $adminTitle = 'Pano';
 require __DIR__ . '/_layout.php';
+require_once __DIR__ . '/../includes/qnbpay.php';
+
+// Sanal POS / Ödemeler özet verisi — yalnızca süper yönetici / yönetici görür (sanal-pos.php ile aynı yetki kuralı)
+$payAllowed = in_array($adminUser['role'] ?? '', ['superadmin', 'admin'], true);
+$payStats = ['today' => 0.0, 'month' => 0.0, 'review' => 0, 'pending' => 0];
+$lastPayments = [];
+if ($payAllowed) {
+    try {
+        qnb_ensure_schema();
+        $payStats['today']   = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE status='paid' AND pos_mode='live' AND DATE(paid_at)=CURDATE()");
+        $payStats['month']   = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE status='paid' AND pos_mode='live' AND YEAR(paid_at)=YEAR(CURDATE()) AND MONTH(paid_at)=MONTH(CURDATE())");
+        $payStats['review']  = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='review'");
+        $payStats['pending'] = (int)val("SELECT COUNT(*) FROM tm_payments WHERE status='pending'");
+        $lastPayments = all("SELECT id, invoice_id, full_name, amount, status, channel, pos_mode, created_at FROM tm_payments ORDER BY created_at DESC LIMIT 6");
+    } catch (Throwable $e) {
+        // Sessiz — tablo henüz yoksa/POS hiç kurulmadıysa pano bu bölümü boş gösterir
+    }
+}
 
 $stats = [
     'products'  => (int)val("SELECT COUNT(*) FROM tm_products WHERE is_active=1"),
@@ -273,6 +291,26 @@ $installedVersion = TM_VERSION;
       <div class="pano-stat-sub"><a href="<?= h(url('admin/mail-orders.php')) ?>">Mail Order →</a></div>
     </div>
 
+    <?php if ($payAllowed): ?>
+    <div class="pano-stat">
+      <div class="pano-stat-label">Bugün Tahsilat</div>
+      <div class="pano-stat-value" style="font-size:22px"><?= h(qnb_money($payStats['today'])) ?></div>
+      <div class="pano-stat-sub"><a href="<?= h(url('admin/sanal-pos.php?tab=payments')) ?>">Sanal POS →</a></div>
+    </div>
+
+    <div class="pano-stat">
+      <div class="pano-stat-label">Bu Ay Tahsilat</div>
+      <div class="pano-stat-value" style="font-size:22px"><?= h(qnb_money($payStats['month'])) ?></div>
+      <div class="pano-stat-sub"><a href="<?= h(url('admin/sanal-pos.php?tab=payments')) ?>">Sanal POS →</a></div>
+    </div>
+
+    <div class="pano-stat <?= $payStats['review'] > 0 ? 'highlight' : '' ?>">
+      <div class="pano-stat-label">İnceleme Bekleyen Ödeme</div>
+      <div class="pano-stat-value"><?= $payStats['review'] ?></div>
+      <div class="pano-stat-sub"><a href="<?= h(url('admin/sanal-pos.php?tab=payments&status=review')) ?>">İncele →</a></div>
+    </div>
+    <?php endif; ?>
+
     <div class="pano-stat">
       <div class="pano-stat-label">Aktif Ürün</div>
       <div class="pano-stat-value"><?= $stats['products'] ?></div>
@@ -401,6 +439,38 @@ $installedVersion = TM_VERSION;
     </div>
 
   </div>
+
+  <?php if ($payAllowed): ?>
+  <div class="pano-panel">
+    <div class="pano-panel-head">
+      <h2>💳 Son Ödemeler</h2>
+      <a href="<?= h(url('admin/sanal-pos.php?tab=payments')) ?>">Tümünü Gör →</a>
+    </div>
+    <div class="pano-panel-body">
+      <?php if (empty($lastPayments)): ?>
+        <div class="pano-empty">
+          <div class="pano-empty-icon">💳</div>
+          <div>Henüz ödeme kaydı yok.</div>
+        </div>
+      <?php else: ?>
+        <?php foreach ($lastPayments as $pm): ?>
+        <a href="<?= h(url('admin/sanal-pos.php?tab=payments&view=' . $pm['id'])) ?>" class="pano-msg">
+          <div class="pano-msg-avatar"><?= h(mb_strtoupper(mb_substr($pm['full_name'], 0, 1, 'UTF-8'), 'UTF-8')) ?></div>
+          <div class="pano-msg-body">
+            <div class="pano-msg-name">
+              <?= h($pm['full_name']) ?>
+              <?= $pm['channel'] === 'admin_moto' ? ' <span title="Telefon siparişi">📞</span>' : '' ?>
+              <?= $pm['pos_mode'] === 'test' ? ' <span class="badge badge-warn" style="font-size:9px">TEST</span>' : '' ?>
+            </div>
+            <div class="pano-msg-subject"><?= h(qnb_money((float)$pm['amount'])) ?> · <?= qnb_status_badge((string)$pm['status']) ?></div>
+          </div>
+          <div class="pano-msg-time"><?= h(date('d.m H:i', strtotime($pm['created_at']))) ?></div>
+        </a>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </div>
+  </div>
+  <?php endif; ?>
 
   <div class="pano-panel">
     <div class="pano-panel-head">
