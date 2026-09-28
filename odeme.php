@@ -107,6 +107,7 @@ $payPaused  = $payOn && qnb_is_paused();
 $payClosed  = $payOn && !$payPaused && !qnb_is_open_now();
 $payCfg     = qnb_cfg();
 $showWorkspace = $payOn && !$payPaused && !$payClosed && $cust && !$cust['must_change_password'];
+$showSplit  = $payOn && !$payPaused && !$payClosed && !$cust;
 
 $js = [
     'btn'        => t('pay.btn', 'Güvenli Ödeme Yap'),
@@ -251,49 +252,63 @@ body.ck-body-app{overflow:hidden}
 /* Giriş ekranı — split-screen (yalnızca kayıtlı müşteri girişi beklenirken; ödeme formu ve
    hesap ekranı işlevsel formlar olduğu için tek-kart düzeninde kalır). v1.0.144: kurumsal
    yeniden tasarım — sağ panelde çelik/profil temalı geometrik doku + rozet + güven listesi,
-   sol panelde yeni sans-serif başlık dili ve mini güven şeridi. */
-.ck-main-split{padding:0;align-items:stretch}
-.ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1080px;width:100%;min-height:calc(100vh - 65px);
+   sol panelde yeni sans-serif başlık dili ve mini güven şeridi.
+   v1.0.148: masaüstünde ekran boyutu ne olursa olsun TEK SAYFAYA (kaydırmasız) sığacak
+   şekilde tamamen akışkan (clamp/vh tabanlı) ölçülendirme; ürün galerisi 8 kalemle 4x2 düzene çıktı. */
+html:has(body.ck-body-split),body.ck-body-split{height:100%}
+body.ck-body-split{overflow:hidden}
+body.ck-body-split .ck-top-inner{padding:clamp(8px,1.6vh,16px) 22px}
+body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
+.ck-main-split{padding:0;align-items:stretch;min-height:0;overflow:hidden}
+.ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1080px;width:100%;height:100%;
   border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(15,13,8,.06),0 12px 40px rgba(5,13,36,.10)}
-.ck-split-left{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 44px}
+.ck-split-left{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(16px,4vh,48px) clamp(20px,4vw,44px);height:100%;overflow-y:auto;min-height:0}
 .ck-split-left .pay-gate{box-shadow:none;border-radius:0;padding:0;max-width:360px;width:100%}
 
 .ck-split-right{background:
     repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 46px),
     linear-gradient(160deg,#0a1730 0%,var(--navy) 45%,var(--navy-2) 100%);
-  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 48px;color:#fff}
+  position:relative;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(14px,3.6vh,52px) clamp(20px,4vw,48px);color:#fff;height:100%;min-height:0;
+  --gth:clamp(42px,8.6vh,88px)}
 .ck-split-right::before{content:'';position:absolute;width:480px;height:480px;border:1px solid rgba(201,168,107,.16);
   border-radius:50%;right:-190px;bottom:-190px;pointer-events:none}
 .ck-split-right::after{content:'';position:absolute;width:260px;height:260px;border:1px solid rgba(255,255,255,.06);
   border-radius:50%;left:-110px;top:-110px;pointer-events:none}
-.ck-split-badge{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
-  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1;
-  box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 0 0 5px rgba(255,255,255,.03)}
-.ck-split-badge svg{color:var(--gold);width:26px;height:26px}
-.ck-split-right h2{font-family:var(--sans);font-size:22px;font-weight:700;text-align:center;max-width:340px;line-height:1.3;
-  position:relative;z-index:1;margin:0 0 8px;letter-spacing:-.2px}
-.ck-split-right p{font-family:var(--sans);font-size:12.5px;color:rgba(255,255,255,.68);text-align:center;max-width:300px;
-  position:relative;z-index:1;margin:0 0 22px;line-height:1.55}
-.ck-split-features{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px}
-.ck-split-features .f{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-size:12px;color:rgba(255,255,255,.85);
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:9px 13px}
-.ck-split-features .f svg{width:15px;height:15px;flex-shrink:0;color:var(--gold)}
+.ck-split-badge{width:clamp(38px,6.6vh,66px);height:clamp(38px,6.6vh,66px);border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
+  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:clamp(6px,1.6vh,16px);position:relative;z-index:1;
+  box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 0 0 5px rgba(255,255,255,.03);flex-shrink:0}
+.ck-split-badge svg{color:var(--gold);width:55%;height:55%}
+.ck-split-right h2{font-family:var(--sans);font-size:clamp(15px,2.5vh,22px);font-weight:700;text-align:center;max-width:340px;line-height:1.28;
+  position:relative;z-index:1;margin:0 0 clamp(3px,.8vh,8px);letter-spacing:-.2px;flex-shrink:0}
+.ck-split-right p{font-family:var(--sans);font-size:clamp(10.5px,1.5vh,12.5px);color:rgba(255,255,255,.68);text-align:center;max-width:300px;
+  position:relative;z-index:1;margin:0 0 clamp(8px,2vh,20px);line-height:1.5;flex-shrink:0}
+.ck-split-trust{position:relative;z-index:1;width:100%;max-width:320px;display:flex;align-items:center;justify-content:center;gap:7px;
+  font-family:var(--sans);font-size:clamp(9.5px,1.25vh,11px);color:rgba(255,255,255,.72);text-align:center;line-height:1.5;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:clamp(6px,1.2vh,10px) 12px;flex-shrink:0}
+.ck-split-trust svg{width:14px;height:14px;flex-shrink:0;color:var(--gold)}
 
-/* v1.0.147 — sağ panelde ürün galerisi (Boru / Profil / Sac / Panel / Hadde) */
-.ck-split-gallery{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%;max-width:320px;margin:0 0 26px}
-.ck-split-gallery .g{flex:0 0 calc(33.333% - 7px);display:flex;flex-direction:column;align-items:center;gap:7px}
-.ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;
+/* v1.0.147/148 — sağ panelde ürün galerisi (Boru / Profil / Sac / Panel / Hadde / Genişletilmiş Sac / Delikli Sac / Trapez Sac) */
+.ck-split-gallery{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,var(--gth));justify-content:center;
+  gap:clamp(6px,1.3vh,10px);margin:0 0 clamp(8px,2vh,20px);flex-shrink:1}
+.ck-split-gallery .g{width:var(--gth);display:flex;flex-direction:column;align-items:center;gap:clamp(3px,.7vh,6px)}
+.ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:9px;overflow:hidden;position:relative;
   background:linear-gradient(160deg,#0e2148 0%,#152b57 100%);border:1px solid rgba(201,168,107,.28);
-  box-shadow:0 10px 22px rgba(0,0,0,.22)}
+  box-shadow:0 8px 18px rgba(0,0,0,.22)}
 .ck-split-gallery .g-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.ck-split-gallery .g[data-pad] .g-thumb img{object-fit:contain;padding:10px}
-.ck-split-gallery .g-thumb::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border-radius:10px;pointer-events:none}
-.ck-split-gallery .g-lbl{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.6px;color:rgba(255,255,255,.72);text-transform:uppercase}
+.ck-split-gallery .g[data-pad] .g-thumb img{object-fit:contain;padding:8%}
+.ck-split-gallery .g-thumb::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border-radius:9px;pointer-events:none}
+.ck-split-gallery .g-lbl{font-family:var(--sans);font-size:clamp(7.5px,1vh,9.5px);font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.72);
+  text-transform:uppercase;text-align:center;line-height:1.2}
 @media (max-width:900px){
-  .ck-main-split{padding:0}
-  .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;min-height:auto}
+  html:has(body.ck-body-split),body.ck-body-split{height:auto;overflow:visible}
+  body.ck-body-split .ck-top-inner{padding:16px 22px}
+  body.ck-body-split .ck-footer{padding:22px 18px 28px;font-size:11.5px}
+  .ck-main-split{padding:0;overflow:visible}
+  .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;height:auto;min-height:auto}
   .ck-split-right{display:none}
-  .ck-split-left{padding:36px 20px}
+  .ck-split-left{padding:36px 20px;height:auto;overflow:visible}
 }
 
 /* Canlı kart önizlemesi — ödeme formunda kullanıcı yazdıkça güncellenir */
@@ -431,7 +446,7 @@ body.ck-body-app{overflow:hidden}
 .ck-footer .sep{margin:0 7px;opacity:.6}
 </style>
 </head>
-<body<?= $showWorkspace ? ' class="ck-body-app"' : '' ?>>
+<body<?= $showWorkspace ? ' class="ck-body-app"' : ($showSplit ? ' class="ck-body-split"' : '') ?>>
 
 <header class="ck-top<?= $showWorkspace ? ' ck-top-app' : '' ?>">
   <div class="ck-top-inner">
@@ -447,7 +462,6 @@ body.ck-body-app{overflow:hidden}
   </div>
 </header>
 
-<?php $showSplit = $payOn && !$payPaused && !$payClosed && !$cust; ?>
 <main class="ck-main<?= $showSplit ? ' ck-main-split' : '' ?><?= $showWorkspace ? ' ck-main-app' : '' ?>">
   <div class="<?= $showSplit ? 'ck-shell-split' : ($showWorkspace ? 'ck-shell-app' : 'ck-shell') ?>">
   <?php if ($showSplit): ?><div class="ck-split-left"><?php endif; ?>
@@ -906,22 +920,24 @@ body.ck-body-app{overflow:hidden}
       <p><?= h(t('pay.split_lead', 'Bankanızın 3D Secure altyapısıyla kart bilgileriniz korunur. Tüm işlemler kayıt altına alınır.')) ?></p>
       <div class="ck-split-gallery">
         <?php foreach ([
-          ['boru.jpg',   'pay.gal_boru',   'Boru'],
-          ['profil.jpg', 'pay.gal_profil', 'Profil'],
-          ['sac.jpg',    'pay.gal_sac',    'Sac'],
-          ['panel.png',  'pay.gal_panel',  'Panel'],
-          ['hadde.jpg',  'pay.gal_hadde',  'Hadde'],
+          ['boru.jpg',               'pay.gal_boru',      'Boru'],
+          ['profil.jpg',             'pay.gal_profil',    'Profil'],
+          ['sac.jpg',                'pay.gal_sac',       'Sac'],
+          ['genisletilmis-sac.jpg',  'pay.gal_gensac',    'Genişletilmiş Sac'],
+          ['delikli-sac.png',        'pay.gal_deliklisac','Delikli Sac'],
+          ['trapez-sac.png',         'pay.gal_trapezsac', 'Trapez Sac'],
+          ['panel.png',              'pay.gal_panel',     'Panel'],
+          ['hadde.jpg',              'pay.gal_hadde',     'Hadde'],
         ] as [$galFile, $galKey, $galDefault]): ?>
-          <div class="g"<?= $galFile === 'panel.png' ? ' data-pad' : '' ?>>
+          <div class="g"<?= in_array($galFile, ['panel.png', 'delikli-sac.png'], true) ? ' data-pad' : '' ?>>
             <div class="g-thumb"><img src="<?= h(url('assets/img/login/' . $galFile)) ?>" alt="<?= h(t($galKey, $galDefault)) ?>" loading="lazy"></div>
             <span class="g-lbl"><?= h(t($galKey, $galDefault)) ?></span>
           </div>
         <?php endforeach; ?>
       </div>
-      <div class="ck-split-features">
-        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5.25 3.6 9.7 8 11 4.4-1.3 8-5.75 8-11V6z"/><path d="m9 12 2 2 4-4"/></svg> <?= h(t('pay.split_f1', '3D Secure ile doğrulanmış ödeme')) ?></div>
-        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <?= h(t('pay.split_f2', 'Kart bilgileriniz sunucularımızda saklanmaz')) ?></div>
-        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> <?= h(t('pay.split_f3', 'Tüm işlemleriniz hesabınızda kayıt altında')) ?></div>
+      <div class="ck-split-trust">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span><?= h(t('pay.split_trust', '3D Secure ile korunan ödeme · Kart bilgileri saklanmaz · İşlemleriniz hesabınızda kayıtlı')) ?></span>
       </div>
     </div>
   <?php endif; ?>
