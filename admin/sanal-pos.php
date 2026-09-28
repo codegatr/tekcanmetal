@@ -347,13 +347,17 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
 ?>
   <div class="adm-panel">
     <div class="adm-panel-head">
-      <h2>Ödeme <?= h($p['invoice_id']) ?> <?= qnb_status_badge((string)$p['status']) ?><?= $p['pos_mode'] === 'test' ? ' <span class="badge badge-warn">TEST</span>' : '' ?></h2>
+      <h2>Ödeme <?= h($p['invoice_id']) ?> <?= qnb_status_badge((string)$p['status']) ?><?= $p['pos_mode'] === 'test' ? ' <span class="badge badge-warn">TEST</span>' : '' ?><?= ($p['channel'] ?? 'web') === 'admin_moto' ? ' <span class="badge" style="background:#eef2ff;color:#3730a3">📞 Telefon Siparişi</span>' : '' ?></h2>
       <a href="<?= h(admin_url('sanal-pos.php')) ?>" class="adm-btn adm-btn-ghost">← Listeye dön</a>
     </div>
     <div class="adm-panel-body" style="padding:0">
       <table class="adm-table">
         <tbody>
           <tr><td style="width:220px">Tutar</td><td><strong><?= h(qnb_money((float)$p['amount'])) ?></strong> (<?= h($p['currency']) ?>, <?= (int)$p['installments'] ?> taksit)</td></tr>
+          <?php if (($p['channel'] ?? 'web') === 'admin_moto'):
+            $motoAdmin = $p['created_by_admin_id'] ? row("SELECT full_name, username FROM tm_users WHERE id=?", [(int)$p['created_by_admin_id']]) : null; ?>
+          <tr><td>Kanal</td><td>📞 Telefonla sipariş (MOTO)<?= $motoAdmin ? ' — girdi: <strong>' . h($motoAdmin['full_name'] ?: $motoAdmin['username']) . '</strong>' : '' ?></td></tr>
+          <?php endif; ?>
           <tr><td>Ad Soyad</td><td><?= h($p['full_name']) ?></td></tr>
           <tr><td>Firma</td><td><?= h($p['company'] ?: '—') ?></td></tr>
           <tr><td>E-posta</td><td><a href="mailto:<?= h($p['email']) ?>"><?= h($p['email']) ?></a></td></tr>
@@ -471,7 +475,7 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
         <?php foreach ($rows as $r): ?>
           <tr>
             <td style="white-space:nowrap"><?= h(tr_date($r['created_at'], true)) ?></td>
-            <td><code style="font-size:11px"><?= h($r['invoice_id']) ?></code><?= $r['pos_mode'] === 'test' ? ' <span class="badge badge-warn">TEST</span>' : '' ?></td>
+            <td><code style="font-size:11px"><?= h($r['invoice_id']) ?></code><?= $r['pos_mode'] === 'test' ? ' <span class="badge badge-warn">TEST</span>' : '' ?><?= ($r['channel'] ?? 'web') === 'admin_moto' ? ' <span class="badge" style="background:#eef2ff;color:#3730a3" title="Telefonla sipariş">📞</span>' : '' ?></td>
             <td><strong><?= h($r['full_name']) ?></strong><?= $r['company'] ? '<br><span style="opacity:.6;font-size:12px">' . h($r['company']) . '</span>' : '' ?></td>
             <td style="white-space:nowrap"><strong><?= h(qnb_money((float)$r['amount'])) ?></strong></td>
             <td><?= qnb_status_badge((string)$r['status']) ?></td>

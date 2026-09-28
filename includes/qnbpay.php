@@ -139,6 +139,13 @@ function qnb_ensure_schema(): void {
         if (!$has) {
             db()->exec("ALTER TABLE tm_payments ADD COLUMN remote_addr VARCHAR(45) NULL AFTER ip_address, ADD INDEX idx_remote (remote_addr, created_at)");
         }
+        // v1.0.152: admin panelinden telefonla sipariş (MOTO) — hangi kanaldan ve hangi
+        // yönetici tarafından açıldığını ayırt etmek için (web müşteri kendi kartını girer,
+        // admin_moto: yönetici telefonda müşteriden aldığı kart bilgisini kendisi girer).
+        $hasChannel = (int)val("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tm_payments' AND COLUMN_NAME = 'channel'");
+        if (!$hasChannel) {
+            db()->exec("ALTER TABLE tm_payments ADD COLUMN channel ENUM('web','admin_moto') NOT NULL DEFAULT 'web' AFTER pos_mode, ADD COLUMN created_by_admin_id INT UNSIGNED NULL AFTER channel");
+        }
     } catch (Throwable $e) {
         // Sessiz: çağıran sayfa tabloya erişemezse kendi hata mesajını gösterir
     }
@@ -285,15 +292,16 @@ function qnb_create_payment(array $d): int {
     $c = qnb_cfg();
     q("INSERT INTO tm_payments
          (invoice_id, public_ref, full_name, company, email, phone, description, amount, currency,
-          installments, status, pos_mode, ip_address, remote_addr, user_agent)
-       VALUES (?,?,?,?,?,?,?,?, 'TRY', 1, 'pending', ?, ?, ?, ?)",
+          installments, status, pos_mode, channel, created_by_admin_id, ip_address, remote_addr, user_agent)
+       VALUES (?,?,?,?,?,?,?,?, 'TRY', 1, 'pending', ?, ?, ?, ?, ?, ?)",
       [
         $d['invoice_id'], bin2hex(random_bytes(16)),
         $d['full_name'], $d['company'] !== '' ? $d['company'] : null,
         $d['email'], $d['phone'],
         $d['description'] !== '' ? $d['description'] : null,
         qnb_amount((float)$d['amount']),
-        $c['mode'], get_ip(), qnb_remote_addr(), mb_substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255, 'UTF-8'),
+        $c['mode'], $d['channel'] ?? 'web', $d['created_by_admin_id'] ?? null,
+        get_ip(), qnb_remote_addr(), mb_substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255, 'UTF-8'),
       ]);
     return (int)db()->lastInsertId();
 }
