@@ -126,6 +126,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         adm_back_with('success', 'Ödeme formu yeniden açıldı.', $self);
     }
 
+    /**
+     * ---- Tek bir başarısız kaydı "deneme sayacından" çıkar (v1.0.143) ----
+     * qnb_abuse_check(), aynı IP/e-posta 30 dk içinde fail_per_actor (3) başarısız
+     * denemeden sonra 30 dk bekletir (bkz. includes/qnbpay.php). Bu koruma test
+     * sırasında (yanlış kart, yanlış mod vb.) da devreye girebiliyor ve önceden
+     * bunu manuel açmanın bir yolu yoktu. Kaydın DURUMUNU değiştirmiyoruz (geçmişte
+     * hâlâ "Başarısız" görünür, veri bozulmaz) — yalnızca updated_at'i pencerenin
+     * dışına (24 saat öncesine) alarak abuse-check sorgusunun onu artık saymamasını
+     * sağlıyoruz.
+     */
+    if ($do === 'clear_abuse') {
+        $id = (int)($_POST['id'] ?? 0);
+        $p  = row("SELECT * FROM tm_payments WHERE id=?", [$id]);
+        if (!$p || $p['status'] !== 'failed') {
+            adm_back_with('error', 'Bu işlem yalnızca "Başarısız" durumundaki kayıtlar için kullanılabilir.', $self);
+        }
+        q("UPDATE tm_payments SET updated_at = (NOW() - INTERVAL 1 DAY) WHERE id=?", [$id]);
+        log_activity('update', 'payment', $id, 'Ödeme ' . $p['invoice_id'] . ' deneme sayacından elle çıkarıldı');
+        adm_back_with('success', 'Kayıt deneme sayacından çıkarıldı; hemen yeniden deneyebilirsiniz.', $self . '?view=' . $id);
+    }
+
     /* ---- İnceleme/bekleyen kaydı elle sonuçlandır ---- */
     if ($do === 'resolve') {
         $id = (int)($_POST['id'] ?? 0);
@@ -369,6 +390,21 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
       <form method="post" style="display:inline" onsubmit="return confirm('Bu işlemi BAŞARISIZ olarak işaretlemek istediğinize emin misiniz?')">
         <?= csrf_field() ?><input type="hidden" name="do" value="resolve"><input type="hidden" name="id" value="<?= (int)$p['id'] ?>"><input type="hidden" name="to" value="failed">
         <button type="submit" class="adm-btn adm-btn-danger">✕ Başarısız işaretle</button>
+      </form>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($p['status'] === 'failed'): ?>
+  <div class="adm-panel">
+    <div class="adm-panel-head"><h2>Deneme Sayacından Çıkar</h2></div>
+    <div class="adm-panel-body">
+      <p class="help">Bu kayıt, aynı kişinin yeni ödeme denemesi yapmasını engelleyen "30 dk'da 3 başarısız" korumasını
+        tetikliyor olabilir. Bu, kaydın durumunu <strong>değiştirmez</strong> (geçmişte hâlâ "Başarısız" görünür) —
+        yalnızca bu kaydı deneme sayacından düşürür, böylece kişi hemen tekrar deneyebilir.</p>
+      <form method="post" onsubmit="return confirm('Bu kaydı deneme sayacından çıkarmak istediğinize emin misiniz?')">
+        <?= csrf_field() ?><input type="hidden" name="do" value="clear_abuse"><input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+        <button type="submit" class="adm-btn adm-btn-ghost">↺ Deneme sayacından çıkar</button>
       </form>
     </div>
   </div>
