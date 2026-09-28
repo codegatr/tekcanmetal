@@ -114,7 +114,7 @@ $logoOnDark = file_exists(__DIR__ . '/' . $logoWhitePath) ? $logoWhitePath : (fi
 html{-webkit-text-size-adjust:100%}
 body{margin:0;overflow-x:hidden;font-family:var(--sans);color:var(--ink);background:linear-gradient(180deg,#f3f1ec 0%,#eceae3 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-.ck-top{background:var(--navy);border-bottom:3px solid var(--red)}
+.ck-top{background:var(--navy);border-bottom:3px solid var(--red);display:none}
 .ck-top-inner{max-width:1080px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .ck-brand{display:flex;align-items:center;gap:10px}
 .ck-brand-logo{height:38px;width:auto;max-width:220px;display:block;object-fit:contain}
@@ -125,12 +125,18 @@ a{color:inherit}
 .hist-back{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none}
 .hist-back:hover{color:#fff}
 
-.hist-main{flex:1;padding:22px 18px 40px;display:flex;justify-content:center}
-.hist-shell{width:100%;max-width:1180px}
-
-/* Sol navbarlı app kabuğu — odeme.php ile aynı, tutarlı gezinme */
-.ck-app{display:flex;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-height:calc(100vh - 86px)}
-.ck-nav{width:216px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:18px 12px}
+/* v1.0.146 — Tam sayfa (edge-to-edge) sol navbarlı app kabuğu; odeme.php ile birebir aynı kalıp */
+html,body{height:100%}
+body{overflow:hidden}
+.hist-main{flex:1;padding:0;display:block;overflow:hidden}
+.hist-shell{width:100%;height:100vh}
+.ck-app{display:flex;background:#fff;height:100vh;overflow:hidden}
+.ck-nav{width:224px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:0 12px 16px;height:100vh;overflow-y:auto}
+.ck-nav-brand{display:flex;align-items:center;gap:9px;padding:18px 8px 16px}
+.ck-nav-brand img{height:30px;width:auto;max-width:170px;display:block;object-fit:contain}
+.ck-nav-brand .mark{width:30px;height:30px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:600;color:var(--gold);flex-shrink:0}
+.ck-nav-brand .txt{font-family:var(--serif);font-size:15px;font-weight:600;color:#fff;letter-spacing:.3px}
+.ck-nav-brand .txt em{font-style:italic;color:var(--gold)}
 .ck-nav-user{display:flex;align-items:center;gap:10px;padding:2px 8px 16px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
 .ck-nav-avatar{width:34px;height:34px;border-radius:50%;background:rgba(201,168,107,.16);border:1px solid rgba(201,168,107,.5);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:13px;flex-shrink:0}
 .ck-nav-user-info{min-width:0}
@@ -145,11 +151,22 @@ a{color:inherit}
 .ck-nav-logout{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;color:rgba(255,255,255,.55);font-family:var(--sans);font-size:12.5px;font-weight:600;background:none;border:0;width:100%;text-align:left;cursor:pointer;transition:.15s;text-decoration:none}
 .ck-nav-logout:hover{background:rgba(200,16,46,.15);color:#ff9d9d}
 .ck-nav-logout svg{width:16px;height:16px;flex-shrink:0}
-.ck-app-main{flex:1;min-width:0;overflow-y:auto;padding:22px 26px 26px}
+.ck-app-main{flex:1;min-width:0;height:100vh;overflow-y:auto;background:var(--paper);padding:0}
+.ck-app-topbar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ck-app-topbar h1{font-family:var(--sans);font-size:18px;font-weight:800;color:#1a1a1a;margin:0;letter-spacing:-.2px}
+.ck-app-topbar-actions{display:flex;align-items:center;gap:8px}
+.ck-app-topbar-btn{display:inline-flex;align-items:center;gap:7px;background:var(--navy);color:#fff;border:0;border-radius:7px;padding:9px 16px;font-family:var(--sans);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;transition:.15s}
+.ck-app-topbar-btn:hover{background:var(--navy-2)}
+.ck-app-body{padding:22px 28px 40px}
 .lbl-short{display:none}
 @media (max-width:900px){
-  .ck-app{flex-direction:column;min-height:auto}
-  .ck-nav{width:100%;flex-direction:row;align-items:center;padding:8px 8px;gap:4px}
+  html,body{height:auto;overflow:visible}
+  .ck-top{display:block}
+  .hist-main{padding:0;overflow:visible}
+  .hist-shell{height:auto}
+  .ck-app{flex-direction:column;height:auto}
+  .ck-nav{width:100%;flex-direction:row;align-items:center;padding:8px 8px;gap:4px;height:auto}
+  .ck-nav-brand{display:none}
   .ck-nav-user{display:none}
   .ck-nav-list{flex-direction:row;flex:1;overflow-x:auto;gap:2px;min-width:0}
   .ck-nav-link{white-space:nowrap;padding:8px 9px;font-size:11px;gap:6px}
@@ -159,15 +176,10 @@ a{color:inherit}
   .ck-nav-logout svg{width:15px;height:15px}
   .lbl-full{display:none}
   .lbl-short{display:inline}
-  .ck-app-main{padding:16px 14px 22px}
+  .ck-app-main{height:auto}
+  .ck-app-topbar{padding:12px 14px}
+  .ck-app-body{padding:16px 14px 30px}
 }
-
-.hist-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-.hist-head h1{font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);margin:0 0 4px;letter-spacing:-.3px}
-.hist-head .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted)}
-.hist-export{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 16px;
-  font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--navy);text-decoration:none;white-space:nowrap}
-.hist-export:hover{border-color:var(--gold);background:var(--paper)}
 
 .hist-card{background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(15,13,8,.04),0 18px 44px rgba(15,13,8,.06);margin-bottom:18px;overflow:hidden}
 .hist-filters{padding:20px 22px;display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr auto;gap:12px;align-items:end}
@@ -223,6 +235,13 @@ a{color:inherit}
   <div class="hist-shell">
   <div class="ck-app">
     <nav class="ck-nav">
+      <div class="ck-nav-brand">
+        <?php if ($logoOnDark): ?>
+          <img src="<?= h(url($logoOnDark)) ?>" alt="<?= h($siteShort) ?>">
+        <?php else: ?>
+          <span class="mark">T</span><span class="txt">TEKCAN <em>METAL</em></span>
+        <?php endif; ?>
+      </div>
       <div class="ck-nav-user">
         <div class="ck-nav-avatar"><?= h($custInitial ?: '?') ?></div>
         <div class="ck-nav-user-info">
@@ -254,15 +273,20 @@ a{color:inherit}
 
     <div class="ck-app-main">
 
-    <div class="hist-head">
-      <div>
-        <h1><?= h(t('hist.title', 'Geçmiş Ödemelerim')) ?></h1>
-        <div class="sub"><?= h($cust['full_name']) ?> · <?= (int)$total ?> <?= h(t('hist.records', 'kayıt')) ?></div>
+    <div class="ck-app-topbar">
+      <h1><?= h(t('hist.title', 'Geçmiş Ödemelerim')) ?></h1>
+      <div class="ck-app-topbar-actions">
+        <a class="ck-app-topbar-btn" href="<?= h($qs(['action' => 'export'])) ?>">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <?= h(t('hist.csv', 'CSV İndir')) ?>
+        </a>
       </div>
-      <a class="hist-export" href="<?= h($qs(['action' => 'export'])) ?>">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <?= h(t('hist.csv', 'CSV İndir')) ?>
-      </a>
+    </div>
+
+    <div class="ck-app-body">
+
+    <div class="ck-panel-head">
+      <p><?= h($cust['full_name']) ?> · <?= (int)$total ?> <?= h(t('hist.records', 'kayıt')) ?></p>
     </div>
 
     <div class="hist-card">
@@ -325,17 +349,11 @@ a{color:inherit}
       <?php endif; ?>
     </div>
 
+    </div><!-- .ck-app-body -->
     </div><!-- .ck-app-main -->
   </div><!-- .ck-app -->
   </div>
 </main>
-
-<footer class="ck-footer">
-  <p>© <?= h(date('Y')) ?> <?= h($siteShort) ?>
-    <span class="sep">·</span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>">KVKK</a>
-    <span class="sep">·</span><a href="<?= h(url('iletisim.php')) ?>">İletişim</a>
-  </p>
-</footer>
 
 </body>
 </html>

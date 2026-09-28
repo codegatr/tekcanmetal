@@ -169,15 +169,25 @@ a{color:inherit}
 .ck-main{flex:1;padding:22px 16px 30px;display:flex;justify-content:center}
 .ck-shell{width:100%;max-width:460px}
 .ck-shell-wide{width:100%;max-width:900px}
-.ck-shell-app{width:100%;max-width:1180px}
+.ck-shell-app{width:100%;max-width:none}
 .ck-workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
 .ck-workspace-main{min-width:0}
 .ck-workspace-side{position:sticky;top:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 @media (max-width:860px){.ck-workspace{grid-template-columns:minmax(0,1fr)}.ck-workspace-side{position:static}}
 
-/* v1.0.145 — Sol navbarlı, kompakt tek-ekran çalışma alanı (giriş sonrası) */
-.ck-app{display:flex;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-height:calc(100vh - 106px)}
-.ck-nav{width:216px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:18px 12px}
+/* v1.0.146 — Tam sayfa (edge-to-edge) sol navbarlı app kabuğu; kart/kenar boşluğu YOK — Peker Demir referansıyla birebir yerleşim */
+html:has(body.ck-body-app),body.ck-body-app{height:100%}
+body.ck-body-app{overflow:hidden}
+.ck-top-app{display:none}
+.ck-main-app{padding:0;display:block;overflow:hidden}
+.ck-main-app .ck-shell-app{height:100vh}
+.ck-app{display:flex;background:#fff;height:100vh;overflow:hidden}
+.ck-nav{width:224px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:0 12px 16px;height:100vh;overflow-y:auto}
+.ck-nav-brand{display:flex;align-items:center;gap:9px;padding:18px 8px 16px}
+.ck-nav-brand img{height:30px;width:auto;max-width:170px;display:block;object-fit:contain}
+.ck-nav-brand .mark{width:30px;height:30px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:600;color:var(--gold);flex-shrink:0}
+.ck-nav-brand .txt{font-family:var(--serif);font-size:15px;font-weight:600;color:#fff;letter-spacing:.3px}
+.ck-nav-brand .txt em{font-style:italic;color:var(--gold)}
 .ck-nav-user{display:flex;align-items:center;gap:10px;padding:2px 8px 16px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
 .ck-nav-avatar{width:34px;height:34px;border-radius:50%;background:rgba(201,168,107,.16);border:1px solid rgba(201,168,107,.5);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:13px;flex-shrink:0}
 .ck-nav-user-info{min-width:0}
@@ -193,17 +203,34 @@ a{color:inherit}
 .ck-nav-logout:hover{background:rgba(200,16,46,.15);color:#ff9d9d}
 .ck-nav-logout svg{width:16px;height:16px;flex-shrink:0}
 
-.ck-app-main{flex:1;min-width:0;overflow-y:auto;padding:22px 26px 26px}
+.ck-app-main{flex:1;min-width:0;height:100vh;overflow-y:auto;background:var(--paper);padding:0}
+.ck-app-topbar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ck-app-topbar h1{font-family:var(--sans);font-size:18px;font-weight:800;color:#1a1a1a;margin:0;letter-spacing:-.2px}
+.ck-app-topbar-actions{display:flex;align-items:center;gap:8px}
+.ck-app-topbar-btn{display:inline-flex;align-items:center;gap:7px;background:var(--navy);color:#fff;border:0;border-radius:7px;padding:9px 16px;font-family:var(--sans);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;transition:.15s}
+.ck-app-topbar-btn:hover{background:var(--navy-2)}
+.ck-app-topbar-btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.ck-app-topbar-btn.ghost:hover{border-color:var(--red);color:var(--red)}
+.ck-app-body{padding:22px 28px 40px}
 .ck-tab{display:none}
 .ck-tab.active{display:block}
-.ck-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.ck-panel-head h1{font-family:var(--sans);font-size:19px;font-weight:800;color:#1a1a1a;margin:0 0 2px;letter-spacing:-.2px}
-.ck-panel-head p{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0}
+.ck-panel-head{margin-bottom:16px}
+.ck-panel-head h1{display:none}
+.ck-panel-head p{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0}
 
 .lbl-short{display:none}
 @media (max-width:900px){
+  html:has(body.ck-body-app),body.ck-body-app{height:auto;overflow:visible}
+  .ck-top-app{display:block}
+  .ck-main-app .ck-shell-app{height:auto}
+  .ck-app{height:auto}
+  .ck-nav{height:auto}
+  .ck-app-main{height:auto}
+  .ck-app-body{padding:16px 14px 30px}
+  .ck-app-topbar{padding:12px 14px}
   .ck-app{flex-direction:column;min-height:auto}
   .ck-nav{width:100%;flex-direction:row;align-items:center;padding:8px 8px;gap:4px}
+  .ck-nav-brand{display:none}
   .ck-nav-user{display:none}
   .ck-nav-list{flex-direction:row;flex:1;overflow-x:auto;gap:2px;min-width:0}
   .ck-nav-link{white-space:nowrap;padding:8px 9px;font-size:11px;gap:6px}
@@ -213,7 +240,6 @@ a{color:inherit}
   .ck-nav-logout svg{width:15px;height:15px}
   .lbl-full{display:none}
   .lbl-short{display:inline}
-  .ck-app-main{padding:16px 14px 22px}
 }
 .ck-security-box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:var(--shadow)}
 .ck-security-box h4{margin:0 0 12px;font-family:var(--sans);font-size:13px;font-weight:700;color:#1a1a1a}
@@ -394,9 +420,9 @@ a{color:inherit}
 .ck-footer .sep{margin:0 7px;opacity:.6}
 </style>
 </head>
-<body>
+<body<?= $showWorkspace ? ' class="ck-body-app"' : '' ?>>
 
-<header class="ck-top">
+<header class="ck-top<?= $showWorkspace ? ' ck-top-app' : '' ?>">
   <div class="ck-top-inner">
     <div class="ck-brand">
       <?php if ($logoOnDark): ?>
@@ -411,7 +437,7 @@ a{color:inherit}
 </header>
 
 <?php $showSplit = $payOn && !$payPaused && !$payClosed && !$cust; ?>
-<main class="ck-main<?= $showSplit ? ' ck-main-split' : '' ?>">
+<main class="ck-main<?= $showSplit ? ' ck-main-split' : '' ?><?= $showWorkspace ? ' ck-main-app' : '' ?>">
   <div class="<?= $showSplit ? 'ck-shell-split' : ($showWorkspace ? 'ck-shell-app' : 'ck-shell') ?>">
   <?php if ($showSplit): ?><div class="ck-split-left"><?php endif; ?>
 
@@ -515,6 +541,13 @@ a{color:inherit}
     <?php $custInitial = mb_strtoupper(mb_substr(trim((string)$cust['full_name']), 0, 1, 'UTF-8'), 'UTF-8'); ?>
     <div class="ck-app" id="ckApp">
       <nav class="ck-nav">
+        <div class="ck-nav-brand">
+          <?php if ($logoOnDark): ?>
+            <img src="<?= h(url($logoOnDark)) ?>" alt="<?= h($siteShort) ?>">
+          <?php else: ?>
+            <span class="mark">T</span><span class="txt">TEKCAN <em>METAL</em></span>
+          <?php endif; ?>
+        </div>
         <div class="ck-nav-user">
           <div class="ck-nav-avatar"><?= h($custInitial ?: '?') ?></div>
           <div class="ck-nav-user-info">
@@ -545,6 +578,22 @@ a{color:inherit}
       </nav>
 
       <div class="ck-app-main">
+
+        <div class="ck-app-topbar">
+          <h1 id="ckTopbarTitle"><?= h(t('pay.nav_ozet', 'Özet')) ?></h1>
+          <div class="ck-app-topbar-actions">
+            <a href="#odeme" class="ck-app-topbar-btn" data-tab-link="odeme">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <?= h(t('pay.cust_empty_cta', 'Yeni Tahsilat')) ?>
+            </a>
+            <form method="post" style="margin:0">
+              <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
+              <button type="submit" class="ck-app-topbar-btn ghost"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></button>
+            </form>
+          </div>
+        </div>
+
+        <div class="ck-app-body">
 
         <div class="ck-tab active" id="tab-ozet" data-tab-panel="ozet">
           <div class="ck-panel-head">
@@ -692,23 +741,31 @@ a{color:inherit}
     </div><!-- .ck-workspace -->
 
         </div><!-- #tab-odeme -->
+        </div><!-- .ck-app-body -->
       </div><!-- .ck-app-main -->
     </div><!-- .ck-app -->
 
+    <?php if (!$showWorkspace): ?>
     <div class="ck-trust">
       <div class="ck-trust-item"><span class="ico">🔒</span> <?= h(t('pay.trust1_t', '3D Secure')) ?></div>
       <div class="ck-trust-item"><span class="ico">🛡</span> <?= h(t('pay.trust2_t', 'Kart Bilgisi Saklanmaz')) ?></div>
       <div class="ck-trust-item"><span class="ico">✓</span> <?= h(t('pay.trust3_t', 'QNBpay Altyapısı')) ?></div>
     </div>
+    <?php endif; ?>
 
     <script>
     (function () {
       /* Sol navbar sekme geçişi (Özet / Ödeme Yap) — sayfa yenilenmez, tam URL hash ile hatırlanır */
       var navLinks = Array.prototype.slice.call(document.querySelectorAll('.ck-nav-link[data-tab]'));
       var panels = Array.prototype.slice.call(document.querySelectorAll('.ck-tab[data-tab-panel]'));
+      var topbarTitle = document.getElementById('ckTopbarTitle');
+      var topbarTitles = { ozet: <?= json_encode(t('pay.nav_ozet', 'Özet'), JSON_UNESCAPED_UNICODE) ?>, odeme: <?= json_encode(t('pay.card_h1', 'Güvenli Ödeme'), JSON_UNESCAPED_UNICODE) ?> };
+      var topbarNewBtn = document.querySelector('.ck-app-topbar-btn[data-tab-link="odeme"]');
       function activateTab(tab) {
         navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-tab') === tab); });
         panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-tab-panel') === tab); });
+        if (topbarTitle && topbarTitles[tab]) topbarTitle.textContent = topbarTitles[tab];
+        if (topbarNewBtn) topbarNewBtn.style.display = (tab === 'odeme') ? 'none' : '';
         if (window.history && history.replaceState) history.replaceState(null, '', '#' + tab);
       }
       navLinks.forEach(function (a) { a.addEventListener('click', function () { activateTab(a.getAttribute('data-tab')); }); });
@@ -863,6 +920,7 @@ a{color:inherit}
 })();
 </script>
 
+<?php if (!$showWorkspace): ?>
 <footer class="ck-footer">
   <p>© <?= h(date('Y')) ?> <?= h($siteShort) ?>
     <span class="sep">·</span><a href="<?= h(url('sayfa.php?slug=kvkk')) ?>">KVKK</a>
@@ -871,6 +929,7 @@ a{color:inherit}
     <span class="sep">·</span><a href="<?= h(url('iletisim.php')) ?>">İletişim</a>
   </p>
 </footer>
+<?php endif; ?>
 
 </body>
 </html>
