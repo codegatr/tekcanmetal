@@ -262,36 +262,76 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
 .ck-main-split{padding:0;align-items:stretch;min-height:0;overflow:hidden}
 .ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1080px;width:100%;height:100%;
   border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(15,13,8,.06),0 12px 40px rgba(5,13,36,.10)}
-.ck-split-left{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:clamp(16px,4vh,48px) clamp(20px,4vw,44px);height:100%;overflow-y:auto;min-height:0}
-.ck-split-left .pay-gate{box-shadow:none;border-radius:0;padding:0;max-width:360px;width:100%}
+
+/* v1.0.149 — musteriportal.tekcanmetal.com referansına göre kurumsal, "premium" giriş ekranı:
+   sağ panel editoryal başlık + ürün galerisi + segmentli güven şeridi, sol panelde üç renkli
+   şeritli yüzen kart, güvenli bağlantı rozeti, ikonlu alanlar ve kırmızı degrade CTA. */
+.ck-split-left{background:linear-gradient(180deg,#f6f4ef 0%,#f1efe8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(14px,3.4vh,40px) clamp(18px,3.6vw,40px);height:100%;overflow-y:auto;min-height:0}
+.ck-split-left .pay-gate{background:#fff;border-radius:14px;position:relative;overflow:hidden;text-align:center;
+  box-shadow:0 1px 2px rgba(15,13,8,.06),0 22px 50px rgba(5,13,36,.12);border:1px solid var(--line);
+  padding:clamp(6px,1.4vh,10px) clamp(18px,3vw,30px) clamp(16px,3vh,30px);max-width:378px;width:100%}
+.ck-split-left .pay-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--red) 0 33.3%,var(--gold) 33.3% 66.6%,var(--navy-2) 66.6% 100%)}
+.ck-split-conn{display:flex;align-items:center;justify-content:center;gap:6px;margin:clamp(10px,2.2vh,16px) 0 clamp(10px,2vh,16px);
+  font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.6px;color:#4a7a5e;text-transform:uppercase}
+.ck-split-conn .dot{width:6px;height:6px;border-radius:50%;background:#3ecf8e;box-shadow:0 0 0 3px rgba(62,207,142,.18);flex-shrink:0}
+.ck-split-conn .sep{color:#c8c3b5;font-weight:400}
+.ck-split-conn .bit{color:#9a9689}
+.pay-gate-kicker{font-family:var(--sans);font-size:10.5px;font-weight:800;letter-spacing:1.4px;color:var(--red);text-transform:uppercase;margin:0 0 4px}
+.pay-gate h2{font-family:var(--serif);font-size:clamp(19px,3.4vh,27px);font-weight:700;color:var(--navy);margin:0 0 clamp(4px,1vh,8px);letter-spacing:-.2px;line-height:1.18}
+.pay-gate p{font-family:var(--sans);font-size:clamp(11.5px,1.5vh,12.5px);line-height:1.5;color:var(--muted);margin:0 0 clamp(10px,2vh,16px)}
+.ck-split-left .pay-login-form{margin-top:0;flex-direction:column;gap:clamp(8px,1.6vh,12px)}
+.ck-split-left .pay-login-form .fld{position:relative}
+.ck-split-left .pay-login-form .fld > svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#a8a49a;pointer-events:none}
+.ck-split-left .pay-login-form input{width:100%;padding:12px 14px 12px 38px!important;font-size:14px;border-radius:8px}
+.ck-split-left .pay-login-form .pw-field input{padding-right:42px!important}
+.ck-split-left .pay-login-form input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 40px #fff inset}
+.ck-split-left .pay-login-form button[type="submit"]{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);border-radius:8px;padding:12.5px 18px;font-size:12.5px;
+  box-shadow:0 10px 22px rgba(200,16,46,.26);letter-spacing:1px}
+.ck-split-left .pay-login-form button[type="submit"]:hover{background:linear-gradient(135deg,var(--red-dark) 0%,#7c0a1a 100%)}
+.ck-split-left .pay-login-form button[type="submit"] svg{width:15px;height:15px;flex-shrink:0}
+.ck-split-trustrow{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:clamp(8px,1.6vh,12px);
+  font-family:var(--sans);font-size:10.5px;color:#5a8a6c}
+.ck-split-trustrow span{display:inline-flex;align-items:center;gap:4px}
+.ck-split-trustrow svg{width:12px;height:12px;color:#3ecf8e;flex-shrink:0}
+.ck-split-trustrow .sep{color:#d5d2c8}
+.ck-split-left .pay-gate .pay-login-hint{font-size:11px;color:var(--muted);margin:clamp(8px,1.6vh,12px) 0 0}
+.pay-gate .pay-login-alt{margin:clamp(10px,2vh,14px) 0 0;padding-top:clamp(10px,2vh,14px);border-top:1px solid var(--line);font-family:var(--sans);font-size:11.5px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pay-gate .pay-login-alt a{color:var(--navy);text-decoration:underline}
 
 .ck-split-right{background:
     repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 46px),
     linear-gradient(160deg,#0a1730 0%,var(--navy) 45%,var(--navy-2) 100%);
   position:relative;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:clamp(14px,3.6vh,52px) clamp(20px,4vw,48px);color:#fff;height:100%;min-height:0;
-  --gth:clamp(42px,8.6vh,88px)}
+  --gth:clamp(40px,8vh,82px)}
 .ck-split-right::before{content:'';position:absolute;width:480px;height:480px;border:1px solid rgba(201,168,107,.16);
   border-radius:50%;right:-190px;bottom:-190px;pointer-events:none}
 .ck-split-right::after{content:'';position:absolute;width:260px;height:260px;border:1px solid rgba(255,255,255,.06);
   border-radius:50%;left:-110px;top:-110px;pointer-events:none}
-.ck-split-badge{width:clamp(38px,6.6vh,66px);height:clamp(38px,6.6vh,66px);border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
-  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:clamp(6px,1.6vh,16px);position:relative;z-index:1;
-  box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 0 0 5px rgba(255,255,255,.03);flex-shrink:0}
-.ck-split-badge svg{color:var(--gold);width:55%;height:55%}
-.ck-split-right h2{font-family:var(--sans);font-size:clamp(15px,2.5vh,22px);font-weight:700;text-align:center;max-width:340px;line-height:1.28;
-  position:relative;z-index:1;margin:0 0 clamp(3px,.8vh,8px);letter-spacing:-.2px;flex-shrink:0}
-.ck-split-right p{font-family:var(--sans);font-size:clamp(10.5px,1.5vh,12.5px);color:rgba(255,255,255,.68);text-align:center;max-width:300px;
-  position:relative;z-index:1;margin:0 0 clamp(8px,2vh,20px);line-height:1.5;flex-shrink:0}
-.ck-split-trust{position:relative;z-index:1;width:100%;max-width:320px;display:flex;align-items:center;justify-content:center;gap:7px;
-  font-family:var(--sans);font-size:clamp(9.5px,1.25vh,11px);color:rgba(255,255,255,.72);text-align:center;line-height:1.5;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:clamp(6px,1.2vh,10px) 12px;flex-shrink:0}
-.ck-split-trust svg{width:14px;height:14px;flex-shrink:0;color:var(--gold)}
+.ck-split-kicker{position:relative;z-index:1;display:flex;align-items:center;gap:7px;font-family:var(--sans);
+  font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.6);
+  margin-bottom:clamp(8px,1.8vh,16px);flex-shrink:0}
+.ck-split-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.ck-split-right h2{font-family:var(--serif);font-size:clamp(19px,3.2vh,28px);font-weight:700;text-align:center;max-width:360px;line-height:1.22;
+  position:relative;z-index:1;margin:0 0 clamp(4px,1vh,10px);letter-spacing:-.2px;flex-shrink:0}
+.ck-split-right h2 em{font-style:italic;color:var(--gold)}
+.ck-split-right p{font-family:var(--sans);font-size:clamp(10.5px,1.4vh,12.5px);color:rgba(255,255,255,.62);text-align:center;max-width:300px;
+  position:relative;z-index:1;margin:0 0 clamp(10px,2.2vh,22px);line-height:1.5;flex-shrink:0}
+.ck-split-trust{position:relative;z-index:1;width:100%;max-width:340px;display:flex;align-items:stretch;justify-content:center;
+  border:1px solid rgba(255,255,255,.14);border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.03)}
+.ck-split-trust .t{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  padding:clamp(8px,1.6vh,12px) 6px;text-align:center;border-left:1px solid rgba(255,255,255,.1)}
+.ck-split-trust .t:first-child{border-left:0}
+.ck-split-trust .t svg{width:15px;height:15px;color:var(--gold)}
+.ck-split-trust .t span{font-family:var(--sans);font-size:clamp(8.5px,1.05vh,9.5px);font-weight:700;letter-spacing:.2px;
+  color:rgba(255,255,255,.78);line-height:1.25}
 
-/* v1.0.147/148 — sağ panelde ürün galerisi (Boru / Profil / Sac / Panel / Hadde / Genişletilmiş Sac / Delikli Sac / Trapez Sac) */
+/* v1.0.147/148/149 — sağ panelde ürün galerisi (Boru / Profil / Sac / Panel / Hadde / Genişletilmiş Sac / Delikli Sac / Trapez Sac) */
 .ck-split-gallery{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,var(--gth));justify-content:center;
-  gap:clamp(6px,1.3vh,10px);margin:0 0 clamp(8px,2vh,20px);flex-shrink:1}
+  gap:clamp(6px,1.2vh,10px);margin:0 0 clamp(10px,2.2vh,22px);flex-shrink:1}
 .ck-split-gallery .g{width:var(--gth);display:flex;flex-direction:column;align-items:center;gap:clamp(3px,.7vh,6px)}
 .ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:9px;overflow:hidden;position:relative;
   background:linear-gradient(160deg,#0e2148 0%,#152b57 100%);border:1px solid rgba(201,168,107,.28);
@@ -308,7 +348,9 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
   .ck-main-split{padding:0;overflow:visible}
   .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;height:auto;min-height:auto}
   .ck-split-right{display:none}
-  .ck-split-left{padding:36px 20px;height:auto;overflow:visible}
+  .ck-split-left{padding:36px 20px;height:auto;overflow:visible;background:#fff}
+  .ck-split-left .pay-gate{box-shadow:none;border:0;border-radius:0;padding:0;max-width:360px}
+  .ck-split-left .pay-gate::before{display:none}
 }
 
 /* Canlı kart önizlemesi — ödeme formunda kullanıcı yazdıkça güncellenir */
@@ -337,7 +379,6 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
 
 .pay-gate{background:#fff;border-radius:8px;border:1px solid var(--line);box-shadow:var(--shadow);padding:28px 26px;text-align:center}
 @media (max-width:480px){.pay-gate{padding:22px 18px}}
-.pay-gate-icon{width:44px;height:44px;line-height:44px;margin:0 auto 14px;background:var(--navy);color:var(--gold);border-radius:12px;font-size:17px}
 .pay-gate h2{font-family:var(--sans);font-size:19px;font-weight:700;color:var(--navy);margin:0 0 6px;letter-spacing:-.2px}
 .pay-gate p{font-family:var(--sans);font-size:12.5px;line-height:1.55;color:var(--muted);margin:0 0 14px}
 .pay-gate .pay-login-form{margin-top:0;flex-direction:column}
@@ -496,19 +537,33 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
     <?php if (!$cust): ?>
 
     <div class="pay-gate">
-      <div class="pay-gate-icon">🔒</div>
+      <div class="ck-split-conn">
+        <span class="dot"></span><?= h(t('pay.secure_badge', 'Güvenli Bağlantı')) ?><span class="sep">·</span><span class="bit">TLS 256-BIT</span>
+      </div>
+      <div class="pay-gate-kicker"><?= h(t('pay.gate_kicker', 'Müşteri Girişi')) ?></div>
       <h2><?= h(t('pay.gate_title', 'Ödeme Yapmak İçin Giriş Yapın')) ?></h2>
       <p><?= h(t('pay.gate_lead', 'Online ödeme sayfamız yalnızca kayıtlı müşterilerimize açıktır. Kullanıcı adı ve şifreniz tarafımızca size iletilmiştir.')) ?></p>
       <?php if ($custErr): ?><div class="pay-account-error"><?= h($custErr) ?></div><?php endif; ?>
       <form method="post" class="pay-login-form">
         <?= csrf_field() ?><input type="hidden" name="action" value="customer_login">
-        <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username" autofocus>
-        <div class="pw-field">
+        <div class="fld">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" name="username" placeholder="<?= h(t('pay.cust_username', 'Kullanıcı Adı')) ?>" required autocomplete="username" autofocus>
+        </div>
+        <div class="fld pw-field">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           <input type="password" id="gatePassword" name="password" placeholder="<?= h(t('pay.cust_password', 'Şifre')) ?>" required autocomplete="current-password">
           <button type="button" class="pw-toggle" data-pw-toggle="#gatePassword" aria-label="<?= h(t('pay.pw_show', 'Şifreyi göster')) ?>"><svg class="eye-on" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button>
         </div>
-        <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?></button>
+        <button type="submit"><?= h(t('pay.cust_login_btn', 'Giriş Yap')) ?>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
       </form>
+      <div class="ck-split-trustrow">
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><?= h(t('pay.trust_enc', 'Verileriniz şifrelenir')) ?></span>
+        <span class="sep">·</span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><?= h(t('pay.trust_kvkk', 'KVKK uyumlu erişim')) ?></span>
+      </div>
       <p class="pay-login-hint"><?= h(t('pay.cust_no_account', 'Kullanıcı adı ve şifrenizi almadıysanız veya kaybettiyseniz bizimle iletişime geçin.')) ?></p>
       <p class="pay-login-alt">
         <a href="<?= h(url_lang('iban.php')) ?>"><?= h(t('header.menu.iban', 'IBAN Bilgilerimiz')) ?></a>
@@ -913,10 +968,8 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
   <?php if ($showSplit): ?>
     </div><!-- .ck-split-left -->
     <div class="ck-split-right">
-      <div class="ck-split-badge">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <h2><?= h(t('pay.split_title', 'Tekcan Metal ile güvenli ödeme')) ?></h2>
+      <div class="ck-split-kicker"><span class="dot"></span><?= h(t('pay.split_kicker', 'Tekcan Metal Ödeme Alanı')) ?></div>
+      <h2><?= h(t('pay.split_title1', 'Tekcan Metal ile')) ?> <em><?= h(t('pay.split_title2', 'güvenli ödeme')) ?></em></h2>
       <p><?= h(t('pay.split_lead', 'Bankanızın 3D Secure altyapısıyla kart bilgileriniz korunur. Tüm işlemler kayıt altına alınır.')) ?></p>
       <div class="ck-split-gallery">
         <?php foreach ([
@@ -936,8 +989,18 @@ body.ck-body-split .ck-footer{padding:clamp(6px,1.4vh,14px) 18px;font-size:11px}
         <?php endforeach; ?>
       </div>
       <div class="ck-split-trust">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <span><?= h(t('pay.split_trust', '3D Secure ile korunan ödeme · Kart bilgileri saklanmaz · İşlemleriniz hesabınızda kayıtlı')) ?></span>
+        <div class="t">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5.25 3.6 9.7 8 11 4.4-1.3 8-5.75 8-11V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span><?= h(t('pay.split_t1', '3D Secure')) ?></span>
+        </div>
+        <div class="t">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span><?= h(t('pay.split_t2', 'Kart Saklanmaz')) ?></span>
+        </div>
+        <div class="t">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <span><?= h(t('pay.split_t3', 'Kayıt Altında')) ?></span>
+        </div>
       </div>
     </div>
   <?php endif; ?>
