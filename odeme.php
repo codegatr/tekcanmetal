@@ -269,7 +269,7 @@ body.ck-body-split .ck-top,body.ck-body-split .ck-footer{display:none}
     repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 46px),
     linear-gradient(160deg,#0a1730 0%,var(--navy) 45%,var(--navy-2) 100%);
   position:relative;overflow:hidden;display:flex;flex-direction:column;color:#fff;height:100%;min-height:0;
-  --gth:clamp(38px,7.4vh,78px)}
+  --gth:clamp(48px,9.6vh,100px)}
 .ck-split-right::before{content:'';position:absolute;width:480px;height:480px;border:1px solid rgba(201,168,107,.16);
   border-radius:50%;right:-190px;bottom:-190px;pointer-events:none}
 .ck-split-right::after{content:'';position:absolute;width:260px;height:260px;border:1px solid rgba(255,255,255,.06);
@@ -308,15 +308,15 @@ body.ck-body-split .ck-top,body.ck-body-split .ck-footer{display:none}
 
 /* v1.0.147/148/149/150 — ürün galerisi (Boru / Profil / Sac / Panel / Hadde / Genişletilmiş Sac / Delikli Sac / Trapez Sac) */
 .ck-split-gallery{display:grid;grid-template-columns:repeat(4,var(--gth));justify-content:center;
-  gap:clamp(5px,1.1vh,10px);margin:0 0 clamp(8px,1.8vh,20px);flex-shrink:1}
-.ck-split-gallery .g{width:var(--gth);display:flex;flex-direction:column;align-items:center;gap:clamp(3px,.6vh,6px)}
-.ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:9px;overflow:hidden;position:relative;
+  gap:clamp(7px,1.6vh,15px);margin:0 0 clamp(10px,2.2vh,24px);flex-shrink:1}
+.ck-split-gallery .g{width:var(--gth);display:flex;flex-direction:column;align-items:center;gap:clamp(4px,.8vh,7px)}
+.ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:11px;overflow:hidden;position:relative;
   background:linear-gradient(160deg,#0e2148 0%,#152b57 100%);border:1px solid rgba(201,168,107,.28);
-  box-shadow:0 8px 18px rgba(0,0,0,.22)}
+  box-shadow:0 10px 22px rgba(0,0,0,.24)}
 .ck-split-gallery .g-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .ck-split-gallery .g[data-pad] .g-thumb img{object-fit:contain;padding:8%}
-.ck-split-gallery .g-thumb::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border-radius:9px;pointer-events:none}
-.ck-split-gallery .g-lbl{font-family:var(--sans);font-size:clamp(7.5px,1vh,9.5px);font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.72);
+.ck-split-gallery .g-thumb::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border-radius:11px;pointer-events:none}
+.ck-split-gallery .g-lbl{font-family:var(--sans);font-size:clamp(8.5px,1.15vh,11px);font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.72);
   text-transform:uppercase;text-align:center;line-height:1.2}
 
 .ck-split-left{order:2;background:linear-gradient(180deg,#f6f4ef 0%,#f1efe8 100%);display:flex;flex-direction:column;
