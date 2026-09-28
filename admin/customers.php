@@ -106,6 +106,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         log_activity('update', 'customer', $id, 'Müşteri hesap kilidi kaldırıldı');
         adm_back_with('success', 'Hesap kilidi kaldırıldı.', $self . '?view=' . $id);
     }
+
+    /**
+     * ---- Müşteri hesabını sil (v1.0.144) ----
+     * Hesap tamamen silinir (login artık mümkün değil). Ödeme kayıtları GÜVENLİK/MUHASEBE
+     * amacıyla asla silinmez — tm_payments.customer_id NULL'a çekilir, kayıtların kendisi
+     * (tutar, tarih, ad-soyad, banka işlem no, dekont) olduğu gibi kalır; yalnızca "bu hesaba
+     * bağlı" ilişkisi kopar. Yazım kutusuna kullanıcı adının aynen yazılmasını istiyoruz
+     * (tek tıkla yanlışlıkla silmeyi önlemek için).
+     */
+    if ($do === 'delete') {
+        $id = (int)($_POST['id'] ?? 0);
+        $c = row("SELECT * FROM tm_customers WHERE id=?", [$id]);
+        if (!$c) adm_back_with('error', 'Müşteri bulunamadı.', $self);
+        $confirmUsername = trim((string)($_POST['confirm_username'] ?? ''));
+        if (mb_strtolower($confirmUsername, 'UTF-8') !== mb_strtolower((string)$c['username'], 'UTF-8')) {
+            adm_back_with('error', 'Kullanıcı adı doğrulaması eşleşmedi; hesap silinmedi.', $self . '?view=' . $id);
+        }
+        $paidCount = (int)val("SELECT COUNT(*) FROM tm_payments WHERE customer_id=?", [$id]);
+        q("UPDATE tm_payments SET customer_id=NULL WHERE customer_id=?", [$id]);
+        q("DELETE FROM tm_customers WHERE id=?", [$id]);
+        log_activity('delete', 'customer', $id, 'Müşteri hesabı silindi: ' . $c['username']
+            . ($paidCount ? " ({$paidCount} ödeme kaydı korunarak hesaptan ayrıldı)" : ''));
+        adm_back_with('success', 'Müşteri hesabı silindi.' . ($paidCount ? ' Ödeme kayıtları (' . $paidCount . ' adet) arşivde korundu.' : ''), $self);
+    }
 }
 
 // Bir kerelik şifre gösterimi: yalnızca doğru oturumdan, tek yönlendirme sonrası, 2 dakika geçerli
@@ -186,6 +210,31 @@ if ($view) {
       </form>
     </div>
   </div>
+
+  <div class="adm-panel" style="border-left:4px solid var(--red, #c8102e)">
+    <div class="adm-panel-head"><h2>⚠ Tehlikeli Bölge</h2></div>
+    <div class="adm-panel-body">
+      <p class="help" style="margin:0 0 12px">Hesabı tamamen siler; müşteri artık bu bilgilerle giriş yapamaz. <strong>Ödeme kayıtları silinmez</strong> — muhasebe/denetim için saklanır, yalnızca bu hesapla bağlantısı kalkar. Bu işlem geri alınamaz.</p>
+      <form method="post" onsubmit="return confirmDeleteCustomer(this)">
+        <?= csrf_field() ?><input type="hidden" name="do" value="delete"><input type="hidden" name="id" value="<?= (int)$c['id'] ?>">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <input type="text" name="confirm_username" placeholder="Onaylamak için kullanıcı adını yazın: <?= h($c['username']) ?>" autocomplete="off" style="min-width:280px">
+          <button type="submit" class="adm-btn adm-btn-danger">🗑 Hesabı Kalıcı Olarak Sil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+  function confirmDeleteCustomer(f) {
+    var expected = <?= json_encode($c['username'], JSON_UNESCAPED_UNICODE) ?>;
+    var got = f.confirm_username.value.trim();
+    if (got !== expected) {
+      alert('Kullanıcı adı eşleşmedi. Silmek için tam olarak "' + expected + '" yazmalısınız.');
+      return false;
+    }
+    return confirm('SON UYARI: @' + expected + ' hesabı kalıcı olarak silinecek. Bu işlem geri alınamaz. Devam edilsin mi?');
+  }
+  </script>
 
   <div class="adm-panel">
     <div class="adm-panel-head"><h2>Ödeme Geçmişi (<?= count($payments) ?>)</h2></div>

@@ -181,21 +181,35 @@ a{color:inherit}
 .ck-amount-badge{display:none}
 
 /* Giriş ekranı — split-screen (yalnızca kayıtlı müşteri girişi beklenirken; ödeme formu ve
-   hesap ekranı işlevsel formlar olduğu için tek-kart düzeninde kalır). */
+   hesap ekranı işlevsel formlar olduğu için tek-kart düzeninde kalır). v1.0.144: kurumsal
+   yeniden tasarım — sağ panelde çelik/profil temalı geometrik doku + rozet + güven listesi,
+   sol panelde yeni sans-serif başlık dili ve mini güven şeridi. */
 .ck-main-split{padding:0;align-items:stretch}
-.ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1040px;width:100%;min-height:calc(100vh - 65px);
-  border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.ck-shell-split{display:grid;grid-template-columns:1fr 1fr;max-width:1080px;width:100%;min-height:calc(100vh - 65px);
+  border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(15,13,8,.06),0 12px 40px rgba(5,13,36,.10)}
 .ck-split-left{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 44px}
-.ck-split-left .pay-gate{box-shadow:none;border-radius:0;padding:0;max-width:360px}
-.ck-split-right{background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 100%);position:relative;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;color:#fff}
-.ck-split-right::before{content:'';position:absolute;width:460px;height:460px;border:60px solid rgba(255,255,255,.07);
-  border-radius:50%;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);right:-130px;bottom:-130px}
-.ck-split-phone{width:168px;height:266px;border-radius:26px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.3);
-  display:grid;place-items:center;border:7px solid #08122c;margin-bottom:30px;position:relative;z-index:1}
-.ck-split-phone svg{color:var(--gold)}
-.ck-split-right h2{font-family:var(--serif);font-size:25px;font-weight:600;text-align:center;max-width:320px;line-height:1.3;position:relative;z-index:1;margin:0 0 12px}
-.ck-split-right p{font-family:var(--sans);font-size:13px;color:rgba(255,255,255,.72);text-align:center;max-width:290px;position:relative;z-index:1;margin:0}
+.ck-split-left .pay-gate{box-shadow:none;border-radius:0;padding:0;max-width:360px;width:100%}
+
+.ck-split-right{background:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 46px),
+    linear-gradient(160deg,#0a1730 0%,var(--navy) 45%,var(--navy-2) 100%);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 48px;color:#fff}
+.ck-split-right::before{content:'';position:absolute;width:480px;height:480px;border:1px solid rgba(201,168,107,.16);
+  border-radius:50%;right:-190px;bottom:-190px;pointer-events:none}
+.ck-split-right::after{content:'';position:absolute;width:260px;height:260px;border:1px solid rgba(255,255,255,.06);
+  border-radius:50%;left:-110px;top:-110px;pointer-events:none}
+.ck-split-badge{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
+  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:26px;position:relative;z-index:1;
+  box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 0 0 5px rgba(255,255,255,.03)}
+.ck-split-badge svg{color:var(--gold);width:32px;height:32px}
+.ck-split-right h2{font-family:var(--sans);font-size:24px;font-weight:700;text-align:center;max-width:340px;line-height:1.32;
+  position:relative;z-index:1;margin:0 0 10px;letter-spacing:-.2px}
+.ck-split-right p{font-family:var(--sans);font-size:13px;color:rgba(255,255,255,.68);text-align:center;max-width:300px;
+  position:relative;z-index:1;margin:0 0 30px;line-height:1.6}
+.ck-split-features{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px}
+.ck-split-features .f{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-size:12.5px;color:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:11px 13px}
+.ck-split-features .f svg{width:16px;height:16px;flex-shrink:0;color:var(--gold)}
 @media (max-width:900px){
   .ck-main-split{padding:0}
   .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;min-height:auto}
@@ -229,8 +243,8 @@ a{color:inherit}
 
 .pay-gate{background:#fff;border-radius:8px;border:1px solid var(--line);box-shadow:var(--shadow);padding:28px 26px;text-align:center}
 @media (max-width:480px){.pay-gate{padding:22px 18px}}
-.pay-gate-icon{width:40px;height:40px;line-height:40px;margin:0 auto 10px;background:var(--navy);color:var(--gold);border-radius:50%;font-size:16px}
-.pay-gate h2{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--navy);margin:0 0 6px}
+.pay-gate-icon{width:44px;height:44px;line-height:44px;margin:0 auto 14px;background:var(--navy);color:var(--gold);border-radius:12px;font-size:17px}
+.pay-gate h2{font-family:var(--sans);font-size:19px;font-weight:700;color:var(--navy);margin:0 0 6px;letter-spacing:-.2px}
 .pay-gate p{font-family:var(--sans);font-size:12.5px;line-height:1.55;color:var(--muted);margin:0 0 14px}
 .pay-gate .pay-login-form{margin-top:0;flex-direction:column}
 .pay-gate .pay-login-form input,.pay-gate .pay-login-form button:not(.pw-toggle){width:100%}
@@ -721,11 +735,16 @@ a{color:inherit}
   <?php if ($showSplit): ?>
     </div><!-- .ck-split-left -->
     <div class="ck-split-right">
-      <div class="ck-split-phone">
-        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div class="ck-split-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
       <h2><?= h(t('pay.split_title', 'Tekcan Metal ile güvenli ödeme')) ?></h2>
       <p><?= h(t('pay.split_lead', 'Bankanızın 3D Secure altyapısıyla kart bilgileriniz korunur. Tüm işlemler kayıt altına alınır.')) ?></p>
+      <div class="ck-split-features">
+        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5.25 3.6 9.7 8 11 4.4-1.3 8-5.75 8-11V6z"/><path d="m9 12 2 2 4-4"/></svg> <?= h(t('pay.split_f1', '3D Secure ile doğrulanmış ödeme')) ?></div>
+        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <?= h(t('pay.split_f2', 'Kart bilgileriniz sunucularımızda saklanmaz')) ?></div>
+        <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> <?= h(t('pay.split_f3', 'Tüm işlemleriniz hesabınızda kayıt altında')) ?></div>
+      </div>
     </div>
   <?php endif; ?>
   </div>

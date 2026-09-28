@@ -128,7 +128,7 @@ a{color:inherit}
 .hist-main{flex:1;padding:32px 18px 46px;display:flex;justify-content:center}
 .hist-shell{width:100%;max-width:1000px}
 .hist-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-.hist-head h1{font-family:var(--serif);font-size:27px;font-weight:600;color:var(--navy);margin:0 0 4px}
+.hist-head h1{font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);margin:0 0 4px;letter-spacing:-.3px}
 .hist-head .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted)}
 .hist-export{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 16px;
   font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--navy);text-decoration:none;white-space:nowrap}
