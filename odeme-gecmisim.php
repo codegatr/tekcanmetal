@@ -109,7 +109,7 @@ $logoOnDark = file_exists(__DIR__ . '/' . $logoWhitePath) ? $logoWhitePath : (fi
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#050d24;--navy-2:#0c1e44;--gold:#c9a86b;--gold-dark:#a88a4a;--red:#c8102e;--red-dark:#a00d24;
-  --paper:#fafaf7;--ink:#1a1a1a;--line:#e7e4dc;--muted:#767268;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif}
+  --paper:#fafaf7;--ink:#1a1a1a;--line:#e7e4dc;--muted:#767268;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--shadow:0 1px 2px rgba(15,13,8,.05),0 1px 6px rgba(15,13,8,.04)}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;overflow-x:hidden;font-family:var(--sans);color:var(--ink);background:linear-gradient(180deg,#f3f1ec 0%,#eceae3 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
@@ -125,8 +125,43 @@ a{color:inherit}
 .hist-back{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none}
 .hist-back:hover{color:#fff}
 
-.hist-main{flex:1;padding:32px 18px 46px;display:flex;justify-content:center}
-.hist-shell{width:100%;max-width:1000px}
+.hist-main{flex:1;padding:22px 18px 40px;display:flex;justify-content:center}
+.hist-shell{width:100%;max-width:1180px}
+
+/* Sol navbarlı app kabuğu — odeme.php ile aynı, tutarlı gezinme */
+.ck-app{display:flex;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-height:calc(100vh - 86px)}
+.ck-nav{width:216px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:18px 12px}
+.ck-nav-user{display:flex;align-items:center;gap:10px;padding:2px 8px 16px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ck-nav-avatar{width:34px;height:34px;border-radius:50%;background:rgba(201,168,107,.16);border:1px solid rgba(201,168,107,.5);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:13px;flex-shrink:0}
+.ck-nav-user-info{min-width:0}
+.ck-nav-user-name{font-family:var(--sans);font-size:12.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ck-nav-user-uname{font-family:var(--sans);font-size:10.5px;color:rgba(255,255,255,.5)}
+.ck-nav-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;flex:1}
+.ck-nav-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;color:rgba(255,255,255,.72);font-family:var(--sans);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s;background:transparent;border:0;width:100%;text-align:left}
+.ck-nav-link svg{width:17px;height:17px;flex-shrink:0}
+.ck-nav-link:hover{background:rgba(255,255,255,.06);color:#fff}
+.ck-nav-link.active{background:rgba(201,168,107,.14);color:var(--gold)}
+.ck-nav-foot{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:6px}
+.ck-nav-logout{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;color:rgba(255,255,255,.55);font-family:var(--sans);font-size:12.5px;font-weight:600;background:none;border:0;width:100%;text-align:left;cursor:pointer;transition:.15s;text-decoration:none}
+.ck-nav-logout:hover{background:rgba(200,16,46,.15);color:#ff9d9d}
+.ck-nav-logout svg{width:16px;height:16px;flex-shrink:0}
+.ck-app-main{flex:1;min-width:0;overflow-y:auto;padding:22px 26px 26px}
+.lbl-short{display:none}
+@media (max-width:900px){
+  .ck-app{flex-direction:column;min-height:auto}
+  .ck-nav{width:100%;flex-direction:row;align-items:center;padding:8px 8px;gap:4px}
+  .ck-nav-user{display:none}
+  .ck-nav-list{flex-direction:row;flex:1;overflow-x:auto;gap:2px;min-width:0}
+  .ck-nav-link{white-space:nowrap;padding:8px 9px;font-size:11px;gap:6px}
+  .ck-nav-link svg{width:15px;height:15px}
+  .ck-nav-foot{border-top:0;border-left:1px solid rgba(255,255,255,.12);padding:0 0 0 6px;margin:0;flex-shrink:0}
+  .ck-nav-logout{padding:8px 9px;font-size:11px;gap:6px}
+  .ck-nav-logout svg{width:15px;height:15px}
+  .lbl-full{display:none}
+  .lbl-short{display:inline}
+  .ck-app-main{padding:16px 14px 22px}
+}
+
 .hist-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
 .hist-head h1{font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);margin:0 0 4px;letter-spacing:-.3px}
 .hist-head .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted)}
@@ -180,12 +215,44 @@ a{color:inherit}
         <span class="ck-brand-text">TEKCAN <em>METAL</em></span>
       <?php endif; ?>
     </div>
-    <a href="<?= h(url('odeme.php')) ?>" class="hist-back">← <?= h(t('hist.back', 'Ödeme Sayfasına Dön')) ?></a>
   </div>
 </header>
 
+<?php $custInitial = mb_strtoupper(mb_substr(trim((string)$cust['full_name']), 0, 1, 'UTF-8'), 'UTF-8'); ?>
 <main class="hist-main">
   <div class="hist-shell">
+  <div class="ck-app">
+    <nav class="ck-nav">
+      <div class="ck-nav-user">
+        <div class="ck-nav-avatar"><?= h($custInitial ?: '?') ?></div>
+        <div class="ck-nav-user-info">
+          <div class="ck-nav-user-name"><?= h($cust['full_name']) ?></div>
+          <div class="ck-nav-user-uname">@<?= h($cust['username']) ?></div>
+        </div>
+      </div>
+      <ul class="ck-nav-list">
+        <li><a class="ck-nav-link" href="<?= h(url('odeme.php#ozet')) ?>">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <span class="lbl"><?= h(t('pay.nav_ozet', 'Özet')) ?></span></a></li>
+        <li><a class="ck-nav-link" href="<?= h(url('odeme.php#odeme')) ?>">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span class="lbl"><?= h(t('pay.nav_odeme', 'Ödeme Yap')) ?></span></a></li>
+        <li><a class="ck-nav-link active" href="<?= h(url('odeme-gecmisim.php')) ?>">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="lbl lbl-full"><?= h(t('pay.nav_gecmis', 'Geçmiş Ödemelerim')) ?></span><span class="lbl lbl-short"><?= h(t('pay.nav_gecmis_short', 'Geçmiş')) ?></span></a></li>
+      </ul>
+      <div class="ck-nav-foot">
+        <form method="post" action="<?= h(url('odeme.php')) ?>">
+          <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
+          <button type="submit" class="ck-nav-logout">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span class="lbl"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></span>
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="ck-app-main">
 
     <div class="hist-head">
       <div>
@@ -258,6 +325,8 @@ a{color:inherit}
       <?php endif; ?>
     </div>
 
+    </div><!-- .ck-app-main -->
+  </div><!-- .ck-app -->
   </div>
 </main>
 

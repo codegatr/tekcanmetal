@@ -169,10 +169,52 @@ a{color:inherit}
 .ck-main{flex:1;padding:22px 16px 30px;display:flex;justify-content:center}
 .ck-shell{width:100%;max-width:460px}
 .ck-shell-wide{width:100%;max-width:900px}
+.ck-shell-app{width:100%;max-width:1180px}
 .ck-workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
 .ck-workspace-main{min-width:0}
 .ck-workspace-side{position:sticky;top:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 @media (max-width:860px){.ck-workspace{grid-template-columns:minmax(0,1fr)}.ck-workspace-side{position:static}}
+
+/* v1.0.145 — Sol navbarlı, kompakt tek-ekran çalışma alanı (giriş sonrası) */
+.ck-app{display:flex;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-height:calc(100vh - 106px)}
+.ck-nav{width:216px;flex-shrink:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:18px 12px}
+.ck-nav-user{display:flex;align-items:center;gap:10px;padding:2px 8px 16px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ck-nav-avatar{width:34px;height:34px;border-radius:50%;background:rgba(201,168,107,.16);border:1px solid rgba(201,168,107,.5);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:13px;flex-shrink:0}
+.ck-nav-user-info{min-width:0}
+.ck-nav-user-name{font-family:var(--sans);font-size:12.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ck-nav-user-uname{font-family:var(--sans);font-size:10.5px;color:rgba(255,255,255,.5)}
+.ck-nav-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;flex:1}
+.ck-nav-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;color:rgba(255,255,255,.72);font-family:var(--sans);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s;background:transparent;border:0;width:100%;text-align:left}
+.ck-nav-link svg{width:17px;height:17px;flex-shrink:0}
+.ck-nav-link:hover{background:rgba(255,255,255,.06);color:#fff}
+.ck-nav-link.active{background:rgba(201,168,107,.14);color:var(--gold)}
+.ck-nav-foot{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:6px}
+.ck-nav-logout{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;color:rgba(255,255,255,.55);font-family:var(--sans);font-size:12.5px;font-weight:600;background:none;border:0;width:100%;text-align:left;cursor:pointer;transition:.15s}
+.ck-nav-logout:hover{background:rgba(200,16,46,.15);color:#ff9d9d}
+.ck-nav-logout svg{width:16px;height:16px;flex-shrink:0}
+
+.ck-app-main{flex:1;min-width:0;overflow-y:auto;padding:22px 26px 26px}
+.ck-tab{display:none}
+.ck-tab.active{display:block}
+.ck-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.ck-panel-head h1{font-family:var(--sans);font-size:19px;font-weight:800;color:#1a1a1a;margin:0 0 2px;letter-spacing:-.2px}
+.ck-panel-head p{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0}
+
+.lbl-short{display:none}
+@media (max-width:900px){
+  .ck-app{flex-direction:column;min-height:auto}
+  .ck-nav{width:100%;flex-direction:row;align-items:center;padding:8px 8px;gap:4px}
+  .ck-nav-user{display:none}
+  .ck-nav-list{flex-direction:row;flex:1;overflow-x:auto;gap:2px;min-width:0}
+  .ck-nav-link{white-space:nowrap;padding:8px 9px;font-size:11px;gap:6px}
+  .ck-nav-link svg{width:15px;height:15px}
+  .ck-nav-foot{border-top:0;border-left:1px solid rgba(255,255,255,.12);padding:0 0 0 6px;margin:0;flex-shrink:0}
+  .ck-nav-logout{padding:8px 9px;font-size:11px;gap:6px}
+  .ck-nav-logout svg{width:15px;height:15px}
+  .lbl-full{display:none}
+  .lbl-short{display:inline}
+  .ck-app-main{padding:16px 14px 22px}
+}
 .ck-security-box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:var(--shadow)}
 .ck-security-box h4{margin:0 0 12px;font-family:var(--sans);font-size:13px;font-weight:700;color:#1a1a1a}
 .ck-security-item{display:flex;gap:8px;align-items:flex-start;font-family:var(--sans);font-size:12px;color:#4b5563;margin-bottom:10px;line-height:1.4}
@@ -283,6 +325,8 @@ a{color:inherit}
 .pay-account-hist td a{color:var(--navy);text-decoration:underline}
 
 .pay-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 16px 2px}
+.pay-stats-grid-4{padding:0;grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.pay-stats-grid-4{grid-template-columns:repeat(2,1fr)}}
 .pay-stat{position:relative;min-width:0;background:#fff;border-radius:8px;padding:12px 12px 11px 14px;overflow:hidden;border:1px solid var(--line);border-left:4px solid transparent}
 .pay-stat.green{border-left-color:#2f9e5c}
 .pay-stat.gold{border-left-color:#d69a1f}
@@ -368,7 +412,7 @@ a{color:inherit}
 
 <?php $showSplit = $payOn && !$payPaused && !$payClosed && !$cust; ?>
 <main class="ck-main<?= $showSplit ? ' ck-main-split' : '' ?>">
-  <div class="<?= $showSplit ? 'ck-shell-split' : ($showWorkspace ? 'ck-shell-wide' : 'ck-shell') ?>">
+  <div class="<?= $showSplit ? 'ck-shell-split' : ($showWorkspace ? 'ck-shell-app' : 'ck-shell') ?>">
   <?php if ($showSplit): ?><div class="ck-split-left"><?php endif; ?>
 
   <?php if (!$payOn || $payPaused || $payClosed): ?>
@@ -468,74 +512,106 @@ a{color:inherit}
         $custStats['today_sum']     = (float)val("SELECT COALESCE(SUM(amount),0) FROM tm_payments WHERE customer_id=? AND status='paid' AND DATE(created_at)=CURDATE()", [$cust['id']]);
       } catch (Throwable $e) { /* istatistikler gösterilemezse ödeme akışı yine de çalışsın */ }
     ?>
-    <div class="ck-workspace">
-    <div class="ck-workspace-main">
-    <div class="pay-account">
-      <div class="pay-account-head">
-        <div>👤 <?= h(t('pay.cust_hello', 'Merhaba')) ?>, <strong><?= h($cust['full_name']) ?></strong>
-          <span class="pay-account-user">@<?= h($cust['username']) ?></span></div>
-        <form method="post" class="pay-account-logout">
-          <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
-          <button type="submit"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></button>
-        </form>
-      </div>
+    <?php $custInitial = mb_strtoupper(mb_substr(trim((string)$cust['full_name']), 0, 1, 'UTF-8'), 'UTF-8'); ?>
+    <div class="ck-app" id="ckApp">
+      <nav class="ck-nav">
+        <div class="ck-nav-user">
+          <div class="ck-nav-avatar"><?= h($custInitial ?: '?') ?></div>
+          <div class="ck-nav-user-info">
+            <div class="ck-nav-user-name"><?= h($cust['full_name']) ?></div>
+            <div class="ck-nav-user-uname">@<?= h($cust['username']) ?></div>
+          </div>
+        </div>
+        <ul class="ck-nav-list">
+          <li><button type="button" class="ck-nav-link active" data-tab="ozet">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            <span class="lbl"><?= h(t('pay.nav_ozet', 'Özet')) ?></span></button></li>
+          <li><button type="button" class="ck-nav-link" data-tab="odeme">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span class="lbl"><?= h(t('pay.nav_odeme', 'Ödeme Yap')) ?></span></button></li>
+          <li><a class="ck-nav-link" href="<?= h(url('odeme-gecmisim.php')) ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="lbl lbl-full"><?= h(t('pay.nav_gecmis', 'Geçmiş Ödemelerim')) ?></span><span class="lbl lbl-short"><?= h(t('pay.nav_gecmis_short', 'Geçmiş')) ?></span></a></li>
+        </ul>
+        <div class="ck-nav-foot">
+          <form method="post">
+            <?= csrf_field() ?><input type="hidden" name="action" value="customer_logout">
+            <button type="submit" class="ck-nav-logout">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span class="lbl"><?= h(t('pay.cust_logout', 'Çıkış Yap')) ?></span>
+            </button>
+          </form>
+        </div>
+      </nav>
 
-      <div class="pay-stats-grid">
-        <div class="pay-stat green">
-          <div class="pay-stat-ic green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-          <div class="pay-stat-label"><?= h(t('pay.stat_paid', 'Toplam Tahsilat')) ?> (<?= (int)$custStats['paid_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
-          <div class="pay-stat-value"><?= h(qnb_money($custStats['paid_sum'])) ?></div>
-        </div>
-        <div class="pay-stat gold">
-          <div class="pay-stat-ic gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="pay-stat-label"><?= h(t('pay.stat_pending', 'Bekleyen Ödeme')) ?> (<?= (int)$custStats['pending_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
-          <div class="pay-stat-value"><?= h(qnb_money($custStats['pending_sum'])) ?></div>
-        </div>
-        <div class="pay-stat blue">
-          <div class="pay-stat-ic blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div class="pay-stat-label"><?= h(t('pay.stat_today', 'Bugünkü Tahsilat')) ?></div>
-          <div class="pay-stat-value"><?= h(qnb_money($custStats['today_sum'])) ?></div>
-        </div>
-        <div class="pay-stat red">
-          <div class="pay-stat-ic red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="pay-stat-label"><?= h(t('pay.stat_failed', 'Başarısız / İncelemede')) ?></div>
-          <div class="pay-stat-value"><?= (int)$custStats['failed_count'] ?> <span style="font-size:12px;font-weight:600;opacity:.6"><?= h(t('pay.stat_op', 'işlem')) ?></span></div>
-        </div>
-      </div>
+      <div class="ck-app-main">
 
-      <div class="pay-account-body">
-        <div class="pay-account-hist-head" style="display:flex;justify-content:space-between;align-items:center">
-          <span><?= h(t('pay.cust_history', 'Son Ödemeler')) ?></span>
-          <a href="<?= h(url('odeme-gecmisim.php')) ?>" style="color:var(--navy);text-transform:none;letter-spacing:0;font-weight:600;font-size:12px"><?= h(t('pay.cust_history_all', 'Tümünü gör')) ?> →</a>
-        </div>
-        <?php if ($custHistory): ?>
-        <div class="pay-account-hist-wrap"><table class="pay-account-hist">
-          <?php foreach ($custHistory as $ch): ?>
-          <tr>
-            <td><?= h(tr_date($ch['created_at'])) ?></td>
-            <td><?= h(qnb_money((float)$ch['amount'])) ?></td>
-            <td><?= qnb_status_badge((string)$ch['status']) ?></td>
-            <td><?php if ($ch['status'] === 'paid'): ?><a href="<?= h(url('odeme-dekont.php?ref=' . $ch['public_ref'])) ?>" target="_blank"><?= h(t('pay.cust_receipt', 'Dekont')) ?></a><?php endif; ?></td>
-          </tr>
-          <?php endforeach; ?>
-        </table></div>
-        <?php else: ?>
-        <div class="pay-empty">
-          <div class="pay-empty-ic">🧾</div>
-          <p><?= h(t('pay.cust_empty', 'Henüz işlem yok. İlk tahsilatınızı aşağıdan oluşturabilirsiniz.')) ?></p>
-          <a href="#yeni-tahsilat" class="pay-empty-btn"><?= h(t('pay.cust_empty_cta', 'Yeni Tahsilat')) ?></a>
-        </div>
-        <?php endif; ?>
-      </div>
-    </div>
+        <div class="ck-tab active" id="tab-ozet" data-tab-panel="ozet">
+          <div class="ck-panel-head">
+            <div><h1><?= h(t('pay.nav_ozet', 'Özet')) ?></h1><p>👤 <?= h(t('pay.cust_hello', 'Merhaba')) ?>, <?= h($cust['full_name']) ?></p></div>
+          </div>
 
-    <div class="pay-alert" id="payErr" role="alert"></div>
+          <div class="pay-stats-grid pay-stats-grid-4">
+            <div class="pay-stat green">
+              <div class="pay-stat-ic green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <div class="pay-stat-label"><?= h(t('pay.stat_paid', 'Toplam Tahsilat')) ?> (<?= (int)$custStats['paid_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
+              <div class="pay-stat-value"><?= h(qnb_money($custStats['paid_sum'])) ?></div>
+            </div>
+            <div class="pay-stat gold">
+              <div class="pay-stat-ic gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="pay-stat-label"><?= h(t('pay.stat_pending', 'Bekleyen Ödeme')) ?> (<?= (int)$custStats['pending_count'] ?> <?= h(t('pay.stat_op', 'işlem')) ?>)</div>
+              <div class="pay-stat-value"><?= h(qnb_money($custStats['pending_sum'])) ?></div>
+            </div>
+            <div class="pay-stat blue">
+              <div class="pay-stat-ic blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="pay-stat-label"><?= h(t('pay.stat_today', 'Bugünkü Tahsilat')) ?></div>
+              <div class="pay-stat-value"><?= h(qnb_money($custStats['today_sum'])) ?></div>
+            </div>
+            <div class="pay-stat red">
+              <div class="pay-stat-ic red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="pay-stat-label"><?= h(t('pay.stat_failed', 'Başarısız / İncelemede')) ?></div>
+              <div class="pay-stat-value"><?= (int)$custStats['failed_count'] ?> <span style="font-size:12px;font-weight:600;opacity:.6"><?= h(t('pay.stat_op', 'işlem')) ?></span></div>
+            </div>
+          </div>
 
-    <div class="ck-card" id="yeni-tahsilat">
-      <div class="ck-card-head">
-        <h1><?= h(t('pay.card_h1', 'Güvenli Ödeme')) ?></h1>
-        <p><?= h(t('pay.card_lead', '3D Secure doğrulamalı, kart bilgisi saklanmayan ödeme.')) ?></p>
-      </div>
+          <div class="ck-card" style="margin-top:16px">
+            <div class="pay-account-body" style="padding-top:14px">
+              <div class="pay-account-hist-head" style="display:flex;justify-content:space-between;align-items:center;padding-top:0">
+                <span><?= h(t('pay.cust_history', 'Son Ödemeler')) ?></span>
+                <a href="<?= h(url('odeme-gecmisim.php')) ?>" style="color:var(--navy);text-transform:none;letter-spacing:0;font-weight:600;font-size:12px"><?= h(t('pay.cust_history_all', 'Tümünü gör')) ?> →</a>
+              </div>
+              <?php if ($custHistory): ?>
+              <div class="pay-account-hist-wrap"><table class="pay-account-hist">
+                <?php foreach ($custHistory as $ch): ?>
+                <tr>
+                  <td><?= h(tr_date($ch['created_at'])) ?></td>
+                  <td><?= h(qnb_money((float)$ch['amount'])) ?></td>
+                  <td><?= qnb_status_badge((string)$ch['status']) ?></td>
+                  <td><?php if ($ch['status'] === 'paid'): ?><a href="<?= h(url('odeme-dekont.php?ref=' . $ch['public_ref'])) ?>" target="_blank"><?= h(t('pay.cust_receipt', 'Dekont')) ?></a><?php endif; ?></td>
+                </tr>
+                <?php endforeach; ?>
+              </table></div>
+              <?php else: ?>
+              <div class="pay-empty">
+                <div class="pay-empty-ic">🧾</div>
+                <p><?= h(t('pay.cust_empty', 'Henüz işlem yok. İlk tahsilatınızı aşağıdan oluşturabilirsiniz.')) ?></p>
+                <a href="#odeme" class="pay-empty-btn" data-tab-link="odeme"><?= h(t('pay.cust_empty_cta', 'Yeni Tahsilat')) ?></a>
+              </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+
+        <div class="ck-tab" id="tab-odeme" data-tab-panel="odeme">
+          <div class="ck-panel-head">
+            <div><h1><?= h(t('pay.card_h1', 'Güvenli Ödeme')) ?></h1><p><?= h(t('pay.card_lead', '3D Secure doğrulamalı, kart bilgisi saklanmayan ödeme.')) ?></p></div>
+          </div>
+
+          <div class="pay-alert" id="payErr" role="alert"></div>
+
+          <div class="ck-workspace">
+          <div class="ck-workspace-main">
+          <div class="ck-card">
     <form id="payForm" novalidate autocomplete="on" data-init="<?= h(url('odeme.php')) ?>"
           data-min="<?= h((string)$payCfg['min']) ?>" data-max="<?= h((string)$payCfg['max']) ?>">
       <?= csrf_field() ?>
@@ -590,8 +666,8 @@ a{color:inherit}
         <button type="submit" class="pay-btn" id="payBtn"><?= h($js['btn']) ?> →</button>
       </div>
     </form>
-    </div>
-    </div>
+    </div><!-- .ck-card -->
+    </div><!-- .ck-workspace-main -->
 
     <div class="ck-workspace-side">
       <div class="ck-cardpreview" id="ckCardPreview">
@@ -612,8 +688,12 @@ a{color:inherit}
         <div class="ck-security-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span><?= h(t('pay.security_2', 'Kart bilgileriniz sunucularımızda saklanmaz.')) ?></span></div>
         <div class="ck-security-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M9 15l2 2 4-4"></path></svg><span><?= h(t('pay.security_3', 'Tüm işlemler kayıt altına alınır.')) ?></span></div>
       </div>
-    </div>
-    </div>
+    </div><!-- .ck-workspace-side -->
+    </div><!-- .ck-workspace -->
+
+        </div><!-- #tab-odeme -->
+      </div><!-- .ck-app-main -->
+    </div><!-- .ck-app -->
 
     <div class="ck-trust">
       <div class="ck-trust-item"><span class="ico">🔒</span> <?= h(t('pay.trust1_t', '3D Secure')) ?></div>
@@ -622,6 +702,22 @@ a{color:inherit}
     </div>
 
     <script>
+    (function () {
+      /* Sol navbar sekme geçişi (Özet / Ödeme Yap) — sayfa yenilenmez, tam URL hash ile hatırlanır */
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll('.ck-nav-link[data-tab]'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('.ck-tab[data-tab-panel]'));
+      function activateTab(tab) {
+        navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-tab') === tab); });
+        panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-tab-panel') === tab); });
+        if (window.history && history.replaceState) history.replaceState(null, '', '#' + tab);
+      }
+      navLinks.forEach(function (a) { a.addEventListener('click', function () { activateTab(a.getAttribute('data-tab')); }); });
+      Array.prototype.slice.call(document.querySelectorAll('[data-tab-link]')).forEach(function (el) {
+        el.addEventListener('click', function (ev) { ev.preventDefault(); activateTab(el.getAttribute('data-tab-link')); });
+      });
+      var initialTab = (location.hash || '').replace('#', '');
+      if (initialTab === 'odeme') activateTab('odeme');
+    })();
     (function () {
       var I = <?= json_encode($js, JSON_UNESCAPED_UNICODE) ?>;
       var form = document.getElementById('payForm'), btn = document.getElementById('payBtn'), box = document.getElementById('payErr');
