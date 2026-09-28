@@ -11,7 +11,7 @@ qnb_ensure_schema();
  *    gönderilmeyebilir; bu yüzden kimlik doğrulama OTURUMA DEĞİL hash_key'e dayanır.
  * ============================================================ */
 $in = array_merge($_GET, $_POST);   // QNBpay POST veya GET ile dönebilir
-$isGatewayReturn = isset($in['invoice_id']) && (isset($in['sipay_status']) || isset($in['hash_key']));
+$isGatewayReturn = isset($in['invoice_id']) && (isset($in['sipay_status']) || isset($in['qnbpay_status']) || isset($in['hash_key']));
 
 if ($isGatewayReturn) {
     $invoiceId = mb_substr((string)$in['invoice_id'], 0, 40, 'UTF-8');

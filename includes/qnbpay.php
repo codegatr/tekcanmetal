@@ -545,8 +545,13 @@ function qnb_check_breaker(): void {
 
 /** Dönüş parametrelerinden yalnızca bilinen, kart içermeyen alanları alır. */
 function qnb_pick_return(array $in): array {
-    $keys = ['sipay_status', 'order_no', 'invoice_id', 'status_code', 'status_description',
-             'transaction_type', 'payment_status', 'payment_method', 'sipay_payment_method',
+    // NOT (v1.0.142): QNBpay resmi dokümantasyonu (apidocs.qnbpay.com.tr) bu alanı bazı
+    // yerlerde "qnbpay_status", bazı yerlerde (eski Sipay mirası) "sipay_status" olarak
+    // gösteriyor — belgenin kendisi tutarsız. Olası tüm varyantlar + doğrulama servisinin
+    // açıkça "1=başarılı, 0=başarısız" dediği payment_status/qnbpay_payment_method alanları
+    // teşhis için saklanıyor.
+    $keys = ['sipay_status', 'qnbpay_status', 'status', 'order_no', 'invoice_id', 'status_code', 'status_description',
+             'transaction_type', 'payment_status', 'payment_method', 'sipay_payment_method', 'qnbpay_payment_method',
              'error_code', 'error', 'md_status', 'original_bank_error_code',
              'original_bank_error_description', 'installments_number'];
     $out = [];
@@ -559,11 +564,36 @@ function qnb_pick_return(array $in): array {
 }
 
 /**
+ * QNBpay dönüşü "banka onayladı" mı diyor? (v1.0.142)
+ *
+ * QNBpay'in kendi entegrasyon kılavuzu (apidocs.qnbpay.com.tr) bu konuda TUTARSIZ:
+ *  - "3D Ödeme" sayfası "sorgu dizesinde qnbpay_status mevcuttur" diyor (iki kez, düz metinde).
+ *  - Aynı sayfanın parametre şeması "qnbpay_status" alanını "gerekli" gösteriyor.
+ *  - Ama "Satış WebHook" sayfasındaki ÖRNEK değer satırı hâlâ eski Sipay adını kullanıyor:
+ *    "Example: sipay_status=1" — QNBpay'in Sipay altyapısından white-label geçişte
+ *    dokümantasyonun tam güncellenmediğinin işareti.
+ *  - "payment_status" alanı ise HER İKİ sayfada da açıkça "1 veya 0 olabilir. 1=başarılı,
+ *    0=başarısız" diye net tanımlanmış — belirsizlik yok.
+ *
+ * Önceki sürüm SADECE 'sipay_status' alanına bakıyordu. QNBpay gerçekte 'qnbpay_status'
+ * gönderiyorsa (dokümantasyonun büyük kısmı bunu işaret ediyor), $in['sipay_status'] hiçbir
+ * zaman set olmaz → her başarılı ödeme de "Başarısız" olarak kaydedilir. Bu fonksiyon artık
+ * üç olası alanı da kabul ediyor; hangisini gönderirlerse göndersinler doğru sonucu üretir.
+ */
+function qnb_return_ok(array $in): bool {
+    foreach (['payment_status', 'qnbpay_status', 'sipay_status'] as $k) {
+        if (isset($in[$k]) && (string)$in[$k] === '1') return true;
+    }
+    return false;
+}
+
+/**
  * Dönüşü işler ve kaydı günceller.
  *
  * Güvenlik kuralları:
- *  - "paid" yalnızca sipay_status=1 + geçerli hash_key + fatura/tutar eşleşmesi ile olur.
- *  - sipay_status=1 ama hash doğrulanamazsa "review" (para çekilmiş olabilir → elle kontrol).
+ *  - "paid" yalnızca banka onayı (bkz. qnb_return_ok) + geçerli hash_key + fatura/tutar
+ *    eşleşmesi ile olur.
+ *  - Banka onayı var ama hash doğrulanamazsa "review" (para çekilmiş olabilir → elle kontrol).
  *  - Doğrulanmamış (sahte) bir "başarısız" dönüş gerçek bir başarıyı KİLİTLEYEMEZ:
  *    failed/review → paid geçişine izin verilir; paid asla geri alınmaz.
  *
@@ -578,7 +608,7 @@ function qnb_apply_return(array $pay, array $in): array {
     $c       = qnb_cfg();
     $parts   = qnb_hash_decode((string)($in['hash_key'] ?? ''), $c['app_secret']);
     $hashOk  = qnb_hash_matches($parts, $pay);
-    $sipayOk = ((string)($in['sipay_status'] ?? '')) === '1';
+    $sipayOk = qnb_return_ok($in);
 
     if ($sipayOk && $hashOk)      $new = 'paid';
     elseif ($sipayOk && !$hashOk) $new = 'review';
