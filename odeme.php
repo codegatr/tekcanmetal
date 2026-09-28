@@ -266,18 +266,29 @@ body.ck-body-app{overflow:hidden}
   border-radius:50%;right:-190px;bottom:-190px;pointer-events:none}
 .ck-split-right::after{content:'';position:absolute;width:260px;height:260px;border:1px solid rgba(255,255,255,.06);
   border-radius:50%;left:-110px;top:-110px;pointer-events:none}
-.ck-split-badge{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
-  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:26px;position:relative;z-index:1;
+.ck-split-badge{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(2px);
+  border:1px solid rgba(201,168,107,.5);display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1;
   box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 0 0 5px rgba(255,255,255,.03)}
-.ck-split-badge svg{color:var(--gold);width:32px;height:32px}
-.ck-split-right h2{font-family:var(--sans);font-size:24px;font-weight:700;text-align:center;max-width:340px;line-height:1.32;
-  position:relative;z-index:1;margin:0 0 10px;letter-spacing:-.2px}
-.ck-split-right p{font-family:var(--sans);font-size:13px;color:rgba(255,255,255,.68);text-align:center;max-width:300px;
-  position:relative;z-index:1;margin:0 0 30px;line-height:1.6}
-.ck-split-features{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px}
-.ck-split-features .f{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-size:12.5px;color:rgba(255,255,255,.85);
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:11px 13px}
-.ck-split-features .f svg{width:16px;height:16px;flex-shrink:0;color:var(--gold)}
+.ck-split-badge svg{color:var(--gold);width:26px;height:26px}
+.ck-split-right h2{font-family:var(--sans);font-size:22px;font-weight:700;text-align:center;max-width:340px;line-height:1.3;
+  position:relative;z-index:1;margin:0 0 8px;letter-spacing:-.2px}
+.ck-split-right p{font-family:var(--sans);font-size:12.5px;color:rgba(255,255,255,.68);text-align:center;max-width:300px;
+  position:relative;z-index:1;margin:0 0 22px;line-height:1.55}
+.ck-split-features{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px}
+.ck-split-features .f{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-size:12px;color:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:9px 13px}
+.ck-split-features .f svg{width:15px;height:15px;flex-shrink:0;color:var(--gold)}
+
+/* v1.0.147 — sağ panelde ürün galerisi (Boru / Profil / Sac / Panel / Hadde) */
+.ck-split-gallery{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%;max-width:320px;margin:0 0 26px}
+.ck-split-gallery .g{flex:0 0 calc(33.333% - 7px);display:flex;flex-direction:column;align-items:center;gap:7px}
+.ck-split-gallery .g-thumb{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;
+  background:linear-gradient(160deg,#0e2148 0%,#152b57 100%);border:1px solid rgba(201,168,107,.28);
+  box-shadow:0 10px 22px rgba(0,0,0,.22)}
+.ck-split-gallery .g-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ck-split-gallery .g[data-pad] .g-thumb img{object-fit:contain;padding:10px}
+.ck-split-gallery .g-thumb::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border-radius:10px;pointer-events:none}
+.ck-split-gallery .g-lbl{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.6px;color:rgba(255,255,255,.72);text-transform:uppercase}
 @media (max-width:900px){
   .ck-main-split{padding:0}
   .ck-shell-split{grid-template-columns:1fr;border-radius:0;box-shadow:none;min-height:auto}
@@ -893,6 +904,20 @@ body.ck-body-app{overflow:hidden}
       </div>
       <h2><?= h(t('pay.split_title', 'Tekcan Metal ile güvenli ödeme')) ?></h2>
       <p><?= h(t('pay.split_lead', 'Bankanızın 3D Secure altyapısıyla kart bilgileriniz korunur. Tüm işlemler kayıt altına alınır.')) ?></p>
+      <div class="ck-split-gallery">
+        <?php foreach ([
+          ['boru.jpg',   'pay.gal_boru',   'Boru'],
+          ['profil.jpg', 'pay.gal_profil', 'Profil'],
+          ['sac.jpg',    'pay.gal_sac',    'Sac'],
+          ['panel.png',  'pay.gal_panel',  'Panel'],
+          ['hadde.jpg',  'pay.gal_hadde',  'Hadde'],
+        ] as [$galFile, $galKey, $galDefault]): ?>
+          <div class="g"<?= $galFile === 'panel.png' ? ' data-pad' : '' ?>>
+            <div class="g-thumb"><img src="<?= h(url('assets/img/login/' . $galFile)) ?>" alt="<?= h(t($galKey, $galDefault)) ?>" loading="lazy"></div>
+            <span class="g-lbl"><?= h(t($galKey, $galDefault)) ?></span>
+          </div>
+        <?php endforeach; ?>
+      </div>
       <div class="ck-split-features">
         <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5.25 3.6 9.7 8 11 4.4-1.3 8-5.75 8-11V6z"/><path d="m9 12 2 2 4-4"/></svg> <?= h(t('pay.split_f1', '3D Secure ile doğrulanmış ödeme')) ?></div>
         <div class="f"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <?= h(t('pay.split_f2', 'Kart bilgileriniz sunucularımızda saklanmaz')) ?></div>
