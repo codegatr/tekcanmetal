@@ -163,10 +163,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_check()) {
         if ($to === 'paid') qnb_notify($id);
         adm_back_with('success', 'Kayıt güncellendi.', $self . '?view=' . $id);
     }
+
+    /* ---- Ödenmiş bir kaydı "İade Edildi" olarak işaretle ----
+       NOT: Burası bankaya/QNBpay'e gerçek bir iade isteği GÖNDERMEZ. QNBpay'in kendi üye iş
+       yeri panelinden yapılan iade işlemleri bize webhook ile bildirilmediği için, gerçek
+       iadeyi (para iadesini) önce QNBpay panelinden yapıp, sonra burada yalnızca KAYDI
+       senkronize etmek için kullanılır. */
+    if ($do === 'mark_refunded') {
+        $id   = (int)($_POST['id'] ?? 0);
+        $note = trim((string)($_POST['refund_note'] ?? ''));
+        $p    = row("SELECT * FROM tm_payments WHERE id=?", [$id]);
+        if (!$p || $p['status'] !== 'paid') {
+            adm_back_with('error', 'Bu işlem yalnızca "Ödendi" durumundaki kayıtlar için kullanılabilir.', $self);
+        }
+        q("UPDATE tm_payments SET status='refunded', refunded_at=NOW(), refund_note=?, refunded_by_admin_id=? WHERE id=?",
+          [$note !== '' ? mb_substr($note, 0, 255, 'UTF-8') : null, (int)$adminUser['id'], $id]);
+        log_activity('update', 'payment', $id, 'Ödeme ' . $p['invoice_id'] . ' iade edildi olarak işaretlendi' . ($note !== '' ? ' — ' . $note : ''));
+        adm_back_with('success', 'Kayıt "İade Edildi" olarak işaretlendi.', $self . '?view=' . $id);
+    }
+
+    /* ---- Yanlışlıkla iade işaretlenmiş bir kaydı geri al ---- */
+    if ($do === 'undo_refund') {
+        $id = (int)($_POST['id'] ?? 0);
+        $p  = row("SELECT * FROM tm_payments WHERE id=?", [$id]);
+        if (!$p || $p['status'] !== 'refunded') {
+            adm_back_with('error', 'Bu kayıt "İade Edildi" durumunda değil.', $self);
+        }
+        q("UPDATE tm_payments SET status='paid', refunded_at=NULL, refund_note=NULL, refunded_by_admin_id=NULL WHERE id=?", [$id]);
+        log_activity('update', 'payment', $id, 'Ödeme ' . $p['invoice_id'] . ' iade işareti geri alındı, "Ödendi"ye döndürüldü');
+        adm_back_with('success', 'Kayıt tekrar "Ödendi" olarak işaretlendi.', $self . '?view=' . $id);
+    }
 }
 
 $cfg = qnb_cfg();
-$statusOptions = ['pending', 'paid', 'failed', 'review'];
+$statusOptions = ['pending', 'paid', 'failed', 'review', 'refunded'];
 ?>
 
 <div class="adm-tabs">
@@ -394,6 +424,43 @@ $statusOptions = ['pending', 'paid', 'failed', 'review'];
       <form method="post" style="display:inline" onsubmit="return confirm('Bu işlemi BAŞARISIZ olarak işaretlemek istediğinize emin misiniz?')">
         <?= csrf_field() ?><input type="hidden" name="do" value="resolve"><input type="hidden" name="id" value="<?= (int)$p['id'] ?>"><input type="hidden" name="to" value="failed">
         <button type="submit" class="adm-btn adm-btn-danger">✕ Başarısız işaretle</button>
+      </form>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($p['status'] === 'paid'): ?>
+  <div class="adm-panel">
+    <div class="adm-panel-head"><h2>↩ İade</h2></div>
+    <div class="adm-panel-body">
+      <p class="help">Bu ekran bankaya iade isteği <strong>göndermez</strong> — QNBpay üye iş yeri panelinden iade/iptali
+        <strong>önce siz yapın</strong>, para orada iade edilir. Burada yalnızca bu kaydı "İade Edildi" olarak
+        işaretleyip sitede de doğru görünmesini sağlarsınız.</p>
+      <form method="post" onsubmit="return confirm('QNBpay panelinden iadeyi/iptali zaten yaptınız mı? Bu kayıt İADE EDİLDİ olarak işaretlenecek.')">
+        <?= csrf_field() ?><input type="hidden" name="do" value="mark_refunded"><input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+        <div class="row"><label>Not (opsiyonel)</label><input type="text" name="refund_note" placeholder="Örn: QNBpay panelinden iade edildi, dekont no ..." maxlength="255"></div>
+        <div class="form-actions"><button type="submit" class="adm-btn adm-btn-danger">↩ İade Edildi olarak işaretle</button></div>
+      </form>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($p['status'] === 'refunded'): ?>
+  <div class="adm-panel">
+    <div class="adm-panel-head"><h2>↩ İade Bilgisi</h2></div>
+    <div class="adm-panel-body">
+      <table class="adm-table">
+        <tbody>
+          <tr><td style="width:220px">İade tarihi</td><td><?= h($p['refunded_at'] ?: '—') ?></td></tr>
+          <tr><td>Not</td><td><?= h($p['refund_note'] ?: '—') ?></td></tr>
+          <?php if ($p['refunded_by_admin_id']): $ra = row("SELECT full_name, username FROM tm_users WHERE id=?", [(int)$p['refunded_by_admin_id']]); ?>
+          <tr><td>İşaretleyen</td><td><?= h($ra ? ($ra['full_name'] ?: $ra['username']) : '—') ?></td></tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+      <form method="post" style="margin-top:14px" onsubmit="return confirm('Bu kaydı tekrar ÖDENDİ durumuna almak istediğinize emin misiniz? (Yalnızca yanlışlıkla işaretlendiyse kullanın.)')">
+        <?= csrf_field() ?><input type="hidden" name="do" value="undo_refund"><input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+        <button type="submit" class="adm-btn adm-btn-ghost">↺ İade işaretini geri al</button>
       </form>
     </div>
   </div>

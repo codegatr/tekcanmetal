@@ -18,7 +18,7 @@ if (!$cust || $cust['must_change_password']) {
     redirect('odeme.php');
 }
 
-$statusOptions = ['' => 'Tüm Durumlar', 'paid' => 'Ödendi', 'pending' => 'Bekliyor', 'failed' => 'Başarısız', 'review' => 'İnceleniyor'];
+$statusOptions = ['' => 'Tüm Durumlar', 'paid' => 'Ödendi', 'pending' => 'Bekliyor', 'failed' => 'Başarısız', 'review' => 'İnceleniyor', 'refunded' => 'İade Edildi'];
 $fStatusRaw = (string)($_GET['status'] ?? '');
 $fStatus = array_key_exists($fStatusRaw, $statusOptions) ? $fStatusRaw : '';
 $fQ      = trim((string)($_GET['q'] ?? ''));
@@ -206,6 +206,7 @@ body{overflow:hidden}
 .hist-badge-pending{background:#fff7e6;color:#b45309}
 .hist-badge-failed{background:#fdecec;color:#dc2626}
 .hist-badge-review{background:#fff3eb;color:#c8102e}
+.hist-badge-refunded{background:#eef2ff;color:#3730a3}
 .hist-pager{display:flex;justify-content:center;align-items:center;gap:14px;padding:16px;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
 .hist-pager a{color:var(--navy);text-decoration:underline}
 
@@ -325,7 +326,7 @@ body{overflow:hidden}
             </tr></thead>
             <tbody>
             <?php foreach ($rows as $r):
-              $badgeCls = ['paid' => 'hist-badge-paid', 'pending' => 'hist-badge-pending', 'failed' => 'hist-badge-failed', 'review' => 'hist-badge-review'][$r['status']] ?? 'hist-badge-pending';
+              $badgeCls = ['paid' => 'hist-badge-paid', 'pending' => 'hist-badge-pending', 'failed' => 'hist-badge-failed', 'review' => 'hist-badge-review', 'refunded' => 'hist-badge-refunded'][$r['status']] ?? 'hist-badge-pending';
             ?>
               <tr>
                 <td><code><?= h($r['invoice_id']) ?></code></td>

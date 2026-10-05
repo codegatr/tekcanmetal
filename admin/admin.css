@@ -442,6 +442,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;ba
 .badge-off{background:var(--bg-active);color:var(--text-dim);border-color:var(--line)}
 .badge-warn{background:var(--warning-soft);color:var(--warning);border-color:rgba(180,83,9,.18)}
 .badge-danger{background:var(--danger-soft);color:var(--danger);border-color:rgba(200,16,46,.18)}
+.badge-refund{background:#eef2ff;color:#3730a3;border-color:rgba(55,48,163,.18)}
 
 /* === BUTTONS === */
 .adm-btn{

@@ -146,6 +146,14 @@ function qnb_ensure_schema(): void {
         if (!$hasChannel) {
             db()->exec("ALTER TABLE tm_payments ADD COLUMN channel ENUM('web','admin_moto') NOT NULL DEFAULT 'web' AFTER pos_mode, ADD COLUMN created_by_admin_id INT UNSIGNED NULL AFTER channel");
         }
+        // v1.0.154: QNBpay'in kendi üye iş yeri panelinden yapılan iade/iptal işlemleri bize
+        // webhook ile bildirilmiyor — banka tarafında yapılan iadeyi burada yansıtabilmek için
+        // 'refunded' durumu ve elle işaretleme bilgileri eklendi.
+        $hasRefund = (int)val("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tm_payments' AND COLUMN_NAME = 'refunded_at'");
+        if (!$hasRefund) {
+            db()->exec("ALTER TABLE tm_payments MODIFY COLUMN status ENUM('pending','paid','failed','review','refunded') NOT NULL DEFAULT 'pending'");
+            db()->exec("ALTER TABLE tm_payments ADD COLUMN refunded_at DATETIME NULL AFTER paid_at, ADD COLUMN refund_note VARCHAR(255) NULL AFTER refunded_at, ADD COLUMN refunded_by_admin_id INT UNSIGNED NULL AFTER refund_note");
+        }
     } catch (Throwable $e) {
         // Sessiz: çağıran sayfa tabloya erişemezse kendi hata mesajını gösterir
     }
@@ -271,16 +279,18 @@ function qnb_card_last4(?string $mask): string {
 
 function qnb_status_label(string $st): string {
     return [
-        'pending' => 'Bekliyor',
-        'paid'    => 'Ödendi',
-        'failed'  => 'Başarısız',
-        'review'  => 'İnceleme Gerekli',
+        'pending'  => 'Bekliyor',
+        'paid'     => 'Ödendi',
+        'failed'   => 'Başarısız',
+        'review'   => 'İnceleme Gerekli',
+        'refunded' => 'İade Edildi',
     ][$st] ?? $st;
 }
 
 function qnb_status_badge(string $st): string {
-    $cls = ['paid' => 'badge-on', 'failed' => 'badge-danger', 'review' => 'badge-warn', 'pending' => 'badge-off'][$st] ?? 'badge-off';
-    return '<span class="badge ' . $cls . '">' . h(qnb_status_label($st)) . '</span>';
+    $cls = ['paid' => 'badge-on', 'failed' => 'badge-danger', 'review' => 'badge-warn', 'pending' => 'badge-off', 'refunded' => 'badge-refund'][$st] ?? 'badge-off';
+    $ico = $st === 'refunded' ? '↩ ' : '';
+    return '<span class="badge ' . $cls . '">' . $ico . h(qnb_status_label($st)) . '</span>';
 }
 
 /* ============================================================
